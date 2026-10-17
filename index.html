@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stock & Fish — Bản anime</title>
+<title>Stock & Fish — Bản kịch tính</title>
 <style>
 :root{--cyan:#20eaff;--blue:#087bff;--gold:#ffd34f;--panel:#061b3b;--line:#168ddc}
 *{box-sizing:border-box}
@@ -19,7 +19,8 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 .hero-art{text-align:center;font-size:clamp(40px,8vw,95px);padding:20px 0;filter:drop-shadow(0 0 15px #00cfff)}
 .hero p{color:#b9e8ff}.auth h2{margin:0 0 14px}
 .auth input{width:100%;padding:12px;margin:6px 0;background:#06132a;border:1px solid #21649a;border-radius:9px;color:#fff}
-.auth .wide{width:100%;margin-top:10px}.switch{color:#7de8ff;text-decoration:underline;cursor:pointer}.hint{color:#92b6d1;font-size:12px}
+.auth .wide{width:100%;margin-top:10px}
+.switch{color:#7de8ff;text-decoration:underline;cursor:pointer}.hint{color:#92b6d1;font-size:12px}
 
 .topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px 14px;margin-bottom:12px}
 .money{margin-left:auto;color:var(--gold);font-weight:1000;font-size:20px}
@@ -27,32 +28,57 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 .panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:15px;overflow:hidden;box-shadow:0 0 20px #00bfff12}
 .panelhead{padding:10px 13px;background:#092b50;border-bottom:1px solid #13537d;font-weight:900;display:flex;justify-content:space-between;align-items:center}
 
-/* ===== ĐẠI DƯƠNG ANIME ===== */
-.arena{position:relative;height:500px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 0,#8ff7ff 0,#1aa8e0 22%,#0a5fa8 52%,#052a5c 80%,#020d2c 100%)}
+/* ===== ĐẠI DƯƠNG ===== */
+.arena{position:relative;height:500px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 0,#8ff7ff 0,#1aa8e0 22%,#0a5fa8 52%,#052a5c 80%,#020d2c 100%);transition:filter .2s}
+.arena.shake{animation:screenshake .35s}
+@keyframes screenshake{0%,100%{translate:0 0}20%{translate:-7px 4px}40%{translate:6px -5px}60%{translate:-4px 3px}80%{translate:3px -2px}}
+.arena.rage{background:radial-gradient(ellipse at 50% 0,#ffb3b3 0,#c4305a 25%,#5a0f2e 60%,#1a0212 100%)}
 .arena:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 12% 25%,#e6ffffaa 0 2px,transparent 3px),radial-gradient(circle at 82% 40%,#e6ffff88 0 3px,transparent 4px),radial-gradient(circle at 40% 80%,#e6ffffaa 0 2px,transparent 3px);background-size:90px 100px;animation:bubbles 7s linear infinite}
 .arena:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(105deg,transparent 0 70px,#ffffff12 70px 110px,transparent 110px 190px);animation:rays 9s linear infinite alternate}
 @keyframes bubbles{to{background-position:0 -300px,0 -200px,0 -400px}}
 @keyframes rays{to{opacity:.4}}
+
 .fish{position:absolute;width:clamp(70px,9vw,96px);z-index:2;cursor:pointer;user-select:none;filter:drop-shadow(0 0 8px #16dfff);animation:swim 4s ease-in-out infinite alternate;transition:transform .15s}
+.fish.small{width:clamp(44px,5.5vw,60px)}
 .fish svg{width:100%;height:auto;display:block}
 .fish:hover{transform:scale(1.12);filter:drop-shadow(0 0 14px #ffeb75)}
 @keyframes swim{from{translate:-10px 4px}to{translate:18px -12px}}
-.dying{transition:transform .5s,opacity .5s!important;transform:rotate(180deg) translateY(-30px)!important;opacity:0!important}
-.wiggle{animation:wig .2s}@keyframes wig{50%{translate:6px 0}}
-.boss{position:absolute;left:50%;top:30%;width:clamp(190px,27vw,270px);z-index:5;translate:-50% -50%;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation:bossfloat 2.4s ease-in-out infinite alternate;transition:opacity .6s,transform .6s}
+.fish.dying{opacity:0!important;transform:rotate(180deg) scale(.4)!important;transition:transform .45s,opacity .45s!important}
+.fish.wiggle{animation:wig .2s}
+@keyframes wig{50%{translate:6px 0}}
+.fish.school{animation:schoolswim 7s linear forwards}
+@keyframes schoolswim{from{left:-120px}to{left:110%}}
+
+.boss{position:absolute;left:50%;top:30%;width:clamp(190px,27vw,270px);z-index:5;translate:-50% -50%;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation:bossfloat 2.4s ease-in-out infinite alternate;transition:opacity .6s}
 .boss svg{width:100%;height:auto;display:block}
 @keyframes bossfloat{to{translate:-50% -56%;filter:drop-shadow(0 0 30px #ff41e9)}}
-.boss.rage{animation:shake .12s infinite}
-@keyframes shake{0%{translate:-51% -50%}50%{translate:-49% -51%}}
-.boss.flash{filter:brightness(2.2)}
+.boss.rage{filter:drop-shadow(0 0 26px #ff1f5a) hue-rotate(-30deg) saturate(1.4)}
+.boss.rage svg{animation:rageshake .12s infinite}
+@keyframes rageshake{0%{transform:translate(-3px,0)}50%{transform:translate(3px,-2px)}100%{transform:translate(-2px,2px)}}
+.boss.hit{animation:bosshit .22s}
+@keyframes bosshit{0%{scale:1}35%{scale:.9;rotate:-4deg}100%{scale:1;rotate:0deg}}
+.boss.charge{transition:translate .55s cubic-bezier(.2,.9,.3,1)}
+.boss.dying{opacity:0!important;transform:scale(.3) rotate(200deg)!important;transition:transform .9s,opacity .9s!important}
+.boss.flash svg{filter:brightness(2.4)}
+
 .bossbar{position:absolute;left:12%;right:12%;top:8px;text-align:center;z-index:6;text-shadow:0 2px 4px #001a33}
 .hpouter{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
-.hpinner{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .15s}
+.hpinner{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .25s}
 .cannon{position:absolute;bottom:4px;left:50%;translate:-50% 0;font-size:58px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
-.dmg{position:absolute;font-size:20px;font-weight:1000;pointer-events:none;z-index:9;text-shadow:0 2px 4px #001a33;animation:pop .85s forwards}
+.cannon.recoil{animation:recoil .2s}
+@keyframes recoil{50%{translate:-50% 5px}}
+.dmg{position:absolute;font-size:20px;font-weight:1000;pointer-events:none;z-index:9;text-shadow:0 2px 4px #001a33;animation:pop .85s forwards;white-space:nowrap}
+.dmg.crit{font-size:34px;color:#ff4d6d!important;text-shadow:0 0 12px #ffe600,0 2px 4px #7d0019}
 @keyframes pop{to{transform:translateY(-65px) scale(1.3);opacity:0}}
 .beam{position:absolute;height:6px;transform-origin:left center;background:linear-gradient(90deg,#fff,#2fffff,#b44dff,transparent);box-shadow:0 0 12px #37f9ff;border-radius:100px;pointer-events:none;z-index:7;animation:fadebeam .28s forwards}
 @keyframes fadebeam{to{opacity:0}}
+.burst{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;pointer-events:none;z-index:8;background:radial-gradient(circle,#fff 0,#ffe066 25%,#ff7ab8 55%,transparent 70%);animation:burst .45s forwards}
+@keyframes burst{to{transform:scale(3.2);opacity:0}}
+.coin{position:absolute;font-size:20px;pointer-events:none;z-index:9;filter:drop-shadow(0 0 6px #ffd34f)}
+.warn{position:absolute;left:50%;top:44%;translate:-50% -50%;font-size:clamp(30px,5vw,54px);font-weight:1000;color:#ffe600;text-shadow:0 0 16px #ff0055,0 4px 0 #6b0020;z-index:20;pointer-events:none;animation:warnpop 1s forwards;white-space:nowrap}
+@keyframes warnpop{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.15);opacity:1}70%{transform:scale(1);opacity:1}100%{transform:scale(1.2);opacity:0}}
+.wave{position:absolute;left:0;right:0;height:40px;bottom:60px;z-index:4;pointer-events:none;background:linear-gradient(transparent,#8ff7ff55,transparent);animation:wavesweep 1.2s forwards}
+@keyframes wavesweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 
 .controls{padding:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#03132b}
 .controls label{color:#9ddfff}
@@ -70,7 +96,8 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 .stocks{width:100%;border-collapse:collapse;font-size:12px}
 .stocks th,.stocks td{padding:8px 7px;text-align:left;border-bottom:1px solid #123a60}.stocks th{color:#91dfff}
 .up{color:#47ffb3}.down{color:#ff7099}
-.feed{padding:10px;max-height:190px;overflow:auto;color:#b5ddf8;font-size:12px}.feed div{padding:6px 0;border-bottom:1px solid #123353}
+.feed{padding:10px;max-height:190px;overflow:auto;color:#b5ddf8;font-size:12px}
+.feed div{padding:6px 0;border-bottom:1px solid #123353}
 .notice{position:fixed;top:16px;left:50%;translate:-50% 0;background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:11px 16px;box-shadow:0 0 25px #00dfff55;z-index:99;max-width:90%;text-align:center}
 .foot{padding:12px;text-align:center;color:#739dbd;font-size:11px}
 
@@ -82,21 +109,26 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 .market-card{background:linear-gradient(145deg,#08284d,#04132b);border:1px solid #177bb5;border-radius:16px;overflow:hidden;margin-bottom:14px}
 .market-card h2{font-size:18px;margin:0;padding:14px;border-bottom:1px solid #15517d;background:#092e53}
 .market-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px}
-.kpi{padding:14px;background:#061a35;border:1px solid #174d76;border-radius:12px}.kpi small{color:#9dcce9;display:block}.kpi b{font-size:22px;color:#ffe06a}
+.kpi{padding:14px;background:#061a35;border:1px solid #174d76;border-radius:12px}
+.kpi small{color:#9dcce9;display:block}.kpi b{font-size:22px;color:#ffe06a}
 .market-table{width:100%;border-collapse:collapse}
 .market-table th,.market-table td{padding:12px 10px;border-bottom:1px solid #123b5c;text-align:left}
 .market-table th{color:#9cddff;background:#071e3a}.market-table button{padding:7px 11px}
 .market-chart{height:190px;margin:14px;border:1px solid #14517d;border-radius:12px;background:linear-gradient(180deg,#073454,#04162d);position:relative;overflow:hidden;padding:12px}
 .market-chart svg{width:100%;height:100%}
 .market-actions{display:flex;gap:8px;flex-wrap:wrap;padding:12px}
-.market-feed{padding:12px;max-height:300px;overflow:auto;color:#b5ddf8}.market-feed div{padding:9px 0;border-bottom:1px solid #123353}
+.market-feed{padding:12px;max-height:300px;overflow:auto;color:#b5ddf8}
+.market-feed div{padding:9px 0;border-bottom:1px solid #123353}
 .market-exit{background:linear-gradient(135deg,#17456d,#0b77ac)}
+.sell{background:linear-gradient(135deg,#b91c48,#f44d75)!important}
 @media(max-width:850px){
  .layout{grid-template-columns:1fr}.arena{height:420px}.auth-wrap{grid-template-columns:1fr}.hero{display:none}.money{margin-left:0}
- .market-grid{grid-template-columns:1fr}.market-kpis{grid-template-columns:1fr}.market-table th,.market-table td{padding:8px 5px;font-size:12px}.market-view{padding:8px}
+ .market-grid{grid-template-columns:1fr}.market-kpis{grid-template-columns:1fr}
+ .market-table th,.market-table td{padding:8px 5px;font-size:12px}.market-view{padding:8px}
  .botgrid{grid-template-columns:repeat(3,1fr)}
 }
-</style></head>
+</style>
+</head>
 <body>
 <div id="notice" class="notice hidden"></div>
 
@@ -107,7 +139,7 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
     <div class="hero">
       <div class="hero-art">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>Cá anime đủ loại, 5 boss máu trâu xuất hiện lần lượt, đạn nhiều cấp và 5 bot cùng săn. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
+      <p>Cá anime đủ loại, 5 boss máu trâu biết lao tới và nổi giận, đạn nhiều cấp và 5 bot cùng săn. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
       <p>🪙 Ví khởi đầu: <b style="color:#ffd34f">100.000 xu</b></p>
       <p class="hint">Bản demo: tài khoản lưu trên máy này, chưa có máy chủ hay tiền thật.</p>
     </div>
@@ -251,12 +283,41 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 
 <script>
 const $=id=>document.getElementById(id);
-let username='',wallet=100000,ammoIndex=0,autoTimer=null,fireTimer=null,power=1,hold={},
-    bossIdx=0,bossLoop=0,bossHP=0,bossMax=0,bossAlive=false,bossRespawn=null,marketSector='Tất cả';
+let username='',wallet=100000,ammoIndex=0,autoTimer=null,tickTimer=null,schoolTimer=null,power=1,hold={},
+    bossIdx=0,bossLoop=0,bossHP=0,bossMax=0,bossAlive=false,bossRespawn=null,marketSector='Tất cả',
+    bossPhase='idle',bossChargeTimer=null,bossNextCharge=0,enraged=false;
 let stocks=[
   {s:'VCB',name:'Ngân hàng',p:92500,prev:91000},{s:'HPG',name:'Sắt thép',p:28700,prev:29200},
   {s:'NKG',name:'Sắt thép',p:21300,prev:20500},{s:'ALU',name:'Nhôm',p:68000,prev:67000},
   {s:'BTC',name:'Coin',p:1250000,prev:1180000},{s:'PLX',name:'Nhựa',p:38500,prev:38900}];
+
+const ammos=[['🔹','Đạn thường',1,100],['💥','Đạn hạt',2.2,1000],['🔮','Laser',4,10000],['🧊','Đạn băng',5.5,10000],
+ ['⚡','Đạn sét',8,50000],['🌟','Đạn pháo',12,100000],['💠','Siêu đạn',22,100000],['🌈','Đạn thiên hà',40,100000]];
+
+const BOSS_ARMOR=0.2;   // mỗi phát chỉ gây 20% sát thương thực → boss trâu
+const CRIT_CHANCE=0.08; // 8% phát bắn là CHÍ MẠNG (x2)
+
+/* ===== ÂM THANH (Web Audio, không cần file) ===== */
+let audioCtx=null;
+function ac(){if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();return audioCtx}
+function tone(freq,dur,type='sine',vol=.08,slide=0){
+ try{
+  const c=ac(),o=c.createOscillator(),g=c.createGain();
+  o.type=type;o.frequency.setValueAtTime(freq,c.currentTime);
+  if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,freq+slide),c.currentTime+dur);
+  g.gain.setValueAtTime(vol,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
+  o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur);
+ }catch(e){}
+}
+const sfx={
+ shoot:()=>tone(880,.12,'square',.04,-600),
+ hit:()=>tone(220,.15,'sawtooth',.06,-120),
+ pop:()=>{tone(640,.1,'triangle',.08,300);setTimeout(()=>tone(960,.12,'triangle',.06,200),60)},
+ coin:()=>{tone(1200,.08,'sine',.05);setTimeout(()=>tone(1600,.1,'sine',.05),70)},
+ roar:()=>{tone(90,.7,'sawtooth',.12,-40);setTimeout(()=>tone(70,.6,'square',.06,-20),150)},
+ crit:()=>{tone(1400,.1,'square',.06,-800);setTimeout(()=>tone(300,.25,'sawtooth',.08,-200),70)},
+ win:()=>{[523,659,784,1046].forEach((f,i)=>setTimeout(()=>tone(f,.2,'triangle',.07),i*120))}
+};
 
 /* ===== ART SVG ANIME ===== */
 function fishArt(c1,c2,fin,extra=''){
@@ -292,24 +353,24 @@ function turtleArt(){
  <g fill="#e0a52a" stroke="#0a1a3a" stroke-width="2"><circle cx="40" cy="38" r="9"/><circle cx="60" cy="30" r="9"/><circle cx="80" cy="38" r="9"/><circle cx="50" cy="54" r="9"/><circle cx="70" cy="54" r="9"/></g>
  <path d="M30 26 Q40 16 52 22" stroke="#fff" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/></svg>`;
 }
-const bossArt=a=>({
- dragon:()=>fishArt('#9ff3ff','#ffffff','#2a9fff',`<path d="M40 22 L34 2 L50 16Z M58 16 L60 -4 L68 14Z" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/>`),
- shark:()=>fishArt('#ff7a3c','#ffe08a','#ff3b1f',`<path d="M30 10 Q36 -6 42 10 Q48 -8 54 8 Q60 -8 66 8 Z" fill="#ffd34f" stroke="#0a1a3a" stroke-width="2"/>`),
- octo:()=>octoArt('#b57bff','#e6d4ff'),
- turtle:()=>turtleArt(),
- kraken:()=>octoArt('#ff4d6d','#ffd0d8')
-}[a]())||'';
+function bossSvg(k){
+ if(k==='dragon')return fishArt('#9ff3ff','#ffffff','#2a9fff',`<path d="M40 22 L34 2 L50 16Z M58 16 L60 -4 L68 14Z" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/>`);
+ if(k==='shark')return fishArt('#ff7a3c','#ffe08a','#ff3b1f',`<path d="M30 10 Q36 -6 42 10 Q48 -8 54 8 Q60 -8 66 8 Z" fill="#ffd34f" stroke="#0a1a3a" stroke-width="2"/>`);
+ if(k==='octo')return octoArt('#b57bff','#e6d4ff');
+ if(k==='turtle')return turtleArt();
+ return octoArt('#ff4d6d','#ffd0d8');
+}
 
+/* ===== DỮ LIỆU ===== */
 const BOSSES=[
- {name:'CÁ RỒNG BĂNG',lv:5,hp:1500000,reward:600000,art:'dragon'},
- {name:'BẠCH TUỘC TÍM',lv:10,hp:4000000,reward:1800000,art:'octo'},
- {name:'CÁ MẬP LỬA',lv:15,hp:10000000,reward:4000000,art:'shark'},
- {name:'RÙA THẦN VÀNG',lv:20,hp:25000000,reward:9000000,art:'turtle'},
- {name:'KRAKEN SẤM',lv:30,hp:60000000,reward:20000000,art:'kraken'}];
+ {name:'CÁ RỒNG BĂNG',lv:5,hp:2000000,reward:800000,art:'dragon'},
+ {name:'BẠCH TUỘC TÍM',lv:10,hp:6000000,reward:2500000,art:'octo'},
+ {name:'CÁ MẬP LỬA',lv:15,hp:15000000,reward:6000000,art:'shark'},
+ {name:'RÙA THẦN VÀNG',lv:20,hp:40000000,reward:15000000,art:'turtle'},
+ {name:'KRAKEN SẤM',lv:30,hp:100000000,reward:40000000,art:'kraken'}];
 const bossMaxFor=(i,l)=>Math.round(BOSSES[i].hp*(1+l*0.6));
 const bossRewardFor=(i,l)=>Math.round(BOSSES[i].reward*(1+l*0.6));
 
-/* m = hệ số thưởng (x tiền đạn), w = tỉ lệ xuất hiện. Xác suất trúng = 0.9/m → RTP ~90% */
 const FISH=[
  {m:2,w:.30,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
  {m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
@@ -317,9 +378,6 @@ const FISH=[
  {m:8,w:.14,svg:fishArt('#ffe066','#fffbe0','#ffb020')},
  {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},
  {m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}];
-
-const ammos=[['🔹','Đạn thường',1,100],['💥','Đạn hạt',2.2,1000],['🔮','Laser',4,10000],['🧊','Đạn băng',5.5,10000],
- ['⚡','Đạn sét',8,50000],['🌟','Đạn pháo',12,100000],['💠','Siêu đạn',22,100000],['🌈','Đạn thiên hà',40,100000]];
 
 /* ===== TIỆN ÍCH ===== */
 function notify(t){const n=$('notice');n.textContent=t;n.classList.remove('hidden');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.add('hidden'),2400)}
@@ -353,13 +411,14 @@ function enterGame(){
  $('arena').querySelectorAll('.fish').forEach(f=>f.remove());
  for(let i=0;i<14;i++)spawnFish();
  renderBots();
- if(!fireTimer)fireTimer=setInterval(tick,850);
+ if(!tickTimer)tickTimer=setInterval(tick,850);
+ if(!schoolTimer)schoolTimer=setInterval(spawnSchool,20000);
 }
 function logout(){save();stopAuto();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
 function renderWallet(){$('wallet').textContent=fmt(wallet);$('wallet2').textContent=fmt(wallet)+' xu'}
 function renderAmmo(){
  $('ammoList').innerHTML=ammos.map((a,i)=>`<div class="ammo ${i===ammoIndex?'active':''}" onclick="selectAmmo(${i})">
-  <span class="emoji">${a[0]}</span><b>${a[1]}</b><br><small>x${a[2]} sát thương boss</small></div>`).join('');
+  <span class="emoji">${a[0]}</span><b>${a[1]}</b><br><small>x${a[2]} sát thương</small></div>`).join('');
 }
 function selectAmmo(i){ammoIndex=i;renderAmmo();notify('Đã chọn '+ammos[i][1])}
 function renderBots(){
@@ -371,41 +430,96 @@ function renderBots(){
 function spawnBoss(){
  const b=BOSSES[bossIdx];
  bossMax=bossMaxFor(bossIdx,bossLoop);
- if(bossHP<=0)bossHP=bossMax;
+ if(bossHP<=0||bossHP>bossMax)bossHP=bossMax;
  const el=$('boss');
- el.innerHTML=bossArt(b.art);
- el.classList.remove('dying');el.style.opacity=1;
- el.onclick=e=>{e.stopPropagation();if(bossAlive)shoot(e,'boss')};
+ el.innerHTML=bossSvg(b.art);
+ el.className='boss';el.style.translate='';el.style.left='50%';
+ $('arena').classList.remove('rage');
  $('bossName').textContent=b.name+(bossLoop?' ⭐ x'+(bossLoop+1):'');
  $('bossLv').textContent=b.lv;
- bossAlive=true;renderBoss();
+ $('status').textContent='Boss: '+b.name;
+ bossAlive=true;enraged=false;bossPhase='idle';
+ scheduleCharge();
+ renderBoss();
  addFeed('🐉 '+b.name+' xuất hiện! Máu: '+fmt(bossHP));
 }
 function renderBoss(){
  $('bossText').textContent=fmt(bossHP)+' / '+fmt(bossMax)+' HP';
  const pct=Math.max(0,bossHP/bossMax*100);
  $('bossHp').style.width=pct+'%';
- $('boss').classList.toggle('rage',bossAlive&&pct<35);
+ if(bossAlive&&pct<35&&!enraged)enrage();
 }
-function hitBoss(e,a,cost){
- const dmg=Math.round(cost*a[2]*power*(0.75+Math.random()*0.65));
+function enrage(){
+ enraged=true;
+ $('boss').classList.add('rage');
+ $('arena').classList.add('rage');
+ sfx.roar();
+ showWarn('😡 NỔI GIẬN!');
+ shakeArena();
+ addFeed('🔥 '+BOSSES[bossIdx].name+' nổi giận! Tấn công dồn dập hơn.');
+}
+function hitBoss(e,cost){
+ const a=ammos[ammoIndex];
+ const crit=Math.random()<CRIT_CHANCE;
+ const dmg=Math.round(cost*a[2]*power*BOSS_ARMOR*(0.75+Math.random()*0.65)*(crit?2:1));
  bossHP-=dmg;
- const el=$('boss');el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),110);
- floatText(e,'-'+fmt(dmg),'#ffed65');
+ sfx.hit();if(crit)sfx.crit();
+ const boss=$('boss');
+ boss.classList.remove('hit');void boss.offsetWidth;boss.classList.add('hit');
+ boss.classList.add('flash');setTimeout(()=>boss.classList.remove('flash'),120);
+ knockback();
+ burstAt(e);
+ floatText(e,(crit?'CHÍ MẠNG! ':'-')+fmt(dmg),crit?'#ff4d6d':'#ffed65',crit);
+ if(crit)showWarn('💥 CHÍ MẠNG!');
  if(bossHP<=0)killBoss();
  renderBoss();
 }
+function knockback(){
+ const boss=$('boss');
+ const dx=(Math.random()<.5?-1:1)*(10+Math.random()*10);
+ boss.style.translate=`calc(-50% + ${dx}px) -50%`;
+ setTimeout(()=>{if(!boss.classList.contains('charge'))boss.style.translate=''},160);
+}
+/* Boss lao về phía cannon rồi lùi lại, cảnh báo trước 1 giây */
+function scheduleCharge(){
+ clearTimeout(bossChargeTimer);
+ if(!bossAlive)return;
+ const gap=enraged?2200:4200+Math.random()*1800;
+ bossChargeTimer=setTimeout(bossCharge,gap);
+}
+function bossCharge(){
+ if(!bossAlive){return}
+ const boss=$('boss');
+ showWarn('⚠️ BOSS LAO TỚI!');
+ bossPhase='warn';
+ setTimeout(()=>{
+  if(!bossAlive)return;
+  bossPhase='charge';
+  sfx.roar();
+  boss.classList.add('charge');
+  boss.style.translate='-50% calc(-50% + 90px)';
+  shakeArena();
+  setTimeout(()=>{
+   if(!bossAlive)return;
+   boss.style.translate='-50% -50%';
+   setTimeout(()=>{boss.classList.remove('charge');bossPhase='idle';scheduleCharge()},600);
+  },700);
+ },1000);
+}
 function killBoss(){
- bossAlive=false;bossHP=0;
+ bossAlive=false;bossHP=0;clearTimeout(bossChargeTimer);
  const reward=bossRewardFor(bossIdx,bossLoop);
  wallet+=reward;renderWallet();
+ sfx.win();
+ showWarn('🏆 HẠ GỤC!');
+ shakeArena();
+ coinShower(14);
  notify('🐉 HẠ GỤC '+BOSSES[bossIdx].name+'! +'+fmt(reward)+' xu thưởng!');
  addFeed('🏆 Hạ '+BOSSES[bossIdx].name+' • +'+fmt(reward)+' xu');
  $('boss').classList.add('dying');
  bossIdx++;if(bossIdx>=BOSSES.length){bossIdx=0;bossLoop++}
- bossMax=bossMaxFor(bossIdx,bossLoop);
  clearTimeout(bossRespawn);
- bossRespawn=setTimeout(()=>{bossHP=0;spawnBoss();save()},2400);
+ bossRespawn=setTimeout(()=>{spawnBoss();save()},2600);
  save();
 }
 
@@ -415,35 +529,60 @@ function spawnFish(){
  for(const f of FISH){acc+=f.w;if(r<acc){sp=f;break}}
  const el=document.createElement('div');
  el.className='fish';el.innerHTML=sp.svg;
- el.style.left=(3+Math.random()*82)+'%';el.style.top=(18+Math.random()*58)+'%';
+ el.style.left=(3+Math.random()*82)+'%';el.style.top=(18+Math.random()*56)+'%';
  el.style.animationDelay=(-Math.random()*4)+'s';
  const obj={sp,el,dead:false};
  el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
  $('arena').appendChild(el);
 }
+/* Đàn cá nhỏ bơi ngang màn hình */
+function spawnSchool(){
+ if($('gameScreen').classList.contains('hidden'))return;
+ const n=5+Math.floor(Math.random()*3),top=20+Math.random()*50;
+ for(let i=0;i<n;i++){
+  const el=document.createElement('div');
+  el.className='fish small school';
+  el.innerHTML=FISH[Math.floor(Math.random()*3)].svg;
+  el.style.top=(top+(Math.random()*8-4))+'%';
+  el.style.animationDelay=(-i*.25)+'s';
+  el.style.animationDuration=(6+Math.random()*2)+'s';
+  el.style.left='-120px';
+  const obj={sp:{m:2},el,dead:false,school:true};
+  el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
+  $('arena').appendChild(el);
+  setTimeout(()=>{if(el.isConnected&&!obj.dead)el.remove()},9000);
+ }
+ notify('🐟 Đàn cá đang bơi qua!');
+}
 
 /* ===== BẮN ===== */
-function shoot(e,kind,fishObj){
+function shoot(e,kind,obj){
+ if(kind==='boss'&&!bossAlive)return;
  const cost=Number($('bet').value);
  if(wallet<cost){notify('Không đủ xu! Chọn mức đạn thấp hơn.');stopAuto();return}
  wallet-=cost;
- beam(e);
+ beam(e);sfx.shoot();
+ const c=$('cannon');c.classList.remove('recoil');void c.offsetWidth;c.classList.add('recoil');
  if(kind==='boss'){
-  hitBoss(e,ammos[ammoIndex],cost);
- }else if(kind==='fish'){
-  const sp=fishObj.sp;
+  hitBoss(e,cost);
+ }else{
+  const sp=obj.sp;
   if(Math.random()<Math.min(.9,.9/sp.m)){
    const reward=Math.round(cost*sp.m);
-   wallet+=reward;fishObj.dead=true;
+   wallet+=reward;obj.dead=true;
+   sfx.pop();setTimeout(sfx.coin,120);
+   burstAt(e);
+   coinFly(e,reward);
    floatText(e,'+'+fmt(reward),'#8dffb5');
-   fishObj.el.classList.add('dying');
-   setTimeout(()=>{fishObj.el.remove();spawnFish()},480);
-   if(sp.m>=15)notify('✨ Hạ cá hiếm! +'+fmt(reward)+' xu');
+   obj.el.classList.add('dying');
+   if(!obj.school)setTimeout(()=>{obj.el.remove();spawnFish()},480);
+   else setTimeout(()=>obj.el.remove(),480);
+   if(sp.m>=15){notify('✨ Hạ cá hiếm! +'+fmt(reward)+' xu');shakeArena()}
   }else{
-   fishObj.el.classList.remove('wiggle');void fishObj.el.offsetWidth;fishObj.el.classList.add('wiggle');
+   obj.el.classList.remove('wiggle');void obj.el.offsetWidth;obj.el.classList.add('wiggle');
   }
  }
- renderWallet();renderBoss();save();
+ renderWallet();save();
 }
 function beam(e){
  const arena=$('arena'),rect=arena.getBoundingClientRect();
@@ -454,11 +593,52 @@ function beam(e){
  b.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
  arena.appendChild(b);setTimeout(()=>b.remove(),300);
 }
-function floatText(e,txt,color){
+function burstAt(e){
  const arena=$('arena'),rect=arena.getBoundingClientRect();
- const d=document.createElement('div');d.className='dmg';d.textContent=txt;d.style.color=color;
+ const d=document.createElement('div');d.className='burst';
+ d.style.left=(e.clientX-rect.left)+'px';d.style.top=(e.clientY-rect.top)+'px';
+ arena.appendChild(d);setTimeout(()=>d.remove(),460);
+}
+function floatText(e,txt,color,crit=false){
+ const arena=$('arena'),rect=arena.getBoundingClientRect();
+ const d=document.createElement('div');d.className='dmg'+(crit?' crit':'');d.textContent=txt;d.style.color=color;
  d.style.left=(e.clientX-rect.left)+'px';d.style.top=(e.clientY-rect.top)+'px';
  arena.appendChild(d);setTimeout(()=>d.remove(),900);
+}
+/* Xu bay từ điểm nổ về ví */
+function coinFly(e,reward){
+ const arena=$('arena'),rect=arena.getBoundingClientRect();
+ const sx=e.clientX-rect.left,sy=e.clientY-rect.top;
+ const tx=rect.width-80,ty=rect.height-30;
+ const n=Math.min(6,2+Math.floor(Math.log10(Math.max(10,reward))));
+ for(let i=0;i<n;i++){
+  const c=document.createElement('div');c.className='coin';c.textContent='🪙';
+  c.style.left=sx+'px';c.style.top=sy+'px';
+  arena.appendChild(c);
+  c.animate([
+   {transform:'translate(0,0) scale(1)',opacity:1},
+   {transform:`translate(${(Math.random()-.5)*60}px,${-40-Math.random()*30}px) scale(1.2)`,opacity:1,offset:.35},
+   {transform:`translate(${tx-sx}px,${ty-sy}px) scale(.6)`,opacity:.2}
+  ],{duration:700+i*60,easing:'cubic-bezier(.3,.7,.4,1)'}).onfinish=()=>c.remove();
+ }
+}
+function coinShower(n){
+ const arena=$('arena'),rect=arena.getBoundingClientRect();
+ for(let i=0;i<n;i++){
+  const c=document.createElement('div');c.className='coin';c.textContent='🪙';
+  c.style.left=(rect.width*.2+Math.random()*rect.width*.6)+'px';c.style.top='-30px';
+  arena.appendChild(c);
+  c.animate([{transform:'translateY(0)'},{transform:`translateY(${rect.height+60}px) rotate(${Math.random()*720}deg)`}],
+   {duration:1100+Math.random()*700,delay:i*60,easing:'ease-in'}).onfinish=()=>c.remove();
+ }
+}
+function showWarn(txt){
+ const d=document.createElement('div');d.className='warn';d.textContent=txt;
+ $('arena').appendChild(d);setTimeout(()=>d.remove(),1000);
+}
+function shakeArena(){
+ const a=$('arena');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');
+ setTimeout(()=>a.classList.remove('shake'),380);
 }
 
 /* Bắn tự động: bắn vào boss */
@@ -482,6 +662,7 @@ function upgrade(){
  const cost=150000*power;
  if(wallet<cost)return notify('Cần '+fmt(cost)+' xu để nâng cấp pháo.');
  wallet-=cost;power=Math.min(8,power+1);renderWallet();
+ sfx.win();
  notify('⚡ Nâng cấp pháo thành công! Sức mạnh x'+power);save();
 }
 
@@ -506,7 +687,7 @@ function renderStocks(){
   return `<tr><td><b>${s.s}</b><br><small>${s.name}</small></td><td>${fmt(s.p)}</td>
   <td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td>
   <td><button style="padding:5px 7px" onclick="trade('${s.s}',true)">Mua</button>
-  <button style="padding:5px 7px;background:linear-gradient(135deg,#b91c48,#f44d75)" onclick="trade('${s.s}',false)">Bán</button></td></tr>`;
+  <button class="sell" style="padding:5px 7px" onclick="trade('${s.s}',false)">Bán</button></td></tr>`;
  }).join('');
  const h=Object.entries(hold).filter(x=>x[1]>0);
  $('holdings').textContent=h.length?h.map(([s,q])=>s+': '+q+' cp').join(' • '):'Chưa mua cổ phiếu';
@@ -515,7 +696,7 @@ function trade(sym,buy){
  const s=stocks.find(x=>x.s===sym);
  if(buy){
   const qty=Math.max(1,Math.min(20,Math.floor(wallet/s.p)));
-  if(!qty||wallet<s.p)return notify('Ví không đủ mua 1 cổ phiếu.');
+  if(wallet<s.p)return notify('Ví không đủ mua 1 cổ phiếu.');
   wallet-=qty*s.p;hold[sym]=(hold[sym]||0)+qty;notify('Đã mua '+qty+' '+sym);
  }else{
   const qty=hold[sym]||0;
@@ -545,13 +726,13 @@ function renderBigMarket(){
   return `<tr><td><b>${s.s}</b></td><td>${s.name}</td><td><b>${fmt(s.p)} xu</b></td>
   <td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td><td>${hold[s.s]||0}</td>
   <td><button onclick="trade('${s.s}',true);renderBigMarket()">Mua</button>
-  <button style="background:linear-gradient(135deg,#b91c48,#f44d75)" onclick="trade('${s.s}',false);renderBigMarket()">Bán</button></td></tr>`;
+  <button class="sell" onclick="trade('${s.s}',false);renderBigMarket()">Bán</button></td></tr>`;
  }).join('');
  let entries=Object.entries(hold).filter(([s,q])=>q>0),total=0;
  $('portfolioRows').innerHTML=entries.length?entries.map(([sym,q])=>{
   const s=stocks.find(x=>x.s===sym),v=q*s.p;total+=v;
   return `<tr><td><b>${sym}</b></td><td>${q}</td><td>${fmt(v)} xu</td>
-  <td><button style="background:linear-gradient(135deg,#b91c48,#f44d75)" onclick="trade('${sym}',false);renderBigMarket()">Bán hết</button></td></tr>`;
+  <td><button class="sell" onclick="trade('${sym}',false);renderBigMarket()">Bán hết</button></td></tr>`;
  }).join(''):'<tr><td colspan="4">Chưa có cổ phiếu nào. Mua mã mày thích ở bảng giá.</td></tr>';
  $('portfolioValue').textContent=fmt(total)+' xu';
  $('portfolioTotal').textContent=fmt(total)+' xu';
@@ -562,14 +743,12 @@ function renderBigMarket(){
 function renderAll(){
  renderWallet();renderAmmo();renderBoss();renderStocks();
  addFeed('📣 Thị trường mở cửa — giá có thể tăng hoặc giảm ngẫu nhiên.');
- addFeed('🐉 Các boss sẽ xuất hiện lần lượt. Máu rất trâu, kiên nhẫn nhé!');
+ addFeed('🐉 Các boss sẽ lao tới và nổi giận khi máu xuống dưới 35%. Kiên nhẫn nhé!');
 }
 
-$('arena').addEventListener('click',e=>{
- if(e.target.closest('.bossbar'))return;
- if(!bossAlive&&!e.target.closest('.fish'))return;
- shoot(e,'miss');
-});
+/* Khởi tạo */
+$('boss').onclick=e=>{e.stopPropagation();shoot(e,'boss')};
+renderAmmo();
 </script>
 </body>
 </html>
