@@ -2,14 +2,15 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stock & Fish — Bản kịch tính</title>
+<title>Stock & Fish — Bản đầy đủ</title>
 <style>
 :root{--cyan:#20eaff;--blue:#087bff;--gold:#ffd34f;--panel:#061b3b;--line:#168ddc}
 *{box-sizing:border-box}
 body{margin:0;background:#020a20;color:#eefaff;font:14px/1.4 system-ui,Segoe UI,Arial;overflow-x:hidden}
 button,input,select{font:inherit}
 button{cursor:pointer;border:1px solid #2edfff;color:#fff;background:linear-gradient(135deg,#0876ed,#09c8f1);border-radius:10px;padding:9px 13px;font-weight:800;box-shadow:0 0 14px #00baff38;transition:.15s}
-button:hover{filter:brightness(1.18);transform:translateY(-1px)}
+button:hover:not(:disabled){filter:brightness(1.18);transform:translateY(-1px)}
+button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .hidden{display:none!important}
 .screen{min-height:100vh;padding:18px;background:radial-gradient(ellipse at 50% 0,#07568b 0,#031735 44%,#02091b 100%)}
 .brand{text-align:center;font-size:clamp(30px,5vw,56px);font-weight:1000;letter-spacing:-2px;color:#fff;text-shadow:0 3px 0 #0750a0,0 0 22px #00d9ff}
@@ -50,6 +51,7 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 @keyframes schoolswim{from{left:-120px}to{left:110%}}
 
 .boss{position:absolute;left:50%;top:30%;width:clamp(190px,27vw,270px);z-index:5;translate:-50% -50%;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation:bossfloat 2.4s ease-in-out infinite alternate;transition:opacity .6s}
+.boss.side{left:24%;top:44%;width:clamp(130px,17vw,180px);animation-duration:3s}
 .boss svg{width:100%;height:auto;display:block}
 @keyframes bossfloat{to{translate:-50% -56%;filter:drop-shadow(0 0 30px #ff41e9)}}
 .boss.rage{filter:drop-shadow(0 0 26px #ff1f5a) hue-rotate(-30deg) saturate(1.4)}
@@ -61,9 +63,11 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 .boss.dying{opacity:0!important;transform:scale(.3) rotate(200deg)!important;transition:transform .9s,opacity .9s!important}
 .boss.flash svg{filter:brightness(2.4)}
 
-.bossbar{position:absolute;left:12%;right:12%;top:8px;text-align:center;z-index:6;text-shadow:0 2px 4px #001a33}
+.bossbar{position:absolute;left:2%;right:44%;top:8px;text-align:center;z-index:6;text-shadow:0 2px 4px #001a33}
+.sidebar{position:absolute;left:57%;right:2%;top:8px;text-align:center;z-index:6;text-shadow:0 2px 4px #001a33;font-size:12px}
 .hpouter{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
 .hpinner{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .25s}
+.hpinner.side{background:linear-gradient(90deg,#6d4cff,#4fd8ff)}
 .cannon{position:absolute;bottom:4px;left:50%;translate:-50% 0;font-size:58px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
 .cannon.recoil{animation:recoil .2s}
 @keyframes recoil{50%{translate:-50% 5px}}
@@ -77,8 +81,6 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 .coin{position:absolute;font-size:20px;pointer-events:none;z-index:9;filter:drop-shadow(0 0 6px #ffd34f)}
 .warn{position:absolute;left:50%;top:44%;translate:-50% -50%;font-size:clamp(30px,5vw,54px);font-weight:1000;color:#ffe600;text-shadow:0 0 16px #ff0055,0 4px 0 #6b0020;z-index:20;pointer-events:none;animation:warnpop 1s forwards;white-space:nowrap}
 @keyframes warnpop{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.15);opacity:1}70%{transform:scale(1);opacity:1}100%{transform:scale(1.2);opacity:0}}
-.wave{position:absolute;left:0;right:0;height:40px;bottom:60px;z-index:4;pointer-events:none;background:linear-gradient(transparent,#8ff7ff55,transparent);animation:wavesweep 1.2s forwards}
-@keyframes wavesweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 
 .controls{padding:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#03132b}
 .controls label{color:#9ddfff}
@@ -98,6 +100,20 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 .up{color:#47ffb3}.down{color:#ff7099}
 .feed{padding:10px;max-height:190px;overflow:auto;color:#b5ddf8;font-size:12px}
 .feed div{padding:6px 0;border-bottom:1px solid #123353}
+.box{padding:10px 12px;color:#b5ddf8;font-size:13px}
+.quest{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #123a60}
+.quest small{color:#9edcff}
+.qbar{height:7px;background:#0a2a4a;border-radius:6px;overflow:hidden;margin:4px 0}
+.qbar div{height:100%;background:linear-gradient(90deg,#20eaff,#47ffb3)}
+.invrow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #123a60}
+.invrow button{padding:5px 10px}
+.buffline{padding-top:8px;color:#ffe66b;font-weight:700}
+.brow{display:flex;justify-content:space-between;gap:8px;padding:6px 4px;border-bottom:1px solid #123a60;font-size:12px}
+.brow.me{background:#0c3a5e;border-radius:6px;color:#fff}
+.gift input,.gift select{width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px;margin:4px 0}
+.giftrow{display:flex;gap:6px;margin-bottom:6px}
+.giftrow input{margin:0}
+.gift .wide{width:100%;margin-top:6px}
 .notice{position:fixed;top:16px;left:50%;translate:-50% 0;background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:11px 16px;box-shadow:0 0 25px #00dfff55;z-index:99;max-width:90%;text-align:center}
 .foot{padding:12px;text-align:center;color:#739dbd;font-size:11px}
 
@@ -126,6 +142,7 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
  .market-grid{grid-template-columns:1fr}.market-kpis{grid-template-columns:1fr}
  .market-table th,.market-table td{padding:8px 5px;font-size:12px}.market-view{padding:8px}
  .botgrid{grid-template-columns:repeat(3,1fr)}
+ .bossbar{right:30%}.sidebar{left:70%}
 }
 </style>
 </head>
@@ -139,7 +156,7 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
     <div class="hero">
       <div class="hero-art">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>Cá anime đủ loại, 5 boss máu trâu biết lao tới và nổi giận, đạn nhiều cấp và 5 bot cùng săn. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
+      <p>Cá anime đủ loại, boss máu trâu biết lao tới và nổi giận, đàn em hỗ trợ, nhiệm vụ mỗi ngày, rương kho báu, skill hồi chiêu, bảng xếp hạng và tặng xu cho bạn bè. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
       <p>🪙 Ví khởi đầu: <b style="color:#ffd34f">100.000 xu</b></p>
       <p class="hint">Bản demo: tài khoản lưu trên máy này, chưa có máy chủ hay tiền thật.</p>
     </div>
@@ -181,7 +198,12 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
             <b>👑 <span id="bossName"></span> • Lv <span id="bossLv"></span> — <span id="bossText"></span></b>
             <div class="hpouter"><div id="bossHp" class="hpinner"></div></div>
           </div>
+          <div id="sideBar" class="sidebar hidden">
+            <b>🐟 <span id="sideName"></span> — <span id="sideText"></span></b>
+            <div class="hpouter"><div id="sideHp" class="hpinner side"></div></div>
+          </div>
           <div id="boss" class="boss"></div>
+          <div id="bossSide" class="boss side hidden"></div>
           <div id="cannon" class="cannon">🔱</div>
         </div>
         <div class="controls">
@@ -195,6 +217,8 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
           </select>
           <button id="autoBtn" onclick="toggleAuto()">▶ Bắn tự động</button>
           <button onclick="upgrade()">⚡ Nâng cấp pháo</button>
+          <button id="netBtn" onclick="castNet()">🕸️ Lưới bắt cá</button>
+          <button id="bombBtn" onclick="castBomb()">💣 Bom nước</button>
         </div>
         <div class="ammo-list" id="ammoList"></div>
       </div>
@@ -208,6 +232,29 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
           <p>🎯 Tiền bắn cá và đầu tư cổ phiếu dùng chung một ví.</p>
           <button onclick="switchTab('fish')">Bắn cá</button> <button onclick="switchTab('stocks')">Đầu tư</button>
         </div>
+      </div>
+      <div class="panel gift">
+        <div class="panelhead">🎁 Tặng xu bạn bè</div>
+        <div class="box">
+          <div class="giftrow"><input id="friendName" placeholder="Tên người chơi"><button onclick="addFriend()">+ Thêm</button></div>
+          <select id="friendSel"></select>
+          <input id="giftAmt" type="number" min="1000" step="1000" value="10000" placeholder="Số xu (tối thiểu 1.000)">
+          <button class="wide" onclick="sendGift()">🎁 Tặng xu</button>
+          <div class="hint" id="giftInfo" style="margin-top:6px"></div>
+          <div id="friendList" style="margin-top:8px"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panelhead">🎯 Nhiệm vụ hôm nay</div>
+        <div class="box" id="questBox"></div>
+      </div>
+      <div class="panel">
+        <div class="panelhead">🎒 Kho đồ</div>
+        <div class="box"><div id="invBox"></div><div class="buffline" id="buffLine">Buff: không có</div></div>
+      </div>
+      <div class="panel">
+        <div class="panelhead">🏆 Bảng xếp hạng</div>
+        <div class="box" id="boardBox"></div>
       </div>
       <div class="panel">
         <div class="panelhead">📈 Thị trường cổ phiếu</div>
@@ -245,16 +292,16 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
             <table class="market-table"><thead><tr><th>Mã</th><th>Ngành</th><th>Giá hiện tại</th><th>Biến động</th><th>Số lượng</th><th>Giao dịch</th></tr></thead><tbody id="bigStockRows"></tbody></table>
           </div>
           <div class="market-card">
-            <h2>📉 Biểu đồ giá minh họa</h2>
-            <div class="market-chart">
-              <svg viewBox="0 0 800 170" preserveAspectRatio="none">
-                <defs><linearGradient id="fillChart" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0" stop-color="#1df3ce" stop-opacity=".45"/><stop offset="1" stop-color="#1df3ce" stop-opacity="0"/></linearGradient></defs>
-                <path d="M0 135 L45 120 L90 128 L135 86 L180 98 L225 65 L270 82 L315 50 L360 72 L405 38 L450 60 L495 31 L540 52 L585 23 L630 45 L675 17 L720 30 L765 12 L800 18 L800 170 L0 170 Z" fill="url(#fillChart)"/>
-                <polyline points="0,135 45,120 90,128 135,86 180,98 225,65 270,82 315,50 360,72 405,38 450,60 495,31 540,52 585,23 630,45 675,17 720,30 765,12 800,18" fill="none" stroke="#25f1c6" stroke-width="4"/>
-              </svg>
+            <h2>📉 Biểu đồ giá (lịch sử giả lập trong phiên)</h2>
+            <div class="market-actions" id="chartBtns"></div>
+            <div class="market-chart" id="chartBox"></div>
+            <div class="market-actions"><span id="chartInfo" style="color:#9edcff"></span></div>
+          </div>
+          <div class="market-card">
+            <h2>🧾 Lịch sử giao dịch</h2>
+            <div style="max-height:260px;overflow:auto">
+              <table class="market-table"><thead><tr><th>Giờ</th><th>Loại</th><th>Mã / Người</th><th>SL</th><th>Giá</th><th>Tổng</th></tr></thead><tbody id="txList"></tbody></table>
             </div>
-            <div class="market-actions"><span style="color:#9edcff">Đồ thị minh họa cho giao diện demo, không phải dữ liệu thị trường thật.</span></div>
           </div>
         </div>
         <div>
@@ -284,20 +331,19 @@ button:hover{filter:brightness(1.18);transform:translateY(-1px)}
 <script>
 const $=id=>document.getElementById(id);
 let username='',wallet=100000,ammoIndex=0,autoTimer=null,tickTimer=null,schoolTimer=null,power=1,hold={},
-    bossIdx=0,bossLoop=0,bossHP=0,bossMax=0,bossAlive=false,bossRespawn=null,marketSector='Tất cả',
-    bossPhase='idle',bossChargeTimer=null,bossNextCharge=0,enraged=false;
-let stocks=[
-  {s:'VCB',name:'Ngân hàng',p:92500,prev:91000},{s:'HPG',name:'Sắt thép',p:28700,prev:29200},
-  {s:'NKG',name:'Sắt thép',p:21300,prev:20500},{s:'ALU',name:'Nhôm',p:68000,prev:67000},
-  {s:'BTC',name:'Coin',p:1250000,prev:1180000},{s:'PLX',name:'Nhựa',p:38500,prev:38900}];
+    marketSector='Tất cả',chartSym='VCB',txs=[],inv={common:0,rare:0,gold:0},buff=null,
+    skillCD={net:0,bomb:0},daily=null,totals={kills:0,fish:0,shots:0},fishObjs=[],friends=[],
+    main={idx:0,loop:0,hp:0,max:0,alive:false,enraged:false,chargeTimer:null,respawn:null},
+    side={idx:0,hp:0,max:0,alive:false,respawn:null};
+let stocks=defaultStocks();
+const htmlCache={};
 
 const ammos=[['🔹','Đạn thường',1,100],['💥','Đạn hạt',2.2,1000],['🔮','Laser',4,10000],['🧊','Đạn băng',5.5,10000],
  ['⚡','Đạn sét',8,50000],['🌟','Đạn pháo',12,100000],['💠','Siêu đạn',22,100000],['🌈','Đạn thiên hà',40,100000]];
+const BOSS_ARMOR=0.2, CRIT_CHANCE=0.08;
+const GIFT_FEE=0.05, GIFT_DAILY_LIMIT=500000, MAX_FRIENDS=20;
 
-const BOSS_ARMOR=0.2;   // mỗi phát chỉ gây 20% sát thương thực → boss trâu
-const CRIT_CHANCE=0.08; // 8% phát bắn là CHÍ MẠNG (x2)
-
-/* ===== ÂM THANH (Web Audio, không cần file) ===== */
+/* ===== ÂM THANH ===== */
 let audioCtx=null;
 function ac(){if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();return audioCtx}
 function tone(freq,dur,type='sine',vol=.08,slide=0){
@@ -370,7 +416,6 @@ const BOSSES=[
  {name:'KRAKEN SẤM',lv:30,hp:100000000,reward:40000000,art:'kraken'}];
 const bossMaxFor=(i,l)=>Math.round(BOSSES[i].hp*(1+l*0.6));
 const bossRewardFor=(i,l)=>Math.round(BOSSES[i].reward*(1+l*0.6));
-
 const FISH=[
  {m:2,w:.30,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
  {m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
@@ -378,16 +423,64 @@ const FISH=[
  {m:8,w:.14,svg:fishArt('#ffe066','#fffbe0','#ffb020')},
  {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},
  {m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}];
+const CHESTS={common:{name:'Rương gỗ',icon:'📦'},rare:{name:'Rương bạc',icon:'🎁'},gold:{name:'Rương vàng',icon:'👑'}};
+const QUESTS=[
+ {id:'shots',label:'Bắn 100 phát đạn',target:100,reward:30000},
+ {id:'fish',label:'Hạ 20 con cá',target:20,reward:60000},
+ {id:'dmg',label:'Gây 2,000,000 sát thương boss',target:2000000,reward:150000},
+ {id:'kills',label:'Hạ 1 boss (kể cả đàn em)',target:1,reward:300000}];
 
 /* ===== TIỆN ÍCH ===== */
+const T=k=>k==='main'?main:side;
+const EL=k=>$(k==='main'?'boss':'bossSide');
+const rnd=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 function notify(t){const n=$('notice');n.textContent=t;n.classList.remove('hidden');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.add('hidden'),2400)}
 function fmt(n){return Math.floor(n).toLocaleString('en-US')}
-function save(){localStorage.setItem('sf_user_'+username,JSON.stringify({wallet,hold,stocks,bossIdx,bossLoop,bossHP,power}))}
+function setHTML(id,html){if(htmlCache[id]===html)return;htmlCache[id]=html;$(id).innerHTML=html}
+function defaultStocks(){return [
+ {s:'VCB',name:'Ngân hàng',p:92500,prev:91000},{s:'HPG',name:'Sắt thép',p:28700,prev:29200},
+ {s:'NKG',name:'Sắt thép',p:21300,prev:20500},{s:'ALU',name:'Nhôm',p:68000,prev:67000},
+ {s:'BTC',name:'Coin',p:1250000,prev:1180000},{s:'PLX',name:'Nhựa',p:38500,prev:38900}]}
+function ensureStocks(){
+ stocks.forEach(s=>{
+  if(!s.hist){
+   s.hist=Array.from({length:30},(_,i)=>Math.max(100,Math.round(s.p*(1+(Math.random()-.5)*.08*(30-i)/30))));
+   s.hist[29]=s.p;
+  }
+ });
+}
+function ensureDaily(){
+ const today=new Date().toDateString();
+ if(!daily||daily.date!==today)daily={date:today,shots:0,fish:0,dmg:0,kills:0,claimed:{},gifted:0};
+}
+function holdingsValue(){
+ return Object.entries(hold).reduce((s,[sym,q])=>{const st=stocks.find(x=>x.s===sym);return s+(st?q*st.p:0)},0);
+}
+function sideEnabled(){return main.idx>=1||main.loop>0}
+function sideIdx(){return main.idx>=1?main.idx-1:BOSSES.length-1}
+function buffActive(t){return !!buff&&buff.type===t&&buff.until>Date.now()}
+function luckMult(){return buffActive('luck')?buff.mult:1}
+
+/* ===== LƯU / TẢI ===== */
+function save(){
+ localStorage.setItem('sf_user_'+username,JSON.stringify({wallet,hold,stocks,power,txs,inv,buff,daily,totals,friends,
+  mainIdx:main.idx,mainLoop:main.loop,mainHP:main.hp}));
+ updateBoard();
+}
 function load(){
  const x=JSON.parse(localStorage.getItem('sf_user_'+username)||'null');
- if(x){wallet=x.wallet??100000;hold=x.hold||{};if(x.stocks)stocks=x.stocks;bossIdx=x.bossIdx||0;bossLoop=x.bossLoop||0;bossHP=x.bossHP||0;power=x.power||1}
- else{wallet=100000;hold={};bossIdx=0;bossLoop=0;bossHP=0;power=1}
- bossMax=bossMaxFor(bossIdx,bossLoop);renderWallet();
+ if(x){
+  wallet=x.wallet??100000;hold=x.hold||{};stocks=x.stocks||defaultStocks();power=x.power||1;
+  txs=x.txs||[];inv=x.inv||{common:0,rare:0,gold:0};buff=x.buff||null;daily=x.daily||null;
+  totals=x.totals||{kills:0,fish:0,shots:0};friends=x.friends||[];
+  main.idx=x.mainIdx||0;main.loop=x.mainLoop||0;main.hp=x.mainHP||0;
+ }else{
+  wallet=100000;hold={};stocks=defaultStocks();power=1;txs=[];inv={common:0,rare:0,gold:0};
+  buff=null;daily=null;totals={kills:0,fish:0,shots:0};friends=[];main.idx=0;main.loop=0;main.hp=0;
+ }
+ ensureStocks();ensureDaily();
+ main.max=bossMaxFor(main.idx,main.loop);
+ renderWallet();
 }
 function register(){
  const n=$('regName').value.trim(),p=$('regPass').value,p2=$('regPass2').value;
@@ -404,138 +497,255 @@ function login(){
 }
 function showRegister(){$('loginForm').classList.add('hidden');$('registerForm').classList.remove('hidden')}
 function showLogin(){$('registerForm').classList.add('hidden');$('loginForm').classList.remove('hidden')}
+function resetTimers(){
+ clearTimeout(main.chargeTimer);clearTimeout(main.respawn);clearTimeout(side.respawn);
+ main.alive=false;side.alive=false;
+}
 function enterGame(){
  $('authScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');
  $('playerLabel').textContent='👤 '+username;
- renderAll();spawnBoss();
- $('arena').querySelectorAll('.fish').forEach(f=>f.remove());
+ resetTimers();
+ $('arena').querySelectorAll('.fish').forEach(f=>f.remove());fishObjs=[];
+ spawnBoss('main');
+ if(sideEnabled())spawnBoss('side');else setEl('side',false);
  for(let i=0;i<14;i++)spawnFish();
  renderBots();
+ claimGifts();
+ renderAll();
  if(!tickTimer)tickTimer=setInterval(tick,850);
  if(!schoolTimer)schoolTimer=setInterval(spawnSchool,20000);
 }
-function logout(){save();stopAuto();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
+function logout(){save();stopAuto();resetTimers();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
+
+/* ===== TẶNG XU BẠN BÈ ===== */
+function addFriend(){
+ const n=$('friendName').value.trim();
+ if(!n)return notify('Nhập tên người chơi.');
+ if(n===username)return notify('Không thể thêm chính mình.');
+ if(!localStorage.getItem('sf_pass_'+n))return notify('Không tìm thấy người chơi "'+n+'".');
+ if(friends.includes(n))return notify('Người này đã có trong danh sách.');
+ if(friends.length>=MAX_FRIENDS)return notify('Tối đa '+MAX_FRIENDS+' bạn bè.');
+ friends.push(n);$('friendName').value='';
+ notify('Đã thêm '+n+' vào danh sách bạn');
+ renderFriends();save();
+}
+function removeFriend(n){
+ friends=friends.filter(f=>f!==n);
+ renderFriends();save();
+}
+function sendGift(){
+ ensureDaily();
+ const to=$('friendSel').value,amt=Math.floor(Number($('giftAmt').value)||0);
+ if(!to)return notify('Thêm bạn bè trước đã nhé.');
+ if(!friends.includes(to))return notify('Người này không có trong danh sách bạn.');
+ if(amt<1000)return notify('Tặng tối thiểu 1.000 xu.');
+ if(amt>wallet)return notify('Ví không đủ xu.');
+ const left=GIFT_DAILY_LIMIT-(daily.gifted||0);
+ if(amt>left)return notify('Hôm nay chỉ còn tặng được '+fmt(Math.max(0,left))+' xu.');
+ const received=Math.floor(amt*(1-GIFT_FEE));
+ wallet-=amt;daily.gifted=(daily.gifted||0)+amt;
+ const key='sf_gifts_'+to;
+ const inbox=JSON.parse(localStorage.getItem(key)||'[]');
+ inbox.push({from:username,amount:received});
+ localStorage.setItem(key,JSON.stringify(inbox));
+ txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:to,qty:'',price:'',total:-amt});
+ txs=txs.slice(0,30);
+ addFeed('🎁 Tặng '+fmt(received)+' xu cho '+to+' (phí '+Math.round(GIFT_FEE*100)+'%)');
+ notify('🎁 Đã tặng '+fmt(received)+' xu cho '+to);
+ renderWallet();renderFriends();save();
+}
+/* Quà được lưu trong hộp thư, nhận khi người nhận vào game */
+function claimGifts(){
+ const key='sf_gifts_'+username;
+ const inbox=JSON.parse(localStorage.getItem(key)||'[]');
+ if(!inbox.length)return;
+ let sum=0;
+ inbox.forEach(g=>{
+  sum+=g.amount;
+  txs.unshift({t:new Date().toLocaleTimeString(),type:'Nhận',sym:g.from,qty:'',price:'',total:g.amount});
+ });
+ txs=txs.slice(0,30);
+ localStorage.removeItem(key);
+ wallet+=sum;
+ notify('🎁 Có '+inbox.length+' món quà từ bạn bè! +'+fmt(sum)+' xu');
+ addFeed('🎁 Nhận quà từ bạn bè: +'+fmt(sum)+' xu');
+ renderWallet();save();
+}
+function renderFriends(){
+ ensureDaily();
+ const cur=$('friendSel').value;
+ setHTML('friendSel',friends.length
+  ?friends.map(f=>`<option value="${f}" ${f===cur?'selected':''}>${f}</option>`).join('')
+  :'<option value="">— chưa có bạn —</option>');
+ setHTML('friendList',friends.length
+  ?friends.map(f=>`<div class="invrow"><span>👤 ${f}</span><button class="sell" style="padding:4px 9px" onclick="removeFriend('${f}')">Xóa</button></div>`).join('')
+  :'<small>Chưa có bạn bè. Nhập tên người chơi để thêm.</small>');
+ const left=Math.max(0,GIFT_DAILY_LIMIT-(daily.gifted||0));
+ $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'% • Hôm nay còn tặng được '+fmt(left)+' xu';
+}
+
+/* ===== RENDER CHUNG ===== */
 function renderWallet(){$('wallet').textContent=fmt(wallet);$('wallet2').textContent=fmt(wallet)+' xu'}
 function renderAmmo(){
- $('ammoList').innerHTML=ammos.map((a,i)=>`<div class="ammo ${i===ammoIndex?'active':''}" onclick="selectAmmo(${i})">
-  <span class="emoji">${a[0]}</span><b>${a[1]}</b><br><small>x${a[2]} sát thương</small></div>`).join('');
+ setHTML('ammoList',ammos.map((a,i)=>`<div class="ammo ${i===ammoIndex?'active':''}" onclick="selectAmmo(${i})">
+  <span class="emoji">${a[0]}</span><b>${a[1]}</b><br><small>x${a[2]} sát thương</small></div>`).join(''));
 }
 function selectAmmo(i){ammoIndex=i;renderAmmo();notify('Đã chọn '+ammos[i][1])}
 function renderBots(){
- $('botGrid').innerHTML=[['🦈','BOT 1','1,230,000'],['🐙','BOT 2','980,000'],['🧜','BOT 3','2,450,000'],['🐲','BOT 4','1,870,000'],['🐡','BOT 5','1,560,000']]
-  .map(x=>`<div class="bot"><div class="face">${x[0]}</div><b>${x[1]}</b><small>🪙 ${x[2]}</small><div class="hint">Đang bắn</div></div>`).join('');
+ setHTML('botGrid',[['🦈','BOT 1','1,230,000'],['🐙','BOT 2','980,000'],['🧜','BOT 3','2,450,000'],['🐲','BOT 4','1,870,000'],['🐡','BOT 5','1,560,000']]
+  .map(x=>`<div class="bot"><div class="face">${x[0]}</div><b>${x[1]}</b><small>🪙 ${x[2]}</small><div class="hint">Đang bắn</div></div>`).join(''));
+}
+function renderAll(){
+ renderWallet();renderAmmo();renderBoss('main');renderBoss('side');renderStocks();
+ renderQuests();renderInv();renderSkills();renderBoard();renderFriends();
+ addFeed('📣 Thị trường mở cửa — giá có thể tăng hoặc giảm ngẫu nhiên.');
+ addFeed('🐉 Boss lao tới và nổi giận khi máu xuống dưới 35%. Đàn em hỗ trợ bên trái!');
 }
 
-/* ===== BOSS ===== */
-function spawnBoss(){
- const b=BOSSES[bossIdx];
- bossMax=bossMaxFor(bossIdx,bossLoop);
- if(bossHP<=0||bossHP>bossMax)bossHP=bossMax;
- const el=$('boss');
- el.innerHTML=bossSvg(b.art);
- el.className='boss';el.style.translate='';el.style.left='50%';
- $('arena').classList.remove('rage');
- $('bossName').textContent=b.name+(bossLoop?' ⭐ x'+(bossLoop+1):'');
- $('bossLv').textContent=b.lv;
- $('status').textContent='Boss: '+b.name;
- bossAlive=true;enraged=false;bossPhase='idle';
- scheduleCharge();
- renderBoss();
- addFeed('🐉 '+b.name+' xuất hiện! Máu: '+fmt(bossHP));
+/* ===== BOSS (main & side) ===== */
+function setEl(k,alive){
+ const el=EL(k);
+ el.className=k==='main'?'boss':'boss side';
+ el.style.opacity=1;
+ el.classList.toggle('hidden',!alive);
+ T(k).alive=alive;
 }
-function renderBoss(){
- $('bossText').textContent=fmt(bossHP)+' / '+fmt(bossMax)+' HP';
- const pct=Math.max(0,bossHP/bossMax*100);
- $('bossHp').style.width=pct+'%';
- if(bossAlive&&pct<35&&!enraged)enrage();
+function spawnBoss(k){
+ const t=T(k);
+ if(k==='main'){
+  t.max=bossMaxFor(t.idx,t.loop);
+  if(t.hp<=0||t.hp>t.max)t.hp=t.max;
+  const b=BOSSES[t.idx];
+  $('boss').innerHTML=bossSvg(b.art);
+  $('bossName').textContent=b.name+(t.loop?' ⭐ x'+(t.loop+1):'');
+  $('bossLv').textContent=b.lv;
+  $('status').textContent='Boss: '+b.name;
+  t.enraged=false;$('arena').classList.remove('rage');
+  setEl('main',true);
+  scheduleCharge();
+  addFeed('🐉 '+b.name+' xuất hiện! Máu: '+fmt(t.hp));
+ }else{
+  const si=sideIdx();
+  side.idx=si;side.max=Math.round(BOSSES[si].hp*0.3*(1+main.loop*0.6));
+  side.hp=side.max;
+  $('bossSide').innerHTML=bossSvg(BOSSES[si].art);
+  $('sideName').textContent=BOSSES[si].name;
+  setEl('side',true);
+  addFeed('🐟 Đàn em '+BOSSES[si].name+' xuất hiện bên trái!');
+ }
+ renderBoss(k);
+}
+function renderBoss(k){
+ const t=T(k),pre=k==='main'?'boss':'side';
+ const max=t.max||1,pct=Math.max(0,t.hp/max*100);
+ $(pre+'Text').textContent=fmt(Math.max(0,t.hp))+' / '+fmt(max)+' HP';
+ $(pre+'Hp').style.width=pct+'%';
+ if(k==='main'){
+  $('boss').classList.toggle('rage',t.alive&&pct<35&&t.enraged);
+  if(t.alive&&pct<35&&!t.enraged)enrage();
+ }else{
+  $('sideBar').classList.toggle('hidden',!t.alive);
+ }
 }
 function enrage(){
- enraged=true;
- $('boss').classList.add('rage');
- $('arena').classList.add('rage');
- sfx.roar();
- showWarn('😡 NỔI GIẬN!');
- shakeArena();
- addFeed('🔥 '+BOSSES[bossIdx].name+' nổi giận! Tấn công dồn dập hơn.');
+ main.enraged=true;
+ $('boss').classList.add('rage');$('arena').classList.add('rage');
+ sfx.roar();showWarn('😡 NỔI GIẬN!');shakeArena();
+ addFeed('🔥 '+BOSSES[main.idx].name+' nổi giận! Tấn công dồn dập hơn.');
 }
-function hitBoss(e,cost){
- const a=ammos[ammoIndex];
- const crit=Math.random()<CRIT_CHANCE;
- const dmg=Math.round(cost*a[2]*power*BOSS_ARMOR*(0.75+Math.random()*0.65)*(crit?2:1));
- bossHP-=dmg;
- sfx.hit();if(crit)sfx.crit();
- const boss=$('boss');
- boss.classList.remove('hit');void boss.offsetWidth;boss.classList.add('hit');
- boss.classList.add('flash');setTimeout(()=>boss.classList.remove('flash'),120);
- knockback();
+function knockback(k){
+ const el=EL(k);
+ const dx=(Math.random()<.5?-1:1)*(10+Math.random()*10);
+ el.style.translate=`calc(-50% + ${dx}px) -50%`;
+ setTimeout(()=>{if(!el.classList.contains('charge'))el.style.translate=''},160);
+}
+function hitBoss(e,cost,k){
+ const a=ammos[ammoIndex],crit=Math.random()<CRIT_CHANCE;
+ const bm=buffActive('dmg')?buff.mult:1;
+ const dmg=Math.round(cost*a[2]*power*BOSS_ARMOR*(0.75+Math.random()*0.65)*(crit?2:1)*bm);
+ sfx.hit();
+ if(crit){sfx.crit();showWarn('💥 CHÍ MẠNG!')}
+ knockback(k);
+ applyBossDamage(k,dmg,e,crit);
+}
+function applyBossDamage(k,dmg,e,crit=false){
+ const t=T(k),el=EL(k);
+ if(!t.alive)return;
+ t.hp-=dmg;daily.dmg+=dmg;
+ el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');
+ el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),120);
  burstAt(e);
  floatText(e,(crit?'CHÍ MẠNG! ':'-')+fmt(dmg),crit?'#ff4d6d':'#ffed65',crit);
- if(crit)showWarn('💥 CHÍ MẠNG!');
- if(bossHP<=0)killBoss();
- renderBoss();
+ if(t.hp<=0)killBoss(k);
+ renderBoss(k);
 }
-function knockback(){
- const boss=$('boss');
- const dx=(Math.random()<.5?-1:1)*(10+Math.random()*10);
- boss.style.translate=`calc(-50% + ${dx}px) -50%`;
- setTimeout(()=>{if(!boss.classList.contains('charge'))boss.style.translate=''},160);
-}
-/* Boss lao về phía cannon rồi lùi lại, cảnh báo trước 1 giây */
+/* Boss chính lao tới rồi lùi lại, cảnh báo trước 1 giây */
 function scheduleCharge(){
- clearTimeout(bossChargeTimer);
- if(!bossAlive)return;
- const gap=enraged?2200:4200+Math.random()*1800;
- bossChargeTimer=setTimeout(bossCharge,gap);
+ clearTimeout(main.chargeTimer);
+ if(!main.alive)return;
+ main.chargeTimer=setTimeout(bossCharge,main.enraged?2200:4200+Math.random()*1800);
 }
 function bossCharge(){
- if(!bossAlive){return}
- const boss=$('boss');
+ if(!main.alive)return;
+ const el=$('boss');
  showWarn('⚠️ BOSS LAO TỚI!');
- bossPhase='warn';
  setTimeout(()=>{
-  if(!bossAlive)return;
-  bossPhase='charge';
-  sfx.roar();
-  boss.classList.add('charge');
-  boss.style.translate='-50% calc(-50% + 90px)';
+  if(!main.alive)return;
+  sfx.roar();el.classList.add('charge');
+  el.style.translate='-50% calc(-50% + 90px)';
   shakeArena();
   setTimeout(()=>{
-   if(!bossAlive)return;
-   boss.style.translate='-50% -50%';
-   setTimeout(()=>{boss.classList.remove('charge');bossPhase='idle';scheduleCharge()},600);
+   if(!main.alive)return;
+   el.style.translate='-50% -50%';
+   setTimeout(()=>{el.classList.remove('charge');scheduleCharge()},600);
   },700);
  },1000);
 }
-function killBoss(){
- bossAlive=false;bossHP=0;clearTimeout(bossChargeTimer);
- const reward=bossRewardFor(bossIdx,bossLoop);
- wallet+=reward;renderWallet();
- sfx.win();
- showWarn('🏆 HẠ GỤC!');
- shakeArena();
- coinShower(14);
- notify('🐉 HẠ GỤC '+BOSSES[bossIdx].name+'! +'+fmt(reward)+' xu thưởng!');
- addFeed('🏆 Hạ '+BOSSES[bossIdx].name+' • +'+fmt(reward)+' xu');
- $('boss').classList.add('dying');
- bossIdx++;if(bossIdx>=BOSSES.length){bossIdx=0;bossLoop++}
- clearTimeout(bossRespawn);
- bossRespawn=setTimeout(()=>{spawnBoss();save()},2600);
- save();
+function killBoss(k){
+ const t=T(k),el=EL(k);
+ t.alive=false;t.hp=0;
+ if(k==='main'){
+  clearTimeout(main.chargeTimer);
+  const reward=bossRewardFor(main.idx,main.loop);
+  wallet+=reward;totals.kills++;daily.kills++;
+  sfx.win();showWarn('🏆 HẠ GỤC!');shakeArena();coinShower(14);
+  notify('🐉 HẠ GỤC '+BOSSES[main.idx].name+'! +'+fmt(reward)+' xu thưởng!');
+  addFeed('🏆 Hạ '+BOSSES[main.idx].name+' • +'+fmt(reward)+' xu');
+  el.classList.add('dying');
+  dropChest(main.idx<2?'common':main.idx<4?'rare':'gold');
+  main.idx++;if(main.idx>=BOSSES.length){main.idx=0;main.loop++}
+  main.max=bossMaxFor(main.idx,main.loop);
+  clearTimeout(main.respawn);
+  main.respawn=setTimeout(()=>{spawnBoss('main');save()},2600);
+  if(sideEnabled()&&!side.alive){
+   clearTimeout(side.respawn);
+   side.respawn=setTimeout(()=>{if(!side.alive)spawnBoss('side')},2600);
+  }
+ }else{
+  const reward=Math.round(bossRewardFor(side.idx,main.loop)*0.35);
+  wallet+=reward;totals.kills++;daily.kills++;
+  sfx.win();
+  notify('🐟 Hạ đàn em '+BOSSES[side.idx].name+'! +'+fmt(reward)+' xu');
+  el.classList.add('dying');
+  dropChest('common');
+  clearTimeout(side.respawn);
+  side.respawn=setTimeout(()=>{if(sideEnabled()&&!side.alive)spawnBoss('side')},30000);
+ }
+ renderWallet();renderBoss(k);save();
 }
 
 /* ===== CÁ ===== */
+function pickFish(){const r=Math.random();let acc=0;for(const f of FISH){acc+=f.w;if(r<acc)return f}return FISH[0]}
 function spawnFish(){
- const r=Math.random();let acc=0,sp=FISH[0];
- for(const f of FISH){acc+=f.w;if(r<acc){sp=f;break}}
+ const sp=pickFish();
  const el=document.createElement('div');
  el.className='fish';el.innerHTML=sp.svg;
  el.style.left=(3+Math.random()*82)+'%';el.style.top=(18+Math.random()*56)+'%';
  el.style.animationDelay=(-Math.random()*4)+'s';
- const obj={sp,el,dead:false};
+ const obj={sp,el,dead:false,school:false};
  el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
- $('arena').appendChild(el);
+ fishObjs.push(obj);$('arena').appendChild(el);
 }
-/* Đàn cá nhỏ bơi ngang màn hình */
 function spawnSchool(){
  if($('gameScreen').classList.contains('hidden'))return;
  const n=5+Math.floor(Math.random()*3),top=20+Math.random()*50;
@@ -543,44 +753,44 @@ function spawnSchool(){
   const el=document.createElement('div');
   el.className='fish small school';
   el.innerHTML=FISH[Math.floor(Math.random()*3)].svg;
-  el.style.top=(top+(Math.random()*8-4))+'%';
-  el.style.animationDelay=(-i*.25)+'s';
-  el.style.animationDuration=(6+Math.random()*2)+'s';
-  el.style.left='-120px';
+  el.style.top=(top+(Math.random()*8-4))+'%';el.style.left='-120px';
+  el.style.animationDelay=(-i*.25)+'s';el.style.animationDuration=(6+Math.random()*2)+'s';
   const obj={sp:{m:2},el,dead:false,school:true};
   el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
-  $('arena').appendChild(el);
-  setTimeout(()=>{if(el.isConnected&&!obj.dead)el.remove()},9000);
+  fishObjs.push(obj);$('arena').appendChild(el);
+  setTimeout(()=>{if(!obj.dead){obj.dead=true;fishObjs=fishObjs.filter(f=>f!==obj);el.remove()}},9000);
  }
  notify('🐟 Đàn cá đang bơi qua!');
+}
+function fishCaught(obj,e,reward){
+ obj.dead=true;wallet+=reward;totals.fish++;daily.fish++;
+ fishObjs=fishObjs.filter(f=>f!==obj);
+ sfx.pop();setTimeout(sfx.coin,120);
+ burstAt(e);coinFly(e,reward);
+ floatText(e,'+'+fmt(reward),'#8dffb5');
+ obj.el.classList.add('dying');
+ if(!obj.school)setTimeout(()=>{obj.el.remove();spawnFish()},480);
+ else setTimeout(()=>obj.el.remove(),480);
+ if(obj.sp.m>=15){notify('✨ Hạ cá hiếm! +'+fmt(reward)+' xu');shakeArena()}
+ if(Math.random()<.03)dropChest('common');
 }
 
 /* ===== BẮN ===== */
 function shoot(e,kind,obj){
- if(kind==='boss'&&!bossAlive)return;
+ if(kind!=='fish'&&!T(kind).alive)return;
  const cost=Number($('bet').value);
  if(wallet<cost){notify('Không đủ xu! Chọn mức đạn thấp hơn.');stopAuto();return}
- wallet-=cost;
+ wallet-=cost;totals.shots++;daily.shots++;
  beam(e);sfx.shoot();
  const c=$('cannon');c.classList.remove('recoil');void c.offsetWidth;c.classList.add('recoil');
- if(kind==='boss'){
-  hitBoss(e,cost);
- }else{
-  const sp=obj.sp;
-  if(Math.random()<Math.min(.9,.9/sp.m)){
-   const reward=Math.round(cost*sp.m);
-   wallet+=reward;obj.dead=true;
-   sfx.pop();setTimeout(sfx.coin,120);
-   burstAt(e);
-   coinFly(e,reward);
-   floatText(e,'+'+fmt(reward),'#8dffb5');
-   obj.el.classList.add('dying');
-   if(!obj.school)setTimeout(()=>{obj.el.remove();spawnFish()},480);
-   else setTimeout(()=>obj.el.remove(),480);
-   if(sp.m>=15){notify('✨ Hạ cá hiếm! +'+fmt(reward)+' xu');shakeArena()}
+ if(kind==='fish'){
+  if(Math.random()<Math.min(.9,.9/obj.sp.m)){
+   fishCaught(obj,e,Math.round(cost*obj.sp.m*luckMult()));
   }else{
    obj.el.classList.remove('wiggle');void obj.el.offsetWidth;obj.el.classList.add('wiggle');
   }
+ }else{
+  hitBoss(e,cost,kind);
  }
  renderWallet();save();
 }
@@ -605,7 +815,6 @@ function floatText(e,txt,color,crit=false){
  d.style.left=(e.clientX-rect.left)+'px';d.style.top=(e.clientY-rect.top)+'px';
  arena.appendChild(d);setTimeout(()=>d.remove(),900);
 }
-/* Xu bay từ điểm nổ về ví */
 function coinFly(e,reward){
  const arena=$('arena'),rect=arena.getBoundingClientRect();
  const sx=e.clientX-rect.left,sy=e.clientY-rect.top;
@@ -613,8 +822,7 @@ function coinFly(e,reward){
  const n=Math.min(6,2+Math.floor(Math.log10(Math.max(10,reward))));
  for(let i=0;i<n;i++){
   const c=document.createElement('div');c.className='coin';c.textContent='🪙';
-  c.style.left=sx+'px';c.style.top=sy+'px';
-  arena.appendChild(c);
+  c.style.left=sx+'px';c.style.top=sy+'px';arena.appendChild(c);
   c.animate([
    {transform:'translate(0,0) scale(1)',opacity:1},
    {transform:`translate(${(Math.random()-.5)*60}px,${-40-Math.random()*30}px) scale(1.2)`,opacity:1,offset:.35},
@@ -641,7 +849,7 @@ function shakeArena(){
  setTimeout(()=>a.classList.remove('shake'),380);
 }
 
-/* Bắn tự động: bắn vào boss */
+/* Bắn tự động: nhắm boss chính, nếu không có thì nhắm đàn em */
 function toggleAuto(){
  if(autoTimer)return stopAuto();
  autoTimer=setInterval(autoShot,320);
@@ -652,26 +860,132 @@ function stopAuto(){
  $('autoBtn').textContent='▶ Bắn tự động';
 }
 function autoShot(){
- if(!bossAlive)return;
+ const k=main.alive?'main':side.alive?'side':null;
+ if(!k)return;
+ const r=EL(k).getBoundingClientRect();
+ shoot({clientX:r.left+r.width/2,clientY:r.top+r.height*.4},k);
+}
+
+/* ===== SKILL ===== */
+function castNet(){
+ if(Date.now()<skillCD.net)return;
+ const bet=Number($('bet').value);
+ const targets=fishObjs.filter(f=>!f.dead).sort(()=>Math.random()-.5).slice(0,3);
+ if(!targets.length)return notify('Không có con cá nào trong lưới!');
+ targets.forEach(f=>{
+  const r=f.el.getBoundingClientRect();
+  const e={clientX:r.left+r.width/2,clientY:r.top+r.height/2};
+  fishCaught(f,e,Math.round(bet*f.sp.m*0.25*luckMult()));
+ });
+ skillCD.net=Date.now()+40000;
+ notify('🕸️ Lưới bắt được '+targets.length+' con! (không tốn đạn)');
+ renderWallet();renderSkills();save();
+}
+function castBomb(){
+ if(Date.now()<skillCD.bomb)return;
+ if(!main.alive)return notify('Chưa có boss chính để ném bom!');
  const r=$('boss').getBoundingClientRect();
- shoot({clientX:r.left+r.width/2,clientY:r.top+r.height*.4},'boss');
+ const e={clientX:r.left+r.width/2,clientY:r.top+r.height*.4};
+ skillCD.bomb=Date.now()+60000;
+ sfx.hit();shakeArena();
+ applyBossDamage('main',Math.round(main.max*0.05),e,false);
+ notify('💣 Bom nước gây 5% máu boss!');
+ renderSkills();save();
+}
+function renderSkills(){
+ const now=Date.now();
+ const n=Math.max(0,Math.ceil((skillCD.net-now)/1000)),b=Math.max(0,Math.ceil((skillCD.bomb-now)/1000));
+ $('netBtn').textContent=n?'🕸️ Lưới ('+n+'s)':'🕸️ Lưới bắt cá';
+ $('bombBtn').textContent=b?'💣 Bom ('+b+'s)':'💣 Bom nước';
+ $('netBtn').disabled=n>0;$('bombBtn').disabled=b>0;
 }
 
-/* Nâng cấp pháo */
-function upgrade(){
- const cost=150000*power;
- if(wallet<cost)return notify('Cần '+fmt(cost)+' xu để nâng cấp pháo.');
- wallet-=cost;power=Math.min(8,power+1);renderWallet();
- sfx.win();
- notify('⚡ Nâng cấp pháo thành công! Sức mạnh x'+power);save();
+/* ===== RƯƠNG & BUFF ===== */
+function dropChest(tier){
+ inv[tier]=(inv[tier]||0)+1;
+ notify(CHESTS[tier].icon+' Nhận '+CHESTS[tier].name+'!');
+ renderInv();
+}
+function setBuff(type,mult,sec){
+ buff={type,mult,until:Date.now()+sec*1000};
+ notify('✨ Buff '+(type==='dmg'?'sát thương':'may mắn câu cá')+' x'+mult+' trong '+sec+' giây');
+}
+function openChest(tier){
+ if(!inv[tier])return notify('Không có rương này!');
+ inv[tier]--;
+ const r=Math.random();
+ if(tier==='common'){
+  if(r<.5){const c=rnd(30000,80000);wallet+=c;notify('📦 Rương gỗ: +'+fmt(c)+' xu')}
+  else setBuff('dmg',2,30);
+ }else if(tier==='rare'){
+  if(r<.4){const c=rnd(150000,400000);wallet+=c;notify('🎁 Rương bạc: +'+fmt(c)+' xu')}
+  else if(r<.7)setBuff('dmg',3,20);
+  else setBuff('luck',1.5,45);
+ }else{
+  const c=rnd(800000,2000000);wallet+=c;setBuff('dmg',4,40);
+  notify('👑 Rương vàng: +'+fmt(c)+' xu + buff x4!');
+ }
+ shakeArena();sfx.win();renderWallet();renderInv();save();
+}
+function renderInv(){
+ const rows=Object.keys(CHESTS).map(t=>`<div class="invrow"><span>${CHESTS[t].icon} ${CHESTS[t].name}: <b>${inv[t]||0}</b></span><button ${inv[t]?'':'disabled'} onclick="openChest('${t}')">Mở</button></div>`).join('');
+ setHTML('invBox',rows);
+ updateBuffLine();
+}
+function updateBuffLine(){
+ let txt='Buff: không có';
+ if(buffActive('dmg')||buffActive('luck')){
+  txt='✨ '+(buff.type==='dmg'?'Sát thương':'May mắn câu')+' x'+buff.mult+' • còn '+Math.ceil((buff.until-Date.now())/1000)+'s';
+ }
+ $('buffLine').textContent=txt;
 }
 
-/* ===== THỊ TRƯỜNG (giữ nguyên) ===== */
+/* ===== NHIỆM VỤ ===== */
+function renderQuests(){
+ ensureDaily();
+ setHTML('questBox',QUESTS.map(q=>{
+  const cur=Math.min(daily[q.id]||0,q.target),pct=cur/q.target*100;
+  const done=(daily[q.id]||0)>=q.target,claimed=!!daily.claimed[q.id];
+  const btn=claimed?'<small>✅ Đã nhận</small>':`<button ${done?'':'disabled'} onclick="claimQuest('${q.id}')">Nhận ${fmt(q.reward)} xu</button>`;
+  return `<div class="quest"><div style="flex:1"><b>${q.label}</b><div class="qbar"><div style="width:${pct}%"></div></div><small>${fmt(cur)} / ${fmt(q.target)}</small></div>${btn}</div>`;
+ }).join(''));
+}
+function claimQuest(id){
+ const q=QUESTS.find(x=>x.id===id);
+ if(!q||(daily[id]||0)<q.target||daily.claimed[id])return;
+ daily.claimed[id]=true;wallet+=q.reward;sfx.coin();
+ notify('🎯 Nhận thưởng nhiệm vụ +'+fmt(q.reward)+' xu');
+ renderWallet();renderQuests();save();
+}
+
+/* ===== BẢNG XẾP HẠNG ===== */
+function updateBoard(){
+ if(!username)return;
+ let board=JSON.parse(localStorage.getItem('sf_board')||'[]');
+ const row={name:username,score:Math.round(wallet+holdingsValue()),kills:totals.kills,fish:totals.fish};
+ const i=board.findIndex(r=>r.name===username);
+ if(i>=0)board[i]=row;else board.push(row);
+ board.sort((a,b)=>b.score-a.score);
+ localStorage.setItem('sf_board',JSON.stringify(board.slice(0,50)));
+ renderBoard();
+}
+function renderBoard(){
+ const board=JSON.parse(localStorage.getItem('sf_board')||'[]').slice(0,10);
+ setHTML('boardBox',board.length?board.map((r,i)=>`<div class="brow ${r.name===username?'me':''}">
+  <span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${r.name}</span><span>🪙 ${fmt(r.score)} • 🐉 ${r.kills}</span></div>`).join('')
+  :'<small>Chưa có ai trên bảng.</small>');
+}
+
+/* ===== THỊ TRƯỜNG ===== */
 function tick(){
  if($('gameScreen').classList.contains('hidden'))return;
+ ensureDaily();
+ if(buff&&buff.until<=Date.now()){buff=null;notify('⌛ Buff đã hết hiệu lực')}
+ renderSkills();updateBuffLine();renderQuests();
  if(Math.random()<.3){
   const s=stocks[Math.floor(Math.random()*stocks.length)],old=s.p;
   s.prev=old;s.p=Math.max(100,Math.round(old*(1+(Math.random()-.48)*.035)));
+  s.hist=[...s.hist,s.p].slice(-40);
   renderStocks();
   if(!$('marketView').classList.contains('hidden'))renderBigMarket();
   if(Math.random()<.35){
@@ -682,27 +996,32 @@ function tick(){
  }
 }
 function renderStocks(){
- $('stockRows').innerHTML=stocks.map(s=>{
+ setHTML('stockRows',stocks.map(s=>{
   const d=(s.p/s.prev-1)*100;
   return `<tr><td><b>${s.s}</b><br><small>${s.name}</small></td><td>${fmt(s.p)}</td>
   <td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td>
   <td><button style="padding:5px 7px" onclick="trade('${s.s}',true)">Mua</button>
   <button class="sell" style="padding:5px 7px" onclick="trade('${s.s}',false)">Bán</button></td></tr>`;
- }).join('');
+ }).join(''));
  const h=Object.entries(hold).filter(x=>x[1]>0);
  $('holdings').textContent=h.length?h.map(([s,q])=>s+': '+q+' cp').join(' • '):'Chưa mua cổ phiếu';
 }
 function trade(sym,buy){
  const s=stocks.find(x=>x.s===sym);
  if(buy){
-  const qty=Math.max(1,Math.min(20,Math.floor(wallet/s.p)));
   if(wallet<s.p)return notify('Ví không đủ mua 1 cổ phiếu.');
-  wallet-=qty*s.p;hold[sym]=(hold[sym]||0)+qty;notify('Đã mua '+qty+' '+sym);
+  const qty=Math.max(1,Math.min(20,Math.floor(wallet/s.p)));
+  wallet-=qty*s.p;hold[sym]=(hold[sym]||0)+qty;
+  txs.unshift({t:new Date().toLocaleTimeString(),type:'Mua',sym,qty,price:s.p,total:qty*s.p});
+  notify('Đã mua '+qty+' '+sym);
  }else{
   const qty=hold[sym]||0;
   if(!qty)return notify('Mày chưa giữ mã '+sym);
-  wallet+=qty*s.p;hold[sym]=0;notify('Đã bán '+qty+' '+sym+' • nhận '+fmt(qty*s.p)+' xu');
+  wallet+=qty*s.p;hold[sym]=0;
+  txs.unshift({t:new Date().toLocaleTimeString(),type:'Bán',sym,qty,price:s.p,total:qty*s.p});
+  notify('Đã bán '+qty+' '+sym+' • nhận '+fmt(qty*s.p)+' xu');
  }
+ txs=txs.slice(0,30);
  renderWallet();renderStocks();
  if(!$('marketView').classList.contains('hidden'))renderBigMarket();
  save();
@@ -719,35 +1038,50 @@ function openMarket(){$('marketView').classList.remove('hidden');renderBigMarket
 function closeMarket(){$('marketView').classList.add('hidden')}
 function setSector(s){marketSector=s;renderBigMarket()}
 function renderBigFeed(){$('bigFeed').innerHTML=$('feed').innerHTML||'<div>Chưa có tin mới.</div>'}
+function renderChart(){
+ const s=stocks.find(x=>x.s===chartSym)||stocks[0];
+ const h=s.hist.length>1?s.hist:[s.p,s.p];
+ const mn=Math.min(...h),mx=Math.max(...h),rng=(mx-mn)||1;
+ const W=800,H=170,pad=12;
+ const pts=h.map((v,i)=>[i/(h.length-1)*W,H-pad-(v-mn)/rng*(H-2*pad)]);
+ const line=pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+ const up=h[h.length-1]>=h[0],col=up?'#25f1c6':'#ff7099';
+ setHTML('chartBox',`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+  <defs><linearGradient id="fc" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".4"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+  <polygon points="0,${H} ${line} ${W},${H}" fill="url(#fc)"/>
+  <polyline points="${line}" fill="none" stroke="${col}" stroke-width="4"/></svg>`);
+ setHTML('chartInfo',`<b>${s.s}</b> • ${fmt(s.p)} xu • ${up?'<span class="up">▲</span>':'<span class="down">▼</span>'} ${((h[h.length-1]/h[0]-1)*100).toFixed(2)}% (${h.length} mốc)`);
+ setHTML('chartBtns',stocks.map(x=>`<button onclick="chartSym='${x.s}';renderChart()" style="${x.s===chartSym?'border-color:#ffe66b':''}">${x.s}</button>`).join(''));
+}
+function renderTx(){
+ setHTML('txList',txs.length?txs.map(x=>`<tr><td>${x.t}</td><td class="${x.type==='Mua'||x.type==='Nhận'?'up':'down'}"><b>${x.type}</b></td><td>${x.sym}</td><td>${x.qty}</td><td>${x.price===''?'':fmt(x.price)}</td><td>${fmt(x.total)}</td></tr>`).join('')
+  :'<tr><td colspan="6">Chưa có giao dịch.</td></tr>');
+}
 function renderBigMarket(){
  $('marketWallet').textContent=fmt(wallet);
- $('bigStockRows').innerHTML=stocks.filter(s=>marketSector==='Tất cả'||s.name===marketSector).map(s=>{
+ setHTML('bigStockRows',stocks.filter(s=>marketSector==='Tất cả'||s.name===marketSector).map(s=>{
   const d=(s.p/s.prev-1)*100;
   return `<tr><td><b>${s.s}</b></td><td>${s.name}</td><td><b>${fmt(s.p)} xu</b></td>
   <td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td><td>${hold[s.s]||0}</td>
   <td><button onclick="trade('${s.s}',true);renderBigMarket()">Mua</button>
   <button class="sell" onclick="trade('${s.s}',false);renderBigMarket()">Bán</button></td></tr>`;
- }).join('');
+ }).join(''));
  let entries=Object.entries(hold).filter(([s,q])=>q>0),total=0;
- $('portfolioRows').innerHTML=entries.length?entries.map(([sym,q])=>{
+ setHTML('portfolioRows',entries.length?entries.map(([sym,q])=>{
   const s=stocks.find(x=>x.s===sym),v=q*s.p;total+=v;
   return `<tr><td><b>${sym}</b></td><td>${q}</td><td>${fmt(v)} xu</td>
   <td><button class="sell" onclick="trade('${sym}',false);renderBigMarket()">Bán hết</button></td></tr>`;
- }).join(''):'<tr><td colspan="4">Chưa có cổ phiếu nào. Mua mã mày thích ở bảng giá.</td></tr>';
+ }).join(''):'<tr><td colspan="4">Chưa có cổ phiếu nào. Mua mã mày thích ở bảng giá.</td></tr>');
  $('portfolioValue').textContent=fmt(total)+' xu';
  $('portfolioTotal').textContent=fmt(total)+' xu';
  $('portfolioPL').textContent=(total===0?'0':fmt(total))+' xu';
  $('indexValue').textContent=(1245.32+Math.random()*2-1).toFixed(2);
-}
-
-function renderAll(){
- renderWallet();renderAmmo();renderBoss();renderStocks();
- addFeed('📣 Thị trường mở cửa — giá có thể tăng hoặc giảm ngẫu nhiên.');
- addFeed('🐉 Các boss sẽ lao tới và nổi giận khi máu xuống dưới 35%. Kiên nhẫn nhé!');
+ renderChart();renderTx();
 }
 
 /* Khởi tạo */
-$('boss').onclick=e=>{e.stopPropagation();shoot(e,'boss')};
+$('boss').onclick=e=>{e.stopPropagation();shoot(e,'main')};
+$('bossSide').onclick=e=>{e.stopPropagation();shoot(e,'side')};
 renderAmmo();
 </script>
 </body>
