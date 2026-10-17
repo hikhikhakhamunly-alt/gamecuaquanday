@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stock & Fish — Bản online</title>
+<title>Stock & Fish — Bản đầy đủ</title>
 <style>
 :root{--cyan:#20eaff;--blue:#087bff;--gold:#ffd34f;--panel:#061b3b;--line:#168ddc}
 *{box-sizing:border-box}
@@ -156,9 +156,9 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
     <div class="hero">
       <div class="hero-art">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>Cá anime đủ loại, boss máu trâu biết lao tới và nổi giận, đàn em hỗ trợ, nhiệm vụ mỗi ngày, rương kho báu, skill hồi chiêu, bảng xếp hạng và tặng xu cho bạn bè. Tài khoản lưu trên máy chủ, đăng nhập được từ mọi máy.</p>
+      <p>Cá anime đủ loại, boss máu trâu biết lao tới và nổi giận, đàn em hỗ trợ, nhiệm vụ mỗi ngày, rương kho báu, skill hồi chiêu, bảng xếp hạng và tặng xu cho bạn bè. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
       <p>🪙 Ví khởi đầu: <b style="color:#ffd34f">100.000 xu</b></p>
-      <p class="hint">Dữ liệu lưu trên máy chủ. Quên mật khẩu thì chưa có cách lấy lại trong bản demo này.</p>
+      <p class="hint">Bản demo: tài khoản lưu trên trình duyệt này, chưa có máy chủ hay tiền thật.</p>
     </div>
     <div class="auth">
       <div id="loginForm">
@@ -176,6 +176,7 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
         <button class="wide" onclick="register()">Tạo tài khoản</button>
         <p>Đã có tài khoản? <span class="switch" onclick="showLogin()">Đăng nhập</span></p>
       </div>
+      <p class="hint">Đăng ký demo chỉ lưu trong trình duyệt hiện tại. Đừng dùng mật khẩu thật của mày.</p>
     </div>
   </div>
 </section>
@@ -328,7 +329,7 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
     </div>
   </div>
 
-  <div class="foot">Demo giải trí bằng xu ảo • Không nạp/rút tiền thật • Dữ liệu lưu trên máy chủ.</div>
+  <div class="foot">Demo giải trí bằng xu ảo • Không nạp/rút tiền thật • Đăng nhập và dữ liệu chỉ lưu trên trình duyệt này.</div>
 </section>
 
 <script>
@@ -340,10 +341,6 @@ let username='',wallet=100000,ammoIndex=0,autoTimer=null,tickTimer=null,schoolTi
     side={idx:0,hp:0,max:0,alive:false,respawn:null};
 let stocks=defaultStocks();
 const htmlCache={};
-
-/* ===== CẤU HÌNH MÁY CHỦ ===== */
-const API='http://localhost:5000'; // đổi thành địa chỉ máy chủ khi chơi từ máy khác, ví dụ http://192.168.1.4:5000
-let PASS='',saveT=null,claiming=false,gameTimers=false;
 
 const ammos=[['🔹','Đạn thường',1,100],['💥','Đạn hạt',2.2,1000],['🔮','Laser',4,10000],['🧊','Đạn băng',5.5,10000],
  ['⚡','Đạn sét',8,50000],['🌟','Đạn pháo',12,100000],['💠','Siêu đạn',22,100000],['🌈','Đạn thiên hà',40,100000]];
@@ -468,69 +465,50 @@ function sideIdx(){return main.idx>=1?main.idx-1:BOSSES.length-1}
 function buffActive(t){return !!buff&&buff.type===t&&buff.until>Date.now()}
 function luckMult(){return buffActive('luck')?buff.mult:1}
 
-/* ===== KẾT NỐI MÁY CHỦ ===== */
-async function api(path,body={}){
- try{
-  const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  return await r.json();
- }catch(e){return {ok:false,msg:'Không kết nối được máy chủ. Kiểm tra server.py đã chạy chưa.'}}
+/* ===== DANH SÁCH NGƯỜI CHƠI (lưu chung trên trình duyệt) ===== */
+function registerUser(n){
+ const l=JSON.parse(localStorage.getItem('sf_users')||'[]');
+ if(!l.includes(n)){l.push(n);localStorage.setItem('sf_users',JSON.stringify(l))}
 }
-function loadData(x){
- x=x||{};
- wallet=x.wallet??100000;hold=x.hold||{};stocks=x.stocks||defaultStocks();power=x.power||1;
- txs=x.txs||[];inv=x.inv||{common:0,rare:0,gold:0};buff=x.buff||null;daily=x.daily||null;
- totals=x.totals||{kills:0,fish:0,shots:0};friends=x.friends||[];
- main.idx=x.mainIdx||0;main.loop=x.mainLoop||0;main.hp=x.mainHP||0;
+function allUsers(){return JSON.parse(localStorage.getItem('sf_users')||'[]')}
+
+/* ===== LƯU / TẢI ===== */
+function save(){
+ localStorage.setItem('sf_user_'+username,JSON.stringify({wallet,hold,stocks,power,txs,inv,buff,daily,totals,friends,
+  mainIdx:main.idx,mainLoop:main.loop,mainHP:main.hp}));
+ updateBoard();
+}
+function load(){
+ const x=JSON.parse(localStorage.getItem('sf_user_'+username)||'null');
+ if(x){
+  wallet=x.wallet??100000;hold=x.hold||{};stocks=x.stocks||defaultStocks();power=x.power||1;
+  txs=x.txs||[];inv=x.inv||{common:0,rare:0,gold:0};buff=x.buff||null;daily=x.daily||null;
+  totals=x.totals||{kills:0,fish:0,shots:0};friends=x.friends||[];
+  main.idx=x.mainIdx||0;main.loop=x.mainLoop||0;main.hp=x.mainHP||0;
+ }else{
+  wallet=100000;hold={};stocks=defaultStocks();power=1;txs=[];inv={common:0,rare:0,gold:0};
+  buff=null;daily=null;totals={kills:0,fish:0,shots:0};friends=[];main.idx=0;main.loop=0;main.hp=0;
+ }
  ensureStocks();ensureDaily();
  main.max=bossMaxFor(main.idx,main.loop);
  renderWallet();
 }
-/* Lưu vào trình duyệt trước (an toàn khi mất điện), rồi gửi lên máy chủ sau */
-function snapshot(){
- return {name:username,pass:PASS,
-  data:{wallet,hold,stocks,power,txs,inv,buff,daily,totals,friends,
-   mainIdx:main.idx,mainLoop:main.loop,mainHP:main.hp},
-  score:Math.round(wallet+holdingsValue()),kills:totals.kills,fish:totals.fish};
-}
-function save(){
- if(!username)return;
- localStorage.setItem('sf_pending_'+username,JSON.stringify(snapshot()));
- clearTimeout(saveT);saveT=setTimeout(flushSave,3000);
-}
-async function flushSave(){
- if(!username)return;
- const raw=localStorage.getItem('sf_pending_'+username);
- if(!raw)return;
- const r=await api('/api/save',JSON.parse(raw));
- if(r.ok)localStorage.removeItem('sf_pending_'+username);
-}
-
-/* ===== ĐĂNG KÝ / ĐĂNG NHẬP ===== */
-async function register(){
+function register(){
  const n=$('regName').value.trim(),p=$('regPass').value,p2=$('regPass2').value;
  if(n.length<3||p.length<4)return notify('Tên cần ≥3 ký tự, mật khẩu ≥4 ký tự.');
  if(p!==p2)return notify('Hai mật khẩu chưa trùng nhau.');
- const r=await api('/api/register',{name:n,pass:p});
- if(!r.ok)return notify(r.msg);
- username=n;PASS=p;loadData(null);enterGame();save();
- notify('Tạo tài khoản thành công! Tặng 100.000 xu.');
+ if(localStorage.getItem('sf_pass_'+n))return notify('Tên này đã tồn tại.');
+ localStorage.setItem('sf_pass_'+n,p);registerUser(n);
+ username=n;load();enterGame();notify('Tạo tài khoản thành công! Tặng 100.000 xu.');
 }
-async function login(){
+function login(){
  const n=$('loginName').value.trim(),p=$('loginPass').value;
- const r=await api('/api/login',{name:n,pass:p});
- if(!r.ok)return notify(r.msg);
- const pend=localStorage.getItem('sf_pending_'+n);
- username=n;PASS=p;
- loadData(pend?JSON.parse(pend).data:r.data);
- enterGame();
- notify('Chào mừng trở lại, '+n+'!');
+ if(!localStorage.getItem('sf_pass_'+n))return notify('Chưa có tài khoản. Hãy đăng ký trước nhé.');
+ if(localStorage.getItem('sf_pass_'+n)!==p)return notify('Sai mật khẩu.');
+ username=n;registerUser(n);load();enterGame();notify('Chào mừng trở lại, '+n+'!');
 }
 function showRegister(){$('loginForm').classList.add('hidden');$('registerForm').classList.remove('hidden')}
 function showLogin(){$('registerForm').classList.add('hidden');$('loginForm').classList.remove('hidden')}
-function logout(){
- flushSave();stopAuto();resetTimers();
- $('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden');
-}
 function resetTimers(){
  clearTimeout(main.chargeTimer);clearTimeout(main.respawn);clearTimeout(side.respawn);
  main.alive=false;side.alive=false;
@@ -544,30 +522,21 @@ function enterGame(){
  if(sideEnabled())spawnBoss('side');else setEl('side',false);
  for(let i=0;i<14;i++)spawnFish();
  renderBots();
- if(!gameTimers){
-  gameTimers=true;
-  tickTimer=setInterval(tick,850);
-  schoolTimer=setInterval(spawnSchool,20000);
-  setInterval(claimGifts,4000);
-  setInterval(renderBoard,10000);
-  setInterval(flushSave,10000);
- }
- refreshUsers();claimGifts();renderAll();
+ claimGifts();
+ renderAll();
+ if(!tickTimer)tickTimer=setInterval(tick,850);
+ if(!schoolTimer)schoolTimer=setInterval(spawnSchool,20000);
 }
-async function refreshUsers(){
- const r=await api('/api/users',{});
- setHTML('userList',(r.users||[]).filter(u=>u!==username).map(u=>`<option value="${u}">`).join(''));
-}
+function logout(){save();stopAuto();resetTimers();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
 
 /* ===== BẠN BÈ & TẶNG XU ===== */
-async function addFriend(){
+function addFriend(){
  const n=$('friendName').value.trim();
  if(!n)return notify('Nhập tên người chơi.');
  if(n===username)return notify('Không thể thêm chính mình.');
+ if(!localStorage.getItem('sf_pass_'+n))return notify('Không tìm thấy người chơi "'+n+'".');
  if(friends.includes(n))return notify('Người này đã có trong danh sách.');
  if(friends.length>=MAX_FRIENDS)return notify('Tối đa '+MAX_FRIENDS+' bạn bè.');
- const r=await api('/api/exists',{name:n});
- if(!r.exists)return notify('Không tìm thấy người chơi "'+n+'".');
  friends.push(n);$('friendName').value='';
  notify('Đã thêm '+n+' vào danh sách bạn');
  renderFriends();save();
@@ -576,32 +545,35 @@ function removeFriend(n){
  friends=friends.filter(f=>f!==n);
  renderFriends();save();
 }
-async function sendGift(){
+function sendGift(){
  ensureDaily();
- const to=$('friendSel').value,amt=Math.floor(Number($('giftAmt').value)||0);
+ const to=$('friendSel').value;
+ const amt=Math.floor(Number($('giftAmt').value)||0);
  if(!to)return notify('Chưa có bạn nào được chọn. Hãy thêm bạn trước.');
  if(!friends.includes(to))return notify('Người này không có trong danh sách bạn.');
+ if(!localStorage.getItem('sf_pass_'+to))return notify('Không tìm thấy tài khoản '+to+' trên máy này.');
  if(amt<1000)return notify('Tặng tối thiểu 1.000 xu.');
  if(amt>wallet)return notify('Ví không đủ xu.');
  const left=GIFT_DAILY_LIMIT-(daily.gifted||0);
  if(amt>left)return notify('Hôm nay chỉ còn tặng được '+fmt(Math.max(0,left))+' xu.');
  const received=Math.floor(amt*(1-GIFT_FEE));
- const r=await api('/api/gift',{name:username,pass:PASS,to,received});
- if(!r.ok)return notify(r.msg);
  wallet-=amt;daily.gifted=(daily.gifted||0)+amt;
+ const key='sf_gifts_'+to;
+ const inbox=JSON.parse(localStorage.getItem(key)||'[]');
+ inbox.push({from:username,amount:received,at:Date.now()});
+ localStorage.setItem(key,JSON.stringify(inbox));
  txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:to,qty:'',price:'',total:-amt});
  txs=txs.slice(0,30);
  addFeed('🎁 Đã tặng '+fmt(received)+' xu cho '+to+' (phí '+Math.round(GIFT_FEE*100)+'%)');
  notify('🎁 Đã gửi '+fmt(received)+' xu cho '+to);
  renderWallet();renderFriends();save();
 }
-async function claimGifts(){
- if(!username||claiming)return;
- claiming=true;
- const r=await api('/api/inbox',{name:username,pass:PASS});
- claiming=false;
- const inbox=r.gifts||[];
+function claimGifts(){
+ if(!username||$('gameScreen').classList.contains('hidden'))return;
+ const key='sf_gifts_'+username;
+ const inbox=JSON.parse(localStorage.getItem(key)||'[]');
  if(!inbox.length)return;
+ localStorage.removeItem(key);
  let sum=0;
  inbox.forEach(g=>{
   sum+=g.amount;
@@ -622,15 +594,10 @@ function renderFriends(){
  setHTML('friendList',friends.length
   ?friends.map(f=>`<div class="invrow"><span>👤 ${f}</span><button class="sell" style="padding:4px 9px" onclick="removeFriend('${f}')">Xóa</button></div>`).join('')
   :'<small>Chưa có bạn bè. Chọn tên người chơi rồi bấm Thêm.</small>');
+ setHTML('userList',allUsers().filter(u=>u!==username).map(u=>`<option value="${u}">`).join(''));
  const left=Math.max(0,GIFT_DAILY_LIMIT-(daily.gifted||0));
- $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'% • Hôm nay còn tặng được '+fmt(left)+' xu';
-}
-async function renderBoard(){
- const r=await api('/api/board',{});
- const board=r.board||[];
- setHTML('boardBox',board.length?board.map((x,i)=>`<div class="brow ${x.name===username?'me':''}">
-  <span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${x.name}</span><span>🪙 ${fmt(x.score)} • 🐉 ${x.kills}</span></div>`).join('')
-  :'<small>Chưa có ai trên bảng.</small>');
+ const pending=username?JSON.parse(localStorage.getItem('sf_gifts_'+username)||'[]').length:0;
+ $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'% • Hôm nay còn tặng được '+fmt(left)+' xu • 📬 Quà chờ: '+pending;
 }
 
 /* ===== RENDER CHUNG ===== */
@@ -896,6 +863,8 @@ function shakeArena(){
  const a=$('arena');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');
  setTimeout(()=>a.classList.remove('shake'),380);
 }
+
+/* Bắn tự động: nhắm boss chính, nếu không có thì nhắm đàn em */
 function toggleAuto(){
  if(autoTimer)return stopAuto();
  autoTimer=setInterval(autoShot,320);
@@ -1004,10 +973,29 @@ function claimQuest(id){
  renderWallet();renderQuests();save();
 }
 
+/* ===== BẢNG XẾP HẠNG ===== */
+function updateBoard(){
+ if(!username)return;
+ let board=JSON.parse(localStorage.getItem('sf_board')||'[]');
+ const row={name:username,score:Math.round(wallet+holdingsValue()),kills:totals.kills,fish:totals.fish};
+ const i=board.findIndex(r=>r.name===username);
+ if(i>=0)board[i]=row;else board.push(row);
+ board.sort((a,b)=>b.score-a.score);
+ localStorage.setItem('sf_board',JSON.stringify(board.slice(0,50)));
+ renderBoard();
+}
+function renderBoard(){
+ const board=JSON.parse(localStorage.getItem('sf_board')||'[]').slice(0,10);
+ setHTML('boardBox',board.length?board.map((r,i)=>`<div class="brow ${r.name===username?'me':''}">
+  <span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${r.name}</span><span>🪙 ${fmt(r.score)} • 🐉 ${r.kills}</span></div>`).join('')
+  :'<small>Chưa có ai trên bảng.</small>');
+}
+
 /* ===== THỊ TRƯỜNG ===== */
 function tick(){
  if($('gameScreen').classList.contains('hidden'))return;
  ensureDaily();
+ claimGifts();
  if(buff&&buff.until<=Date.now()){buff=null;notify('⌛ Buff đã hết hiệu lực')}
  renderSkills();updateBuffLine();renderQuests();
  if(Math.random()<.3){
@@ -1110,7 +1098,7 @@ function renderBigMarket(){
 /* Khởi tạo */
 $('boss').onclick=e=>{e.stopPropagation();shoot(e,'main')};
 $('bossSide').onclick=e=>{e.stopPropagation();shoot(e,'side')};
-window.addEventListener('pagehide',()=>{if(username)flushSave()});
+window.addEventListener('storage',e=>{if(username&&e.key==='sf_gifts_'+username)claimGifts()});
 renderAmmo();
 </script>
 </body>
