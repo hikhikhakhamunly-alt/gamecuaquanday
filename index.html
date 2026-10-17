@@ -1,371 +1,575 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bắn Cá Anime</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(180deg, #0a0e30 0%, #1a2a6c 50%, #000 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        #game-container {
-            position: relative;
-            width: 100vw;
-            height: 80vh;
-            max-width: 800px;
-            max-height: 600px;
-            background: linear-gradient(180deg, #001f3f 0%, #003366 50%, #001a33 100%);
-            border: 3px solid #4a90e2;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        #header {
-            width: 100%;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        #wallet {
-            color: #ffd700;
-        }
-        #weapon {
-            color: #00ff88;
-        }
-        #boss-bar {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            overflow: hidden;
-            display: none;
-        }
-        #boss-hp {
-            height: 100%;
-            background: linear-gradient(90deg, #ff416c, #ff4b2b);
-            width: 100%;
-            transition: width 0.2s linear;
-        }
-        #submarine {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 60px;
-            background: #4a90e2;
-            border-radius: 50% 50% 20% 20%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            z-index: 10;
-        }
-        #submarine::after {
-            content: "🔫";
-            font-size: 25px;
-        }
-        .fish {
-            position: absolute;
-            font-size: 30px;
-            transition: left 0.5s linear, top 0.5s linear;
-        }
-        .boss {
-            font-size: 50px;
-            animation: boss-float 3s ease-in-out infinite;
-        }
-        @keyframes boss-float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-        .bullet {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #ffff00;
-            border-radius: 50%;
-            z-index: 5;
-        }
-        .effect {
-            position: absolute;
-            font-size: 20px;
-            pointer-events: none;
-            animation: float-up 1s ease-out forwards;
-        }
-        @keyframes float-up {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-50px); }
-        }
-    </style>
-</head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stock & Fish — Bản anime</title>
+<style>
+:root{--cyan:#20eaff;--blue:#087bff;--gold:#ffd34f;--panel:#061b3b;--line:#168ddc}
+*{box-sizing:border-box}
+body{margin:0;background:#020a20;color:#eefaff;font:14px/1.4 system-ui,Segoe UI,Arial;overflow-x:hidden}
+button,input,select{font:inherit}
+button{cursor:pointer;border:1px solid #2edfff;color:#fff;background:linear-gradient(135deg,#0876ed,#09c8f1);border-radius:10px;padding:9px 13px;font-weight:800;box-shadow:0 0 14px #00baff38;transition:.15s}
+button:hover{filter:brightness(1.18);transform:translateY(-1px)}
+.hidden{display:none!important}
+.screen{min-height:100vh;padding:18px;background:radial-gradient(ellipse at 50% 0,#07568b 0,#031735 44%,#02091b 100%)}
+.brand{text-align:center;font-size:clamp(30px,5vw,56px);font-weight:1000;letter-spacing:-2px;color:#fff;text-shadow:0 3px 0 #0750a0,0 0 22px #00d9ff}
+.brand span{color:var(--gold)}.sub{text-align:center;color:#9cecff;margin:0 0 20px}
+.auth-wrap{max-width:950px;margin:4vh auto;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+.hero,.auth{border:1px solid #159fe8;border-radius:20px;background:linear-gradient(145deg,#07315bdb,#04132df2);box-shadow:0 0 30px #00baff1a;padding:24px}
+.hero-art{text-align:center;font-size:clamp(40px,8vw,95px);padding:20px 0;filter:drop-shadow(0 0 15px #00cfff)}
+.hero p{color:#b9e8ff}.auth h2{margin:0 0 14px}
+.auth input{width:100%;padding:12px;margin:6px 0;background:#06132a;border:1px solid #21649a;border-radius:9px;color:#fff}
+.auth .wide{width:100%;margin-top:10px}.switch{color:#7de8ff;text-decoration:underline;cursor:pointer}.hint{color:#92b6d1;font-size:12px}
+
+.topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px 14px;margin-bottom:12px}
+.money{margin-left:auto;color:var(--gold);font-weight:1000;font-size:20px}
+.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.9fr);gap:12px}
+.panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:15px;overflow:hidden;box-shadow:0 0 20px #00bfff12}
+.panelhead{padding:10px 13px;background:#092b50;border-bottom:1px solid #13537d;font-weight:900;display:flex;justify-content:space-between;align-items:center}
+
+/* ===== ĐẠI DƯƠNG ANIME ===== */
+.arena{position:relative;height:500px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 0,#8ff7ff 0,#1aa8e0 22%,#0a5fa8 52%,#052a5c 80%,#020d2c 100%)}
+.arena:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 12% 25%,#e6ffffaa 0 2px,transparent 3px),radial-gradient(circle at 82% 40%,#e6ffff88 0 3px,transparent 4px),radial-gradient(circle at 40% 80%,#e6ffffaa 0 2px,transparent 3px);background-size:90px 100px;animation:bubbles 7s linear infinite}
+.arena:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(105deg,transparent 0 70px,#ffffff12 70px 110px,transparent 110px 190px);animation:rays 9s linear infinite alternate}
+@keyframes bubbles{to{background-position:0 -300px,0 -200px,0 -400px}}
+@keyframes rays{to{opacity:.4}}
+.fish{position:absolute;width:clamp(70px,9vw,96px);z-index:2;cursor:pointer;user-select:none;filter:drop-shadow(0 0 8px #16dfff);animation:swim 4s ease-in-out infinite alternate;transition:transform .15s}
+.fish svg{width:100%;height:auto;display:block}
+.fish:hover{transform:scale(1.12);filter:drop-shadow(0 0 14px #ffeb75)}
+@keyframes swim{from{translate:-10px 4px}to{translate:18px -12px}}
+.dying{transition:transform .5s,opacity .5s!important;transform:rotate(180deg) translateY(-30px)!important;opacity:0!important}
+.wiggle{animation:wig .2s}@keyframes wig{50%{translate:6px 0}}
+.boss{position:absolute;left:50%;top:30%;width:clamp(190px,27vw,270px);z-index:5;translate:-50% -50%;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation:bossfloat 2.4s ease-in-out infinite alternate;transition:opacity .6s,transform .6s}
+.boss svg{width:100%;height:auto;display:block}
+@keyframes bossfloat{to{translate:-50% -56%;filter:drop-shadow(0 0 30px #ff41e9)}}
+.boss.rage{animation:shake .12s infinite}
+@keyframes shake{0%{translate:-51% -50%}50%{translate:-49% -51%}}
+.boss.flash{filter:brightness(2.2)}
+.bossbar{position:absolute;left:12%;right:12%;top:8px;text-align:center;z-index:6;text-shadow:0 2px 4px #001a33}
+.hpouter{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
+.hpinner{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .15s}
+.cannon{position:absolute;bottom:4px;left:50%;translate:-50% 0;font-size:58px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
+.dmg{position:absolute;font-size:20px;font-weight:1000;pointer-events:none;z-index:9;text-shadow:0 2px 4px #001a33;animation:pop .85s forwards}
+@keyframes pop{to{transform:translateY(-65px) scale(1.3);opacity:0}}
+.beam{position:absolute;height:6px;transform-origin:left center;background:linear-gradient(90deg,#fff,#2fffff,#b44dff,transparent);box-shadow:0 0 12px #37f9ff;border-radius:100px;pointer-events:none;z-index:7;animation:fadebeam .28s forwards}
+@keyframes fadebeam{to{opacity:0}}
+
+.controls{padding:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#03132b}
+.controls label{color:#9ddfff}
+.controls select{background:#061a35;color:#fff;border:1px solid #167bb1;border-radius:8px;padding:9px}
+.ammo-list{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:10px}
+.ammo{padding:9px 5px;text-align:center;border:1px solid #165b90;border-radius:10px;background:#071b37;cursor:pointer}
+.ammo.active{border-color:#ffe66b;box-shadow:0 0 13px #ffdf3b55;background:#13385b}
+.ammo .emoji{font-size:25px;display:block}.ammo small{color:#9edcff;font-size:11px}
+.botgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;padding:10px}
+.bot{border:1px solid #1c6090;border-radius:10px;padding:8px 4px;text-align:center;background:#071b37}
+.bot .face{font-size:27px}.bot b{display:block;font-size:11px}.bot small{color:#ffd75e;font-size:10px}
+.rightcol{display:grid;gap:12px;align-content:start}
+.balancebox{padding:14px;color:#a9eaff}.balancebox strong{color:var(--gold);font-size:25px}
+.tabs{display:flex;gap:5px;flex-wrap:wrap;padding:9px}.tabs button{padding:6px 9px;font-size:12px}
+.stocks{width:100%;border-collapse:collapse;font-size:12px}
+.stocks th,.stocks td{padding:8px 7px;text-align:left;border-bottom:1px solid #123a60}.stocks th{color:#91dfff}
+.up{color:#47ffb3}.down{color:#ff7099}
+.feed{padding:10px;max-height:190px;overflow:auto;color:#b5ddf8;font-size:12px}.feed div{padding:6px 0;border-bottom:1px solid #123353}
+.notice{position:fixed;top:16px;left:50%;translate:-50% 0;background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:11px 16px;box-shadow:0 0 25px #00dfff55;z-index:99;max-width:90%;text-align:center}
+.foot{padding:12px;text-align:center;color:#739dbd;font-size:11px}
+
+.market-launch{background:linear-gradient(135deg,#e5a900,#ffdf62);color:#17223a;border-color:#ffe58a;font-size:15px;padding:11px 16px}
+.market-view{position:fixed;inset:0;z-index:80;background:radial-gradient(ellipse at top,#084d7d,#03132e 62%,#010817);padding:18px;overflow:auto}
+.market-shell{max-width:1400px;margin:auto}
+.market-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px;background:#061b38;border:1px solid #1598db;border-radius:16px;margin-bottom:14px}
+.market-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.8fr);gap:14px}
+.market-card{background:linear-gradient(145deg,#08284d,#04132b);border:1px solid #177bb5;border-radius:16px;overflow:hidden;margin-bottom:14px}
+.market-card h2{font-size:18px;margin:0;padding:14px;border-bottom:1px solid #15517d;background:#092e53}
+.market-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px}
+.kpi{padding:14px;background:#061a35;border:1px solid #174d76;border-radius:12px}.kpi small{color:#9dcce9;display:block}.kpi b{font-size:22px;color:#ffe06a}
+.market-table{width:100%;border-collapse:collapse}
+.market-table th,.market-table td{padding:12px 10px;border-bottom:1px solid #123b5c;text-align:left}
+.market-table th{color:#9cddff;background:#071e3a}.market-table button{padding:7px 11px}
+.market-chart{height:190px;margin:14px;border:1px solid #14517d;border-radius:12px;background:linear-gradient(180deg,#073454,#04162d);position:relative;overflow:hidden;padding:12px}
+.market-chart svg{width:100%;height:100%}
+.market-actions{display:flex;gap:8px;flex-wrap:wrap;padding:12px}
+.market-feed{padding:12px;max-height:300px;overflow:auto;color:#b5ddf8}.market-feed div{padding:9px 0;border-bottom:1px solid #123353}
+.market-exit{background:linear-gradient(135deg,#17456d,#0b77ac)}
+@media(max-width:850px){
+ .layout{grid-template-columns:1fr}.arena{height:420px}.auth-wrap{grid-template-columns:1fr}.hero{display:none}.money{margin-left:0}
+ .market-grid{grid-template-columns:1fr}.market-kpis{grid-template-columns:1fr}.market-table th,.market-table td{padding:8px 5px;font-size:12px}.market-view{padding:8px}
+ .botgrid{grid-template-columns:repeat(3,1fr)}
+}
+</style></head>
 <body>
-    <div id="header">
-        <div id="weapon">Đạn cấp: 1</div>
-        <div id="wallet">Xu: 100000</div>
+<div id="notice" class="notice hidden"></div>
+
+<section id="authScreen" class="screen">
+  <div class="brand">STOCK <span>&</span> FISH</div>
+  <p class="sub">BẮN CÁ • ĐẦU TƯ • SĂN BOSS • CHƠI VUI BẰNG XU ẢO</p>
+  <div class="auth-wrap">
+    <div class="hero">
+      <div class="hero-art">🐉 🐠 🐬 🦈</div>
+      <h2>Đại dương săn thưởng!</h2>
+      <p>Cá anime đủ loại, 5 boss máu trâu xuất hiện lần lượt, đạn nhiều cấp và 5 bot cùng săn. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
+      <p>🪙 Ví khởi đầu: <b style="color:#ffd34f">100.000 xu</b></p>
+      <p class="hint">Bản demo: tài khoản lưu trên máy này, chưa có máy chủ hay tiền thật.</p>
     </div>
-    <div id="boss-bar">
-        <div id="boss-hp"></div>
+    <div class="auth">
+      <div id="loginForm">
+        <h2>Đăng nhập</h2>
+        <input id="loginName" placeholder="Tên đăng nhập">
+        <input id="loginPass" type="password" placeholder="Mật khẩu">
+        <button class="wide" onclick="login()">Vào đại dương</button>
+        <p>Chưa có tài khoản? <span class="switch" onclick="showRegister()">Đăng ký ngay</span></p>
+      </div>
+      <div id="registerForm" class="hidden">
+        <h2>Tạo tài khoản</h2>
+        <input id="regName" placeholder="Tên đăng nhập (ít nhất 3 ký tự)">
+        <input id="regPass" type="password" placeholder="Mật khẩu (ít nhất 4 ký tự)">
+        <input id="regPass2" type="password" placeholder="Nhập lại mật khẩu">
+        <button class="wide" onclick="register()">Tạo tài khoản</button>
+        <p>Đã có tài khoản? <span class="switch" onclick="showLogin()">Đăng nhập</span></p>
+      </div>
+      <p class="hint">Đăng ký demo chỉ lưu trong trình duyệt hiện tại. Đừng dùng mật khẩu thật của mày.</p>
     </div>
-    <div id="game-container"></div>
-    <div id="submarine"></div>
+  </div>
+</section>
 
-    <script>
-        // Các loại cá phong cách anime, HP và giá trị thưởng
-        const FISH_TYPES = [
-            { emoji: '🐠', hp: 5, reward: 10, speed: 2 },
-            { emoji: '🐟', hp: 10, reward: 25, speed: 1.5 },
-            { emoji: '🐡', hp: 15, reward: 40, speed: 1 },
-            { emoji: '🦈', hp: 30, reward: 100, speed: 1.2 },
-            { emoji: '🐙', hp: 50, reward: 200, speed: 1 },
-            { emoji: '🐳', hp: 100, reward: 500, speed: 0.8 },
-            { emoji: '👹', isBoss: true, hp: 500, reward: 2000, speed: 0.5, emoji: '👹' }
-        ];
+<section id="gameScreen" class="screen hidden">
+  <div class="topbar">
+    <b>🌊 STOCK & FISH</b><span id="playerLabel">Thợ săn</span>
+    <span class="money">🪙 <span id="wallet">100,000</span> xu</span>
+    <button class="market-launch" onclick="openMarket()">📈 Vào chứng khoán</button>
+    <button onclick="logout()">Thoát</button>
+  </div>
 
-        const gameContainer = document.getElementById('game-container');
-        const walletEl = document.getElementById('wallet');
-        const weaponEl = document.getElementById('weapon');
-        const bossBar = document.getElementById('boss-bar');
-        const bossHpEl = document.getElementById('boss-hp');
-        const submarine = document.getElementById('submarine');
+  <div class="layout">
+    <div>
+      <div class="panel">
+        <div class="panelhead"><span>🐟 ĐẠI CHIẾN ĐẠI DƯƠNG</span><span id="status">Đang săn cá</span></div>
+        <div id="arena" class="arena">
+          <div class="bossbar">
+            <b>👑 <span id="bossName"></span> • Lv <span id="bossLv"></span> — <span id="bossText"></span></b>
+            <div class="hpouter"><div id="bossHp" class="hpinner"></div></div>
+          </div>
+          <div id="boss" class="boss"></div>
+          <div id="cannon" class="cannon">🔱</div>
+        </div>
+        <div class="controls">
+          <label>Đạn mỗi phát:</label>
+          <select id="bet" onchange="renderAmmo()">
+            <option value="100">100 xu</option>
+            <option value="1000">1.000 xu</option>
+            <option value="10000" selected>10.000 xu</option>
+            <option value="50000">50.000 xu</option>
+            <option value="100000">100.000 xu</option>
+          </select>
+          <button id="autoBtn" onclick="toggleAuto()">▶ Bắn tự động</button>
+          <button onclick="upgrade()">⚡ Nâng cấp pháo</button>
+        </div>
+        <div class="ammo-list" id="ammoList"></div>
+      </div>
+      <div class="panel" style="margin-top:12px"><div class="panelhead">🤖 5 BOT ĐANG CÙNG SĂN</div><div class="botgrid" id="botGrid"></div></div>
+    </div>
 
-        let wallet = 100000;
-        let weaponLevel = 1;
-        let fishes = [];
-        let bullets = [];
-        let bossActive = false;
-        let boss = null;
+    <div class="rightcol">
+      <div class="panel">
+        <div class="panelhead">💰 Ví chung</div>
+        <div class="balancebox">Số dư hiện tại<br><strong id="wallet2">100,000 xu</strong>
+          <p>🎯 Tiền bắn cá và đầu tư cổ phiếu dùng chung một ví.</p>
+          <button onclick="switchTab('fish')">Bắn cá</button> <button onclick="switchTab('stocks')">Đầu tư</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panelhead">📈 Thị trường cổ phiếu</div>
+        <div class="tabs"><button onclick="switchTab('stocks')">Cổ phiếu</button><button onclick="switchTab('fish')">Đại dương</button></div>
+        <div id="stockArea">
+          <table class="stocks"><thead><tr><th>Mã</th><th>Giá</th><th>Đổi</th><th></th></tr></thead><tbody id="stockRows"></tbody></table>
+          <div class="balancebox">Đang giữ: <span id="holdings">Chưa mua cổ phiếu</span></div>
+        </div>
+        <div class="feed" id="feed"></div>
+      </div>
+    </div>
+  </div>
 
-        // Cập nhật hiển thị
-        function updateDisplay() {
-            walletEl.textContent = `Xu: ${wallet.toLocaleString('vi-VN')}`;
-            weaponEl.textContent = `Đạn cấp: ${weaponLevel}`;
-        }
+  <div id="marketView" class="market-view hidden">
+    <div class="market-shell">
+      <div class="market-head">
+        <div><div style="font-size:25px;font-weight:1000">📈 SÀN CHỨNG KHOÁN</div><div style="color:#9edcff">Bảng giá lớn • Mua/bán bằng ví xu chung với bắn cá</div></div>
+        <div style="font-size:20px;color:#ffd34f;font-weight:900">🪙 <span id="marketWallet">100,000</span> xu</div>
+        <button class="market-exit" onclick="closeMarket()">← Quay lại bắn cá</button>
+      </div>
+      <div class="market-kpis">
+        <div class="kpi"><small>VN-INDEX DEMO</small><b id="indexValue">1,245.32</b><div class="up">▲ 1.01% hôm nay</div></div>
+        <div class="kpi"><small>TỔNG GIÁ TRỊ DANH MỤC</small><b id="portfolioValue">0 xu</b><div style="color:#9edcff">Tính theo giá hiện tại</div></div>
+        <div class="kpi"><small>LÃI / LỖ TẠM TÍNH</small><b id="portfolioPL">0 xu</b><div style="color:#9edcff">Biến động thị trường giả lập</div></div>
+      </div>
+      <div class="market-grid">
+        <div>
+          <div class="market-card">
+            <h2>📊 Bảng giá thị trường</h2>
+            <div class="market-actions">
+              <button onclick="setSector('Tất cả')">Tất cả</button><button onclick="setSector('Ngân hàng')">Ngân hàng</button>
+              <button onclick="setSector('Sắt thép')">Sắt thép</button><button onclick="setSector('Nhôm')">Nhôm</button>
+              <button onclick="setSector('Coin')">Coin</button><button onclick="setSector('Nhựa')">Nhựa</button>
+            </div>
+            <table class="market-table"><thead><tr><th>Mã</th><th>Ngành</th><th>Giá hiện tại</th><th>Biến động</th><th>Số lượng</th><th>Giao dịch</th></tr></thead><tbody id="bigStockRows"></tbody></table>
+          </div>
+          <div class="market-card">
+            <h2>📉 Biểu đồ giá minh họa</h2>
+            <div class="market-chart">
+              <svg viewBox="0 0 800 170" preserveAspectRatio="none">
+                <defs><linearGradient id="fillChart" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0" stop-color="#1df3ce" stop-opacity=".45"/><stop offset="1" stop-color="#1df3ce" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0 135 L45 120 L90 128 L135 86 L180 98 L225 65 L270 82 L315 50 L360 72 L405 38 L450 60 L495 31 L540 52 L585 23 L630 45 L675 17 L720 30 L765 12 L800 18 L800 170 L0 170 Z" fill="url(#fillChart)"/>
+                <polyline points="0,135 45,120 90,128 135,86 180,98 225,65 270,82 315,50 360,72 405,38 450,60 495,31 540,52 585,23 630,45 675,17 720,30 765,12 800,18" fill="none" stroke="#25f1c6" stroke-width="4"/>
+              </svg>
+            </div>
+            <div class="market-actions"><span style="color:#9edcff">Đồ thị minh họa cho giao diện demo, không phải dữ liệu thị trường thật.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="market-card">
+            <h2>💼 Danh mục đầu tư của mày</h2>
+            <table class="market-table"><thead><tr><th>Mã</th><th>Số lượng</th><th>Giá trị</th><th>Thao tác</th></tr></thead><tbody id="portfolioRows"></tbody></table>
+            <div class="market-actions"><b>Tổng giá trị: <span id="portfolioTotal">0 xu</span></b></div>
+          </div>
+          <div class="market-card"><h2>📰 Tin tức & diễn biến</h2><div class="market-feed" id="bigFeed"></div></div>
+          <div class="market-card">
+            <h2>ℹ️ Cách giao dịch</h2>
+            <div class="market-actions" style="display:block;color:#b9def7">
+              • Bấm <b>Mua</b> để dùng xu trong ví mua cổ phiếu.<br>
+              • Bấm <b>Bán</b> để đổi cổ phiếu đang giữ thành xu.<br>
+              • Giá tăng/giảm ngẫu nhiên trong bản demo.<br>
+              • Ví dùng chung với bắn cá; không có nạp/rút tiền thật.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Tạo cá mới
-        function spawnFish() {
-            if (bossActive) return;
-            // Chọn loại cá ngẫu nhiên, ít boss hơn
-            const random = Math.random();
-            let fishType;
-            if (random < 0.05) {
-                fishType = FISH_TYPES.find(f => f.isBoss);
-            } else {
-                fishType = FISH_TYPES[Math.floor(Math.random() * (FISH_TYPES.length - 1))];
-            }
+  <div class="foot">Demo giải trí bằng xu ảo • Không nạp/rút tiền thật • Đăng nhập và dữ liệu chỉ lưu trên trình duyệt này.</div>
+</section>
 
-            const fish = document.createElement('div');
-            fish.className = `fish ${fishType.isBoss ? 'boss' : ''}`;
-            fish.textContent = fishType.emoji;
-            fish.dataset.hp = fishType.hp;
-            fish.dataset.reward = fishType.reward;
-            fish.dataset.speed = fishType.speed;
+<script>
+const $=id=>document.getElementById(id);
+let username='',wallet=100000,ammoIndex=0,autoTimer=null,fireTimer=null,power=1,hold={},
+    bossIdx=0,bossLoop=0,bossHP=0,bossMax=0,bossAlive=false,bossRespawn=null,marketSector='Tất cả';
+let stocks=[
+  {s:'VCB',name:'Ngân hàng',p:92500,prev:91000},{s:'HPG',name:'Sắt thép',p:28700,prev:29200},
+  {s:'NKG',name:'Sắt thép',p:21300,prev:20500},{s:'ALU',name:'Nhôm',p:68000,prev:67000},
+  {s:'BTC',name:'Coin',p:1250000,prev:1180000},{s:'PLX',name:'Nhựa',p:38500,prev:38900}];
 
-            // Vị trí ban đầu
-            fish.style.left = '-50px';
-            fish.style.top = `${Math.random() * (gameContainer.offsetHeight - 50)}px`;
-            
-            gameContainer.appendChild(fish);
-            fishes.push({ element: fish, ...fishType });
+/* ===== ART SVG ANIME ===== */
+function fishArt(c1,c2,fin,extra=''){
+ return `<svg viewBox="0 -12 120 92">
+ <path d="M90 40 L118 16 Q112 40 118 64 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="3"/>
+ <path d="M42 14 Q56 -2 72 14 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="2.5"/>${extra}
+ <ellipse cx="55" cy="40" rx="42" ry="28" fill="${c1}" stroke="#0a1a3a" stroke-width="3"/>
+ <ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".9"/>
+ <path d="M30 28 Q34 20 44 20" stroke="#fff" stroke-width="3" fill="none" opacity=".85" stroke-linecap="round"/>
+ <circle cx="32" cy="36" r="11" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/>
+ <circle cx="29" cy="37" r="6.5" fill="#0a1a3a"/><circle cx="26.5" cy="33.5" r="2.5" fill="#fff"/>
+ <ellipse cx="42" cy="48" rx="5" ry="3" fill="#ff7aa8" opacity=".75"/>
+ <path d="M18 46 Q14 50 19 54" stroke="#0a1a3a" stroke-width="2" fill="none"/></svg>`;
+}
+function octoArt(c,l){
+ return `<svg viewBox="0 -10 120 110">
+ <g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round">
+  <path d="M32 60 Q18 84 30 100"/><path d="M48 66 Q42 92 54 104"/><path d="M68 66 Q74 92 62 104"/><path d="M88 60 Q102 84 90 100"/></g>
+ <ellipse cx="60" cy="38" rx="42" ry="34" fill="${c}" stroke="#0a1a3a" stroke-width="3"/>
+ <ellipse cx="50" cy="20" rx="20" ry="8" fill="${l}" opacity=".7"/>
+ <circle cx="44" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="46" cy="40" r="6.5" fill="#0a1a3a"/><circle cx="48" cy="36" r="2.5" fill="#fff"/>
+ <circle cx="76" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="78" cy="40" r="6.5" fill="#0a1a3a"/><circle cx="80" cy="36" r="2.5" fill="#fff"/>
+ <ellipse cx="40" cy="56" rx="5" ry="3" fill="#ff7aa8" opacity=".7"/><ellipse cx="80" cy="56" rx="5" ry="3" fill="#ff7aa8" opacity=".7"/></svg>`;
+}
+function turtleArt(){
+ return `<svg viewBox="0 -4 130 100">
+ <ellipse cx="44" cy="74" rx="12" ry="6" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/>
+ <ellipse cx="82" cy="74" rx="12" ry="6" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/>
+ <path d="M14 48 L4 42 L8 52 Z" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/>
+ <ellipse cx="112" cy="36" rx="14" ry="11" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/>
+ <circle cx="117" cy="32" r="5" fill="#fff"/><circle cx="118" cy="32" r="2.5" fill="#0a1a3a"/>
+ <ellipse cx="60" cy="46" rx="46" ry="30" fill="#ffd34f" stroke="#0a1a3a" stroke-width="3"/>
+ <g fill="#e0a52a" stroke="#0a1a3a" stroke-width="2"><circle cx="40" cy="38" r="9"/><circle cx="60" cy="30" r="9"/><circle cx="80" cy="38" r="9"/><circle cx="50" cy="54" r="9"/><circle cx="70" cy="54" r="9"/></g>
+ <path d="M30 26 Q40 16 52 22" stroke="#fff" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/></svg>`;
+}
+const bossArt=a=>({
+ dragon:()=>fishArt('#9ff3ff','#ffffff','#2a9fff',`<path d="M40 22 L34 2 L50 16Z M58 16 L60 -4 L68 14Z" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/>`),
+ shark:()=>fishArt('#ff7a3c','#ffe08a','#ff3b1f',`<path d="M30 10 Q36 -6 42 10 Q48 -8 54 8 Q60 -8 66 8 Z" fill="#ffd34f" stroke="#0a1a3a" stroke-width="2"/>`),
+ octo:()=>octoArt('#b57bff','#e6d4ff'),
+ turtle:()=>turtleArt(),
+ kraken:()=>octoArt('#ff4d6d','#ffd0d8')
+}[a]())||'';
 
-            // Di chuyển cá
-            moveFish(fish);
-        }
+const BOSSES=[
+ {name:'CÁ RỒNG BĂNG',lv:5,hp:1500000,reward:600000,art:'dragon'},
+ {name:'BẠCH TUỘC TÍM',lv:10,hp:4000000,reward:1800000,art:'octo'},
+ {name:'CÁ MẬP LỬA',lv:15,hp:10000000,reward:4000000,art:'shark'},
+ {name:'RÙA THẦN VÀNG',lv:20,hp:25000000,reward:9000000,art:'turtle'},
+ {name:'KRAKEN SẤM',lv:30,hp:60000000,reward:20000000,art:'kraken'}];
+const bossMaxFor=(i,l)=>Math.round(BOSSES[i].hp*(1+l*0.6));
+const bossRewardFor=(i,l)=>Math.round(BOSSES[i].reward*(1+l*0.6));
 
-        // Di chuyển cá
-        function moveFish(fish) {
-            const speed = parseFloat(fish.dataset.speed);
-            const moveInterval = setInterval(() => {
-                const currentLeft = parseInt(fish.style.left);
-                if (currentLeft > gameContainer.offsetWidth) {
-                    // Cá đi ra ngoài, xóa
-                    clearInterval(moveInterval);
-                    fish.remove();
-                    fishes = fishes.filter(f => f.element !== fish);
-                    return;
-                }
-                fish.style.left = `${currentLeft + speed}px`;
-            }, 30);
-        }
+/* m = hệ số thưởng (x tiền đạn), w = tỉ lệ xuất hiện. Xác suất trúng = 0.9/m → RTP ~90% */
+const FISH=[
+ {m:2,w:.30,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
+ {m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
+ {m:5,w:.18,svg:fishArt('#ff8ad8','#fff0fa','#ff4fb8')},
+ {m:8,w:.14,svg:fishArt('#ffe066','#fffbe0','#ffb020')},
+ {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},
+ {m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}];
 
-        // Tạo đạn
-        function createBullet() {
-            const bullet = document.createElement('div');
-            bullet.className = 'bullet';
-            const submarineRect = submarine.getBoundingClientRect();
-            const containerRect = gameContainer.getBoundingClientRect();
-            
-            bullet.style.left = `${submarineRect.left - containerRect.left + submarineRect.width/2}px`;
-            bullet.style.top = `${submarineRect.top - containerRect.top - 20}px`;
-            
-            gameContainer.appendChild(bullet);
-            bullets.push(bullet);
-            moveBullet(bullet);
-        }
+const ammos=[['🔹','Đạn thường',1,100],['💥','Đạn hạt',2.2,1000],['🔮','Laser',4,10000],['🧊','Đạn băng',5.5,10000],
+ ['⚡','Đạn sét',8,50000],['🌟','Đạn pháo',12,100000],['💠','Siêu đạn',22,100000],['🌈','Đạn thiên hà',40,100000]];
 
-        // Di chuyển đạn
-        function moveBullet(bullet) {
-            const moveInterval = setInterval(() => {
-                const currentTop = parseInt(bullet.style.top);
-                if (currentTop < 0) {
-                    clearInterval(moveInterval);
-                    bullet.remove();
-                    bullets = bullets.filter(b => b !== bullet);
-                    return;
-                }
-                bullet.style.top = `${currentTop - 8}px`;
-                
-                // Kiểm tra va chạm với cá
-                checkCollision(bullet);
-            }, 10);
-        }
+/* ===== TIỆN ÍCH ===== */
+function notify(t){const n=$('notice');n.textContent=t;n.classList.remove('hidden');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.add('hidden'),2400)}
+function fmt(n){return Math.floor(n).toLocaleString('en-US')}
+function save(){localStorage.setItem('sf_user_'+username,JSON.stringify({wallet,hold,stocks,bossIdx,bossLoop,bossHP,power}))}
+function load(){
+ const x=JSON.parse(localStorage.getItem('sf_user_'+username)||'null');
+ if(x){wallet=x.wallet??100000;hold=x.hold||{};if(x.stocks)stocks=x.stocks;bossIdx=x.bossIdx||0;bossLoop=x.bossLoop||0;bossHP=x.bossHP||0;power=x.power||1}
+ else{wallet=100000;hold={};bossIdx=0;bossLoop=0;bossHP=0;power=1}
+ bossMax=bossMaxFor(bossIdx,bossLoop);renderWallet();
+}
+function register(){
+ const n=$('regName').value.trim(),p=$('regPass').value,p2=$('regPass2').value;
+ if(n.length<3||p.length<4)return notify('Tên cần ≥3 ký tự, mật khẩu ≥4 ký tự.');
+ if(p!==p2)return notify('Hai mật khẩu chưa trùng nhau.');
+ if(localStorage.getItem('sf_pass_'+n))return notify('Tên này đã tồn tại.');
+ localStorage.setItem('sf_pass_'+n,p);username=n;load();enterGame();notify('Tạo tài khoản thành công! Tặng 100.000 xu.');
+}
+function login(){
+ const n=$('loginName').value.trim(),p=$('loginPass').value;
+ if(!localStorage.getItem('sf_pass_'+n))return notify('Chưa có tài khoản. Hãy đăng ký trước nhé.');
+ if(localStorage.getItem('sf_pass_'+n)!==p)return notify('Sai mật khẩu.');
+ username=n;load();enterGame();notify('Chào mừng trở lại, '+n+'!');
+}
+function showRegister(){$('loginForm').classList.add('hidden');$('registerForm').classList.remove('hidden')}
+function showLogin(){$('registerForm').classList.add('hidden');$('loginForm').classList.remove('hidden')}
+function enterGame(){
+ $('authScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');
+ $('playerLabel').textContent='👤 '+username;
+ renderAll();spawnBoss();
+ $('arena').querySelectorAll('.fish').forEach(f=>f.remove());
+ for(let i=0;i<14;i++)spawnFish();
+ renderBots();
+ if(!fireTimer)fireTimer=setInterval(tick,850);
+}
+function logout(){save();stopAuto();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
+function renderWallet(){$('wallet').textContent=fmt(wallet);$('wallet2').textContent=fmt(wallet)+' xu'}
+function renderAmmo(){
+ $('ammoList').innerHTML=ammos.map((a,i)=>`<div class="ammo ${i===ammoIndex?'active':''}" onclick="selectAmmo(${i})">
+  <span class="emoji">${a[0]}</span><b>${a[1]}</b><br><small>x${a[2]} sát thương boss</small></div>`).join('');
+}
+function selectAmmo(i){ammoIndex=i;renderAmmo();notify('Đã chọn '+ammos[i][1])}
+function renderBots(){
+ $('botGrid').innerHTML=[['🦈','BOT 1','1,230,000'],['🐙','BOT 2','980,000'],['🧜','BOT 3','2,450,000'],['🐲','BOT 4','1,870,000'],['🐡','BOT 5','1,560,000']]
+  .map(x=>`<div class="bot"><div class="face">${x[0]}</div><b>${x[1]}</b><small>🪙 ${x[2]}</small><div class="hint">Đang bắn</div></div>`).join('');
+}
 
-        // Kiểm tra va chạm
-        function checkCollision(bullet) {
-            const bulletRect = bullet.getBoundingClientRect();
-            
-            for (const fishObj of fishes) {
-                const fishRect = fishObj.element.getBoundingClientRect();
-                
-                if (
-                    bulletRect.left < fishRect.right &&
-                    bulletRect.right > fishRect.left &&
-                    bulletRect.top < fishRect.bottom &&
-                    bulletRect.bottom > fishRect.top
-                ) {
-                    // Trừ HP cá
-                    let currentHp = parseInt(fishObj.element.dataset.hp);
-                    currentHp -= weaponLevel;
-                    fishObj.element.dataset.hp = currentHp;
-                    
-                    // Hiệu ứng trúng đạn
-                    createEffect(fishObj.element, '-${weaponLevel}');
-                    
-                    if (currentHp <= 0) {
-                        // Cá chết, nhận thưởng
-                        wallet += fishObj.element.dataset.reward;
-                        createEffect(fishObj.element, '+${fishObj.element.dataset.reward}');
-                        
-                        fishObj.element.remove();
-                        fishes = fishes.filter(f => f.element !== fishObj.element);
-                    }
-                    
-                    // Xóa đạn sau va chạm
-                    bullet.remove();
-                    bullets = bullets.filter(b => b !== bullet);
-                    break;
-                }
-            }
+/* ===== BOSS ===== */
+function spawnBoss(){
+ const b=BOSSES[bossIdx];
+ bossMax=bossMaxFor(bossIdx,bossLoop);
+ if(bossHP<=0)bossHP=bossMax;
+ const el=$('boss');
+ el.innerHTML=bossArt(b.art);
+ el.classList.remove('dying');el.style.opacity=1;
+ el.onclick=e=>{e.stopPropagation();if(bossAlive)shoot(e,'boss')};
+ $('bossName').textContent=b.name+(bossLoop?' ⭐ x'+(bossLoop+1):'');
+ $('bossLv').textContent=b.lv;
+ bossAlive=true;renderBoss();
+ addFeed('🐉 '+b.name+' xuất hiện! Máu: '+fmt(bossHP));
+}
+function renderBoss(){
+ $('bossText').textContent=fmt(bossHP)+' / '+fmt(bossMax)+' HP';
+ const pct=Math.max(0,bossHP/bossMax*100);
+ $('bossHp').style.width=pct+'%';
+ $('boss').classList.toggle('rage',bossAlive&&pct<35);
+}
+function hitBoss(e,a,cost){
+ const dmg=Math.round(cost*a[2]*power*(0.75+Math.random()*0.65));
+ bossHP-=dmg;
+ const el=$('boss');el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),110);
+ floatText(e,'-'+fmt(dmg),'#ffed65');
+ if(bossHP<=0)killBoss();
+ renderBoss();
+}
+function killBoss(){
+ bossAlive=false;bossHP=0;
+ const reward=bossRewardFor(bossIdx,bossLoop);
+ wallet+=reward;renderWallet();
+ notify('🐉 HẠ GỤC '+BOSSES[bossIdx].name+'! +'+fmt(reward)+' xu thưởng!');
+ addFeed('🏆 Hạ '+BOSSES[bossIdx].name+' • +'+fmt(reward)+' xu');
+ $('boss').classList.add('dying');
+ bossIdx++;if(bossIdx>=BOSSES.length){bossIdx=0;bossLoop++}
+ bossMax=bossMaxFor(bossIdx,bossLoop);
+ clearTimeout(bossRespawn);
+ bossRespawn=setTimeout(()=>{bossHP=0;spawnBoss();save()},2400);
+ save();
+}
 
-            // Kiểm tra va chạm với boss
-            if (bossActive) {
-                const bossRect = boss.getBoundingClientRect();
-                if (
-                    bulletRect.left < bossRect.right &&
-                    bulletRect.right > bossRect.left &&
-                    bulletRect.top < bossRect.bottom &&
-                    bulletRect.bottom > bossRect.top
-                ) {
-                    let currentHp = parseInt(boss.dataset.hp);
-                    currentHp -= weaponLevel * 5;
-                    boss.dataset.hp = currentHp;
-                    bossHpEl.style.width = `${currentHp / 500 * 100}%`;
-                    
-                    createEffect(boss, '-${weaponLevel *5}');
-                    
-                    if (currentHp <= 0) {
-                        wallet += 2000;
-                        createEffect(boss, '+2000');
-                        boss.remove();
-                        boss = null;
-                        bossActive = false;
-                        bossBar.style.display = 'none';
-                    }
-                    
-                    bullet.remove();
-                    bullets = bullets.filter(b => b !== bullet);
-                }
-            }
-        }
+/* ===== CÁ ===== */
+function spawnFish(){
+ const r=Math.random();let acc=0,sp=FISH[0];
+ for(const f of FISH){acc+=f.w;if(r<acc){sp=f;break}}
+ const el=document.createElement('div');
+ el.className='fish';el.innerHTML=sp.svg;
+ el.style.left=(3+Math.random()*82)+'%';el.style.top=(18+Math.random()*58)+'%';
+ el.style.animationDelay=(-Math.random()*4)+'s';
+ const obj={sp,el,dead:false};
+ el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
+ $('arena').appendChild(el);
+}
 
-        // Tạo hiệu ứng số bay lên
-        function createEffect(target, text) {
-            const effect = document.createElement('div');
-            effect.className = 'effect';
-            effect.textContent = text;
-            effect.style.left = target.style.left;
-            effect.style.top = target.style.top;
-            effect.style.color = text.startsWith('+') ? '#00ff88' : '#ff4444';
-            
-            gameContainer.appendChild(effect);
-            setTimeout(() => effect.remove(), 1000);
-        }
+/* ===== BẮN ===== */
+function shoot(e,kind,fishObj){
+ const cost=Number($('bet').value);
+ if(wallet<cost){notify('Không đủ xu! Chọn mức đạn thấp hơn.');stopAuto();return}
+ wallet-=cost;
+ beam(e);
+ if(kind==='boss'){
+  hitBoss(e,ammos[ammoIndex],cost);
+ }else if(kind==='fish'){
+  const sp=fishObj.sp;
+  if(Math.random()<Math.min(.9,.9/sp.m)){
+   const reward=Math.round(cost*sp.m);
+   wallet+=reward;fishObj.dead=true;
+   floatText(e,'+'+fmt(reward),'#8dffb5');
+   fishObj.el.classList.add('dying');
+   setTimeout(()=>{fishObj.el.remove();spawnFish()},480);
+   if(sp.m>=15)notify('✨ Hạ cá hiếm! +'+fmt(reward)+' xu');
+  }else{
+   fishObj.el.classList.remove('wiggle');void fishObj.el.offsetWidth;fishObj.el.classList.add('wiggle');
+  }
+ }
+ renderWallet();renderBoss();save();
+}
+function beam(e){
+ const arena=$('arena'),rect=arena.getBoundingClientRect();
+ const x=e.clientX-rect.left,y=e.clientY-rect.top;
+ const sx=rect.width/2,sy=rect.height-30,dx=x-sx,dy=y-sy;
+ const b=document.createElement('div');b.className='beam';
+ b.style.left=sx+'px';b.style.top=sy+'px';b.style.width=Math.hypot(dx,dy)+'px';
+ b.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
+ arena.appendChild(b);setTimeout(()=>b.remove(),300);
+}
+function floatText(e,txt,color){
+ const arena=$('arena'),rect=arena.getBoundingClientRect();
+ const d=document.createElement('div');d.className='dmg';d.textContent=txt;d.style.color=color;
+ d.style.left=(e.clientX-rect.left)+'px';d.style.top=(e.clientY-rect.top)+'px';
+ arena.appendChild(d);setTimeout(()=>d.remove(),900);
+}
 
-        // Sự kiện bắn khi click tàu ngầm
-        submarine.addEventListener('click', () => {
-            createBullet();
-            updateDisplay();
-        });
+/* Bắn tự động: bắn vào boss */
+function toggleAuto(){
+ if(autoTimer)return stopAuto();
+ autoTimer=setInterval(autoShot,320);
+ $('autoBtn').textContent='⏸ Dừng bắn tự động';
+}
+function stopAuto(){
+ clearInterval(autoTimer);autoTimer=null;
+ $('autoBtn').textContent='▶ Bắn tự động';
+}
+function autoShot(){
+ if(!bossAlive)return;
+ const r=$('boss').getBoundingClientRect();
+ shoot({clientX:r.left+r.width/2,clientY:r.top+r.height*.4},'boss');
+}
 
-        // Tạo cá định kỳ
-        setInterval(() => {
-            if (fishes.length < 15) {
-                spawnFish();
-            }
-        }, 800);
+/* Nâng cấp pháo */
+function upgrade(){
+ const cost=150000*power;
+ if(wallet<cost)return notify('Cần '+fmt(cost)+' xu để nâng cấp pháo.');
+ wallet-=cost;power=Math.min(8,power+1);renderWallet();
+ notify('⚡ Nâng cấp pháo thành công! Sức mạnh x'+power);save();
+}
 
-        // Tự động bắn đạn định kỳ
-        setInterval(() => {
-            if (Math.random() < 0.7) {
-                createBullet();
-            }
-        }, 300);
+/* ===== THỊ TRƯỜNG (giữ nguyên) ===== */
+function tick(){
+ if($('gameScreen').classList.contains('hidden'))return;
+ if(Math.random()<.3){
+  const s=stocks[Math.floor(Math.random()*stocks.length)],old=s.p;
+  s.prev=old;s.p=Math.max(100,Math.round(old*(1+(Math.random()-.48)*.035)));
+  renderStocks();
+  if(!$('marketView').classList.contains('hidden'))renderBigMarket();
+  if(Math.random()<.35){
+   const up=s.p>old;
+   addFeed(`${up?'🟢':'🔴'} Tin ${s.name}: giá ${s.s} ${up?'tăng':'giảm'} ${Math.abs((s.p/old-1)*100).toFixed(2)}%`);
+  }
+  save();
+ }
+}
+function renderStocks(){
+ $('stockRows').innerHTML=stocks.map(s=>{
+  const d=(s.p/s.prev-1)*100;
+  return `<tr><td><b>${s.s}</b><br><small>${s.name}</small></td><td>${fmt(s.p)}</td>
+  <td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td>
+  <td><button style="padding:5px 7px" onclick="trade('${s.s}',true)">Mua</button>
+  <button style="padding:5px 7px;background:linear-gradient(135deg,#b91c48,#f44d75)" onclick="trade('${s.s}',false)">Bán</button></td></tr>`;
+ }).join('');
+ const h=Object.entries(hold).filter(x=>x[1]>0);
+ $('holdings').textContent=h.length?h.map(([s,q])=>s+': '+q+' cp').join(' • '):'Chưa mua cổ phiếu';
+}
+function trade(sym,buy){
+ const s=stocks.find(x=>x.s===sym);
+ if(buy){
+  const qty=Math.max(1,Math.min(20,Math.floor(wallet/s.p)));
+  if(!qty||wallet<s.p)return notify('Ví không đủ mua 1 cổ phiếu.');
+  wallet-=qty*s.p;hold[sym]=(hold[sym]||0)+qty;notify('Đã mua '+qty+' '+sym);
+ }else{
+  const qty=hold[sym]||0;
+  if(!qty)return notify('Mày chưa giữ mã '+sym);
+  wallet+=qty*s.p;hold[sym]=0;notify('Đã bán '+qty+' '+sym+' • nhận '+fmt(qty*s.p)+' xu');
+ }
+ renderWallet();renderStocks();
+ if(!$('marketView').classList.contains('hidden'))renderBigMarket();
+ save();
+}
+function addFeed(t){
+ const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' — '+t;
+ $('feed').prepend(d);while($('feed').children.length>20)$('feed').lastChild.remove();
+}
+function switchTab(t){
+ if(t==='stocks'){$('stockArea').classList.remove('hidden');notify('Đang xem thị trường cổ phiếu')}
+ else notify('Chọn cá hoặc boss trong vùng đại dương để bắn!');
+}
+function openMarket(){$('marketView').classList.remove('hidden');renderBigMarket();addFeed('📈 Đã mở sàn chứng khoán.');renderBigFeed()}
+function closeMarket(){$('marketView').classList.add('hidden')}
+function setSector(s){marketSector=s;renderBigMarket()}
+function renderBigFeed(){$('bigFeed').innerHTML=$('feed').innerHTML||'<div>Chưa có tin mới.</div>'}
+function renderBigMarket(){
+ $('marketWallet').textContent=fmt(wallet);
+ $('bigStockRows').innerHTML=stocks.filter(s=>marketSector==='Tất cả'||s.name===marketSector).map(s=>{
+  const d=(s.p/s.prev-1)*100;
+  return `<tr><td><b>${s.s}</b></td><td>${s.name}</td><td><b>${fmt(s.p)} xu</b></td>
+  <td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td><td>${hold[s.s]||0}</td>
+  <td><button onclick="trade('${s.s}',true);renderBigMarket()">Mua</button>
+  <button style="background:linear-gradient(135deg,#b91c48,#f44d75)" onclick="trade('${s.s}',false);renderBigMarket()">Bán</button></td></tr>`;
+ }).join('');
+ let entries=Object.entries(hold).filter(([s,q])=>q>0),total=0;
+ $('portfolioRows').innerHTML=entries.length?entries.map(([sym,q])=>{
+  const s=stocks.find(x=>x.s===sym),v=q*s.p;total+=v;
+  return `<tr><td><b>${sym}</b></td><td>${q}</td><td>${fmt(v)} xu</td>
+  <td><button style="background:linear-gradient(135deg,#b91c48,#f44d75)" onclick="trade('${sym}',false);renderBigMarket()">Bán hết</button></td></tr>`;
+ }).join(''):'<tr><td colspan="4">Chưa có cổ phiếu nào. Mua mã mày thích ở bảng giá.</td></tr>';
+ $('portfolioValue').textContent=fmt(total)+' xu';
+ $('portfolioTotal').textContent=fmt(total)+' xu';
+ $('portfolioPL').textContent=(total===0?'0':fmt(total))+' xu';
+ $('indexValue').textContent=(1245.32+Math.random()*2-1).toFixed(2);
+}
 
-        // Kiểm tra sinh boss định kỳ
-        setInterval(() => {
-            if (!bossActive && Math.random() < 0.02) {
-                const bossType = FISH_TYPES.find(f => f.isBoss);
-                boss = document.createElement('div');
-                boss.className = `fish boss`;
-                boss.textContent = bossType.emoji;
-                boss.dataset.hp = bossType.hp;
-                boss.dataset.reward = bossType.reward;
-                boss.dataset.speed = bossType.speed;
-                
-                boss.style.left = '-50px';
-                boss.style.top = `${Math.random() * (gameContainer.offsetHeight - 100)}px`;
-                
-                gameContainer.appendChild(boss);
-                bossActive = true;
-                bossBar.style.display = 'block';
-                bossHpEl.style.width = '100%';
-                
-                moveFish(boss);
-            }
-        }, 5000);
+function renderAll(){
+ renderWallet();renderAmmo();renderBoss();renderStocks();
+ addFeed('📣 Thị trường mở cửa — giá có thể tăng hoặc giảm ngẫu nhiên.');
+ addFeed('🐉 Các boss sẽ xuất hiện lần lượt. Máu rất trâu, kiên nhẫn nhé!');
+}
 
-        // Khởi tạo
-        updateDisplay();
-    </script>
+$('arena').addEventListener('click',e=>{
+ if(e.target.closest('.bossbar'))return;
+ if(!bossAlive&&!e.target.closest('.fish'))return;
+ shoot(e,'miss');
+});
+</script>
 </body>
 </html>
