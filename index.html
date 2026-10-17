@@ -236,7 +236,11 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
       <div class="panel gift">
         <div class="panelhead">🎁 Tặng xu bạn bè</div>
         <div class="box">
-          <div class="giftrow"><input id="friendName" placeholder="Tên người chơi"><button onclick="addFriend()">+ Thêm</button></div>
+          <div class="giftrow">
+            <input id="friendName" list="userList" placeholder="Chọn hoặc gõ tên người chơi">
+            <button onclick="addFriend()">+ Thêm</button>
+          </div>
+          <datalist id="userList"></datalist>
           <select id="friendSel"></select>
           <input id="giftAmt" type="number" min="1000" step="1000" value="10000" placeholder="Số xu (tối thiểu 1.000)">
           <button class="wide" onclick="sendGift()">🎁 Tặng xu</button>
@@ -461,6 +465,13 @@ function sideIdx(){return main.idx>=1?main.idx-1:BOSSES.length-1}
 function buffActive(t){return !!buff&&buff.type===t&&buff.until>Date.now()}
 function luckMult(){return buffActive('luck')?buff.mult:1}
 
+/* ===== DANH SÁCH NGƯỜI CHƠI (lưu chung trên máy) ===== */
+function registerUser(n){
+ const l=JSON.parse(localStorage.getItem('sf_users')||'[]');
+ if(!l.includes(n)){l.push(n);localStorage.setItem('sf_users',JSON.stringify(l))}
+}
+function allUsers(){return JSON.parse(localStorage.getItem('sf_users')||'[]')}
+
 /* ===== LƯU / TẢI ===== */
 function save(){
  localStorage.setItem('sf_user_'+username,JSON.stringify({wallet,hold,stocks,power,txs,inv,buff,daily,totals,friends,
@@ -487,13 +498,14 @@ function register(){
  if(n.length<3||p.length<4)return notify('Tên cần ≥3 ký tự, mật khẩu ≥4 ký tự.');
  if(p!==p2)return notify('Hai mật khẩu chưa trùng nhau.');
  if(localStorage.getItem('sf_pass_'+n))return notify('Tên này đã tồn tại.');
- localStorage.setItem('sf_pass_'+n,p);username=n;load();enterGame();notify('Tạo tài khoản thành công! Tặng 100.000 xu.');
+ localStorage.setItem('sf_pass_'+n,p);registerUser(n);
+ username=n;load();enterGame();notify('Tạo tài khoản thành công! Tặng 100.000 xu.');
 }
 function login(){
  const n=$('loginName').value.trim(),p=$('loginPass').value;
  if(!localStorage.getItem('sf_pass_'+n))return notify('Chưa có tài khoản. Hãy đăng ký trước nhé.');
  if(localStorage.getItem('sf_pass_'+n)!==p)return notify('Sai mật khẩu.');
- username=n;load();enterGame();notify('Chào mừng trở lại, '+n+'!');
+ username=n;registerUser(n);load();enterGame();notify('Chào mừng trở lại, '+n+'!');
 }
 function showRegister(){$('loginForm').classList.add('hidden');$('registerForm').classList.remove('hidden')}
 function showLogin(){$('registerForm').classList.add('hidden');$('loginForm').classList.remove('hidden')}
@@ -517,7 +529,7 @@ function enterGame(){
 }
 function logout(){save();stopAuto();resetTimers();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
 
-/* ===== TẶNG XU BẠN BÈ ===== */
+/* ===== BẠN BÈ & TẶNG XU ===== */
 function addFriend(){
  const n=$('friendName').value.trim();
  if(!n)return notify('Nhập tên người chơi.');
@@ -535,9 +547,11 @@ function removeFriend(n){
 }
 function sendGift(){
  ensureDaily();
- const to=$('friendSel').value,amt=Math.floor(Number($('giftAmt').value)||0);
- if(!to)return notify('Thêm bạn bè trước đã nhé.');
+ const to=$('friendSel').value;
+ const amt=Math.floor(Number($('giftAmt').value)||0);
+ if(!to)return notify('Chưa có bạn nào được chọn. Hãy thêm bạn trước.');
  if(!friends.includes(to))return notify('Người này không có trong danh sách bạn.');
+ if(!localStorage.getItem('sf_pass_'+to))return notify('Không tìm thấy tài khoản '+to+' trên máy này.');
  if(amt<1000)return notify('Tặng tối thiểu 1.000 xu.');
  if(amt>wallet)return notify('Ví không đủ xu.');
  const left=GIFT_DAILY_LIMIT-(daily.gifted||0);
@@ -546,30 +560,30 @@ function sendGift(){
  wallet-=amt;daily.gifted=(daily.gifted||0)+amt;
  const key='sf_gifts_'+to;
  const inbox=JSON.parse(localStorage.getItem(key)||'[]');
- inbox.push({from:username,amount:received});
+ inbox.push({from:username,amount:received,at:Date.now()});
  localStorage.setItem(key,JSON.stringify(inbox));
  txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:to,qty:'',price:'',total:-amt});
  txs=txs.slice(0,30);
- addFeed('🎁 Tặng '+fmt(received)+' xu cho '+to+' (phí '+Math.round(GIFT_FEE*100)+'%)');
- notify('🎁 Đã tặng '+fmt(received)+' xu cho '+to);
+ addFeed('🎁 Đã tặng '+fmt(received)+' xu cho '+to+' (phí '+Math.round(GIFT_FEE*100)+'%)');
+ notify('🎁 Đã gửi '+fmt(received)+' xu cho '+to);
  renderWallet();renderFriends();save();
 }
-/* Quà được lưu trong hộp thư, nhận khi người nhận vào game */
 function claimGifts(){
+ if(!username||$('gameScreen').classList.contains('hidden'))return;
  const key='sf_gifts_'+username;
  const inbox=JSON.parse(localStorage.getItem(key)||'[]');
  if(!inbox.length)return;
+ localStorage.removeItem(key);
  let sum=0;
  inbox.forEach(g=>{
   sum+=g.amount;
   txs.unshift({t:new Date().toLocaleTimeString(),type:'Nhận',sym:g.from,qty:'',price:'',total:g.amount});
  });
  txs=txs.slice(0,30);
- localStorage.removeItem(key);
  wallet+=sum;
- notify('🎁 Có '+inbox.length+' món quà từ bạn bè! +'+fmt(sum)+' xu');
+ notify('🎁 Nhận '+inbox.length+' món quà từ bạn bè! +'+fmt(sum)+' xu');
  addFeed('🎁 Nhận quà từ bạn bè: +'+fmt(sum)+' xu');
- renderWallet();save();
+ renderWallet();renderFriends();save();
 }
 function renderFriends(){
  ensureDaily();
@@ -579,9 +593,11 @@ function renderFriends(){
   :'<option value="">— chưa có bạn —</option>');
  setHTML('friendList',friends.length
   ?friends.map(f=>`<div class="invrow"><span>👤 ${f}</span><button class="sell" style="padding:4px 9px" onclick="removeFriend('${f}')">Xóa</button></div>`).join('')
-  :'<small>Chưa có bạn bè. Nhập tên người chơi để thêm.</small>');
+  :'<small>Chưa có bạn bè. Chọn tên người chơi rồi bấm Thêm.</small>');
+ setHTML('userList',allUsers().filter(u=>u!==username).map(u=>`<option value="${u}">`).join(''));
  const left=Math.max(0,GIFT_DAILY_LIMIT-(daily.gifted||0));
- $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'% • Hôm nay còn tặng được '+fmt(left)+' xu';
+ const pending=username?JSON.parse(localStorage.getItem('sf_gifts_'+username)||'[]').length:0;
+ $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'% • Hôm nay còn tặng được '+fmt(left)+' xu • 📬 Quà chờ: '+pending;
 }
 
 /* ===== RENDER CHUNG ===== */
@@ -679,7 +695,6 @@ function applyBossDamage(k,dmg,e,crit=false){
  if(t.hp<=0)killBoss(k);
  renderBoss(k);
 }
-/* Boss chính lao tới rồi lùi lại, cảnh báo trước 1 giây */
 function scheduleCharge(){
  clearTimeout(main.chargeTimer);
  if(!main.alive)return;
@@ -980,6 +995,7 @@ function renderBoard(){
 function tick(){
  if($('gameScreen').classList.contains('hidden'))return;
  ensureDaily();
+ claimGifts();
  if(buff&&buff.until<=Date.now()){buff=null;notify('⌛ Buff đã hết hiệu lực')}
  renderSkills();updateBuffLine();renderQuests();
  if(Math.random()<.3){
@@ -1082,6 +1098,7 @@ function renderBigMarket(){
 /* Khởi tạo */
 $('boss').onclick=e=>{e.stopPropagation();shoot(e,'main')};
 $('bossSide').onclick=e=>{e.stopPropagation();shoot(e,'side')};
+window.addEventListener('storage',e=>{if(username&&e.key==='sf_gifts_'+username)claimGifts()});
 renderAmmo();
 </script>
 </body>
