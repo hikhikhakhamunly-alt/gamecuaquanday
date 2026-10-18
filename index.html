@@ -243,9 +243,13 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
           <datalist id="userList"></datalist>
           <select id="friendSel"></select>
           <input id="giftAmt" type="number" min="1000" step="1000" value="10000" placeholder="Số xu (tối thiểu 1.000)">
-          <button class="wide" onclick="sendGift()">🎁 Tặng xu</button>
+          <button class="wide" onclick="sendGift()">🎁 Tặng xu cho bạn (cùng máy)</button>
           <div class="hint" id="giftInfo" style="margin-top:6px"></div>
           <div id="friendList" style="margin-top:8px"></div>
+          <hr style="border-color:#13537d">
+          <button class="wide" onclick="makeGiftCode()">🎟️ Tạo mã quà (tặng máy khác)</button>
+          <input id="giftCodeIn" placeholder="Dán mã quà nhận được" style="width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px;margin-top:6px">
+          <button class="wide" onclick="redeemCode()">📥 Nhận xu bằng mã</button>
         </div>
       </div>
       <div class="panel">
@@ -345,7 +349,7 @@ const htmlCache={};
 const ammos=[['🔹','Đạn thường',1,100],['💥','Đạn hạt',2.2,1000],['🔮','Laser',4,10000],['🧊','Đạn băng',5.5,10000],
  ['⚡','Đạn sét',8,50000],['🌟','Đạn pháo',12,100000],['💠','Siêu đạn',22,100000],['🌈','Đạn thiên hà',40,100000]];
 const BOSS_ARMOR=0.2, CRIT_CHANCE=0.08;
-const GIFT_FEE=0.05, GIFT_DAILY_LIMIT=500000, MAX_FRIENDS=20;
+const GIFT_FEE=0.05, MAX_FRIENDS=20;
 
 /* ===== ÂM THANH ===== */
 let audioCtx=null;
@@ -529,7 +533,7 @@ function enterGame(){
 }
 function logout(){save();stopAuto();resetTimers();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
 
-/* ===== BẠN BÈ & TẶNG XU ===== */
+/* ===== BẠN BÈ & TẶNG XU (cùng trình duyệt) ===== */
 function addFriend(){
  const n=$('friendName').value.trim();
  if(!n)return notify('Nhập tên người chơi.');
@@ -547,15 +551,12 @@ function removeFriend(n){
 }
 function sendGift(){
  ensureDaily();
- const to=$('friendSel').value;
- const amt=Math.floor(Number($('giftAmt').value)||0);
+ const to=$('friendSel').value,amt=Math.floor(Number($('giftAmt').value)||0);
  if(!to)return notify('Chưa có bạn nào được chọn. Hãy thêm bạn trước.');
  if(!friends.includes(to))return notify('Người này không có trong danh sách bạn.');
  if(!localStorage.getItem('sf_pass_'+to))return notify('Không tìm thấy tài khoản '+to+' trên máy này.');
  if(amt<1000)return notify('Tặng tối thiểu 1.000 xu.');
  if(amt>wallet)return notify('Ví không đủ xu.');
- const left=GIFT_DAILY_LIMIT-(daily.gifted||0);
- if(amt>left)return notify('Hôm nay chỉ còn tặng được '+fmt(Math.max(0,left))+' xu.');
  const received=Math.floor(amt*(1-GIFT_FEE));
  wallet-=amt;daily.gifted=(daily.gifted||0)+amt;
  const key='sf_gifts_'+to;
@@ -585,6 +586,41 @@ function claimGifts(){
  addFeed('🎁 Nhận quà từ bạn bè: +'+fmt(sum)+' xu');
  renderWallet();renderFriends();save();
 }
+
+/* ===== MÃ QUÀ (tặng máy khác, không cần máy chủ) ===== */
+function makeGiftCode(){
+ const amt=Math.floor(Number($('giftAmt').value)||0);
+ if(amt<1000)return notify('Tặng tối thiểu 1.000 xu.');
+ if(amt>wallet)return notify('Ví không đủ xu.');
+ const received=Math.floor(amt*(1-GIFT_FEE));
+ wallet-=amt;
+ const payload={f:username,a:received,id:Date.now().toString(36)+Math.random().toString(36).slice(2,8)};
+ const code='SF-'+btoa(encodeURIComponent(JSON.stringify(payload)));
+ txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:'Mã quà',qty:'',price:'',total:-amt});
+ txs=txs.slice(0,30);
+ renderWallet();save();
+ prompt('Copy mã quà này và gửi cho người nhận (chỉ gửi cho 1 người):',code);
+ addFeed('🎟️ Đã tạo mã quà '+fmt(received)+' xu');
+}
+function redeemCode(){
+ const raw=$('giftCodeIn').value.trim();
+ if(!raw.startsWith('SF-'))return notify('Mã quà không hợp lệ.');
+ let p;
+ try{p=JSON.parse(decodeURIComponent(atob(raw.slice(3))))}catch(e){return notify('Mã quà bị lỗi, kiểm tra lại.')}
+ if(!p||!p.id||!p.a||!p.f)return notify('Mã quà không hợp lệ.');
+ if(p.f===username)return notify('Không thể nhận mã do chính mình tạo.');
+ const used=JSON.parse(localStorage.getItem('sf_used_codes')||'[]');
+ if(used.includes(p.id))return notify('Mã này đã được dùng trên máy này.');
+ used.push(p.id);localStorage.setItem('sf_used_codes',JSON.stringify(used));
+ wallet+=p.a;
+ txs.unshift({t:new Date().toLocaleTimeString(),type:'Nhận',sym:p.f,qty:'',price:'',total:p.a});
+ txs=txs.slice(0,30);
+ $('giftCodeIn').value='';
+ notify('🎁 Nhận '+fmt(p.a)+' xu từ '+p.f+'!');
+ addFeed('🎁 Nhận quà mã từ '+p.f+': +'+fmt(p.a)+' xu');
+ renderWallet();save();
+}
+
 function renderFriends(){
  ensureDaily();
  const cur=$('friendSel').value;
@@ -595,9 +631,8 @@ function renderFriends(){
   ?friends.map(f=>`<div class="invrow"><span>👤 ${f}</span><button class="sell" style="padding:4px 9px" onclick="removeFriend('${f}')">Xóa</button></div>`).join('')
   :'<small>Chưa có bạn bè. Chọn tên người chơi rồi bấm Thêm.</small>');
  setHTML('userList',allUsers().filter(u=>u!==username).map(u=>`<option value="${u}">`).join(''));
- const left=Math.max(0,GIFT_DAILY_LIMIT-(daily.gifted||0));
  const pending=username?JSON.parse(localStorage.getItem('sf_gifts_'+username)||'[]').length:0;
- $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'% • Hôm nay còn tặng được '+fmt(left)+' xu • 📬 Quà chờ: '+pending;
+ $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'% • 📬 Quà chờ: '+pending;
 }
 
 /* ===== RENDER CHUNG ===== */
