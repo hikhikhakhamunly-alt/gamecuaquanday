@@ -2,9 +2,8 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stock & Fish — Bản đầy đủ</title>
+<title>Stock & Fish — Đại dương</title>
 <style>
-:root{--cyan:#20eaff;--blue:#087bff;--gold:#ffd34f;--panel:#061b3b;--line:#168ddc}
 *{box-sizing:border-box}
 body{margin:0;background:#020a20;color:#eefaff;font:14px/1.4 system-ui,Segoe UI,Arial;overflow-x:hidden}
 button,input,select,textarea{font:inherit}
@@ -14,55 +13,46 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .hidden{display:none!important}
 .screen{min-height:100vh;padding:18px;background:radial-gradient(ellipse at 50% 0,#07568b 0,#031735 44%,#02091b 100%)}
 .brand{text-align:center;font-size:clamp(30px,5vw,56px);font-weight:1000;letter-spacing:-2px;color:#fff;text-shadow:0 3px 0 #0750a0,0 0 22px #00d9ff}
-.brand span{color:var(--gold)}.sub{text-align:center;color:#9cecff;margin:0 0 20px}
-.auth-wrap{max-width:950px;margin:4vh auto;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
-.hero,.auth{border:1px solid #159fe8;border-radius:20px;background:linear-gradient(145deg,#07315bdb,#04132df2);box-shadow:0 0 30px #00baff1a;padding:24px}
-.hero-art{text-align:center;font-size:clamp(40px,8vw,95px);padding:20px 0;filter:drop-shadow(0 0 15px #00cfff)}
-.hero p{color:#b9e8ff}.auth h2{margin:0 0 14px}
+.brand span{color:#ffd34f}.sub{text-align:center;color:#9cecff;margin:0 0 20px}
+.auth-wrap{max-width:900px;margin:4vh auto;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.hero,.auth{border:1px solid #159fe8;border-radius:20px;background:linear-gradient(145deg,#07315bdb,#04132df2);padding:24px}
+.hero-art{text-align:center;font-size:clamp(40px,8vw,90px);padding:16px 0}
 .auth input{width:100%;padding:12px;margin:6px 0;background:#06132a;border:1px solid #21649a;border-radius:9px;color:#fff}
 .auth .wide{width:100%;margin-top:10px}
-.switch{color:#7de8ff;text-decoration:underline;cursor:pointer}.hint{color:#92b6d1;font-size:12px}
-
-.topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px 14px;margin-bottom:12px}
-.money{margin-left:auto;color:var(--gold);font-weight:1000;font-size:20px}
+.switch{color:#7de8ff;text-decoration:underline;cursor:pointer}
+.hint{color:#92b6d1;font-size:12px}
+.topbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px 14px;margin-bottom:12px}
+.money{margin-left:auto;color:#ffd34f;font-weight:1000;font-size:20px}
 .layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.9fr);gap:12px}
-.panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:15px;overflow:hidden;box-shadow:0 0 20px #00bfff12}
+.panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:15px;overflow:hidden}
 .panelhead{padding:10px 13px;background:#092b50;border-bottom:1px solid #13537d;font-weight:900;display:flex;justify-content:space-between;align-items:center}
-
-/* ===== ĐẠI DƯƠNG ===== */
-.arena{position:relative;height:500px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 0,#8ff7ff 0,#1aa8e0 22%,#0a5fa8 52%,#052a5c 80%,#020d2c 100%);transition:filter .2s}
-.arena.shake{animation:screenshake .35s}
-@keyframes screenshake{0%,100%{translate:0 0}20%{translate:-7px 4px}40%{translate:6px -5px}60%{translate:-4px 3px}80%{translate:3px -2px}}
+.box{padding:10px 12px;color:#b5ddf8;font-size:13px}
+.arena{position:relative;height:500px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 0,#8ff7ff 0,#1aa8e0 22%,#0a5fa8 52%,#052a5c 80%,#020d2c 100%)}
+.arena.shake{animation:shk .35s}
+@keyframes shk{0%,100%{translate:0 0}20%{translate:-7px 4px}40%{translate:6px -5px}60%{translate:-4px 3px}80%{translate:3px -2px}}
 .arena.rage{background:radial-gradient(ellipse at 50% 0,#ffb3b3 0,#c4305a 25%,#5a0f2e 60%,#1a0212 100%)}
-.arena:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 12% 25%,#e6ffffaa 0 2px,transparent 3px),radial-gradient(circle at 82% 40%,#e6ffff88 0 3px,transparent 4px),radial-gradient(circle at 40% 80%,#e6ffffaa 0 2px,transparent 3px);background-size:90px 100px;animation:bubbles 7s linear infinite}
-.arena:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(105deg,transparent 0 70px,#ffffff12 70px 110px,transparent 110px 190px);animation:rays 9s linear infinite alternate}
-@keyframes bubbles{to{background-position:0 -300px,0 -200px,0 -400px}}
-@keyframes rays{to{opacity:.4}}
-
 .fish{position:absolute;width:clamp(70px,9vw,96px);z-index:2;cursor:pointer;user-select:none;filter:drop-shadow(0 0 8px #16dfff);animation:swim 4s ease-in-out infinite alternate;transition:transform .15s}
 .fish.small{width:clamp(44px,5.5vw,60px)}
 .fish svg{width:100%;height:auto;display:block}
-.fish:hover{transform:scale(1.12);filter:drop-shadow(0 0 14px #ffeb75)}
+.fish:hover{transform:scale(1.12)}
 @keyframes swim{from{translate:-10px 4px}to{translate:18px -12px}}
 .fish.dying{opacity:0!important;transform:rotate(180deg) scale(.4)!important;transition:transform .45s,opacity .45s!important}
 .fish.wiggle{animation:wig .2s}
 @keyframes wig{50%{translate:6px 0}}
 .fish.school{animation:schoolswim 7s linear forwards}
 @keyframes schoolswim{from{left:-120px}to{left:110%}}
-
 .boss{position:absolute;left:50%;top:30%;width:clamp(190px,27vw,270px);z-index:5;translate:-50% -50%;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation:bossfloat 2.4s ease-in-out infinite alternate;transition:opacity .6s}
 .boss.side{left:24%;top:44%;width:clamp(130px,17vw,180px);animation-duration:3s}
 .boss svg{width:100%;height:auto;display:block}
 @keyframes bossfloat{to{translate:-50% -56%;filter:drop-shadow(0 0 30px #ff41e9)}}
 .boss.rage{filter:drop-shadow(0 0 26px #ff1f5a) hue-rotate(-30deg) saturate(1.4)}
-.boss.rage svg{animation:rageshake .12s infinite}
-@keyframes rageshake{0%{transform:translate(-3px,0)}50%{transform:translate(3px,-2px)}100%{transform:translate(-2px,2px)}}
-.boss.hit{animation:bosshit .22s}
-@keyframes bosshit{0%{scale:1}35%{scale:.9;rotate:-4deg}100%{scale:1;rotate:0deg}}
+.boss.rage svg{animation:rage .12s infinite}
+@keyframes rage{0%{transform:translate(-3px,0)}50%{transform:translate(3px,-2px)}100%{transform:translate(-2px,2px)}}
+.boss.hit{animation:bh .22s}
+@keyframes bh{0%{scale:1}35%{scale:.9;rotate:-4deg}100%{scale:1;rotate:0deg}}
 .boss.charge{transition:translate .55s cubic-bezier(.2,.9,.3,1)}
 .boss.dying{opacity:0!important;transform:scale(.3) rotate(200deg)!important;transition:transform .9s,opacity .9s!important}
 .boss.flash svg{filter:brightness(2.4)}
-
 .bossbar{position:absolute;left:2%;right:44%;top:8px;text-align:center;z-index:6;text-shadow:0 2px 4px #001a33}
 .sidebar{position:absolute;left:57%;right:2%;top:8px;text-align:center;z-index:6;text-shadow:0 2px 4px #001a33;font-size:12px}
 .hpouter{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
@@ -70,25 +60,23 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .hpinner.side{background:linear-gradient(90deg,#6d4cff,#4fd8ff)}
 .cannon{position:absolute;bottom:0;left:50%;translate:-50% 0;width:92px;height:92px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
 .cannon svg{width:100%;height:100%;display:block}
-.cannon.recoil{animation:recoil .2s}
-@keyframes recoil{50%{translate:-50% 5px}}
+.cannon.recoil{animation:rc .2s}
+@keyframes rc{50%{translate:-50% 5px}}
 .dmg{position:absolute;font-size:20px;font-weight:1000;pointer-events:none;z-index:9;text-shadow:0 2px 4px #001a33;animation:pop .85s forwards;white-space:nowrap}
-.dmg.crit{font-size:34px;color:#ff4d6d!important;text-shadow:0 0 12px #ffe600,0 2px 4px #7d0019}
+.dmg.crit{font-size:34px;color:#ff4d6d!important}
 @keyframes pop{to{transform:translateY(-65px) scale(1.3);opacity:0}}
-.beam{position:absolute;height:6px;transform-origin:left center;box-shadow:0 0 12px #37f9ff;border-radius:100px;pointer-events:none;z-index:7;animation:fadebeam .28s forwards}
-@keyframes fadebeam{to{opacity:0}}
-.burst{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;pointer-events:none;z-index:8;background:radial-gradient(circle,#fff 0,#ffe066 25%,#ff7ab8 55%,transparent 70%);animation:burst .45s forwards}
-@keyframes burst{to{transform:scale(3.2);opacity:0}}
-.coin{position:absolute;font-size:20px;pointer-events:none;z-index:9;filter:drop-shadow(0 0 6px #ffd34f)}
-.warn{position:absolute;left:50%;top:44%;translate:-50% -50%;font-size:clamp(30px,5vw,54px);font-weight:1000;color:#ffe600;text-shadow:0 0 16px #ff0055,0 4px 0 #6b0020;z-index:20;pointer-events:none;animation:warnpop 1s forwards;white-space:nowrap}
-@keyframes warnpop{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.15);opacity:1}70%{transform:scale(1);opacity:1}100%{transform:scale(1.2);opacity:0}}
-
+.beam{position:absolute;height:6px;transform-origin:left center;box-shadow:0 0 12px #37f9ff;border-radius:100px;pointer-events:none;z-index:7;animation:fb .28s forwards}
+@keyframes fb{to{opacity:0}}
+.burst{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;pointer-events:none;z-index:8;background:radial-gradient(circle,#fff 0,#ffe066 25%,#ff7ab8 55%,transparent 70%);animation:bu .45s forwards}
+@keyframes bu{to{transform:scale(3.2);opacity:0}}
+.coin{position:absolute;font-size:20px;pointer-events:none;z-index:9}
+.warn{position:absolute;left:50%;top:44%;translate:-50% -50%;font-size:clamp(30px,5vw,54px);font-weight:1000;color:#ffe600;text-shadow:0 0 16px #ff0055,0 4px 0 #6b0020;z-index:20;pointer-events:none;animation:wp 1s forwards;white-space:nowrap}
+@keyframes wp{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.15);opacity:1}70%{transform:scale(1);opacity:1}100%{transform:scale(1.2);opacity:0}}
 .controls{padding:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#03132b}
-.controls label{color:#9ddfff}
 .controls select{background:#061a35;color:#fff;border:1px solid #167bb1;border-radius:8px;padding:9px}
 .ammo-list{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:10px}
 .ammo{padding:9px 5px;text-align:center;border:1px solid #165b90;border-radius:10px;background:#071b37;cursor:pointer}
-.ammo.active{border-color:#ffe66b;box-shadow:0 0 13px #ffdf3b55;background:#13385b}
+.ammo.active{border-color:#ffe66b;background:#13385b}
 .ammo .emoji{font-size:25px;display:block}.ammo small{color:#9edcff;font-size:11px}
 .botscroll{max-height:320px;overflow:auto}
 .botgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;padding:10px}
@@ -96,72 +84,51 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .bot .face{font-size:22px}.bot b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bot small{color:#ffd75e;font-size:10px;display:block}.bot .hint{font-size:9px}
 .rightcol{display:grid;gap:12px;align-content:start}
-.balancebox{padding:14px;color:#a9eaff}.balancebox strong{color:var(--gold);font-size:25px}
-.tabs{display:flex;gap:5px;flex-wrap:wrap;padding:9px}.tabs button{padding:6px 9px;font-size:12px}
 .stocks{width:100%;border-collapse:collapse;font-size:12px}
-.stocks th,.stocks td{padding:8px 7px;text-align:left;border-bottom:1px solid #123a60}.stocks th{color:#91dfff}
+.stocks th,.stocks td{padding:8px 7px;text-align:left;border-bottom:1px solid #123a60}
 .up{color:#47ffb3}.down{color:#ff7099}
 .feed{padding:10px;max-height:190px;overflow:auto;color:#b5ddf8;font-size:12px}
 .feed div{padding:6px 0;border-bottom:1px solid #123353}
-.box{padding:10px 12px;color:#b5ddf8;font-size:13px}
 .quest{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #123a60}
-.quest small{color:#9edcff}
 .qbar{height:7px;background:#0a2a4a;border-radius:6px;overflow:hidden;margin:4px 0}
 .qbar div{height:100%;background:linear-gradient(90deg,#20eaff,#47ffb3)}
-.invrow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #123a60}
+.invrow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #123a60;gap:6px}
 .invrow button{padding:5px 10px}
 .buffline{padding-top:8px;color:#ffe66b;font-weight:700}
 .brow{display:flex;justify-content:space-between;gap:8px;padding:6px 4px;border-bottom:1px solid #123a60;font-size:12px}
-.brow.me{background:#0c3a5e;border-radius:6px;color:#fff}
-.gift input,.gift select,.gift textarea{width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px;margin:4px 0}
-.giftrow{display:flex;gap:6px;margin-bottom:6px}
-.giftrow input{margin:0}
-.gift .wide{width:100%;margin-top:6px}
-.notice{position:fixed;top:16px;left:50%;translate:-50% 0;background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:11px 16px;box-shadow:0 0 25px #00dfff55;z-index:99;max-width:90%;text-align:center}
-.foot{padding:12px;text-align:center;color:#739dbd;font-size:11px}
-
-.market-launch{background:linear-gradient(135deg,#e5a900,#ffdf62);color:#17223a;border-color:#ffe58a;font-size:15px;padding:11px 16px}
-.market-view{position:fixed;inset:0;z-index:80;background:radial-gradient(ellipse at top,#084d7d,#03132e 62%,#010817);padding:18px;overflow:auto}
-.market-shell{max-width:1400px;margin:auto}
-.market-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px;background:#061b38;border:1px solid #1598db;border-radius:16px;margin-bottom:14px}
-.market-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.8fr);gap:14px}
-.market-card{background:linear-gradient(145deg,#08284d,#04132b);border:1px solid #177bb5;border-radius:16px;overflow:hidden;margin-bottom:14px}
-.market-card h2{font-size:18px;margin:0;padding:14px;border-bottom:1px solid #15517d;background:#092e53}
-.market-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px}
-.kpi{padding:14px;background:#061a35;border:1px solid #174d76;border-radius:12px}
-.kpi small{color:#9dcce9;display:block}.kpi b{font-size:22px;color:#ffe06a}
-.market-table{width:100%;border-collapse:collapse}
-.market-table th,.market-table td{padding:12px 10px;border-bottom:1px solid #123b5c;text-align:left}
-.market-table th{color:#9cddff;background:#071e3a}.market-table button{padding:7px 11px}
-.market-chart{height:190px;margin:14px;border:1px solid #14517d;border-radius:12px;background:linear-gradient(180deg,#073454,#04162d);position:relative;overflow:hidden;padding:12px}
-.market-chart svg{width:100%;height:100%}
-.market-actions{display:flex;gap:8px;flex-wrap:wrap;padding:12px}
-.market-feed{padding:12px;max-height:300px;overflow:auto;color:#b5ddf8}
-.market-feed div{padding:9px 0;border-bottom:1px solid #123353}
-.market-exit{background:linear-gradient(135deg,#17456d,#0b77ac)}
+.brow.me{background:#0c3a5e;border-radius:6px}
+.gin{width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px;margin:4px 0}
+.notice{position:fixed;top:16px;left:50%;translate:-50% 0;background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:11px 16px;z-index:99;max-width:90%;text-align:center}
 .sell{background:linear-gradient(135deg,#b91c48,#f44d75)!important}
-
-/* ===== KHO SÚNG ===== */
-.shop{position:fixed;inset:0;z-index:85;background:#010817e8;padding:16px;overflow:auto}
-.shopbox{max-width:1100px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:16px;padding:14px}
-.shophead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.gold{background:linear-gradient(135deg,#e5a900,#ffdf62);color:#17223a!important}
+.over{position:fixed;inset:0;z-index:80;background:#010817f0;padding:16px;overflow:auto}
+.overbox{max-width:1100px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:16px;padding:14px}
+.ohead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
 .shopgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
 .gcard{border:1px solid #1c6090;border-radius:14px;background:#071b37;padding:10px;text-align:center}
-.gcard.eq{border-color:#47ffb3;box-shadow:0 0 14px #47ffb355}
+.gcard.eq{border-color:#47ffb3}
 .gimg{height:120px;display:flex;align-items:center;justify-content:center}
-.gimg svg{height:100%;width:auto;filter:drop-shadow(0 0 10px #00e5ff88)}
-.gname{font-weight:900;margin-top:4px}
-.gstat{color:#9edcff;font-size:12px}
-.gprice{color:#ffd34f;font-weight:900;margin:4px 0}
+.gimg svg{height:100%;width:auto}
 .gcard button{width:100%;font-size:13px;padding:8px}
-.coins{color:#ffd34f;font-weight:900}
-
+.gprice{color:#ffd34f;font-weight:900;margin:4px 0}
+.mk{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.8fr);gap:14px}
+.card2{background:linear-gradient(145deg,#08284d,#04132b);border:1px solid #177bb5;border-radius:16px;overflow:hidden;margin-bottom:14px}
+.card2 h2{font-size:17px;margin:0;padding:12px;border-bottom:1px solid #15517d;background:#092e53}
+table.mt{width:100%;border-collapse:collapse;font-size:13px}
+table.mt th,table.mt td{padding:9px 8px;border-bottom:1px solid #123b5c;text-align:left}
+.chart{height:190px;margin:12px;border:1px solid #14517d;border-radius:12px;background:#04162d;overflow:hidden;padding:10px}
+.chart svg{width:100%;height:100%}
+.door{width:140px;height:190px;border-radius:14px;border:2px solid #2edfff;background:linear-gradient(145deg,#1d4f8a,#0b2550);display:inline-flex;align-items:center;justify-content:center;font-size:52px;cursor:pointer;margin:8px;position:relative}
+.door.won{border-color:#47ffb3}.door.lost{border-color:#ff7099}
+.lk{position:relative;height:56px;margin:26px auto 10px;max-width:640px;border-radius:14px;background:#071b37;border:2px solid #2edfff;overflow:hidden}
+.zn{position:absolute;top:0;bottom:0}
+.needle{position:absolute;top:-6px;bottom:-6px;width:6px;margin-left:-3px;background:#fff;box-shadow:0 0 12px #fff;border-radius:4px}
+.tabs2{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.center{text-align:center}
+.res{text-align:center;font-weight:900;font-size:20px;min-height:30px;margin-top:10px}
 @media(max-width:850px){
- .layout{grid-template-columns:1fr}.arena{height:420px}.auth-wrap{grid-template-columns:1fr}.hero{display:none}.money{margin-left:0}
- .market-grid{grid-template-columns:1fr}.market-kpis{grid-template-columns:1fr}
- .market-table th,.market-table td{padding:8px 5px;font-size:12px}.market-view{padding:8px}
- .botgrid{grid-template-columns:repeat(3,1fr)}
- .bossbar{right:30%}.sidebar{left:70%}
+ .layout{grid-template-columns:1fr}.arena{height:420px}.auth-wrap{grid-template-columns:1fr}.hero{display:none}
+ .mk{grid-template-columns:1fr}.botgrid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
@@ -170,14 +137,14 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 
 <section id="authScreen" class="screen">
   <div class="brand">STOCK <span>&</span> FISH</div>
-  <p class="sub">BẮN CÁ • ĐẦU TƯ • SĂN BOSS • CHƠI VUI BẰNG XU ẢO</p>
+  <p class="sub">BẮN CÁ • ĐẦU TƯ • TRÒ CHƠI • CHƠI VUI BẰNG XU ẢO</p>
   <div class="auth-wrap">
     <div class="hero">
       <div class="hero-art">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>Cá anime đủ loại, boss máu trâu biết lao tới và nổi giận, đàn em hỗ trợ, 11 loại súng đẹp, nhiệm vụ mỗi ngày, rương kho báu, skill hồi chiêu, bảng xếp hạng và tặng xu cho bạn bè. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
+      <p>Cá anime, boss máu trâu, 11 loại súng, bot, chứng khoán, cửa may rủi, đếm ngược mở khóa, tặng xu và mã quà.</p>
       <p>🪙 Ví khởi đầu: <b style="color:#ffd34f">100.000 xu</b></p>
-      <p class="hint">Bản demo: tài khoản lưu trên trình duyệt này, chưa có máy chủ hay tiền thật.</p>
+      <p class="hint">Chạy hoàn toàn trên trình duyệt, không cần máy chủ. Dữ liệu lưu trên máy này.</p>
     </div>
     <div class="auth">
       <div id="loginForm">
@@ -195,34 +162,30 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
         <button class="wide" onclick="register()">Tạo tài khoản</button>
         <p>Đã có tài khoản? <span class="switch" onclick="showLogin()">Đăng nhập</span></p>
       </div>
-      <p class="hint">Đăng ký demo chỉ lưu trong trình duyệt hiện tại. Đừng dùng mật khẩu thật của mày.</p>
     </div>
   </div>
 </section>
 
 <section id="gameScreen" class="screen hidden">
   <div class="topbar">
-    <b>🌊 STOCK & FISH</b><span id="playerLabel">Thợ săn</span>
+    <b>🌊 STOCK & FISH</b><span id="playerLabel"></span>
     <span id="gunName" style="color:#9edcff"></span>
-    <span class="money">🪙 <span id="wallet">100,000</span> xu</span>
+    <span class="money">🪙 <span id="wallet">0</span> xu</span>
     <button onclick="openShop()">🔫 Kho súng</button>
-    <button class="market-launch" onclick="openMarket()">📈 Vào chứng khoán</button>
+    <button onclick="openGames()">🎮 Trò chơi</button>
+    <button class="gold" onclick="openMarket()">📈 Chứng khoán</button>
     <button onclick="logout()">Thoát</button>
   </div>
 
   <div class="layout">
     <div>
       <div class="panel">
-        <div class="panelhead"><span>🐟 ĐẠI CHIẾN ĐẠI DƯƠNG</span><span id="status">Đang săn cá</span></div>
+        <div class="panelhead"><span>🐟 ĐẠI CHIẾN ĐẠI DƯƠNG</span><span id="status"></span></div>
         <div id="arena" class="arena">
-          <div class="bossbar">
-            <b>👑 <span id="bossName"></span> • Lv <span id="bossLv"></span> — <span id="bossText"></span></b>
-            <div class="hpouter"><div id="bossHp" class="hpinner"></div></div>
-          </div>
-          <div id="sideBar" class="sidebar hidden">
-            <b>🐟 <span id="sideName"></span> — <span id="sideText"></span></b>
-            <div class="hpouter"><div id="sideHp" class="hpinner side"></div></div>
-          </div>
+          <div class="bossbar"><b>👑 <span id="bossName"></span> • Lv <span id="bossLv"></span> — <span id="bossText"></span></b>
+            <div class="hpouter"><div id="bossHp" class="hpinner"></div></div></div>
+          <div id="sideBar" class="sidebar hidden"><b>🐟 <span id="sideName"></span> — <span id="sideText"></span></b>
+            <div class="hpouter"><div id="sideHp" class="hpinner side"></div></div></div>
           <div id="boss" class="boss"></div>
           <div id="bossSide" class="boss side hidden"></div>
           <div id="cannon" class="cannon"></div>
@@ -230,10 +193,8 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
         <div class="controls">
           <label>Đạn mỗi phát:</label>
           <select id="bet" onchange="renderAmmo()">
-            <option value="100">100 xu</option>
-            <option value="1000">1.000 xu</option>
-            <option value="10000" selected>10.000 xu</option>
-            <option value="50000">50.000 xu</option>
+            <option value="100">100 xu</option><option value="1000">1.000 xu</option>
+            <option value="10000" selected>10.000 xu</option><option value="50000">50.000 xu</option>
             <option value="100000">100.000 xu</option>
           </select>
           <button id="autoBtn" onclick="toggleAuto()">▶ Bắn tự động</button>
@@ -252,310 +213,227 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
     <div class="rightcol">
       <div class="panel">
         <div class="panelhead">💰 Ví chung</div>
-        <div class="balancebox">Số dư hiện tại<br><strong id="wallet2">100,000 xu</strong>
-          <p>🎯 Tiền bắn cá và đầu tư cổ phiếu dùng chung một ví.</p>
-          <button onclick="switchTab('fish')">Bắn cá</button> <button onclick="switchTab('stocks')">Đầu tư</button>
-        </div>
+        <div class="box">Số dư: <b id="wallet2" style="color:#ffd34f;font-size:22px"></b>
+          <div class="hint">Xu bắn cá, bầu cua, cửa may rủi và đầu tư dùng chung một ví.</div></div>
       </div>
-      <div class="panel gift">
-        <div class="panelhead">🎁 Tặng xu bạn bè</div>
+
+      <div class="panel">
+        <div class="panelhead">🎁 Tặng xu & mã quà</div>
         <div class="box">
-          <div class="giftrow">
-            <input id="friendName" list="userList" placeholder="Chọn hoặc gõ tên người chơi">
-            <button onclick="addFriend()">+ Thêm</button>
-          </div>
+          <div style="display:flex;gap:6px"><input class="gin" id="friendName" list="userList" placeholder="Tên người chơi" style="margin:0"><button onclick="addFriend()">+ Thêm</button></div>
           <datalist id="userList"></datalist>
-          <select id="friendSel"></select>
-          <input id="giftAmt" type="number" min="1000" step="1000" value="10000" placeholder="Số xu (tối thiểu 1.000)">
-          <button class="wide" onclick="sendGift()">🎁 Tặng xu cho bạn (cùng máy)</button>
-          <div class="hint" id="giftInfo" style="margin-top:6px"></div>
-          <div id="friendList" style="margin-top:8px"></div>
-
-          <hr style="border-color:#13537d;margin:12px 0">
-          <div style="font-weight:800;color:#ffe66b;margin-bottom:4px">🎟️ Mã quà (tặng nhiều máy)</div>
+          <select id="friendSel" class="gin"></select>
+          <input id="giftAmt" class="gin" type="number" min="1000" step="1000" value="10000">
+          <button style="width:100%" onclick="sendGift()">🎁 Tặng bạn (cùng trình duyệt)</button>
+          <div class="hint" id="giftInfo" style="margin:6px 0"></div>
+          <div id="friendList"></div>
+          <hr style="border-color:#13537d">
           <label class="hint">Số xu mỗi người nhận</label>
-          <input id="codeAmt" type="number" min="1000" step="1000" value="50000">
+          <input id="codeAmt" class="gin" type="number" min="1000" step="1000" value="50000">
           <label class="hint">Số người nhận</label>
-          <input id="codeCount" type="number" min="1" step="1" value="5">
-          <button class="wide" onclick="makeGiftCode()">🎟️ Tạo mã quà</button>
-          <div class="hint" id="codeInfo" style="margin-top:6px"></div>
-          <textarea id="codeOut" rows="3" readonly placeholder="Mã quà sẽ hiện ở đây sau khi tạo"></textarea>
-
-          <hr style="border-color:#13537d;margin:12px 0">
-          <input id="giftCodeIn" placeholder="Dán mã quà nhận được" style="width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px">
-          <button class="wide" onclick="redeemCode()">📥 Nhận xu bằng mã</button>
+          <input id="codeCount" class="gin" type="number" min="1" value="5">
+          <button style="width:100%" onclick="makeGiftCode()">🎟️ Tạo mã quà</button>
+          <div class="hint" id="codeInfo"></div>
+          <textarea id="codeOut" class="gin" rows="3" readonly></textarea>
+          <input id="giftCodeIn" class="gin" placeholder="Dán mã quà nhận được">
+          <button style="width:100%" onclick="redeemCode()">📥 Nhận xu bằng mã</button>
         </div>
       </div>
+
+      <div class="panel"><div class="panelhead">🎯 Nhiệm vụ hôm nay</div><div class="box" id="questBox"></div></div>
+      <div class="panel"><div class="panelhead">🎒 Kho đồ</div><div class="box"><div id="invBox"></div><div class="buffline" id="buffLine"></div></div></div>
+      <div class="panel"><div class="panelhead">🏆 Bảng xếp hạng (có bot)</div><div class="box" id="boardBox"></div></div>
       <div class="panel">
-        <div class="panelhead">🎯 Nhiệm vụ hôm nay</div>
-        <div class="box" id="questBox"></div>
-      </div>
-      <div class="panel">
-        <div class="panelhead">🎒 Kho đồ</div>
-        <div class="box"><div id="invBox"></div><div class="buffline" id="buffLine">Buff: không có</div></div>
-      </div>
-      <div class="panel">
-        <div class="panelhead">🏆 Bảng xếp hạng (có bot)</div>
-        <div class="box" id="boardBox"></div>
-      </div>
-      <div class="panel">
-        <div class="panelhead">📈 Thị trường cổ phiếu</div>
-        <div class="tabs"><button onclick="switchTab('stocks')">Cổ phiếu</button><button onclick="switchTab('fish')">Đại dương</button></div>
-        <div id="stockArea">
+        <div class="panelhead">📈 Thị trường nhanh</div>
+        <div class="box" id="stockArea">
           <table class="stocks"><thead><tr><th>Mã</th><th>Giá</th><th>Đổi</th><th></th></tr></thead><tbody id="stockRows"></tbody></table>
-          <div class="balancebox">Đang giữ: <span id="holdings">Chưa mua cổ phiếu</span></div>
+          <div style="padding-top:8px">Đang giữ: <span id="holdings"></span></div>
         </div>
         <div class="feed" id="feed"></div>
       </div>
     </div>
   </div>
-
-  <div id="shopView" class="shop hidden">
-    <div class="shopbox">
-      <div class="shophead">
-        <div>
-          <div style="font-size:22px;font-weight:1000">🔫 KHO SÚNG</div>
-          <div class="hint">Súng càng đắt, sát thương lên boss càng lớn. Súng đã mua được giữ trong tài khoản.</div>
-        </div>
-        <div class="coins">🪙 <span id="shopWallet">0</span> xu</div>
-        <button onclick="closeShop()">← Đóng</button>
-      </div>
-      <div class="shopgrid" id="shopGrid"></div>
-    </div>
-  </div>
-
-  <div id="marketView" class="market-view hidden">
-    <div class="market-shell">
-      <div class="market-head">
-        <div><div style="font-size:25px;font-weight:1000">📈 SÀN CHỨNG KHOÁN</div><div style="color:#9edcff">Bảng giá lớn • Mua/bán bằng ví xu chung với bắn cá</div></div>
-        <div style="font-size:20px;color:#ffd34f;font-weight:900">🪙 <span id="marketWallet">100,000</span> xu</div>
-        <button class="market-exit" onclick="closeMarket()">← Quay lại bắn cá</button>
-      </div>
-      <div class="market-kpis">
-        <div class="kpi"><small>VN-INDEX DEMO</small><b id="indexValue">1,245.32</b><div class="up">▲ 1.01% hôm nay</div></div>
-        <div class="kpi"><small>TỔNG GIÁ TRỊ DANH MỤC</small><b id="portfolioValue">0 xu</b><div style="color:#9edcff">Tính theo giá hiện tại</div></div>
-        <div class="kpi"><small>LÃI / LỖ TẠM TÍNH</small><b id="portfolioPL">0 xu</b><div style="color:#9edcff">Biến động thị trường giả lập</div></div>
-      </div>
-      <div class="market-grid">
-        <div>
-          <div class="market-card">
-            <h2>📊 Bảng giá thị trường</h2>
-            <div class="market-actions">
-              <button onclick="setSector('Tất cả')">Tất cả</button><button onclick="setSector('Ngân hàng')">Ngân hàng</button>
-              <button onclick="setSector('Sắt thép')">Sắt thép</button><button onclick="setSector('Nhôm')">Nhôm</button>
-              <button onclick="setSector('Coin')">Coin</button><button onclick="setSector('Nhựa')">Nhựa</button>
-            </div>
-            <table class="market-table"><thead><tr><th>Mã</th><th>Ngành</th><th>Giá hiện tại</th><th>Biến động</th><th>Số lượng</th><th>Giao dịch</th></tr></thead><tbody id="bigStockRows"></tbody></table>
-          </div>
-          <div class="market-card">
-            <h2>📉 Biểu đồ giá (lịch sử giả lập trong phiên)</h2>
-            <div class="market-actions" id="chartBtns"></div>
-            <div class="market-chart" id="chartBox"></div>
-            <div class="market-actions"><span id="chartInfo" style="color:#9edcff"></span></div>
-          </div>
-          <div class="market-card">
-            <h2>🧾 Lịch sử giao dịch</h2>
-            <div style="max-height:260px;overflow:auto">
-              <table class="market-table"><thead><tr><th>Giờ</th><th>Loại</th><th>Mã / Người</th><th>SL</th><th>Giá</th><th>Tổng</th></tr></thead><tbody id="txList"></tbody></table>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="market-card">
-            <h2>💼 Danh mục đầu tư của mày</h2>
-            <table class="market-table"><thead><tr><th>Mã</th><th>Số lượng</th><th>Giá trị</th><th>Thao tác</th></tr></thead><tbody id="portfolioRows"></tbody></table>
-            <div class="market-actions"><b>Tổng giá trị: <span id="portfolioTotal">0 xu</span></b></div>
-          </div>
-          <div class="market-card"><h2>📰 Tin tức & diễn biến</h2><div class="market-feed" id="bigFeed"></div></div>
-          <div class="market-card">
-            <h2>ℹ️ Cách giao dịch</h2>
-            <div class="market-actions" style="display:block;color:#b9def7">
-              • Bấm <b>Mua</b> để dùng xu trong ví mua cổ phiếu.<br>
-              • Bấm <b>Bán</b> để đổi cổ phiếu đang giữ thành xu.<br>
-              • Giá tăng/giảm ngẫu nhiên trong bản demo.<br>
-              • Ví dùng chung với bắn cá; không có nạp/rút tiền thật.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="foot">Demo giải trí bằng xu ảo • Không nạp/rút tiền thật • Đăng nhập và dữ liệu chỉ lưu trên trình duyệt này.</div>
+  <div class="center" style="color:#739dbd;font-size:11px;padding:12px">Demo giải trí bằng xu ảo • Không nạp/rút tiền thật</div>
 </section>
+
+<!-- KHO SÚNG -->
+<div id="shopView" class="over hidden">
+  <div class="overbox">
+    <div class="ohead">
+      <div><div style="font-size:22px;font-weight:1000">🔫 KHO SÚNG</div><div class="hint">Súng càng đắt, sát thương lên boss càng lớn.</div></div>
+      <div style="color:#ffd34f;font-weight:900">🪙 <span id="shopWallet"></span> xu</div>
+      <button onclick="closeShop()">← Đóng</button>
+    </div>
+    <div class="shopgrid" id="shopGrid"></div>
+  </div>
+</div>
+
+<!-- TRÒ CHƠI -->
+<div id="gamesView" class="over hidden">
+  <div class="overbox">
+    <div class="ohead">
+      <div style="font-size:22px;font-weight:1000">🎮 TRÒ CHƠI (dùng chung ví)</div>
+      <div style="color:#ffd34f;font-weight:900">🪙 <span id="gameWallet"></span> xu</div>
+      <button onclick="closeGames()">← Đóng</button>
+    </div>
+    <div class="tabs2">
+      <button onclick="gameTab('door')">🚪 Chọn cửa may rủi</button>
+      <button onclick="gameTab('lock')">🔓 Đếm ngược mở khóa</button>
+    </div>
+
+    <div id="panelDoor" class="hidden center">
+      <div>Cược: <select id="doorBet" class="gin" style="width:auto;display:inline-block">
+        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
+        <option value="50000">50.000</option><option value="100000">100.000</option></select></div>
+      <div id="doors"></div>
+      <div class="res" id="doorRes"></div>
+      <div class="hint">🪙 Xu: nhận lại cược × 1,2 • 🎁 Rương: × 2,2 • 👾 Quái vật: mất cược</div>
+    </div>
+
+    <div id="panelLock" class="hidden center">
+      <div>Cược: <select id="lockBet" class="gin" style="width:auto;display:inline-block">
+        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
+        <option value="50000">50.000</option><option value="100000">100.000</option></select></div>
+      <div class="lk">
+        <div class="zn" style="left:20%;width:60%;background:#ffd34f33"></div>
+        <div class="zn" style="left:38%;width:24%;background:#47ffb355"></div>
+        <div class="zn" style="left:46%;width:8%;background:#ff4d6d99"></div>
+        <div class="needle" id="needle" style="left:0%"></div>
+      </div>
+      <button class="gold" style="font-size:20px;padding:12px 28px" onclick="lockPress()">🔓 MỞ KHÓA</button>
+      <div class="res" id="lockRes"></div>
+      <div class="hint">Giữa đỏ ×3 • Gần giữa xanh ×1,5 • Vùng vàng ×1 • Ngoài vùng: mất cược</div>
+    </div>
+  </div>
+</div>
+
+<!-- CHỨNG KHOÁN -->
+<div id="marketView" class="over hidden">
+  <div class="overbox">
+    <div class="ohead">
+      <div style="font-size:22px;font-weight:1000">📈 SÀN CHỨNG KHOÁN</div>
+      <div style="color:#ffd34f;font-weight:900">🪙 <span id="marketWallet"></span> xu</div>
+      <button onclick="closeMarket()">← Quay lại</button>
+    </div>
+    <div class="mk">
+      <div>
+        <div class="card2"><h2>📊 Bảng giá</h2>
+          <div style="padding:10px">
+            <button onclick="setSector('Tất cả')">Tất cả</button>
+            <button onclick="setSector('Ngân hàng')">Ngân hàng</button>
+            <button onclick="setSector('Sắt thép')">Sắt thép</button>
+            <button onclick="setSector('Nhôm')">Nhôm</button>
+            <button onclick="setSector('Coin')">Coin</button>
+            <button onclick="setSector('Nhựa')">Nhựa</button>
+          </div>
+          <table class="mt"><thead><tr><th>Mã</th><th>Ngành</th><th>Giá</th><th>Đổi</th><th>SL</th><th>Giao dịch</th></tr></thead><tbody id="bigStockRows"></tbody></table>
+        </div>
+        <div class="card2"><h2>📉 Biểu đồ (giả lập)</h2>
+          <div style="padding:10px" id="chartBtns"></div>
+          <div class="chart" id="chartBox"></div>
+          <div style="padding:10px" id="chartInfo"></div>
+        </div>
+        <div class="card2"><h2>🧾 Lịch sử giao dịch</h2>
+          <div style="max-height:260px;overflow:auto"><table class="mt"><thead><tr><th>Giờ</th><th>Loại</th><th>Mã/Người</th><th>SL</th><th>Giá</th><th>Tổng</th></tr></thead><tbody id="txList"></tbody></table></div>
+        </div>
+      </div>
+      <div>
+        <div class="card2"><h2>💼 Danh mục</h2>
+          <div style="padding:6px 12px;color:#9edcff">Chỉ số VN-INDEX DEMO: <b id="indexValue"></b></div>
+          <table class="mt"><thead><tr><th>Mã</th><th>SL</th><th>Giá trị</th><th></th></tr></thead><tbody id="portfolioRows"></tbody></table>
+          <div style="padding:10px"><b>Tổng: <span id="portfolioTotal"></span></b> <span id="portfolioPL" class="hint"></span>
+            <div class="hint" id="portfolioValue" style="display:none"></div></div>
+        </div>
+        <div class="card2"><h2>📰 Tin tức</h2><div class="feed" id="bigFeed"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 const $=id=>document.getElementById(id);
+const fmt=n=>Math.floor(Number(n)||0).toLocaleString('en-US');
+const setHTML=(id,h)=>{const el=$(id);if(el.dataset.h===h)return;el.dataset.h=h;el.innerHTML=h};
 let username='',wallet=100000,ammoIndex=0,autoTimer=null,tickTimer=null,schoolTimer=null,power=1,hold={},
-    marketSector='Tất cả',chartSym='VCB',txs=[],inv={common:0,rare:0,gold:0},buff=null,
-    skillCD={net:0,bomb:0},daily=null,totals={kills:0,fish:0,shots:0},fishObjs=[],friends=[],
-    owned={wood:true},gunId='wood',
-    main={idx:0,loop:0,hp:0,max:0,alive:false,enraged:false,chargeTimer:null,respawn:null},
-    side={idx:0,hp:0,max:0,alive:false,respawn:null};
-let stocks=defaultStocks();
-const htmlCache={};
+ marketSector='Tất cả',chartSym='VCB',txs=[],inv={common:0,rare:0,gold:0},buff=null,
+ skillCD={net:0,bomb:0},daily=null,totals={kills:0,fish:0,shots:0},fishObjs=[],friends=[],
+ owned={wood:true},gunId='wood',stocks=[],lockRAF=null,lockT0=0,lockP=.5,lockBusy=false,doorBusy=false,
+ main={idx:0,loop:0,hp:0,max:0,alive:false,enraged:false,chargeTimer:null,respawn:null},
+ side={idx:0,hp:0,max:0,alive:false,respawn:null};
+const BOSS_ARMOR=.2,CRIT_CHANCE=.08,GIFT_FEE=.05,MAX_FRIENDS=20,BOT_COUNT=105;
+const GIFT_NET=.95;
 
-const ammos=[['🔹','Đạn thường',1,100],['💥','Đạn hạt',2.2,1000],['🔮','Laser',4,10000],['🧊','Đạn băng',5.5,10000],
- ['⚡','Đạn sét',8,50000],['🌟','Đạn pháo',12,100000],['💠','Siêu đạn',22,100000],['🌈','Đạn thiên hà',40,100000]];
-const BOSS_ARMOR=0.2, CRIT_CHANCE=0.08;
-const GIFT_FEE=0.05, MAX_FRIENDS=20;
-const BOT_COUNT=105;
+const ammos=[['🔹','Đạn thường',1],['💥','Đạn hạt',2.2],['🔮','Laser',4],['🧊','Đạn băng',5.5],
+ ['⚡','Đạn sét',8],['🌟','Đạn pháo',12],['💠','Siêu đạn',22],['🌈','Đạn thiên hà',40]];
 
 /* ===== SÚNG ===== */
 const GUNS=[
- {id:'wood',    name:'Súng Gỗ',          price:10000,     mult:1,  c1:'#c58a52',c2:'#6b4226',beam:'#ffd9a0',shape:'barrel'},
- {id:'copper',  name:'Súng Đồng',        price:50000,     mult:1.3,c1:'#f0b070',c2:'#8a4b1c',beam:'#ffb36b',shape:'barrel'},
- {id:'silver',  name:'Súng Bạc',         price:200000,    mult:1.6,c1:'#eef4ff',c2:'#7d8ca8',beam:'#cfe6ff',shape:'twin'},
- {id:'ruby',    name:'Súng Hồng Ngọc',   price:1000000,   mult:2.2,c1:'#ff6f8f',c2:'#7a0a2a',beam:'#ff6f91',shape:'twin'},
- {id:'fire',    name:'Súng Lửa',         price:5000000,   mult:3,  c1:'#ffae55',c2:'#b3300b',beam:'#ffb020',shape:'barrel'},
- {id:'ice',     name:'Súng Băng',        price:20000000,  mult:4.5,c1:'#c8f6ff',c2:'#2a7fb0',beam:'#8ff7ff',shape:'orb'},
- {id:'thunder', name:'Súng Sét',         price:60000000,  mult:6,  c1:'#fff58a',c2:'#6b5a00',beam:'#fff27a',shape:'twin'},
- {id:'dragon',  name:'Súng Rồng',        price:150000000, mult:9,  c1:'#4ff09a',c2:'#0b5a33',beam:'#7dffb0',shape:'orb'},
- {id:'meteor',  name:'Súng Thiên Thạch', price:250000000, mult:12, c1:'#9d82ff',c2:'#2a1659',beam:'#b49bff',shape:'orb'},
- {id:'gold',    name:'Súng Hoàng Kim',   price:350000000, mult:15, c1:'#ffe66b',c2:'#a06b00',beam:'#ffe066',shape:'twin'},
- {id:'galaxy',  name:'Súng Thiên Hà',    price:500000000, mult:22, c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8',shape:'orb'}
-];
+ {id:'wood',name:'Súng Gỗ',price:10000,mult:1,c1:'#c58a52',c2:'#6b4226',beam:'#ffd9a0',shape:'barrel'},
+ {id:'copper',name:'Súng Đồng',price:50000,mult:1.3,c1:'#f0b070',c2:'#8a4b1c',beam:'#ffb36b',shape:'barrel'},
+ {id:'silver',name:'Súng Bạc',price:200000,mult:1.6,c1:'#eef4ff',c2:'#7d8ca8',beam:'#cfe6ff',shape:'twin'},
+ {id:'ruby',name:'Súng Hồng Ngọc',price:1000000,mult:2.2,c1:'#ff6f8f',c2:'#7a0a2a',beam:'#ff6f91',shape:'twin'},
+ {id:'fire',name:'Súng Lửa',price:5000000,mult:3,c1:'#ffae55',c2:'#b3300b',beam:'#ffb020',shape:'barrel'},
+ {id:'ice',name:'Súng Băng',price:20000000,mult:4.5,c1:'#c8f6ff',c2:'#2a7fb0',beam:'#8ff7ff',shape:'orb'},
+ {id:'thunder',name:'Súng Sét',price:60000000,mult:6,c1:'#fff58a',c2:'#6b5a00',beam:'#fff27a',shape:'twin'},
+ {id:'dragon',name:'Súng Rồng',price:150000000,mult:9,c1:'#4ff09a',c2:'#0b5a33',beam:'#7dffb0',shape:'orb'},
+ {id:'meteor',name:'Súng Thiên Thạch',price:250000000,mult:12,c1:'#9d82ff',c2:'#2a1659',beam:'#b49bff',shape:'orb'},
+ {id:'gold',name:'Súng Hoàng Kim',price:350000000,mult:15,c1:'#ffe66b',c2:'#a06b00',beam:'#ffe066',shape:'twin'},
+ {id:'galaxy',name:'Súng Thiên Hà',price:500000000,mult:22,c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8',shape:'orb'}];
 const curGun=()=>GUNS.find(g=>g.id===gunId)||GUNS[0];
-
 function gunSvg(g){
- const gid='gg'+g.id;
- const defs=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c1}"/><stop offset="1" stop-color="${g.c2}"/></linearGradient>
-  <radialGradient id="${gid}r"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="${g.beam}"/></radialGradient></defs>`;
- const st=`fill="url(#${gid})" stroke="#0a1a3a" stroke-width="3"`;
- let body='';
- if(g.shape==='barrel'){
-  body=`<rect x="38" y="4" width="24" height="56" rx="9" ${st}/>
-   <rect x="31" y="48" width="38" height="28" rx="10" ${st}/>
-   <circle cx="50" cy="80" r="9" fill="#1a2a4a" stroke="#0a1a3a" stroke-width="3"/>
-   <path d="M44 12 L44 46" stroke="#fff" stroke-width="3" opacity=".55" stroke-linecap="round"/>`;
- }else if(g.shape==='twin'){
-  body=`<rect x="22" y="6" width="18" height="54" rx="8" ${st}/>
-   <rect x="60" y="6" width="18" height="54" rx="8" ${st}/>
-   <rect x="20" y="48" width="60" height="28" rx="11" ${st}/>
-   <circle cx="50" cy="82" r="8" fill="#1a2a4a" stroke="#0a1a3a" stroke-width="3"/>
-   <path d="M29 14 L29 44" stroke="#fff" stroke-width="3" opacity=".55" stroke-linecap="round"/>
-   <path d="M67 14 L67 44" stroke="#fff" stroke-width="3" opacity=".55" stroke-linecap="round"/>`;
- }else{
-  body=`<rect x="40" y="2" width="20" height="46" rx="9" ${st}/>
-   <rect x="28" y="40" width="44" height="36" rx="14" ${st}/>
-   <circle cx="50" cy="58" r="15" fill="url(#${gid}r)" stroke="#fff" stroke-width="2" opacity=".95"/>
-   <circle cx="50" cy="58" r="22" fill="none" stroke="${g.beam}" stroke-width="2" opacity=".6"/>`;
- }
- return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${defs}${body}</svg>`;
+ const gid='g'+g.id,st=`fill="url(#${gid})" stroke="#0a1a3a" stroke-width="3"`;
+ let b='';
+ if(g.shape==='barrel')b=`<rect x="38" y="4" width="24" height="56" rx="9" ${st}/><rect x="31" y="48" width="38" height="28" rx="10" ${st}/><circle cx="50" cy="80" r="9" fill="#1a2a4a" stroke="#0a1a3a" stroke-width="3"/>`;
+ else if(g.shape==='twin')b=`<rect x="22" y="6" width="18" height="54" rx="8" ${st}/><rect x="60" y="6" width="18" height="54" rx="8" ${st}/><rect x="20" y="48" width="60" height="28" rx="11" ${st}/><circle cx="50" cy="82" r="8" fill="#1a2a4a" stroke="#0a1a3a" stroke-width="3"/>`;
+ else b=`<rect x="40" y="2" width="20" height="46" rx="9" ${st}/><rect x="28" y="40" width="44" height="36" rx="14" ${st}/><circle cx="50" cy="58" r="15" fill="${g.beam}" stroke="#fff" stroke-width="2"/>`;
+ return `<svg viewBox="0 0 100 100"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c1}"/><stop offset="1" stop-color="${g.c2}"/></linearGradient></defs>${b}</svg>`;
 }
-function applyGun(){
- $('cannon').innerHTML=gunSvg(curGun());
- $('gunName').textContent='🔫 '+curGun().name+' (x'+curGun().mult+')';
-}
+function applyGun(){$('cannon').innerHTML=gunSvg(curGun());$('gunName').textContent='🔫 '+curGun().name+' (x'+curGun().mult+')'}
 function renderShop(){
  $('shopWallet').textContent=fmt(wallet);
  setHTML('shopGrid',GUNS.map(g=>{
   const has=!!owned[g.id],eq=gunId===g.id,can=wallet>=g.price;
-  const btn=eq?'<button disabled>✅ Đang dùng</button>'
-    :has?`<button onclick="equipGun('${g.id}')">Trang bị</button>`
-    :`<button ${can?'':'disabled'} onclick="buyGun('${g.id}')">${can?'Mua':'Chưa đủ xu'} ${fmt(g.price)}</button>`;
-  return `<div class="gcard ${eq?'eq':''}">
-   <div class="gimg">${gunSvg(g)}</div>
-   <div class="gname">${g.name}</div>
-   <div class="gstat">x${g.mult} sát thương boss</div>
-   <div class="gprice">🪙 ${fmt(g.price)} xu</div>${btn}</div>`;
+  const btn=eq?'<button disabled>✅ Đang dùng</button>':has?`<button onclick="equipGun('${g.id}')">Trang bị</button>`
+   :`<button ${can?'':'disabled'} onclick="buyGun('${g.id}')">${can?'Mua':'Chưa đủ xu'} ${fmt(g.price)}</button>`;
+  return `<div class="gcard ${eq?'eq':''}"><div class="gimg">${gunSvg(g)}</div><b>${g.name}</b><div class="hint">x${g.mult} sát thương boss</div><div class="gprice">🪙 ${fmt(g.price)}</div>${btn}</div>`;
  }).join(''));
 }
 function openShop(){renderShop();$('shopView').classList.remove('hidden')}
 function closeShop(){$('shopView').classList.add('hidden')}
-function buyGun(id){
- const g=GUNS.find(x=>x.id===id);
- if(!g||owned[id])return;
- if(wallet<g.price)return notify('Không đủ xu mua '+g.name);
- wallet-=g.price;owned[id]=true;gunId=id;
- applyGun();renderWallet();renderShop();save();
- sfx.win();notify('🔫 Đã mua và trang bị '+g.name+'!');
-}
-function equipGun(id){
- if(!owned[id])return;
- gunId=id;applyGun();renderShop();save();
- notify('🔫 Đã trang bị '+curGun().name);
-}
+function buyGun(id){const g=GUNS.find(x=>x.id===id);if(!g||owned[id])return;if(wallet<g.price)return notify('Không đủ xu');wallet-=g.price;owned[id]=true;gunId=id;applyGun();renderWallet();renderShop();save();sfx.win();notify('🔫 Đã mua '+g.name)}
+function equipGun(id){if(!owned[id])return;gunId=id;applyGun();renderShop();save()}
 
-/* ===== BOT (105 con, số xu cao hơn người chơi thường) ===== */
-const BOT_FIRST=['Hải','Minh','Lan','Tuấn','Hoa','Nam','Linh','Đức','Mai','Khoa','Vy','Phúc','Trang','Long','Ngọc','Bảo','An','Thảo','Quân','Yến'];
-const BOT_LAST=['Sói','Rồng','Gấu','Hổ','Kiếm','Sao','Băng','Lửa','Cá Mập','Thợ Săn','Vua','Pro','Cá Rô','Mèo','Phượng','Ninja'];
-const BOT_FACES=['🦈','🐙','🧜','🐲','🐡','🐳','🐬','🦑','🐢','🦀'];
+/* ===== BOT ===== */
+const BF=['Hải','Minh','Lan','Tuấn','Hoa','Nam','Linh','Đức','Mai','Khoa','Vy','Phúc','Trang','Long','Ngọc','Bảo','An','Thảo','Quân','Yến'];
+const BL=['Sói','Rồng','Gấu','Hổ','Kiếm','Sao','Băng','Lửa','Cá Mập','Thợ Săn','Vua','Pro','Cá Rô','Mèo','Phượng','Ninja'];
+const BFC=['🦈','🐙','🧜','🐲','🐡','🐳','🐬','🦑','🐢','🦀'];
 function getBots(){
  let b=JSON.parse(localStorage.getItem('sf_bots')||'null');
  if(!Array.isArray(b)||b.length!==BOT_COUNT){
-  b=Array.from({length:BOT_COUNT},(_,i)=>({
-   name:BOT_FIRST[i%BOT_FIRST.length]+' '+BOT_LAST[(i*7)%BOT_LAST.length]+' #'+(i+1),
-   face:BOT_FACES[i%BOT_FACES.length],
-   coins:Math.round((2000000+Math.random()*800000000)/1000)*1000,
-   kills:Math.floor(Math.random()*120)
-  }));
+  b=Array.from({length:BOT_COUNT},(_,i)=>({name:BF[i%20]+' '+BL[(i*7)%16]+' #'+(i+1),face:BFC[i%10],
+   coins:Math.round((2000000+Math.random()*800000000)/1000)*1000,kills:Math.floor(Math.random()*120)}));
   localStorage.setItem('sf_bots',JSON.stringify(b));
  }
  return b;
 }
-function renderBots(){
- setHTML('botGrid',getBots().map(b=>`<div class="bot"><div class="face">${b.face}</div><b title="${b.name}">${b.name}</b><small>🪙 ${fmt(b.coins)}</small><div class="hint">Đang bắn</div></div>`).join(''));
-}
+function renderBots(){setHTML('botGrid',getBots().map(b=>`<div class="bot"><div class="face">${b.face}</div><b title="${b.name}">${b.name}</b><small>🪙 ${fmt(b.coins)}</small><div class="hint">Đang bắn</div></div>`).join(''))}
 
 /* ===== ÂM THANH ===== */
-let audioCtx=null;
-function ac(){if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();return audioCtx}
-function tone(freq,dur,type='sine',vol=.08,slide=0){
- try{
-  const c=ac(),o=c.createOscillator(),g=c.createGain();
-  o.type=type;o.frequency.setValueAtTime(freq,c.currentTime);
-  if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,freq+slide),c.currentTime+dur);
-  g.gain.setValueAtTime(vol,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
-  o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur);
- }catch(e){}
-}
-const sfx={
- shoot:()=>tone(880,.12,'square',.04,-600),
- hit:()=>tone(220,.15,'sawtooth',.06,-120),
+let AC=null;
+function tone(f,d,t='sine',v=.08,s=0){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const c=AC,o=c.createOscillator(),g=c.createGain();o.type=t;o.frequency.setValueAtTime(f,c.currentTime);if(s)o.frequency.exponentialRampToValueAtTime(Math.max(30,f+s),c.currentTime+d);g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+d);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
+const sfx={shoot:()=>tone(880,.12,'square',.04,-600),hit:()=>tone(220,.15,'sawtooth',.06,-120),
  pop:()=>{tone(640,.1,'triangle',.08,300);setTimeout(()=>tone(960,.12,'triangle',.06,200),60)},
- coin:()=>{tone(1200,.08,'sine',.05);setTimeout(()=>tone(1600,.1,'sine',.05),70)},
+ coin:()=>{tone(1200,.08);setTimeout(()=>tone(1600,.1),70)},
  roar:()=>{tone(90,.7,'sawtooth',.12,-40);setTimeout(()=>tone(70,.6,'square',.06,-20),150)},
  crit:()=>{tone(1400,.1,'square',.06,-800);setTimeout(()=>tone(300,.25,'sawtooth',.08,-200),70)},
- win:()=>{[523,659,784,1046].forEach((f,i)=>setTimeout(()=>tone(f,.2,'triangle',.07),i*120))}
-};
+ win:()=>{[523,659,784,1046].forEach((f,i)=>setTimeout(()=>tone(f,.2,'triangle',.07),i*120))}};
 
-/* ===== ART SVG ANIME ===== */
-function fishArt(c1,c2,fin,extra=''){
- return `<svg viewBox="0 -12 120 92">
- <path d="M90 40 L118 16 Q112 40 118 64 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="3"/>
- <path d="M42 14 Q56 -2 72 14 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="2.5"/>${extra}
- <ellipse cx="55" cy="40" rx="42" ry="28" fill="${c1}" stroke="#0a1a3a" stroke-width="3"/>
- <ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".9"/>
- <path d="M30 28 Q34 20 44 20" stroke="#fff" stroke-width="3" fill="none" opacity=".85" stroke-linecap="round"/>
- <circle cx="32" cy="36" r="11" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/>
- <circle cx="29" cy="37" r="6.5" fill="#0a1a3a"/><circle cx="26.5" cy="33.5" r="2.5" fill="#fff"/>
- <ellipse cx="42" cy="48" rx="5" ry="3" fill="#ff7aa8" opacity=".75"/>
- <path d="M18 46 Q14 50 19 54" stroke="#0a1a3a" stroke-width="2" fill="none"/></svg>`;
-}
-function octoArt(c,l){
- return `<svg viewBox="0 -10 120 110">
- <g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round">
-  <path d="M32 60 Q18 84 30 100"/><path d="M48 66 Q42 92 54 104"/><path d="M68 66 Q74 92 62 104"/><path d="M88 60 Q102 84 90 100"/></g>
- <ellipse cx="60" cy="38" rx="42" ry="34" fill="${c}" stroke="#0a1a3a" stroke-width="3"/>
- <ellipse cx="50" cy="20" rx="20" ry="8" fill="${l}" opacity=".7"/>
- <circle cx="44" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="46" cy="40" r="6.5" fill="#0a1a3a"/><circle cx="48" cy="36" r="2.5" fill="#fff"/>
- <circle cx="76" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="78" cy="40" r="6.5" fill="#0a1a3a"/><circle cx="80" cy="36" r="2.5" fill="#fff"/>
- <ellipse cx="40" cy="56" rx="5" ry="3" fill="#ff7aa8" opacity=".7"/><ellipse cx="80" cy="56" rx="5" ry="3" fill="#ff7aa8" opacity=".7"/></svg>`;
-}
-function turtleArt(){
- return `<svg viewBox="0 -4 130 100">
- <ellipse cx="44" cy="74" rx="12" ry="6" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/>
- <ellipse cx="82" cy="74" rx="12" ry="6" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/>
- <path d="M14 48 L4 42 L8 52 Z" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/>
- <ellipse cx="112" cy="36" rx="14" ry="11" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/>
- <circle cx="117" cy="32" r="5" fill="#fff"/><circle cx="118" cy="32" r="2.5" fill="#0a1a3a"/>
- <ellipse cx="60" cy="46" rx="46" ry="30" fill="#ffd34f" stroke="#0a1a3a" stroke-width="3"/>
- <g fill="#e0a52a" stroke="#0a1a3a" stroke-width="2"><circle cx="40" cy="38" r="9"/><circle cx="60" cy="30" r="9"/><circle cx="80" cy="38" r="9"/><circle cx="50" cy="54" r="9"/><circle cx="70" cy="54" r="9"/></g>
- <path d="M30 26 Q40 16 52 22" stroke="#fff" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/></svg>`;
-}
+/* ===== ART ===== */
+function fishArt(c1,c2,fin,extra=''){return `<svg viewBox="0 -12 120 92"><path d="M90 40 L118 16 Q112 40 118 64 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="3"/><path d="M42 14 Q56 -2 72 14 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="2.5"/>${extra}<ellipse cx="55" cy="40" rx="42" ry="28" fill="${c1}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".9"/><circle cx="32" cy="36" r="11" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="29" cy="37" r="6.5" fill="#0a1a3a"/><circle cx="26.5" cy="33.5" r="2.5" fill="#fff"/><ellipse cx="42" cy="48" rx="5" ry="3" fill="#ff7aa8" opacity=".75"/></svg>`}
+function octoArt(c,l){return `<svg viewBox="0 -10 120 110"><g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round"><path d="M32 60 Q18 84 30 100"/><path d="M48 66 Q42 92 54 104"/><path d="M68 66 Q74 92 62 104"/><path d="M88 60 Q102 84 90 100"/></g><ellipse cx="60" cy="38" rx="42" ry="34" fill="${c}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="50" cy="20" rx="20" ry="8" fill="${l}" opacity=".7"/><circle cx="44" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="46" cy="40" r="6.5" fill="#0a1a3a"/><circle cx="76" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="78" cy="40" r="6.5" fill="#0a1a3a"/></svg>`}
+function turtleArt(){return `<svg viewBox="0 -4 130 100"><ellipse cx="44" cy="74" rx="12" ry="6" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/><ellipse cx="82" cy="74" rx="12" ry="6" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/><ellipse cx="112" cy="36" rx="14" ry="11" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/><ellipse cx="60" cy="46" rx="46" ry="30" fill="#ffd34f" stroke="#0a1a3a" stroke-width="3"/><g fill="#e0a52a" stroke="#0a1a3a" stroke-width="2"><circle cx="40" cy="38" r="9"/><circle cx="60" cy="30" r="9"/><circle cx="80" cy="38" r="9"/><circle cx="50" cy="54" r="9"/><circle cx="70" cy="54" r="9"/></g></svg>`}
 function bossSvg(k){
- if(k==='dragon')return fishArt('#9ff3ff','#ffffff','#2a9fff',`<path d="M40 22 L34 2 L50 16Z M58 16 L60 -4 L68 14Z" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/>`);
+ if(k==='dragon')return fishArt('#9ff3ff','#fff','#2a9fff',`<path d="M40 22 L34 2 L50 16Z M58 16 L60 -4 L68 14Z" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/>`);
  if(k==='shark')return fishArt('#ff7a3c','#ffe08a','#ff3b1f',`<path d="M30 10 Q36 -6 42 10 Q48 -8 54 8 Q60 -8 66 8 Z" fill="#ffd34f" stroke="#0a1a3a" stroke-width="2"/>`);
  if(k==='octo')return octoArt('#b57bff','#e6d4ff');
  if(k==='turtle')return turtleArt();
@@ -563,422 +441,249 @@ function bossSvg(k){
 }
 
 /* ===== DỮ LIỆU ===== */
-const BOSSES=[
- {name:'CÁ RỒNG BĂNG',lv:5,hp:2000000,reward:800000,art:'dragon'},
+const BOSSES=[{name:'CÁ RỒNG BĂNG',lv:5,hp:2000000,reward:800000,art:'dragon'},
  {name:'BẠCH TUỘC TÍM',lv:10,hp:6000000,reward:2500000,art:'octo'},
  {name:'CÁ MẬP LỬA',lv:15,hp:15000000,reward:6000000,art:'shark'},
  {name:'RÙA THẦN VÀNG',lv:20,hp:40000000,reward:15000000,art:'turtle'},
  {name:'KRAKEN SẤM',lv:30,hp:100000000,reward:40000000,art:'kraken'}];
-const bossMaxFor=(i,l)=>Math.round(BOSSES[i].hp*(1+l*0.6));
-const bossRewardFor=(i,l)=>Math.round(BOSSES[i].reward*(1+l*0.6));
-const FISH=[
- {m:2,w:.30,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
- {m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
- {m:5,w:.18,svg:fishArt('#ff8ad8','#fff0fa','#ff4fb8')},
- {m:8,w:.14,svg:fishArt('#ffe066','#fffbe0','#ffb020')},
- {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},
- {m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}];
+const bossMaxFor=(i,l)=>Math.round(BOSSES[i].hp*(1+l*.6));
+const bossRewardFor=(i,l)=>Math.round(BOSSES[i].reward*(1+l*.6));
+const FISH=[{m:2,w:.3,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},{m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
+ {m:5,w:.18,svg:fishArt('#ff8ad8','#fff0fa','#ff4fb8')},{m:8,w:.14,svg:fishArt('#ffe066','#fffbe0','#ffb020')},
+ {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},{m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}];
 const CHESTS={common:{name:'Rương gỗ',icon:'📦'},rare:{name:'Rương bạc',icon:'🎁'},gold:{name:'Rương vàng',icon:'👑'}};
-const QUESTS=[
- {id:'shots',label:'Bắn 100 phát đạn',target:100,reward:30000},
- {id:'fish',label:'Hạ 20 con cá',target:20,reward:60000},
- {id:'dmg',label:'Gây 2,000,000 sát thương boss',target:2000000,reward:150000},
- {id:'kills',label:'Hạ 1 boss (kể cả đàn em)',target:1,reward:300000}];
+const QUESTS=[{id:'shots',label:'Bắn 100 phát đạn',target:100,reward:30000},{id:'fish',label:'Hạ 20 con cá',target:20,reward:60000},
+ {id:'dmg',label:'Gây 2,000,000 sát thương boss',target:2000000,reward:150000},{id:'kills',label:'Hạ 1 boss',target:1,reward:300000}];
+const DEF_STOCKS=[{s:'VCB',name:'Ngân hàng',p:92500,prev:91000},{s:'HPG',name:'Sắt thép',p:28700,prev:29200},
+ {s:'NKG',name:'Sắt thép',p:21300,prev:20500},{s:'ALU',name:'Nhôm',p:68000,prev:67000},
+ {s:'BTC',name:'Coin',p:1250000,prev:1180000},{s:'PLX',name:'Nhựa',p:38500,prev:38900}];
 
 /* ===== TIỆN ÍCH ===== */
 const T=k=>k==='main'?main:side;
 const EL=k=>$(k==='main'?'boss':'bossSide');
 const rnd=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 function notify(t){const n=$('notice');n.textContent=t;n.classList.remove('hidden');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.add('hidden'),2400)}
-function fmt(n){return Math.floor(n).toLocaleString('en-US')}
-function setHTML(id,html){if(htmlCache[id]===html)return;htmlCache[id]=html;$(id).innerHTML=html}
-function defaultStocks(){return [
- {s:'VCB',name:'Ngân hàng',p:92500,prev:91000},{s:'HPG',name:'Sắt thép',p:28700,prev:29200},
- {s:'NKG',name:'Sắt thép',p:21300,prev:20500},{s:'ALU',name:'Nhôm',p:68000,prev:67000},
- {s:'BTC',name:'Coin',p:1250000,prev:1180000},{s:'PLX',name:'Nhựa',p:38500,prev:38900}]}
-function ensureStocks(){
- stocks.forEach(s=>{
-  if(!s.hist){
-   s.hist=Array.from({length:30},(_,i)=>Math.max(100,Math.round(s.p*(1+(Math.random()-.5)*.08*(30-i)/30))));
-   s.hist[29]=s.p;
-  }
- });
-}
-function ensureDaily(){
- const today=new Date().toDateString();
- if(!daily||daily.date!==today)daily={date:today,shots:0,fish:0,dmg:0,kills:0,claimed:{},gifted:0};
-}
-function holdingsValue(){
- return Object.entries(hold).reduce((s,[sym,q])=>{const st=stocks.find(x=>x.s===sym);return s+(st?q*st.p:0)},0);
-}
+function ensureStocks(){stocks.forEach(s=>{if(!s.hist){s.hist=Array.from({length:30},(_,i)=>Math.max(100,Math.round(s.p*(1+(Math.random()-.5)*.08*(30-i)/30))));s.hist[29]=s.p}})}
+function ensureDaily(){const t=new Date().toDateString();if(!daily||daily.date!==t)daily={date:t,shots:0,fish:0,dmg:0,kills:0,claimed:{}}}
+function holdingsValue(){return Object.entries(hold).reduce((s,[k,q])=>{const st=stocks.find(x=>x.s===k);return s+(st?q*st.p:0)},0)}
 function sideEnabled(){return main.idx>=1||main.loop>0}
 function sideIdx(){return main.idx>=1?main.idx-1:BOSSES.length-1}
 function buffActive(t){return !!buff&&buff.type===t&&buff.until>Date.now()}
 function luckMult(){return buffActive('luck')?buff.mult:1}
-
-/* ===== DANH SÁCH NGƯỜI CHƠI ===== */
-function registerUser(n){
- const l=JSON.parse(localStorage.getItem('sf_users')||'[]');
- if(!l.includes(n)){l.push(n);localStorage.setItem('sf_users',JSON.stringify(l))}
-}
+function registerUser(n){const l=JSON.parse(localStorage.getItem('sf_users')||'[]');if(!l.includes(n)){l.push(n);localStorage.setItem('sf_users',JSON.stringify(l))}}
 function allUsers(){return JSON.parse(localStorage.getItem('sf_users')||'[]')}
 
-/* ===== LƯU / TẢI ===== */
+/* ===== LƯU / TẢI (trên trình duyệt) ===== */
 function save(){
- localStorage.setItem('sf_user_'+username,JSON.stringify({wallet,hold,stocks,power,txs,inv,buff,daily,totals,friends,
-  owned,gunId,mainIdx:main.idx,mainLoop:main.loop,mainHP:main.hp}));
+ if(!username)return;
+ localStorage.setItem('sf_user_'+username,JSON.stringify({wallet,hold,stocks,power,txs,inv,buff,daily,totals,friends,owned,gunId,
+  mainIdx:main.idx,mainLoop:main.loop,mainHP:main.hp}));
  updateBoard();
 }
 function load(){
- const x=JSON.parse(localStorage.getItem('sf_user_'+username)||'null');
- if(x){
-  wallet=x.wallet??100000;hold=x.hold||{};stocks=x.stocks||defaultStocks();power=x.power||1;
-  txs=x.txs||[];inv=x.inv||{common:0,rare:0,gold:0};buff=x.buff||null;daily=x.daily||null;
-  totals=x.totals||{kills:0,fish:0,shots:0};friends=x.friends||[];
-  owned=x.owned||{wood:true};gunId=x.gunId||'wood';
-  main.idx=x.mainIdx||0;main.loop=x.mainLoop||0;main.hp=x.mainHP||0;
- }else{
-  wallet=100000;hold={};stocks=defaultStocks();power=1;txs=[];inv={common:0,rare:0,gold:0};
-  buff=null;daily=null;totals={kills:0,fish:0,shots:0};friends=[];
-  owned={wood:true};gunId='wood';
-  main.idx=0;main.loop=0;main.hp=0;
- }
- ensureStocks();ensureDaily();
- main.max=bossMaxFor(main.idx,main.loop);
- renderWallet();
+ const x=JSON.parse(localStorage.getItem('sf_user_'+username)||'null')||{};
+ wallet=x.wallet??100000;hold=x.hold||{};stocks=x.stocks||JSON.parse(JSON.stringify(DEF_STOCKS));power=x.power||1;
+ txs=x.txs||[];inv=x.inv||{common:0,rare:0,gold:0};buff=x.buff||null;daily=x.daily||null;
+ totals=x.totals||{kills:0,fish:0,shots:0};friends=x.friends||[];owned=x.owned||{wood:true};gunId=x.gunId||'wood';
+ main.idx=x.mainIdx||0;main.loop=x.mainLoop||0;main.hp=x.mainHP||0;
+ ensureStocks();ensureDaily();main.max=bossMaxFor(main.idx,main.loop);renderWallet();
 }
+
+/* ===== ĐĂNG KÝ / ĐĂNG NHẬP ===== */
+function showRegister(){$('loginForm').classList.add('hidden');$('registerForm').classList.remove('hidden')}
+function showLogin(){$('registerForm').classList.add('hidden');$('loginForm').classList.remove('hidden')}
 function register(){
  const n=$('regName').value.trim(),p=$('regPass').value,p2=$('regPass2').value;
- if(n.length<3||p.length<4)return notify('Tên cần ≥3 ký tự, mật khẩu ≥4 ký tự.');
+ if(n.length<3||p.length<4)return notify('Tên ≥3 ký tự, mật khẩu ≥4 ký tự.');
  if(p!==p2)return notify('Hai mật khẩu chưa trùng nhau.');
  if(localStorage.getItem('sf_pass_'+n))return notify('Tên này đã tồn tại.');
  localStorage.setItem('sf_pass_'+n,p);registerUser(n);
- username=n;load();enterGame();notify('Tạo tài khoản thành công! Tặng 100.000 xu.');
+ username=n;load();save();enterGame();notify('Tạo tài khoản xong! Tặng 100.000 xu.');
 }
 function login(){
  const n=$('loginName').value.trim(),p=$('loginPass').value;
- if(!localStorage.getItem('sf_pass_'+n))return notify('Chưa có tài khoản. Hãy đăng ký trước nhé.');
- if(localStorage.getItem('sf_pass_'+n)!==p)return notify('Sai mật khẩu.');
+ const s=localStorage.getItem('sf_pass_'+n);
+ if(s===null)return notify('Chưa có tài khoản. Hãy đăng ký trước nhé.');
+ if(s!==p)return notify('Sai mật khẩu.');
  username=n;registerUser(n);load();enterGame();notify('Chào mừng trở lại, '+n+'!');
 }
-function showRegister(){$('loginForm').classList.add('hidden');$('registerForm').classList.remove('hidden')}
-function showLogin(){$('registerForm').classList.add('hidden');$('loginForm').classList.remove('hidden')}
-function resetTimers(){
- clearTimeout(main.chargeTimer);clearTimeout(main.respawn);clearTimeout(side.respawn);
- main.alive=false;side.alive=false;
-}
+function resetTimers(){clearTimeout(main.chargeTimer);clearTimeout(main.respawn);clearTimeout(side.respawn);main.alive=false;side.alive=false}
 function enterGame(){
  $('authScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');
  $('playerLabel').textContent='👤 '+username;
  resetTimers();
  $('arena').querySelectorAll('.fish').forEach(f=>f.remove());fishObjs=[];
- spawnBoss('main');
- if(sideEnabled())spawnBoss('side');else setEl('side',false);
+ spawnBoss('main');if(sideEnabled())spawnBoss('side');else setEl('side',false);
  for(let i=0;i<14;i++)spawnFish();
- renderBots();
- applyGun();
- claimGifts();
- renderAll();
- if(!tickTimer)tickTimer=setInterval(tick,850);
- if(!schoolTimer)schoolTimer=setInterval(spawnSchool,20000);
+ renderBots();applyGun();renderAll();
+ if(!tickTimer){tickTimer=setInterval(tick,850);schoolTimer=setInterval(spawnSchool,20000);setInterval(claimGifts,3000);setInterval(renderBoard,10000)}
 }
-function logout(){save();stopAuto();resetTimers();closeShop();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
+function logout(){save();stopAuto();resetTimers();closeShop();closeGames();closeMarket();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden');username=''}
 
-/* ===== BẠN BÈ & TẶNG XU ===== */
+/* ===== BẠN BÈ & TẶNG XU (cùng trình duyệt) ===== */
 function addFriend(){
  const n=$('friendName').value.trim();
  if(!n)return notify('Nhập tên người chơi.');
  if(n===username)return notify('Không thể thêm chính mình.');
- if(!localStorage.getItem('sf_pass_'+n))return notify('Không tìm thấy người chơi "'+n+'".');
- if(friends.includes(n))return notify('Người này đã có trong danh sách.');
- if(friends.length>=MAX_FRIENDS)return notify('Tối đa '+MAX_FRIENDS+' bạn bè.');
- friends.push(n);$('friendName').value='';
- notify('Đã thêm '+n+' vào danh sách bạn');
- renderFriends();save();
+ if(!localStorage.getItem('sf_pass_'+n))return notify('Không tìm thấy người chơi "'+n+'" trên trình duyệt này.');
+ if(friends.includes(n))return notify('Đã có trong danh sách.');
+ if(friends.length>=MAX_FRIENDS)return notify('Tối đa '+MAX_FRIENDS+' bạn.');
+ friends.push(n);$('friendName').value='';renderFriends();save();notify('Đã thêm '+n);
 }
-function removeFriend(n){
- friends=friends.filter(f=>f!==n);
- renderFriends();save();
-}
+function removeFriend(n){friends=friends.filter(f=>f!==n);renderFriends();save()}
 function sendGift(){
- ensureDaily();
  const to=$('friendSel').value,amt=Math.floor(Number($('giftAmt').value)||0);
- if(!to)return notify('Chưa có bạn nào được chọn. Hãy thêm bạn trước.');
- if(!friends.includes(to))return notify('Người này không có trong danh sách bạn.');
- if(!localStorage.getItem('sf_pass_'+to))return notify('Không tìm thấy tài khoản '+to+' trên máy này.');
+ if(!to)return notify('Chưa có bạn nào được chọn.');
  if(amt<1000)return notify('Tặng tối thiểu 1.000 xu.');
  if(amt>wallet)return notify('Ví không đủ xu.');
- const received=Math.floor(amt*(1-GIFT_FEE));
- wallet-=amt;daily.gifted=(daily.gifted||0)+amt;
- const key='sf_gifts_'+to;
- const inbox=JSON.parse(localStorage.getItem(key)||'[]');
- inbox.push({from:username,amount:received,at:Date.now()});
- localStorage.setItem(key,JSON.stringify(inbox));
- txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:to,qty:'',price:'',total:-amt});
- txs=txs.slice(0,30);
- addFeed('🎁 Đã tặng '+fmt(received)+' xu cho '+to+' (phí '+Math.round(GIFT_FEE*100)+'%)');
- notify('🎁 Đã gửi '+fmt(received)+' xu cho '+to);
- renderWallet();renderFriends();save();
+ const key='sf_gifts_'+to,box=JSON.parse(localStorage.getItem(key)||'[]');
+ box.push({from:username,amount:Math.floor(amt*GIFT_NET)});localStorage.setItem(key,JSON.stringify(box));
+ wallet-=amt;txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:to,qty:'',price:'',total:-amt});txs=txs.slice(0,30);
+ addFeed('🎁 Đã tặng '+fmt(amt*GIFT_NET)+' xu cho '+to);notify('🎁 Đã gửi cho '+to);renderWallet();save();
 }
 function claimGifts(){
- if(!username||$('gameScreen').classList.contains('hidden'))return;
- const key='sf_gifts_'+username;
- const inbox=JSON.parse(localStorage.getItem(key)||'[]');
- if(!inbox.length)return;
- localStorage.removeItem(key);
- let sum=0;
- inbox.forEach(g=>{
-  sum+=g.amount;
-  txs.unshift({t:new Date().toLocaleTimeString(),type:'Nhận',sym:g.from,qty:'',price:'',total:g.amount});
- });
- txs=txs.slice(0,30);
- wallet+=sum;
- notify('🎁 Nhận '+inbox.length+' món quà từ bạn bè! +'+fmt(sum)+' xu');
- addFeed('🎁 Nhận quà từ bạn bè: +'+fmt(sum)+' xu');
- renderWallet();renderFriends();save();
+ if(!username)return;
+ const key='sf_gifts_'+username,box=JSON.parse(localStorage.getItem(key)||'[]');
+ if(!box.length)return;
+ localStorage.removeItem(key);let sum=0;
+ box.forEach(g=>{sum+=g.amount;txs.unshift({t:new Date().toLocaleTimeString(),type:'Nhận',sym:g.from,qty:'',price:'',total:g.amount})});
+ txs=txs.slice(0,30);wallet+=sum;notify('🎁 Nhận '+box.length+' quà! +'+fmt(sum)+' xu');addFeed('🎁 Nhận quà: +'+fmt(sum)+' xu');renderWallet();save();
+}
+function renderFriends(){
+ const cur=$('friendSel').value;
+ setHTML('friendSel',friends.length?friends.map(f=>`<option value="${f}" ${f===cur?'selected':''}>${f}</option>`).join(''):'<option value="">— chưa có bạn —</option>');
+ setHTML('friendList',friends.length?friends.map(f=>`<div class="invrow"><span>👤 ${f}</span><button class="sell" style="padding:4px 9px" onclick="removeFriend('${f}')">Xóa</button></div>`).join(''):'<small>Chưa có bạn.</small>');
+ setHTML('userList',allUsers().filter(u=>u!==username).map(u=>`<option value="${u}">`).join(''));
+ $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'%';
 }
 
-/* ===== MÃ QUÀ (tặng nhiều máy) ===== */
+/* ===== MÃ QUÀ ===== */
 function makeGiftCode(){
- const each=Math.floor(Number($('codeAmt').value)||0);
- const count=Math.floor(Number($('codeCount').value)||0);
+ const each=Math.floor(Number($('codeAmt').value)||0),count=Math.floor(Number($('codeCount').value)||0);
  if(each<1000)return notify('Mỗi người nhận tối thiểu 1.000 xu.');
- if(count<1)return notify('Số người nhận tối thiểu là 1.');
- const total=each*count;
- if(total>wallet)return notify('Ví không đủ xu. Cần '+fmt(total)+' xu.');
- const received=Math.floor(each*(1-GIFT_FEE));
- wallet-=total;
- const payload={f:username,a:received,n:count,id:Date.now().toString(36)+Math.random().toString(36).slice(2,8)};
- const code='SF-'+btoa(encodeURIComponent(JSON.stringify(payload)));
- txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:'Mã quà x'+count,qty:count,price:each,total:-total});
- txs=txs.slice(0,30);
- $('codeOut').value=code;
- $('codeOut').select();
- $('codeInfo').textContent='Mỗi người nhận '+fmt(received)+' xu (phí '+Math.round(GIFT_FEE*100)+'%), dành cho '+count+' người. Đã trừ '+fmt(total)+' xu.';
- addFeed('🎟️ Tạo mã quà: '+count+' người × '+fmt(received)+' xu');
- renderWallet();save();
- notify('Đã tạo mã quà. Copy mã ở ô bên dưới.');
+ if(count<1)return notify('Số người nhận tối thiểu 1.');
+ const total=each*count;if(total>wallet)return notify('Ví không đủ. Cần '+fmt(total)+' xu.');
+ const recv=Math.floor(each*(1-GIFT_FEE));wallet-=total;
+ const p={f:username,a:recv,id:Date.now().toString(36)+Math.random().toString(36).slice(2,8)};
+ $('codeOut').value='SF-'+btoa(encodeURIComponent(JSON.stringify(p)));
+ $('codeInfo').textContent='Mỗi người nhận '+fmt(recv)+' xu, cho '+count+' người. Đã trừ '+fmt(total)+' xu.';
+ txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:'Mã quà x'+count,qty:count,price:each,total:-total});txs=txs.slice(0,30);
+ renderWallet();save();notify('Đã tạo mã quà.');
 }
 function redeemCode(){
  const raw=$('giftCodeIn').value.trim();
- if(!raw.startsWith('SF-'))return notify('Mã quà không hợp lệ.');
- let p;
- try{p=JSON.parse(decodeURIComponent(atob(raw.slice(3))))}catch(e){return notify('Mã quà bị lỗi, kiểm tra lại.')}
- if(!p||!p.id||!p.a||!p.f)return notify('Mã quà không hợp lệ.');
- if(p.f===username)return notify('Không thể nhận mã do chính mình tạo.');
+ if(!raw.startsWith('SF-'))return notify('Mã không hợp lệ.');
+ let p;try{p=JSON.parse(decodeURIComponent(atob(raw.slice(3))))}catch(e){return notify('Mã bị lỗi.')}
+ if(!p||!p.id||!p.a||!p.f)return notify('Mã không hợp lệ.');
+ if(p.f===username)return notify('Không thể nhận mã của chính mình.');
  const used=JSON.parse(localStorage.getItem('sf_used_codes')||'[]');
  if(used.includes(p.id))return notify('Máy này đã nhận mã này rồi.');
  used.push(p.id);localStorage.setItem('sf_used_codes',JSON.stringify(used));
- wallet+=p.a;
- txs.unshift({t:new Date().toLocaleTimeString(),type:'Nhận',sym:p.f,qty:'',price:'',total:p.a});
- txs=txs.slice(0,30);
- $('giftCodeIn').value='';
- notify('🎁 Nhận '+fmt(p.a)+' xu từ '+p.f+'!');
- addFeed('🎁 Nhận quà mã từ '+p.f+': +'+fmt(p.a)+' xu');
- renderWallet();save();
-}
-
-function renderFriends(){
- ensureDaily();
- const cur=$('friendSel').value;
- setHTML('friendSel',friends.length
-  ?friends.map(f=>`<option value="${f}" ${f===cur?'selected':''}>${f}</option>`).join('')
-  :'<option value="">— chưa có bạn —</option>');
- setHTML('friendList',friends.length
-  ?friends.map(f=>`<div class="invrow"><span>👤 ${f}</span><button class="sell" style="padding:4px 9px" onclick="removeFriend('${f}')">Xóa</button></div>`).join('')
-  :'<small>Chưa có bạn bè. Chọn tên người chơi rồi bấm Thêm.</small>');
- setHTML('userList',allUsers().filter(u=>u!==username).map(u=>`<option value="${u}">`).join(''));
- const pending=username?JSON.parse(localStorage.getItem('sf_gifts_'+username)||'[]').length:0;
- $('giftInfo').textContent='Phí '+Math.round(GIFT_FEE*100)+'% • 📬 Quà chờ: '+pending;
+ wallet+=p.a;txs.unshift({t:new Date().toLocaleTimeString(),type:'Nhận',sym:p.f,qty:'',price:'',total:p.a});txs=txs.slice(0,30);
+ $('giftCodeIn').value='';notify('🎁 Nhận '+fmt(p.a)+' xu từ '+p.f);addFeed('🎁 Nhận mã quà: +'+fmt(p.a));renderWallet();save();
 }
 
 /* ===== RENDER CHUNG ===== */
 function renderWallet(){
  $('wallet').textContent=fmt(wallet);$('wallet2').textContent=fmt(wallet)+' xu';
  if(!$('shopView').classList.contains('hidden'))$('shopWallet').textContent=fmt(wallet);
+ if(!$('gamesView').classList.contains('hidden'))$('gameWallet').textContent=fmt(wallet);
+ if(!$('marketView').classList.contains('hidden'))$('marketWallet').textContent=fmt(wallet);
 }
-function renderAmmo(){
- setHTML('ammoList',ammos.map((a,i)=>`<div class="ammo ${i===ammoIndex?'active':''}" onclick="selectAmmo(${i})">
-  <span class="emoji">${a[0]}</span><b>${a[1]}</b><br><small>x${a[2]} sát thương</small></div>`).join(''));
-}
-function selectAmmo(i){ammoIndex=i;renderAmmo();notify('Đã chọn '+ammos[i][1])}
-function renderAll(){
- renderWallet();renderAmmo();renderBoss('main');renderBoss('side');renderStocks();
- renderQuests();renderInv();renderSkills();renderBoard();renderFriends();
- addFeed('📣 Thị trường mở cửa — giá có thể tăng hoặc giảm ngẫu nhiên.');
- addFeed('🐉 Boss lao tới và nổi giận khi máu xuống dưới 35%. Đàn em hỗ trợ bên trái!');
-}
+function renderAmmo(){setHTML('ammoList',ammos.map((a,i)=>`<div class="ammo ${i===ammoIndex?'active':''}" onclick="ammoIndex=${i};renderAmmo()"><span class="emoji">${a[0]}</span><b>${a[1]}</b><br><small>x${a[2]}</small></div>`).join(''))}
+function renderAll(){renderWallet();renderAmmo();renderBoss('main');renderBoss('side');renderStocks();renderQuests();renderInv();renderSkills();renderBoard();renderFriends();addFeed('📣 Đại dương đã mở!')}
 
-/* ===== BOSS (main & side) ===== */
-function setEl(k,alive){
- const el=EL(k);
- el.className=k==='main'?'boss':'boss side';
- el.style.opacity=1;
- el.classList.toggle('hidden',!alive);
- T(k).alive=alive;
-}
+/* ===== BOSS ===== */
+function setEl(k,alive){const el=EL(k);el.className=k==='main'?'boss':'boss side';el.style.opacity=1;el.classList.toggle('hidden',!alive);T(k).alive=alive}
 function spawnBoss(k){
  const t=T(k);
  if(k==='main'){
-  t.max=bossMaxFor(t.idx,t.loop);
-  if(t.hp<=0||t.hp>t.max)t.hp=t.max;
-  const b=BOSSES[t.idx];
-  $('boss').innerHTML=bossSvg(b.art);
-  $('bossName').textContent=b.name+(t.loop?' ⭐ x'+(t.loop+1):'');
-  $('bossLv').textContent=b.lv;
-  $('status').textContent='Boss: '+b.name;
-  t.enraged=false;$('arena').classList.remove('rage');
-  setEl('main',true);
-  scheduleCharge();
-  addFeed('🐉 '+b.name+' xuất hiện! Máu: '+fmt(t.hp));
+  t.max=bossMaxFor(t.idx,t.loop);if(t.hp<=0||t.hp>t.max)t.hp=t.max;
+  const b=BOSSES[t.idx];$('boss').innerHTML=bossSvg(b.art);
+  $('bossName').textContent=b.name+(t.loop?' ⭐ x'+(t.loop+1):'');$('bossLv').textContent=b.lv;
+  $('status').textContent='Boss: '+b.name;t.enraged=false;$('arena').classList.remove('rage');
+  setEl('main',true);scheduleCharge();addFeed('🐉 '+b.name+' xuất hiện!');
  }else{
-  const si=sideIdx();
-  side.idx=si;side.max=Math.round(BOSSES[si].hp*0.3*(1+main.loop*0.6));
-  side.hp=side.max;
-  $('bossSide').innerHTML=bossSvg(BOSSES[si].art);
-  $('sideName').textContent=BOSSES[si].name;
-  setEl('side',true);
-  addFeed('🐟 Đàn em '+BOSSES[si].name+' xuất hiện bên trái!');
+  const si=sideIdx();side.idx=si;side.max=Math.round(BOSSES[si].hp*.3*(1+main.loop*.6));side.hp=side.max;
+  $('bossSide').innerHTML=bossSvg(BOSSES[si].art);$('sideName').textContent=BOSSES[si].name;setEl('side',true);
+  addFeed('🐟 Đàn em '+BOSSES[si].name+' xuất hiện!');
  }
  renderBoss(k);
 }
 function renderBoss(k){
- const t=T(k),pre=k==='main'?'boss':'side';
- const max=t.max||1,pct=Math.max(0,t.hp/max*100);
- $(pre+'Text').textContent=fmt(Math.max(0,t.hp))+' / '+fmt(max)+' HP';
- $(pre+'Hp').style.width=pct+'%';
- if(k==='main'){
-  $('boss').classList.toggle('rage',t.alive&&pct<35&&t.enraged);
-  if(t.alive&&pct<35&&!t.enraged)enrage();
- }else{
-  $('sideBar').classList.toggle('hidden',!t.alive);
- }
+ const t=T(k),pre=k==='main'?'boss':'side',max=t.max||1,pct=Math.max(0,t.hp/max*100);
+ $(pre+'Text').textContent=fmt(Math.max(0,t.hp))+' / '+fmt(max)+' HP';$(pre+'Hp').style.width=pct+'%';
+ if(k==='main'){$('boss').classList.toggle('rage',t.alive&&pct<35&&t.enraged);if(t.alive&&pct<35&&!t.enraged)enrage()}
+ else $('sideBar').classList.toggle('hidden',!t.alive);
 }
-function enrage(){
- main.enraged=true;
- $('boss').classList.add('rage');$('arena').classList.add('rage');
- sfx.roar();showWarn('😡 NỔI GIẬN!');shakeArena();
- addFeed('🔥 '+BOSSES[main.idx].name+' nổi giận! Tấn công dồn dập hơn.');
-}
-function knockback(k){
- const el=EL(k);
- const dx=(Math.random()<.5?-1:1)*(10+Math.random()*10);
- el.style.translate=`calc(-50% + ${dx}px) -50%`;
- setTimeout(()=>{if(!el.classList.contains('charge'))el.style.translate=''},160);
-}
+function enrage(){main.enraged=true;$('boss').classList.add('rage');$('arena').classList.add('rage');sfx.roar();showWarn('😡 NỔI GIẬN!');shakeArena();addFeed('🔥 Boss nổi giận!')}
+function knockback(k){const el=EL(k),dx=(Math.random()<.5?-1:1)*(10+Math.random()*10);el.style.translate=`calc(-50% + ${dx}px) -50%`;setTimeout(()=>{if(!el.classList.contains('charge'))el.style.translate=''},160)}
 function hitBoss(e,cost,k){
- const a=ammos[ammoIndex],crit=Math.random()<CRIT_CHANCE;
- const bm=buffActive('dmg')?buff.mult:1;
- const gm=curGun().mult;
- const dmg=Math.round(cost*a[2]*power*gm*BOSS_ARMOR*(0.75+Math.random()*0.65)*(crit?2:1)*bm);
- sfx.hit();
- if(crit){sfx.crit();showWarn('💥 CHÍ MẠNG!')}
- knockback(k);
- applyBossDamage(k,dmg,e,crit);
+ const a=ammos[ammoIndex],crit=Math.random()<CRIT_CHANCE,bm=buffActive('dmg')?buff.mult:1;
+ const dmg=Math.round(cost*a[2]*power*curGun().mult*BOSS_ARMOR*(.75+Math.random()*.65)*(crit?2:1)*bm);
+ sfx.hit();if(crit){sfx.crit();showWarn('💥 CHÍ MẠNG!')}
+ knockback(k);applyBossDamage(k,dmg,e,crit);
 }
 function applyBossDamage(k,dmg,e,crit=false){
- const t=T(k),el=EL(k);
- if(!t.alive)return;
+ const t=T(k),el=EL(k);if(!t.alive)return;
  t.hp-=dmg;daily.dmg+=dmg;
  el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');
  el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),120);
- burstAt(e);
- floatText(e,(crit?'CHÍ MẠNG! ':'-')+fmt(dmg),crit?'#ff4d6d':'#ffed65',crit);
- if(t.hp<=0)killBoss(k);
- renderBoss(k);
+ burstAt(e);floatText(e,(crit?'CHÍ MẠNG! ':'-')+fmt(dmg),crit?'#ff4d6d':'#ffed65',crit);
+ if(t.hp<=0)killBoss(k);renderBoss(k);
 }
-function scheduleCharge(){
- clearTimeout(main.chargeTimer);
- if(!main.alive)return;
- main.chargeTimer=setTimeout(bossCharge,main.enraged?2200:4200+Math.random()*1800);
-}
+function scheduleCharge(){clearTimeout(main.chargeTimer);if(!main.alive)return;main.chargeTimer=setTimeout(bossCharge,main.enraged?2200:4200+Math.random()*1800)}
 function bossCharge(){
- if(!main.alive)return;
- const el=$('boss');
- showWarn('⚠️ BOSS LAO TỚI!');
- setTimeout(()=>{
-  if(!main.alive)return;
-  sfx.roar();el.classList.add('charge');
-  el.style.translate='-50% calc(-50% + 90px)';
-  shakeArena();
-  setTimeout(()=>{
-   if(!main.alive)return;
-   el.style.translate='-50% -50%';
-   setTimeout(()=>{el.classList.remove('charge');scheduleCharge()},600);
-  },700);
- },1000);
+ if(!main.alive)return;const el=$('boss');showWarn('⚠️ BOSS LAO TỚI!');
+ setTimeout(()=>{if(!main.alive)return;sfx.roar();el.classList.add('charge');el.style.translate='-50% calc(-50% + 90px)';shakeArena();
+  setTimeout(()=>{if(!main.alive)return;el.style.translate='-50% -50%';setTimeout(()=>{el.classList.remove('charge');scheduleCharge()},600)},700)},1000);
 }
 function killBoss(k){
- const t=T(k),el=EL(k);
- t.alive=false;t.hp=0;
+ const t=T(k),el=EL(k);t.alive=false;t.hp=0;
  if(k==='main'){
-  clearTimeout(main.chargeTimer);
-  const reward=bossRewardFor(main.idx,main.loop);
-  wallet+=reward;totals.kills++;daily.kills++;
-  sfx.win();showWarn('🏆 HẠ GỤC!');shakeArena();coinShower(14);
-  notify('🐉 HẠ GỤC '+BOSSES[main.idx].name+'! +'+fmt(reward)+' xu thưởng!');
-  addFeed('🏆 Hạ '+BOSSES[main.idx].name+' • +'+fmt(reward)+' xu');
-  el.classList.add('dying');
-  dropChest(main.idx<2?'common':main.idx<4?'rare':'gold');
+  clearTimeout(main.chargeTimer);const r=bossRewardFor(main.idx,main.loop);
+  wallet+=r;totals.kills++;daily.kills++;sfx.win();showWarn('🏆 HẠ GỤC!');shakeArena();coinShower(14);
+  notify('🐉 HẠ GỤC '+BOSSES[main.idx].name+'! +'+fmt(r));addFeed('🏆 Hạ '+BOSSES[main.idx].name);
+  el.classList.add('dying');dropChest(main.idx<2?'common':main.idx<4?'rare':'gold');
   main.idx++;if(main.idx>=BOSSES.length){main.idx=0;main.loop++}
-  main.max=bossMaxFor(main.idx,main.loop);
-  clearTimeout(main.respawn);
+  main.max=bossMaxFor(main.idx,main.loop);clearTimeout(main.respawn);
   main.respawn=setTimeout(()=>{spawnBoss('main');save()},2600);
-  if(sideEnabled()&&!side.alive){
-   clearTimeout(side.respawn);
-   side.respawn=setTimeout(()=>{if(!side.alive)spawnBoss('side')},2600);
-  }
+  if(sideEnabled()&&!side.alive){clearTimeout(side.respawn);side.respawn=setTimeout(()=>{if(!side.alive)spawnBoss('side')},2600)}
  }else{
-  const reward=Math.round(bossRewardFor(side.idx,main.loop)*0.35);
-  wallet+=reward;totals.kills++;daily.kills++;
-  sfx.win();
-  notify('🐟 Hạ đàn em '+BOSSES[side.idx].name+'! +'+fmt(reward)+' xu');
-  el.classList.add('dying');
-  dropChest('common');
-  clearTimeout(side.respawn);
-  side.respawn=setTimeout(()=>{if(sideEnabled()&&!side.alive)spawnBoss('side')},30000);
+  const r=Math.round(bossRewardFor(side.idx,main.loop)*.35);wallet+=r;totals.kills++;daily.kills++;sfx.win();
+  notify('🐟 Hạ đàn em! +'+fmt(r));el.classList.add('dying');dropChest('common');
+  clearTimeout(side.respawn);side.respawn=setTimeout(()=>{if(sideEnabled()&&!side.alive)spawnBoss('side')},30000);
  }
  renderWallet();renderBoss(k);save();
 }
 
 /* ===== CÁ ===== */
-function pickFish(){const r=Math.random();let acc=0;for(const f of FISH){acc+=f.w;if(r<acc)return f}return FISH[0]}
+function pickFish(){const r=Math.random();let a=0;for(const f of FISH){a+=f.w;if(r<a)return f}return FISH[0]}
 function spawnFish(){
- const sp=pickFish();
- const el=document.createElement('div');
+ const sp=pickFish(),el=document.createElement('div');
  el.className='fish';el.innerHTML=sp.svg;
- el.style.left=(3+Math.random()*82)+'%';el.style.top=(18+Math.random()*56)+'%';
- el.style.animationDelay=(-Math.random()*4)+'s';
- const obj={sp,el,dead:false,school:false};
- el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
+ el.style.left=(3+Math.random()*82)+'%';el.style.top=(18+Math.random()*56)+'%';el.style.animationDelay=(-Math.random()*4)+'s';
+ const obj={sp,el,dead:false,school:false};el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
  fishObjs.push(obj);$('arena').appendChild(el);
 }
 function spawnSchool(){
  if($('gameScreen').classList.contains('hidden'))return;
  const n=5+Math.floor(Math.random()*3),top=20+Math.random()*50;
  for(let i=0;i<n;i++){
-  const el=document.createElement('div');
-  el.className='fish small school';
-  el.innerHTML=FISH[Math.floor(Math.random()*3)].svg;
-  el.style.top=(top+(Math.random()*8-4))+'%';el.style.left='-120px';
+  const el=document.createElement('div');el.className='fish small school';
+  el.innerHTML=FISH[Math.floor(Math.random()*3)].svg;el.style.top=(top+(Math.random()*8-4))+'%';el.style.left='-120px';
   el.style.animationDelay=(-i*.25)+'s';el.style.animationDuration=(6+Math.random()*2)+'s';
-  const obj={sp:{m:2},el,dead:false,school:true};
-  el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
+  const obj={sp:{m:2},el,dead:false,school:true};el.onclick=e=>{e.stopPropagation();if(!obj.dead)shoot(e,'fish',obj)};
   fishObjs.push(obj);$('arena').appendChild(el);
   setTimeout(()=>{if(!obj.dead){obj.dead=true;fishObjs=fishObjs.filter(f=>f!==obj);el.remove()}},9000);
  }
- notify('🐟 Đàn cá đang bơi qua!');
 }
 function fishCaught(obj,e,reward){
- obj.dead=true;wallet+=reward;totals.fish++;daily.fish++;
- fishObjs=fishObjs.filter(f=>f!==obj);
- sfx.pop();setTimeout(sfx.coin,120);
- burstAt(e);coinFly(e,reward);
- floatText(e,'+'+fmt(reward),'#8dffb5');
+ obj.dead=true;wallet+=reward;totals.fish++;daily.fish++;fishObjs=fishObjs.filter(f=>f!==obj);
+ sfx.pop();setTimeout(sfx.coin,120);burstAt(e);coinFly(e,reward);floatText(e,'+'+fmt(reward),'#8dffb5');
  obj.el.classList.add('dying');
- if(!obj.school)setTimeout(()=>{obj.el.remove();spawnFish()},480);
- else setTimeout(()=>obj.el.remove(),480);
- if(obj.sp.m>=15){notify('✨ Hạ cá hiếm! +'+fmt(reward)+' xu');shakeArena()}
+ if(!obj.school)setTimeout(()=>{obj.el.remove();spawnFish()},480);else setTimeout(()=>obj.el.remove(),480);
+ if(obj.sp.m>=15){notify('✨ Hạ cá hiếm! +'+fmt(reward));shakeArena()}
  if(Math.random()<.03)dropChest('common');
 }
 
@@ -988,313 +693,199 @@ function shoot(e,kind,obj){
  const cost=Number($('bet').value);
  if(wallet<cost){notify('Không đủ xu! Chọn mức đạn thấp hơn.');stopAuto();return}
  wallet-=cost;totals.shots++;daily.shots++;
- beam(e);sfx.shoot();
- const c=$('cannon');c.classList.remove('recoil');void c.offsetWidth;c.classList.add('recoil');
+ beam(e);sfx.shoot();const c=$('cannon');c.classList.remove('recoil');void c.offsetWidth;c.classList.add('recoil');
  if(kind==='fish'){
-  if(Math.random()<Math.min(.9,.9/obj.sp.m)){
-   fishCaught(obj,e,Math.round(cost*obj.sp.m*luckMult()));
-  }else{
-   obj.el.classList.remove('wiggle');void obj.el.offsetWidth;obj.el.classList.add('wiggle');
-  }
- }else{
-  hitBoss(e,cost,kind);
- }
+  if(Math.random()<Math.min(.9,.9/obj.sp.m))fishCaught(obj,e,Math.round(cost*obj.sp.m*luckMult()));
+  else{obj.el.classList.remove('wiggle');void obj.el.offsetWidth;obj.el.classList.add('wiggle')}
+ }else hitBoss(e,cost,kind);
  renderWallet();save();
 }
 function beam(e){
- const arena=$('arena'),rect=arena.getBoundingClientRect();
- const x=e.clientX-rect.left,y=e.clientY-rect.top;
- const sx=rect.width/2,sy=rect.height-30,dx=x-sx,dy=y-sy;
+ const a=$('arena'),r=a.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,sx=r.width/2,sy=r.height-30,dx=x-sx,dy=y-sy;
  const b=document.createElement('div');b.className='beam';
  b.style.background=`linear-gradient(90deg,#fff,${curGun().beam},transparent)`;
- b.style.left=sx+'px';b.style.top=sy+'px';b.style.width=Math.hypot(dx,dy)+'px';
- b.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
- arena.appendChild(b);setTimeout(()=>b.remove(),300);
+ b.style.left=sx+'px';b.style.top=sy+'px';b.style.width=Math.hypot(dx,dy)+'px';b.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
+ a.appendChild(b);setTimeout(()=>b.remove(),300);
 }
-function burstAt(e){
- const arena=$('arena'),rect=arena.getBoundingClientRect();
- const d=document.createElement('div');d.className='burst';
- d.style.left=(e.clientX-rect.left)+'px';d.style.top=(e.clientY-rect.top)+'px';
- arena.appendChild(d);setTimeout(()=>d.remove(),460);
-}
-function floatText(e,txt,color,crit=false){
- const arena=$('arena'),rect=arena.getBoundingClientRect();
- const d=document.createElement('div');d.className='dmg'+(crit?' crit':'');d.textContent=txt;d.style.color=color;
- d.style.left=(e.clientX-rect.left)+'px';d.style.top=(e.clientY-rect.top)+'px';
- arena.appendChild(d);setTimeout(()=>d.remove(),900);
-}
+function burstAt(e){const a=$('arena'),r=a.getBoundingClientRect(),d=document.createElement('div');d.className='burst';d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';a.appendChild(d);setTimeout(()=>d.remove(),460)}
+function floatText(e,txt,color,crit=false){const a=$('arena'),r=a.getBoundingClientRect(),d=document.createElement('div');d.className='dmg'+(crit?' crit':'');d.textContent=txt;d.style.color=color;d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';a.appendChild(d);setTimeout(()=>d.remove(),900)}
 function coinFly(e,reward){
- const arena=$('arena'),rect=arena.getBoundingClientRect();
- const sx=e.clientX-rect.left,sy=e.clientY-rect.top;
- const tx=rect.width-80,ty=rect.height-30;
- const n=Math.min(6,2+Math.floor(Math.log10(Math.max(10,reward))));
- for(let i=0;i<n;i++){
-  const c=document.createElement('div');c.className='coin';c.textContent='🪙';
-  c.style.left=sx+'px';c.style.top=sy+'px';arena.appendChild(c);
-  c.animate([
-   {transform:'translate(0,0) scale(1)',opacity:1},
-   {transform:`translate(${(Math.random()-.5)*60}px,${-40-Math.random()*30}px) scale(1.2)`,opacity:1,offset:.35},
-   {transform:`translate(${tx-sx}px,${ty-sy}px) scale(.6)`,opacity:.2}
-  ],{duration:700+i*60,easing:'cubic-bezier(.3,.7,.4,1)'}).onfinish=()=>c.remove();
- }
+ const a=$('arena'),r=a.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top,tx=r.width-80,ty=r.height-30,n=Math.min(6,2+Math.floor(Math.log10(Math.max(10,reward))));
+ for(let i=0;i<n;i++){const c=document.createElement('div');c.className='coin';c.textContent='🪙';c.style.left=sx+'px';c.style.top=sy+'px';a.appendChild(c);
+  c.animate([{transform:'translate(0,0)',opacity:1},{transform:`translate(${(Math.random()-.5)*60}px,${-40-Math.random()*30}px)`,opacity:1,offset:.35},{transform:`translate(${tx-sx}px,${ty-sy}px) scale(.6)`,opacity:.2}],{duration:700+i*60}).onfinish=()=>c.remove()}
 }
-function coinShower(n){
- const arena=$('arena'),rect=arena.getBoundingClientRect();
- for(let i=0;i<n;i++){
-  const c=document.createElement('div');c.className='coin';c.textContent='🪙';
-  c.style.left=(rect.width*.2+Math.random()*rect.width*.6)+'px';c.style.top='-30px';
-  arena.appendChild(c);
-  c.animate([{transform:'translateY(0)'},{transform:`translateY(${rect.height+60}px) rotate(${Math.random()*720}deg)`}],
-   {duration:1100+Math.random()*700,delay:i*60,easing:'ease-in'}).onfinish=()=>c.remove();
- }
-}
-function showWarn(txt){
- const d=document.createElement('div');d.className='warn';d.textContent=txt;
- $('arena').appendChild(d);setTimeout(()=>d.remove(),1000);
-}
-function shakeArena(){
- const a=$('arena');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');
- setTimeout(()=>a.classList.remove('shake'),380);
-}
-
-/* Bắn tự động: nhắm boss chính, nếu không có thì nhắm đàn em */
-function toggleAuto(){
- if(autoTimer)return stopAuto();
- autoTimer=setInterval(autoShot,320);
- $('autoBtn').textContent='⏸ Dừng bắn tự động';
-}
-function stopAuto(){
- clearInterval(autoTimer);autoTimer=null;
- $('autoBtn').textContent='▶ Bắn tự động';
-}
-function autoShot(){
- const k=main.alive?'main':side.alive?'side':null;
- if(!k)return;
- const r=EL(k).getBoundingClientRect();
- shoot({clientX:r.left+r.width/2,clientY:r.top+r.height*.4},k);
-}
+function coinShower(n){const a=$('arena'),r=a.getBoundingClientRect();for(let i=0;i<n;i++){const c=document.createElement('div');c.className='coin';c.textContent='🪙';c.style.left=(r.width*.2+Math.random()*r.width*.6)+'px';c.style.top='-30px';a.appendChild(c);c.animate([{transform:'translateY(0)'},{transform:`translateY(${r.height+60}px)`}],{duration:1100+Math.random()*700,delay:i*60}).onfinish=()=>c.remove()}}
+function showWarn(t){const d=document.createElement('div');d.className='warn';d.textContent=t;$('arena').appendChild(d);setTimeout(()=>d.remove(),1000)}
+function shakeArena(){const a=$('arena');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');setTimeout(()=>a.classList.remove('shake'),380)}
+function upgrade(){const cost=150000*power;if(wallet<cost)return notify('Cần '+fmt(cost)+' xu');wallet-=cost;power=Math.min(8,power+1);renderWallet();notify('⚡ Pháo x'+power);save()}
+function toggleAuto(){if(autoTimer)return stopAuto();autoTimer=setInterval(autoShot,320);$('autoBtn').textContent='⏸ Dừng bắn tự động'}
+function stopAuto(){clearInterval(autoTimer);autoTimer=null;$('autoBtn').textContent='▶ Bắn tự động'}
+function autoShot(){const k=main.alive?'main':side.alive?'side':null;if(!k)return;const r=EL(k).getBoundingClientRect();shoot({clientX:r.left+r.width/2,clientY:r.top+r.height*.4},k)}
 
 /* ===== SKILL ===== */
 function castNet(){
  if(Date.now()<skillCD.net)return;
- const bet=Number($('bet').value);
- const targets=fishObjs.filter(f=>!f.dead).sort(()=>Math.random()-.5).slice(0,3);
- if(!targets.length)return notify('Không có con cá nào trong lưới!');
- targets.forEach(f=>{
-  const r=f.el.getBoundingClientRect();
-  const e={clientX:r.left+r.width/2,clientY:r.top+r.height/2};
-  fishCaught(f,e,Math.round(bet*f.sp.m*0.25*luckMult()));
- });
- skillCD.net=Date.now()+40000;
- notify('🕸️ Lưới bắt được '+targets.length+' con! (không tốn đạn)');
- renderWallet();renderSkills();save();
+ const bet=Number($('bet').value),t=fishObjs.filter(f=>!f.dead).sort(()=>Math.random()-.5).slice(0,3);
+ if(!t.length)return notify('Không có cá trong lưới!');
+ t.forEach(f=>{const r=f.el.getBoundingClientRect();fishCaught(f,{clientX:r.left+r.width/2,clientY:r.top+r.height/2},Math.round(bet*f.sp.m*.25*luckMult()))});
+ skillCD.net=Date.now()+40000;notify('🕸️ Lưới bắt được '+t.length+' con!');renderWallet();renderSkills();save();
 }
 function castBomb(){
- if(Date.now()<skillCD.bomb)return;
- if(!main.alive)return notify('Chưa có boss chính để ném bom!');
- const r=$('boss').getBoundingClientRect();
- const e={clientX:r.left+r.width/2,clientY:r.top+r.height*.4};
- skillCD.bomb=Date.now()+60000;
- sfx.hit();shakeArena();
- applyBossDamage('main',Math.round(main.max*0.05),e,false);
- notify('💣 Bom nước gây 5% máu boss!');
- renderSkills();save();
+ if(Date.now()<skillCD.bomb)return;if(!main.alive)return notify('Chưa có boss chính!');
+ const r=$('boss').getBoundingClientRect();skillCD.bomb=Date.now()+60000;sfx.hit();shakeArena();
+ applyBossDamage('main',Math.round(main.max*.05),{clientX:r.left+r.width/2,clientY:r.top+r.height*.4},false);
+ notify('💣 Bom nước gây 5% máu boss!');renderSkills();save();
 }
 function renderSkills(){
- const now=Date.now();
- const n=Math.max(0,Math.ceil((skillCD.net-now)/1000)),b=Math.max(0,Math.ceil((skillCD.bomb-now)/1000));
- $('netBtn').textContent=n?'🕸️ Lưới ('+n+'s)':'🕸️ Lưới bắt cá';
- $('bombBtn').textContent=b?'💣 Bom ('+b+'s)':'💣 Bom nước';
+ const now=Date.now(),n=Math.max(0,Math.ceil((skillCD.net-now)/1000)),b=Math.max(0,Math.ceil((skillCD.bomb-now)/1000));
+ $('netBtn').textContent=n?'🕸️ Lưới ('+n+'s)':'🕸️ Lưới bắt cá';$('bombBtn').textContent=b?'💣 Bom ('+b+'s)':'💣 Bom nước';
  $('netBtn').disabled=n>0;$('bombBtn').disabled=b>0;
 }
 
 /* ===== RƯƠNG & BUFF ===== */
-function dropChest(tier){
- inv[tier]=(inv[tier]||0)+1;
- notify(CHESTS[tier].icon+' Nhận '+CHESTS[tier].name+'!');
- renderInv();
-}
-function setBuff(type,mult,sec){
- buff={type,mult,until:Date.now()+sec*1000};
- notify('✨ Buff '+(type==='dmg'?'sát thương':'may mắn câu cá')+' x'+mult+' trong '+sec+' giây');
-}
+function dropChest(tier){inv[tier]=(inv[tier]||0)+1;notify(CHESTS[tier].icon+' Nhận '+CHESTS[tier].name+'!');renderInv()}
+function setBuff(type,mult,sec){buff={type,mult,until:Date.now()+sec*1000};notify('✨ Buff x'+mult+' trong '+sec+' giây')}
 function openChest(tier){
- if(!inv[tier])return notify('Không có rương này!');
- inv[tier]--;
- const r=Math.random();
- if(tier==='common'){
-  if(r<.5){const c=rnd(30000,80000);wallet+=c;notify('📦 Rương gỗ: +'+fmt(c)+' xu')}
-  else setBuff('dmg',2,30);
- }else if(tier==='rare'){
-  if(r<.4){const c=rnd(150000,400000);wallet+=c;notify('🎁 Rương bạc: +'+fmt(c)+' xu')}
-  else if(r<.7)setBuff('dmg',3,20);
-  else setBuff('luck',1.5,45);
- }else{
-  const c=rnd(800000,2000000);wallet+=c;setBuff('dmg',4,40);
-  notify('👑 Rương vàng: +'+fmt(c)+' xu + buff x4!');
- }
+ if(!inv[tier])return;inv[tier]--;const r=Math.random();
+ if(tier==='common'){if(r<.5){const c=rnd(30000,80000);wallet+=c;notify('📦 +'+fmt(c)+' xu')}else setBuff('dmg',2,30)}
+ else if(tier==='rare'){if(r<.4){const c=rnd(150000,400000);wallet+=c;notify('🎁 +'+fmt(c)+' xu')}else if(r<.7)setBuff('dmg',3,20);else setBuff('luck',1.5,45)}
+ else{const c=rnd(800000,2000000);wallet+=c;setBuff('dmg',4,40);notify('👑 +'+fmt(c)+' xu + buff x4!')}
  shakeArena();sfx.win();renderWallet();renderInv();save();
 }
-function renderInv(){
- const rows=Object.keys(CHESTS).map(t=>`<div class="invrow"><span>${CHESTS[t].icon} ${CHESTS[t].name}: <b>${inv[t]||0}</b></span><button ${inv[t]?'':'disabled'} onclick="openChest('${t}')">Mở</button></div>`).join('');
- setHTML('invBox',rows);
- updateBuffLine();
-}
-function updateBuffLine(){
- let txt='Buff: không có';
- if(buffActive('dmg')||buffActive('luck')){
-  txt='✨ '+(buff.type==='dmg'?'Sát thương':'May mắn câu')+' x'+buff.mult+' • còn '+Math.ceil((buff.until-Date.now())/1000)+'s';
- }
- $('buffLine').textContent=txt;
-}
+function renderInv(){setHTML('invBox',Object.keys(CHESTS).map(t=>`<div class="invrow"><span>${CHESTS[t].icon} ${CHESTS[t].name}: <b>${inv[t]||0}</b></span><button ${inv[t]?'':'disabled'} onclick="openChest('${t}')">Mở</button></div>`).join(''));updateBuffLine()}
+function updateBuffLine(){let t='Buff: không có';if(buffActive('dmg')||buffActive('luck'))t='✨ '+(buff.type==='dmg'?'Sát thương':'May mắn')+' x'+buff.mult+' • còn '+Math.ceil((buff.until-Date.now())/1000)+'s';$('buffLine').textContent=t}
 
 /* ===== NHIỆM VỤ ===== */
 function renderQuests(){
  ensureDaily();
  setHTML('questBox',QUESTS.map(q=>{
-  const cur=Math.min(daily[q.id]||0,q.target),pct=cur/q.target*100;
-  const done=(daily[q.id]||0)>=q.target,claimed=!!daily.claimed[q.id];
-  const btn=claimed?'<small>✅ Đã nhận</small>':`<button ${done?'':'disabled'} onclick="claimQuest('${q.id}')">Nhận ${fmt(q.reward)} xu</button>`;
-  return `<div class="quest"><div style="flex:1"><b>${q.label}</b><div class="qbar"><div style="width:${pct}%"></div></div><small>${fmt(cur)} / ${fmt(q.target)}</small></div>${btn}</div>`;
+  const cur=Math.min(daily[q.id]||0,q.target),pct=cur/q.target*100,done=(daily[q.id]||0)>=q.target,cl=!!daily.claimed[q.id];
+  return `<div class="quest"><div style="flex:1"><b>${q.label}</b><div class="qbar"><div style="width:${pct}%"></div></div><small>${fmt(cur)} / ${fmt(q.target)}</small></div>${cl?'<small>✅</small>':`<button ${done?'':'disabled'} onclick="claimQuest('${q.id}')">+${fmt(q.reward)}</button>`}</div>`;
  }).join(''));
 }
-function claimQuest(id){
- const q=QUESTS.find(x=>x.id===id);
- if(!q||(daily[id]||0)<q.target||daily.claimed[id])return;
- daily.claimed[id]=true;wallet+=q.reward;sfx.coin();
- notify('🎯 Nhận thưởng nhiệm vụ +'+fmt(q.reward)+' xu');
- renderWallet();renderQuests();save();
-}
+function claimQuest(id){const q=QUESTS.find(x=>x.id===id);if(!q||(daily[id]||0)<q.target||daily.claimed[id])return;daily.claimed[id]=true;wallet+=q.reward;sfx.coin();renderWallet();renderQuests();save()}
 
-/* ===== BẢNG XẾP HẠNG (người chơi + bot) ===== */
+/* ===== BẢNG XẾP HẠNG ===== */
 function updateBoard(){
  if(!username)return;
- let board=JSON.parse(localStorage.getItem('sf_board')||'[]');
- const row={name:username,score:Math.round(wallet+holdingsValue()),kills:totals.kills,fish:totals.fish};
- const i=board.findIndex(r=>r.name===username);
- if(i>=0)board[i]=row;else board.push(row);
- board.sort((a,b)=>b.score-a.score);
- localStorage.setItem('sf_board',JSON.stringify(board.slice(0,50)));
- renderBoard();
+ const board=JSON.parse(localStorage.getItem('sf_board')||'[]');
+ const row={name:username,score:Math.round(wallet+holdingsValue()),kills:totals.kills};
+ const i=board.findIndex(r=>r.name===username);if(i>=0)board[i]=row;else board.push(row);
+ localStorage.setItem('sf_board',JSON.stringify(board.slice(0,60)));renderBoard();
 }
 function renderBoard(){
- const botRows=getBots().map(b=>({name:b.face+' '+b.name,score:b.coins,kills:b.kills}));
- const playerRows=JSON.parse(localStorage.getItem('sf_board')||'[]');
- const all=[...botRows,...playerRows].sort((a,b)=>b.score-a.score).slice(0,10);
- setHTML('boardBox',all.length?all.map((r,i)=>`<div class="brow ${r.name===username?'me':''}">
-  <span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${r.name}</span><span>🪙 ${fmt(r.score)} • 🐉 ${r.kills}</span></div>`).join('')
-  :'<small>Chưa có ai trên bảng.</small>');
+ const players=JSON.parse(localStorage.getItem('sf_board')||'[]');
+ const bots=getBots().map(b=>({name:b.face+' '+b.name,score:b.coins,kills:b.kills}));
+ const all=[...bots,...players].sort((a,b)=>b.score-a.score).slice(0,10);
+ setHTML('boardBox',all.map((r,i)=>`<div class="brow ${r.name===username?'me':''}"><span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${r.name}</span><span>🪙 ${fmt(r.score)} • 🐉 ${r.kills}</span></div>`).join(''));
+}
+
+/* ===== TRÒ CHƠI: CHỌN CỬA ===== */
+const DOOR_OUT=[['coin',1.2,.4],['chest',2.2,.2],['monster',0,.4]];
+function rollDoor(){const r=Math.random();let a=0;for(const [k,m,w] of DOOR_OUT){a+=w;if(r<a)return [k,m]}return [DOOR_OUT[2][0],0]}
+const ICON={coin:'🪙',chest:'🎁',monster:'👾'},LBL={coin:'Xu',chest:'Rương',monster:'Quái vật'};
+function openGames(){$('gamesView').classList.remove('hidden');$('gameWallet').textContent=fmt(wallet);gameTab('door')}
+function closeGames(){$('gamesView').classList.add('hidden');stopLock()}
+function gameTab(n){
+ $('panelDoor').classList.toggle('hidden',n!=='door');$('panelLock').classList.toggle('hidden',n!=='lock');
+ if(n==='door'){stopLock();renderDoors(null,-1)}else startLock();
+}
+function renderDoors(kinds,picked){
+ $('doors').innerHTML=[0,1,2].map(i=>{
+  const k=kinds?kinds[i]:null;let cls='';if(kinds&&picked===i)cls=k==='monster'?'lost':'won';
+  return `<div class="door ${cls}" onclick="playDoor(${i})">${kinds?ICON[k]:'❓'}<span style="position:absolute;bottom:6px;font-size:12px;color:#9edcff">${kinds?LBL[k]:'Cửa '+(i+1)}</span></div>`;
+ }).join('');
+}
+function playDoor(pick){
+ if(doorBusy)return;
+ const bet=Number($('doorBet').value);
+ if(bet>wallet)return notify('Không đủ xu.');
+ doorBusy=true;
+ const rolled=[rollDoor(),rollDoor(),rollDoor()],kinds=rolled.map(r=>r[0]);
+ const mult=rolled[pick][1],payout=Math.floor(bet*mult),net=payout-bet;
+ wallet+=net;totals.shots++;
+ renderDoors(kinds,pick);renderWallet();
+ $('doorRes').innerHTML=net>0?`<span class="up">🎉 ${LBL[kinds[pick]]}! +${fmt(net)} xu</span>`
+  :net===0?'<span class="up">Hòa vốn</span>':`<span class="down">💥 Quái vật! −${fmt(-net)} xu</span>`;
+ save();doorBusy=false;
+}
+
+/* ===== TRÒ CHƠI: ĐẾM NGƯỢC MỞ KHÓA ===== */
+function startLock(){if(lockRAF)return;lockT0=performance.now();lockRAF=requestAnimationFrame(lockFrame)}
+function stopLock(){if(lockRAF)cancelAnimationFrame(lockRAF);lockRAF=null}
+function lockFrame(now){
+ const x=((now-lockT0)/1000*1.3)%2;lockP=x<1?x:2-x;$('needle').style.left=(lockP*100)+'%';
+ lockRAF=requestAnimationFrame(lockFrame);
+}
+function lockPress(){
+ if(lockBusy)return;
+ const bet=Number($('lockBet').value);
+ if(bet>wallet)return notify('Không đủ xu.');
+ const d=Math.abs(lockP-.5),mult=d<=.04?3:d<=.12?1.5:d<=.30?1:0;
+ const net=Math.floor(bet*mult)-bet;
+ wallet+=net;totals.shots++;
+ const label=mult===3?'🎯 Hoàn hảo!':mult===1.5?'👍 Gần giữa!':mult===1?'😅 Vùng vàng':'❌ Lệch rồi';
+ $('lockRes').innerHTML=net>=0?`<span class="up">${label} ${net>0?'+'+fmt(net):'hòa vốn'} xu</span>`:`<span class="down">${label} −${fmt(-net)} xu</span>`;
+ renderWallet();save();
 }
 
 /* ===== THỊ TRƯỜNG ===== */
 function tick(){
  if($('gameScreen').classList.contains('hidden'))return;
  ensureDaily();
- claimGifts();
- if(buff&&buff.until<=Date.now()){buff=null;notify('⌛ Buff đã hết hiệu lực')}
+ if(buff&&buff.until<=Date.now()){buff=null;notify('⌛ Buff hết hiệu lực')}
  renderSkills();updateBuffLine();renderQuests();
- if(!$('shopView').classList.contains('hidden'))$('shopWallet').textContent=fmt(wallet);
  if(Math.random()<.3){
   const s=stocks[Math.floor(Math.random()*stocks.length)],old=s.p;
   s.prev=old;s.p=Math.max(100,Math.round(old*(1+(Math.random()-.48)*.035)));
-  s.hist=[...s.hist,s.p].slice(-40);
-  renderStocks();
+  s.hist=[...s.hist,s.p].slice(-40);renderStocks();
   if(!$('marketView').classList.contains('hidden'))renderBigMarket();
-  if(Math.random()<.35){
-   const up=s.p>old;
-   addFeed(`${up?'🟢':'🔴'} Tin ${s.name}: giá ${s.s} ${up?'tăng':'giảm'} ${Math.abs((s.p/old-1)*100).toFixed(2)}%`);
-  }
+  if(Math.random()<.35)addFeed(`${s.p>old?'🟢':'🔴'} ${s.s} ${s.p>old?'tăng':'giảm'} ${Math.abs((s.p/old-1)*100).toFixed(2)}%`);
   save();
  }
 }
 function renderStocks(){
- setHTML('stockRows',stocks.map(s=>{
-  const d=(s.p/s.prev-1)*100;
-  return `<tr><td><b>${s.s}</b><br><small>${s.name}</small></td><td>${fmt(s.p)}</td>
-  <td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td>
-  <td><button style="padding:5px 7px" onclick="trade('${s.s}',true)">Mua</button>
-  <button class="sell" style="padding:5px 7px" onclick="trade('${s.s}',false)">Bán</button></td></tr>`;
- }).join(''));
- const h=Object.entries(hold).filter(x=>x[1]>0);
- $('holdings').textContent=h.length?h.map(([s,q])=>s+': '+q+' cp').join(' • '):'Chưa mua cổ phiếu';
+ setHTML('stockRows',stocks.map(s=>{const d=(s.p/s.prev-1)*100;return `<tr><td><b>${s.s}</b></td><td>${fmt(s.p)}</td><td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td><td><button style="padding:4px 6px" onclick="trade('${s.s}',true)">Mua</button> <button class="sell" style="padding:4px 6px" onclick="trade('${s.s}',false)">Bán</button></td></tr>`}).join(''));
+ const h=Object.entries(hold).filter(x=>x[1]>0);$('holdings').textContent=h.length?h.map(([s,q])=>s+': '+q).join(' • '):'Chưa có';
 }
 function trade(sym,buy){
  const s=stocks.find(x=>x.s===sym);
- if(buy){
-  if(wallet<s.p)return notify('Ví không đủ mua 1 cổ phiếu.');
-  const qty=Math.max(1,Math.min(20,Math.floor(wallet/s.p)));
-  wallet-=qty*s.p;hold[sym]=(hold[sym]||0)+qty;
-  txs.unshift({t:new Date().toLocaleTimeString(),type:'Mua',sym,qty,price:s.p,total:qty*s.p});
-  notify('Đã mua '+qty+' '+sym);
- }else{
-  const qty=hold[sym]||0;
-  if(!qty)return notify('Mày chưa giữ mã '+sym);
-  wallet+=qty*s.p;hold[sym]=0;
-  txs.unshift({t:new Date().toLocaleTimeString(),type:'Bán',sym,qty,price:s.p,total:qty*s.p});
-  notify('Đã bán '+qty+' '+sym+' • nhận '+fmt(qty*s.p)+' xu');
- }
- txs=txs.slice(0,30);
- renderWallet();renderStocks();
- if(!$('marketView').classList.contains('hidden'))renderBigMarket();
- save();
+ if(buy){if(wallet<s.p)return notify('Ví không đủ.');const q=Math.max(1,Math.min(20,Math.floor(wallet/s.p)));wallet-=q*s.p;hold[sym]=(hold[sym]||0)+q;txs.unshift({t:new Date().toLocaleTimeString(),type:'Mua',sym,qty:q,price:s.p,total:q*s.p});notify('Đã mua '+q+' '+sym)}
+ else{const q=hold[sym]||0;if(!q)return notify('Chưa giữ '+sym);wallet+=q*s.p;hold[sym]=0;txs.unshift({t:new Date().toLocaleTimeString(),type:'Bán',sym,qty:q,price:s.p,total:q*s.p});notify('Đã bán '+q+' '+sym)}
+ txs=txs.slice(0,30);renderWallet();renderStocks();if(!$('marketView').classList.contains('hidden'))renderBigMarket();save();
 }
-function addFeed(t){
- const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' — '+t;
- $('feed').prepend(d);while($('feed').children.length>20)$('feed').lastChild.remove();
-}
-function switchTab(t){
- if(t==='stocks'){$('stockArea').classList.remove('hidden');notify('Đang xem thị trường cổ phiếu')}
- else notify('Chọn cá hoặc boss trong vùng đại dương để bắn!');
-}
-function openMarket(){$('marketView').classList.remove('hidden');renderBigMarket();addFeed('📈 Đã mở sàn chứng khoán.');renderBigFeed()}
+function addFeed(t){const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' — '+t;$('feed').prepend(d);while($('feed').children.length>20)$('feed').lastChild.remove()}
+function openMarket(){$('marketView').classList.remove('hidden');renderBigMarket()}
 function closeMarket(){$('marketView').classList.add('hidden')}
 function setSector(s){marketSector=s;renderBigMarket()}
-function renderBigFeed(){$('bigFeed').innerHTML=$('feed').innerHTML||'<div>Chưa có tin mới.</div>'}
 function renderChart(){
- const s=stocks.find(x=>x.s===chartSym)||stocks[0];
- const h=s.hist.length>1?s.hist:[s.p,s.p];
- const mn=Math.min(...h),mx=Math.max(...h),rng=(mx-mn)||1;
- const W=800,H=170,pad=12;
- const pts=h.map((v,i)=>[i/(h.length-1)*W,H-pad-(v-mn)/rng*(H-2*pad)]);
- const line=pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+ const s=stocks.find(x=>x.s===chartSym)||stocks[0],h=s.hist.length>1?s.hist:[s.p,s.p];
+ const mn=Math.min(...h),mx=Math.max(...h),rg=(mx-mn)||1,W=800,H=170,pd=12;
+ const line=h.map((v,i)=>(i/(h.length-1)*W).toFixed(1)+','+(H-pd-(v-mn)/rg*(H-2*pd)).toFixed(1)).join(' ');
  const up=h[h.length-1]>=h[0],col=up?'#25f1c6':'#ff7099';
- setHTML('chartBox',`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
-  <defs><linearGradient id="fc" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".4"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
-  <polygon points="0,${H} ${line} ${W},${H}" fill="url(#fc)"/>
-  <polyline points="${line}" fill="none" stroke="${col}" stroke-width="4"/></svg>`);
- setHTML('chartInfo',`<b>${s.s}</b> • ${fmt(s.p)} xu • ${up?'<span class="up">▲</span>':'<span class="down">▼</span>'} ${((h[h.length-1]/h[0]-1)*100).toFixed(2)}% (${h.length} mốc)`);
- setHTML('chartBtns',stocks.map(x=>`<button onclick="chartSym='${x.s}';renderChart()" style="${x.s===chartSym?'border-color:#ffe66b':''}">${x.s}</button>`).join(''));
-}
-function renderTx(){
- setHTML('txList',txs.length?txs.map(x=>`<tr><td>${x.t}</td><td class="${x.type==='Mua'||x.type==='Nhận'?'up':'down'}"><b>${x.type}</b></td><td>${x.sym}</td><td>${x.qty}</td><td>${x.price===''?'':fmt(x.price)}</td><td>${fmt(x.total)}</td></tr>`).join('')
-  :'<tr><td colspan="6">Chưa có giao dịch.</td></tr>');
+ setHTML('chartBox',`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polygon points="0,${H} ${line} ${W},${H}" fill="${col}" fill-opacity=".25"/><polyline points="${line}" fill="none" stroke="${col}" stroke-width="4"/></svg>`);
+ setHTML('chartInfo',`<b>${s.s}</b> • ${fmt(s.p)} xu • ${((h[h.length-1]/h[0]-1)*100).toFixed(2)}%`);
+ setHTML('chartBtns',stocks.map(x=>`<button onclick="chartSym='${x.s}';renderChart()">${x.s}</button>`).join(''));
 }
 function renderBigMarket(){
  $('marketWallet').textContent=fmt(wallet);
- setHTML('bigStockRows',stocks.filter(s=>marketSector==='Tất cả'||s.name===marketSector).map(s=>{
-  const d=(s.p/s.prev-1)*100;
-  return `<tr><td><b>${s.s}</b></td><td>${s.name}</td><td><b>${fmt(s.p)} xu</b></td>
-  <td class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(2)}%</td><td>${hold[s.s]||0}</td>
-  <td><button onclick="trade('${s.s}',true);renderBigMarket()">Mua</button>
-  <button class="sell" onclick="trade('${s.s}',false);renderBigMarket()">Bán</button></td></tr>`;
- }).join(''));
- let entries=Object.entries(hold).filter(([s,q])=>q>0),total=0;
- setHTML('portfolioRows',entries.length?entries.map(([sym,q])=>{
-  const s=stocks.find(x=>x.s===sym),v=q*s.p;total+=v;
-  return `<tr><td><b>${sym}</b></td><td>${q}</td><td>${fmt(v)} xu</td>
-  <td><button class="sell" onclick="trade('${sym}',false);renderBigMarket()">Bán hết</button></td></tr>`;
- }).join(''):'<tr><td colspan="4">Chưa có cổ phiếu nào. Mua mã mày thích ở bảng giá.</td></tr>');
- $('portfolioValue').textContent=fmt(total)+' xu';
- $('portfolioTotal').textContent=fmt(total)+' xu';
- $('portfolioPL').textContent=(total===0?'0':fmt(total))+' xu';
+ setHTML('bigStockRows',stocks.filter(s=>marketSector==='Tất cả'||s.name===marketSector).map(s=>{const d=(s.p/s.prev-1)*100;return `<tr><td><b>${s.s}</b></td><td>${s.name}</td><td>${fmt(s.p)}</td><td class="${d>=0?'up':'down'}">${d.toFixed(2)}%</td><td>${hold[s.s]||0}</td><td><button onclick="trade('${s.s}',true);renderBigMarket()">Mua</button> <button class="sell" onclick="trade('${s.s}',false);renderBigMarket()">Bán</button></td></tr>`}).join(''));
+ let total=0;
+ const ent=Object.entries(hold).filter(([s,q])=>q>0);
+ ent.forEach(([s,q])=>{const st=stocks.find(x=>x.s===s);total+=q*st.p});
+ $('portfolioRows').innerHTML=ent.length?ent.map(([s,q])=>{const st=stocks.find(x=>x.s===s);return `<tr><td><b>${s}</b></td><td>${q}</td><td>${fmt(q*st.p)}</td><td><button class="sell" onclick="trade('${s}',false);renderBigMarket()">Bán hết</button></td></tr>`}).join(''):'<tr><td colspan="4">Chưa có cổ phiếu</td></tr>';
+ $('portfolioTotal').textContent=fmt(total)+' xu';$('portfolioValue').textContent=fmt(total);
+ $('portfolioPL').textContent='';
  $('indexValue').textContent=(1245.32+Math.random()*2-1).toFixed(2);
- renderChart();renderTx();
+ setHTML('txList',txs.length?txs.map(x=>`<tr><td>${x.t}</td><td class="${x.type==='Mua'||x.type==='Nhận'?'up':'down'}">${x.type}</td><td>${x.sym}</td><td>${x.qty}</td><td>${x.price===''?'':fmt(x.price)}</td><td>${fmt(x.total)}</td></tr>`).join(''):'<tr><td colspan="6">Chưa có giao dịch</td></tr>');
+ $('bigFeed').innerHTML=$('feed').innerHTML;
+ renderChart();
 }
 
-/* Khởi tạo */
+/* ===== KHỞI TẠO ===== */
 $('boss').onclick=e=>{e.stopPropagation();shoot(e,'main')};
 $('bossSide').onclick=e=>{e.stopPropagation();shoot(e,'side')};
-window.addEventListener('storage',e=>{if(username&&e.key==='sf_gifts_'+username)claimGifts()});
+window.addEventListener('pagehide',()=>{if(username)save()});
 renderAmmo();
 </script>
 </body>
