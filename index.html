@@ -7,7 +7,7 @@
 :root{--cyan:#20eaff;--blue:#087bff;--gold:#ffd34f;--panel:#061b3b;--line:#168ddc}
 *{box-sizing:border-box}
 body{margin:0;background:#020a20;color:#eefaff;font:14px/1.4 system-ui,Segoe UI,Arial;overflow-x:hidden}
-button,input,select{font:inherit}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer;border:1px solid #2edfff;color:#fff;background:linear-gradient(135deg,#0876ed,#09c8f1);border-radius:10px;padding:9px 13px;font-weight:800;box-shadow:0 0 14px #00baff38;transition:.15s}
 button:hover:not(:disabled){filter:brightness(1.18);transform:translateY(-1px)}
 button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
@@ -110,7 +110,7 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .buffline{padding-top:8px;color:#ffe66b;font-weight:700}
 .brow{display:flex;justify-content:space-between;gap:8px;padding:6px 4px;border-bottom:1px solid #123a60;font-size:12px}
 .brow.me{background:#0c3a5e;border-radius:6px;color:#fff}
-.gift input,.gift select{width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px;margin:4px 0}
+.gift input,.gift select,.gift textarea{width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px;margin:4px 0}
 .giftrow{display:flex;gap:6px;margin-bottom:6px}
 .giftrow input{margin:0}
 .gift .wide{width:100%;margin-top:6px}
@@ -246,9 +246,19 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
           <button class="wide" onclick="sendGift()">🎁 Tặng xu cho bạn (cùng máy)</button>
           <div class="hint" id="giftInfo" style="margin-top:6px"></div>
           <div id="friendList" style="margin-top:8px"></div>
-          <hr style="border-color:#13537d">
-          <button class="wide" onclick="makeGiftCode()">🎟️ Tạo mã quà (tặng máy khác)</button>
-          <input id="giftCodeIn" placeholder="Dán mã quà nhận được" style="width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px;margin-top:6px">
+
+          <hr style="border-color:#13537d;margin:12px 0">
+          <div style="font-weight:800;color:#ffe66b;margin-bottom:4px">🎟️ Mã quà (tặng nhiều máy)</div>
+          <label class="hint">Số xu mỗi người nhận</label>
+          <input id="codeAmt" type="number" min="1000" step="1000" value="50000">
+          <label class="hint">Số người nhận</label>
+          <input id="codeCount" type="number" min="1" step="1" value="5">
+          <button class="wide" onclick="makeGiftCode()">🎟️ Tạo mã quà</button>
+          <div class="hint" id="codeInfo" style="margin-top:6px"></div>
+          <textarea id="codeOut" rows="3" readonly placeholder="Mã quà sẽ hiện ở đây sau khi tạo"></textarea>
+
+          <hr style="border-color:#13537d;margin:12px 0">
+          <input id="giftCodeIn" placeholder="Dán mã quà nhận được">
           <button class="wide" onclick="redeemCode()">📥 Nhận xu bằng mã</button>
         </div>
       </div>
@@ -587,20 +597,26 @@ function claimGifts(){
  renderWallet();renderFriends();save();
 }
 
-/* ===== MÃ QUÀ (tặng máy khác, không cần máy chủ) ===== */
+/* ===== MÃ QUÀ (tặng nhiều máy, chọn số xu và số người) ===== */
 function makeGiftCode(){
- const amt=Math.floor(Number($('giftAmt').value)||0);
- if(amt<1000)return notify('Tặng tối thiểu 1.000 xu.');
- if(amt>wallet)return notify('Ví không đủ xu.');
- const received=Math.floor(amt*(1-GIFT_FEE));
- wallet-=amt;
- const payload={f:username,a:received,id:Date.now().toString(36)+Math.random().toString(36).slice(2,8)};
+ const each=Math.floor(Number($('codeAmt').value)||0);
+ const count=Math.floor(Number($('codeCount').value)||0);
+ if(each<1000)return notify('Mỗi người nhận tối thiểu 1.000 xu.');
+ if(count<1)return notify('Số người nhận tối thiểu là 1.');
+ const total=each*count;
+ if(total>wallet)return notify('Ví không đủ xu. Cần '+fmt(total)+' xu.');
+ const received=Math.floor(each*(1-GIFT_FEE));
+ wallet-=total;
+ const payload={f:username,a:received,n:count,id:Date.now().toString(36)+Math.random().toString(36).slice(2,8)};
  const code='SF-'+btoa(encodeURIComponent(JSON.stringify(payload)));
- txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:'Mã quà',qty:'',price:'',total:-amt});
+ txs.unshift({t:new Date().toLocaleTimeString(),type:'Tặng',sym:'Mã quà x'+count,qty:count,price:each,total:-total});
  txs=txs.slice(0,30);
+ $('codeOut').value=code;
+ $('codeOut').select();
+ $('codeInfo').textContent='Mỗi người nhận '+fmt(received)+' xu (phí '+Math.round(GIFT_FEE*100)+'%), dành cho '+count+' người. Đã trừ '+fmt(total)+' xu.';
+ addFeed('🎟️ Tạo mã quà: '+count+' người × '+fmt(received)+' xu');
  renderWallet();save();
- prompt('Copy mã quà này và gửi cho người nhận (chỉ gửi cho 1 người):',code);
- addFeed('🎟️ Đã tạo mã quà '+fmt(received)+' xu');
+ notify('Đã tạo mã quà. Copy mã ở ô bên dưới.');
 }
 function redeemCode(){
  const raw=$('giftCodeIn').value.trim();
@@ -610,7 +626,7 @@ function redeemCode(){
  if(!p||!p.id||!p.a||!p.f)return notify('Mã quà không hợp lệ.');
  if(p.f===username)return notify('Không thể nhận mã do chính mình tạo.');
  const used=JSON.parse(localStorage.getItem('sf_used_codes')||'[]');
- if(used.includes(p.id))return notify('Mã này đã được dùng trên máy này.');
+ if(used.includes(p.id))return notify('Máy này đã nhận mã này rồi.');
  used.push(p.id);localStorage.setItem('sf_used_codes',JSON.stringify(used));
  wallet+=p.a;
  txs.unshift({t:new Date().toLocaleTimeString(),type:'Nhận',sym:p.f,qty:'',price:'',total:p.a});
