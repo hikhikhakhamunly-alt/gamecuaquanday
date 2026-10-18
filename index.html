@@ -68,13 +68,14 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .hpouter{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
 .hpinner{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .25s}
 .hpinner.side{background:linear-gradient(90deg,#6d4cff,#4fd8ff)}
-.cannon{position:absolute;bottom:4px;left:50%;translate:-50% 0;font-size:58px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
+.cannon{position:absolute;bottom:0;left:50%;translate:-50% 0;width:92px;height:92px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
+.cannon svg{width:100%;height:100%;display:block}
 .cannon.recoil{animation:recoil .2s}
 @keyframes recoil{50%{translate:-50% 5px}}
 .dmg{position:absolute;font-size:20px;font-weight:1000;pointer-events:none;z-index:9;text-shadow:0 2px 4px #001a33;animation:pop .85s forwards;white-space:nowrap}
 .dmg.crit{font-size:34px;color:#ff4d6d!important;text-shadow:0 0 12px #ffe600,0 2px 4px #7d0019}
 @keyframes pop{to{transform:translateY(-65px) scale(1.3);opacity:0}}
-.beam{position:absolute;height:6px;transform-origin:left center;background:linear-gradient(90deg,#fff,#2fffff,#b44dff,transparent);box-shadow:0 0 12px #37f9ff;border-radius:100px;pointer-events:none;z-index:7;animation:fadebeam .28s forwards}
+.beam{position:absolute;height:6px;transform-origin:left center;box-shadow:0 0 12px #37f9ff;border-radius:100px;pointer-events:none;z-index:7;animation:fadebeam .28s forwards}
 @keyframes fadebeam{to{opacity:0}}
 .burst{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;pointer-events:none;z-index:8;background:radial-gradient(circle,#fff 0,#ffe066 25%,#ff7ab8 55%,transparent 70%);animation:burst .45s forwards}
 @keyframes burst{to{transform:scale(3.2);opacity:0}}
@@ -89,9 +90,11 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .ammo{padding:9px 5px;text-align:center;border:1px solid #165b90;border-radius:10px;background:#071b37;cursor:pointer}
 .ammo.active{border-color:#ffe66b;box-shadow:0 0 13px #ffdf3b55;background:#13385b}
 .ammo .emoji{font-size:25px;display:block}.ammo small{color:#9edcff;font-size:11px}
+.botscroll{max-height:320px;overflow:auto}
 .botgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;padding:10px}
-.bot{border:1px solid #1c6090;border-radius:10px;padding:8px 4px;text-align:center;background:#071b37}
-.bot .face{font-size:27px}.bot b{display:block;font-size:11px}.bot small{color:#ffd75e;font-size:10px}
+.bot{border:1px solid #1c6090;border-radius:10px;padding:6px 4px;text-align:center;background:#071b37}
+.bot .face{font-size:22px}.bot b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bot small{color:#ffd75e;font-size:10px;display:block}.bot .hint{font-size:9px}
 .rightcol{display:grid;gap:12px;align-content:start}
 .balancebox{padding:14px;color:#a9eaff}.balancebox strong{color:var(--gold);font-size:25px}
 .tabs{display:flex;gap:5px;flex-wrap:wrap;padding:9px}.tabs button{padding:6px 9px;font-size:12px}
@@ -137,6 +140,22 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .market-feed div{padding:9px 0;border-bottom:1px solid #123353}
 .market-exit{background:linear-gradient(135deg,#17456d,#0b77ac)}
 .sell{background:linear-gradient(135deg,#b91c48,#f44d75)!important}
+
+/* ===== KHO SÚNG ===== */
+.shop{position:fixed;inset:0;z-index:85;background:#010817e8;padding:16px;overflow:auto}
+.shopbox{max-width:1100px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:16px;padding:14px}
+.shophead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.shopgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.gcard{border:1px solid #1c6090;border-radius:14px;background:#071b37;padding:10px;text-align:center}
+.gcard.eq{border-color:#47ffb3;box-shadow:0 0 14px #47ffb355}
+.gimg{height:120px;display:flex;align-items:center;justify-content:center}
+.gimg svg{height:100%;width:auto;filter:drop-shadow(0 0 10px #00e5ff88)}
+.gname{font-weight:900;margin-top:4px}
+.gstat{color:#9edcff;font-size:12px}
+.gprice{color:#ffd34f;font-weight:900;margin:4px 0}
+.gcard button{width:100%;font-size:13px;padding:8px}
+.coins{color:#ffd34f;font-weight:900}
+
 @media(max-width:850px){
  .layout{grid-template-columns:1fr}.arena{height:420px}.auth-wrap{grid-template-columns:1fr}.hero{display:none}.money{margin-left:0}
  .market-grid{grid-template-columns:1fr}.market-kpis{grid-template-columns:1fr}
@@ -156,7 +175,7 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
     <div class="hero">
       <div class="hero-art">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>Cá anime đủ loại, boss máu trâu biết lao tới và nổi giận, đàn em hỗ trợ, nhiệm vụ mỗi ngày, rương kho báu, skill hồi chiêu, bảng xếp hạng và tặng xu cho bạn bè. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
+      <p>Cá anime đủ loại, boss máu trâu biết lao tới và nổi giận, đàn em hỗ trợ, 11 loại súng đẹp, nhiệm vụ mỗi ngày, rương kho báu, skill hồi chiêu, bảng xếp hạng và tặng xu cho bạn bè. Chuyển qua sàn cổ phiếu bất cứ lúc nào — dùng chung ví xu ảo.</p>
       <p>🪙 Ví khởi đầu: <b style="color:#ffd34f">100.000 xu</b></p>
       <p class="hint">Bản demo: tài khoản lưu trên trình duyệt này, chưa có máy chủ hay tiền thật.</p>
     </div>
@@ -184,7 +203,9 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 <section id="gameScreen" class="screen hidden">
   <div class="topbar">
     <b>🌊 STOCK & FISH</b><span id="playerLabel">Thợ săn</span>
+    <span id="gunName" style="color:#9edcff"></span>
     <span class="money">🪙 <span id="wallet">100,000</span> xu</span>
+    <button onclick="openShop()">🔫 Kho súng</button>
     <button class="market-launch" onclick="openMarket()">📈 Vào chứng khoán</button>
     <button onclick="logout()">Thoát</button>
   </div>
@@ -204,7 +225,7 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
           </div>
           <div id="boss" class="boss"></div>
           <div id="bossSide" class="boss side hidden"></div>
-          <div id="cannon" class="cannon">🔱</div>
+          <div id="cannon" class="cannon"></div>
         </div>
         <div class="controls">
           <label>Đạn mỗi phát:</label>
@@ -222,7 +243,10 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
         </div>
         <div class="ammo-list" id="ammoList"></div>
       </div>
-      <div class="panel" style="margin-top:12px"><div class="panelhead">🤖 5 BOT ĐANG CÙNG SĂN</div><div class="botgrid" id="botGrid"></div></div>
+      <div class="panel" style="margin-top:12px">
+        <div class="panelhead">🤖 105 BOT ĐANG CÙNG SĂN</div>
+        <div class="botscroll"><div class="botgrid" id="botGrid"></div></div>
+      </div>
     </div>
 
     <div class="rightcol">
@@ -258,7 +282,7 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
           <textarea id="codeOut" rows="3" readonly placeholder="Mã quà sẽ hiện ở đây sau khi tạo"></textarea>
 
           <hr style="border-color:#13537d;margin:12px 0">
-          <input id="giftCodeIn" placeholder="Dán mã quà nhận được">
+          <input id="giftCodeIn" placeholder="Dán mã quà nhận được" style="width:100%;background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:8px">
           <button class="wide" onclick="redeemCode()">📥 Nhận xu bằng mã</button>
         </div>
       </div>
@@ -271,7 +295,7 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
         <div class="box"><div id="invBox"></div><div class="buffline" id="buffLine">Buff: không có</div></div>
       </div>
       <div class="panel">
-        <div class="panelhead">🏆 Bảng xếp hạng</div>
+        <div class="panelhead">🏆 Bảng xếp hạng (có bot)</div>
         <div class="box" id="boardBox"></div>
       </div>
       <div class="panel">
@@ -283,6 +307,20 @@ button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
         </div>
         <div class="feed" id="feed"></div>
       </div>
+    </div>
+  </div>
+
+  <div id="shopView" class="shop hidden">
+    <div class="shopbox">
+      <div class="shophead">
+        <div>
+          <div style="font-size:22px;font-weight:1000">🔫 KHO SÚNG</div>
+          <div class="hint">Súng càng đắt, sát thương lên boss càng lớn. Súng đã mua được giữ trong tài khoản.</div>
+        </div>
+        <div class="coins">🪙 <span id="shopWallet">0</span> xu</div>
+        <button onclick="closeShop()">← Đóng</button>
+      </div>
+      <div class="shopgrid" id="shopGrid"></div>
     </div>
   </div>
 
@@ -351,6 +389,7 @@ const $=id=>document.getElementById(id);
 let username='',wallet=100000,ammoIndex=0,autoTimer=null,tickTimer=null,schoolTimer=null,power=1,hold={},
     marketSector='Tất cả',chartSym='VCB',txs=[],inv={common:0,rare:0,gold:0},buff=null,
     skillCD={net:0,bomb:0},daily=null,totals={kills:0,fish:0,shots:0},fishObjs=[],friends=[],
+    owned={wood:true},gunId='wood',
     main={idx:0,loop:0,hp:0,max:0,alive:false,enraged:false,chargeTimer:null,respawn:null},
     side={idx:0,hp:0,max:0,alive:false,respawn:null};
 let stocks=defaultStocks();
@@ -360,6 +399,104 @@ const ammos=[['🔹','Đạn thường',1,100],['💥','Đạn hạt',2.2,1000],
  ['⚡','Đạn sét',8,50000],['🌟','Đạn pháo',12,100000],['💠','Siêu đạn',22,100000],['🌈','Đạn thiên hà',40,100000]];
 const BOSS_ARMOR=0.2, CRIT_CHANCE=0.08;
 const GIFT_FEE=0.05, MAX_FRIENDS=20;
+const BOT_COUNT=105;
+
+/* ===== SÚNG ===== */
+const GUNS=[
+ {id:'wood',    name:'Súng Gỗ',          price:10000,     mult:1,  c1:'#c58a52',c2:'#6b4226',beam:'#ffd9a0',shape:'barrel'},
+ {id:'copper',  name:'Súng Đồng',        price:50000,     mult:1.3,c1:'#f0b070',c2:'#8a4b1c',beam:'#ffb36b',shape:'barrel'},
+ {id:'silver',  name:'Súng Bạc',         price:200000,    mult:1.6,c1:'#eef4ff',c2:'#7d8ca8',beam:'#cfe6ff',shape:'twin'},
+ {id:'ruby',    name:'Súng Hồng Ngọc',   price:1000000,   mult:2.2,c1:'#ff6f8f',c2:'#7a0a2a',beam:'#ff6f91',shape:'twin'},
+ {id:'fire',    name:'Súng Lửa',         price:5000000,   mult:3,  c1:'#ffae55',c2:'#b3300b',beam:'#ffb020',shape:'barrel'},
+ {id:'ice',     name:'Súng Băng',        price:20000000,  mult:4.5,c1:'#c8f6ff',c2:'#2a7fb0',beam:'#8ff7ff',shape:'orb'},
+ {id:'thunder', name:'Súng Sét',         price:60000000,  mult:6,  c1:'#fff58a',c2:'#6b5a00',beam:'#fff27a',shape:'twin'},
+ {id:'dragon',  name:'Súng Rồng',        price:150000000, mult:9,  c1:'#4ff09a',c2:'#0b5a33',beam:'#7dffb0',shape:'orb'},
+ {id:'meteor',  name:'Súng Thiên Thạch', price:250000000, mult:12, c1:'#9d82ff',c2:'#2a1659',beam:'#b49bff',shape:'orb'},
+ {id:'gold',    name:'Súng Hoàng Kim',   price:350000000, mult:15, c1:'#ffe66b',c2:'#a06b00',beam:'#ffe066',shape:'twin'},
+ {id:'galaxy',  name:'Súng Thiên Hà',    price:500000000, mult:22, c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8',shape:'orb'}
+];
+const curGun=()=>GUNS.find(g=>g.id===gunId)||GUNS[0];
+
+function gunSvg(g){
+ const gid='gg'+g.id;
+ const defs=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c1}"/><stop offset="1" stop-color="${g.c2}"/></linearGradient>
+  <radialGradient id="${gid}r"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="${g.beam}"/></radialGradient></defs>`;
+ const st=`fill="url(#${gid})" stroke="#0a1a3a" stroke-width="3"`;
+ let body='';
+ if(g.shape==='barrel'){
+  body=`<rect x="38" y="4" width="24" height="56" rx="9" ${st}/>
+   <rect x="31" y="48" width="38" height="28" rx="10" ${st}/>
+   <circle cx="50" cy="80" r="9" fill="#1a2a4a" stroke="#0a1a3a" stroke-width="3"/>
+   <path d="M44 12 L44 46" stroke="#fff" stroke-width="3" opacity=".55" stroke-linecap="round"/>`;
+ }else if(g.shape==='twin'){
+  body=`<rect x="22" y="6" width="18" height="54" rx="8" ${st}/>
+   <rect x="60" y="6" width="18" height="54" rx="8" ${st}/>
+   <rect x="20" y="48" width="60" height="28" rx="11" ${st}/>
+   <circle cx="50" cy="82" r="8" fill="#1a2a4a" stroke="#0a1a3a" stroke-width="3"/>
+   <path d="M29 14 L29 44" stroke="#fff" stroke-width="3" opacity=".55" stroke-linecap="round"/>
+   <path d="M67 14 L67 44" stroke="#fff" stroke-width="3" opacity=".55" stroke-linecap="round"/>`;
+ }else{
+  body=`<rect x="40" y="2" width="20" height="46" rx="9" ${st}/>
+   <rect x="28" y="40" width="44" height="36" rx="14" ${st}/>
+   <circle cx="50" cy="58" r="15" fill="url(#${gid}r)" stroke="#fff" stroke-width="2" opacity=".95"/>
+   <circle cx="50" cy="58" r="22" fill="none" stroke="${g.beam}" stroke-width="2" opacity=".6"/>`;
+ }
+ return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${defs}${body}</svg>`;
+}
+function applyGun(){
+ $('cannon').innerHTML=gunSvg(curGun());
+ $('gunName').textContent='🔫 '+curGun().name+' (x'+curGun().mult+')';
+}
+function renderShop(){
+ $('shopWallet').textContent=fmt(wallet);
+ setHTML('shopGrid',GUNS.map(g=>{
+  const has=!!owned[g.id],eq=gunId===g.id,can=wallet>=g.price;
+  const btn=eq?'<button disabled>✅ Đang dùng</button>'
+    :has?`<button onclick="equipGun('${g.id}')">Trang bị</button>`
+    :`<button ${can?'':'disabled'} onclick="buyGun('${g.id}')">${can?'Mua':'Chưa đủ xu'} ${fmt(g.price)}</button>`;
+  return `<div class="gcard ${eq?'eq':''}">
+   <div class="gimg">${gunSvg(g)}</div>
+   <div class="gname">${g.name}</div>
+   <div class="gstat">x${g.mult} sát thương boss</div>
+   <div class="gprice">🪙 ${fmt(g.price)} xu</div>${btn}</div>`;
+ }).join(''));
+}
+function openShop(){renderShop();$('shopView').classList.remove('hidden')}
+function closeShop(){$('shopView').classList.add('hidden')}
+function buyGun(id){
+ const g=GUNS.find(x=>x.id===id);
+ if(!g||owned[id])return;
+ if(wallet<g.price)return notify('Không đủ xu mua '+g.name);
+ wallet-=g.price;owned[id]=true;gunId=id;
+ applyGun();renderWallet();renderShop();save();
+ sfx.win();notify('🔫 Đã mua và trang bị '+g.name+'!');
+}
+function equipGun(id){
+ if(!owned[id])return;
+ gunId=id;applyGun();renderShop();save();
+ notify('🔫 Đã trang bị '+curGun().name);
+}
+
+/* ===== BOT (105 con, số xu cao hơn người chơi thường) ===== */
+const BOT_FIRST=['Hải','Minh','Lan','Tuấn','Hoa','Nam','Linh','Đức','Mai','Khoa','Vy','Phúc','Trang','Long','Ngọc','Bảo','An','Thảo','Quân','Yến'];
+const BOT_LAST=['Sói','Rồng','Gấu','Hổ','Kiếm','Sao','Băng','Lửa','Cá Mập','Thợ Săn','Vua','Pro','Cá Rô','Mèo','Phượng','Ninja'];
+const BOT_FACES=['🦈','🐙','🧜','🐲','🐡','🐳','🐬','🦑','🐢','🦀'];
+function getBots(){
+ let b=JSON.parse(localStorage.getItem('sf_bots')||'null');
+ if(!Array.isArray(b)||b.length!==BOT_COUNT){
+  b=Array.from({length:BOT_COUNT},(_,i)=>({
+   name:BOT_FIRST[i%BOT_FIRST.length]+' '+BOT_LAST[(i*7)%BOT_LAST.length]+' #'+(i+1),
+   face:BOT_FACES[i%BOT_FACES.length],
+   coins:Math.round((2000000+Math.random()*800000000)/1000)*1000,
+   kills:Math.floor(Math.random()*120)
+  }));
+  localStorage.setItem('sf_bots',JSON.stringify(b));
+ }
+ return b;
+}
+function renderBots(){
+ setHTML('botGrid',getBots().map(b=>`<div class="bot"><div class="face">${b.face}</div><b title="${b.name}">${b.name}</b><small>🪙 ${fmt(b.coins)}</small><div class="hint">Đang bắn</div></div>`).join(''));
+}
 
 /* ===== ÂM THANH ===== */
 let audioCtx=null;
@@ -479,7 +616,7 @@ function sideIdx(){return main.idx>=1?main.idx-1:BOSSES.length-1}
 function buffActive(t){return !!buff&&buff.type===t&&buff.until>Date.now()}
 function luckMult(){return buffActive('luck')?buff.mult:1}
 
-/* ===== DANH SÁCH NGƯỜI CHƠI (lưu chung trên trình duyệt) ===== */
+/* ===== DANH SÁCH NGƯỜI CHƠI ===== */
 function registerUser(n){
  const l=JSON.parse(localStorage.getItem('sf_users')||'[]');
  if(!l.includes(n)){l.push(n);localStorage.setItem('sf_users',JSON.stringify(l))}
@@ -489,7 +626,7 @@ function allUsers(){return JSON.parse(localStorage.getItem('sf_users')||'[]')}
 /* ===== LƯU / TẢI ===== */
 function save(){
  localStorage.setItem('sf_user_'+username,JSON.stringify({wallet,hold,stocks,power,txs,inv,buff,daily,totals,friends,
-  mainIdx:main.idx,mainLoop:main.loop,mainHP:main.hp}));
+  owned,gunId,mainIdx:main.idx,mainLoop:main.loop,mainHP:main.hp}));
  updateBoard();
 }
 function load(){
@@ -498,10 +635,13 @@ function load(){
   wallet=x.wallet??100000;hold=x.hold||{};stocks=x.stocks||defaultStocks();power=x.power||1;
   txs=x.txs||[];inv=x.inv||{common:0,rare:0,gold:0};buff=x.buff||null;daily=x.daily||null;
   totals=x.totals||{kills:0,fish:0,shots:0};friends=x.friends||[];
+  owned=x.owned||{wood:true};gunId=x.gunId||'wood';
   main.idx=x.mainIdx||0;main.loop=x.mainLoop||0;main.hp=x.mainHP||0;
  }else{
   wallet=100000;hold={};stocks=defaultStocks();power=1;txs=[];inv={common:0,rare:0,gold:0};
-  buff=null;daily=null;totals={kills:0,fish:0,shots:0};friends=[];main.idx=0;main.loop=0;main.hp=0;
+  buff=null;daily=null;totals={kills:0,fish:0,shots:0};friends=[];
+  owned={wood:true};gunId='wood';
+  main.idx=0;main.loop=0;main.hp=0;
  }
  ensureStocks();ensureDaily();
  main.max=bossMaxFor(main.idx,main.loop);
@@ -536,14 +676,15 @@ function enterGame(){
  if(sideEnabled())spawnBoss('side');else setEl('side',false);
  for(let i=0;i<14;i++)spawnFish();
  renderBots();
+ applyGun();
  claimGifts();
  renderAll();
  if(!tickTimer)tickTimer=setInterval(tick,850);
  if(!schoolTimer)schoolTimer=setInterval(spawnSchool,20000);
 }
-function logout(){save();stopAuto();resetTimers();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
+function logout(){save();stopAuto();resetTimers();closeShop();$('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden')}
 
-/* ===== BẠN BÈ & TẶNG XU (cùng trình duyệt) ===== */
+/* ===== BẠN BÈ & TẶNG XU ===== */
 function addFriend(){
  const n=$('friendName').value.trim();
  if(!n)return notify('Nhập tên người chơi.');
@@ -597,7 +738,7 @@ function claimGifts(){
  renderWallet();renderFriends();save();
 }
 
-/* ===== MÃ QUÀ (tặng nhiều máy, chọn số xu và số người) ===== */
+/* ===== MÃ QUÀ (tặng nhiều máy) ===== */
 function makeGiftCode(){
  const each=Math.floor(Number($('codeAmt').value)||0);
  const count=Math.floor(Number($('codeCount').value)||0);
@@ -652,16 +793,15 @@ function renderFriends(){
 }
 
 /* ===== RENDER CHUNG ===== */
-function renderWallet(){$('wallet').textContent=fmt(wallet);$('wallet2').textContent=fmt(wallet)+' xu'}
+function renderWallet(){
+ $('wallet').textContent=fmt(wallet);$('wallet2').textContent=fmt(wallet)+' xu';
+ if(!$('shopView').classList.contains('hidden'))$('shopWallet').textContent=fmt(wallet);
+}
 function renderAmmo(){
  setHTML('ammoList',ammos.map((a,i)=>`<div class="ammo ${i===ammoIndex?'active':''}" onclick="selectAmmo(${i})">
   <span class="emoji">${a[0]}</span><b>${a[1]}</b><br><small>x${a[2]} sát thương</small></div>`).join(''));
 }
 function selectAmmo(i){ammoIndex=i;renderAmmo();notify('Đã chọn '+ammos[i][1])}
-function renderBots(){
- setHTML('botGrid',[['🦈','BOT 1','1,230,000'],['🐙','BOT 2','980,000'],['🧜','BOT 3','2,450,000'],['🐲','BOT 4','1,870,000'],['🐡','BOT 5','1,560,000']]
-  .map(x=>`<div class="bot"><div class="face">${x[0]}</div><b>${x[1]}</b><small>🪙 ${x[2]}</small><div class="hint">Đang bắn</div></div>`).join(''));
-}
 function renderAll(){
  renderWallet();renderAmmo();renderBoss('main');renderBoss('side');renderStocks();
  renderQuests();renderInv();renderSkills();renderBoard();renderFriends();
@@ -729,7 +869,8 @@ function knockback(k){
 function hitBoss(e,cost,k){
  const a=ammos[ammoIndex],crit=Math.random()<CRIT_CHANCE;
  const bm=buffActive('dmg')?buff.mult:1;
- const dmg=Math.round(cost*a[2]*power*BOSS_ARMOR*(0.75+Math.random()*0.65)*(crit?2:1)*bm);
+ const gm=curGun().mult;
+ const dmg=Math.round(cost*a[2]*power*gm*BOSS_ARMOR*(0.75+Math.random()*0.65)*(crit?2:1)*bm);
  sfx.hit();
  if(crit){sfx.crit();showWarn('💥 CHÍ MẠNG!')}
  knockback(k);
@@ -865,6 +1006,7 @@ function beam(e){
  const x=e.clientX-rect.left,y=e.clientY-rect.top;
  const sx=rect.width/2,sy=rect.height-30,dx=x-sx,dy=y-sy;
  const b=document.createElement('div');b.className='beam';
+ b.style.background=`linear-gradient(90deg,#fff,${curGun().beam},transparent)`;
  b.style.left=sx+'px';b.style.top=sy+'px';b.style.width=Math.hypot(dx,dy)+'px';
  b.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
  arena.appendChild(b);setTimeout(()=>b.remove(),300);
@@ -1024,7 +1166,7 @@ function claimQuest(id){
  renderWallet();renderQuests();save();
 }
 
-/* ===== BẢNG XẾP HẠNG ===== */
+/* ===== BẢNG XẾP HẠNG (người chơi + bot) ===== */
 function updateBoard(){
  if(!username)return;
  let board=JSON.parse(localStorage.getItem('sf_board')||'[]');
@@ -1036,8 +1178,10 @@ function updateBoard(){
  renderBoard();
 }
 function renderBoard(){
- const board=JSON.parse(localStorage.getItem('sf_board')||'[]').slice(0,10);
- setHTML('boardBox',board.length?board.map((r,i)=>`<div class="brow ${r.name===username?'me':''}">
+ const botRows=getBots().map(b=>({name:b.face+' '+b.name,score:b.coins,kills:b.kills}));
+ const playerRows=JSON.parse(localStorage.getItem('sf_board')||'[]');
+ const all=[...botRows,...playerRows].sort((a,b)=>b.score-a.score).slice(0,10);
+ setHTML('boardBox',all.length?all.map((r,i)=>`<div class="brow ${r.name===username?'me':''}">
   <span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${r.name}</span><span>🪙 ${fmt(r.score)} • 🐉 ${r.kills}</span></div>`).join('')
   :'<small>Chưa có ai trên bảng.</small>');
 }
@@ -1049,6 +1193,7 @@ function tick(){
  claimGifts();
  if(buff&&buff.until<=Date.now()){buff=null;notify('⌛ Buff đã hết hiệu lực')}
  renderSkills();updateBuffLine();renderQuests();
+ if(!$('shopView').classList.contains('hidden'))$('shopWallet').textContent=fmt(wallet);
  if(Math.random()<.3){
   const s=stocks[Math.floor(Math.random()*stocks.length)],old=s.p;
   s.prev=old;s.p=Math.max(100,Math.round(old*(1+(Math.random()-.48)*.035)));
