@@ -769,7 +769,6 @@ function renderWheel(){
   $('wheelBtn').disabled=wheelBusy||S.wallet<wheelBet;
   $('wheelTable').textContent='Đang chọn '+betLabel(wheelBet)+' xu • Trúng x10 nhận '+betLabel(wheelBet*10)+' xu • Trượt mất '+betLabel(wheelBet)+' xu';
   if(S.wallet<wheelBet)$('wheelRes').textContent='Không đủ xu để quay mệnh giá '+betLabel(wheelBet)+'.';
-  else if(!wheelBusy)$('wheelRes').textContent='';
 }
 async function spinWheel(){
   if(!user||!S||wheelBusy)return;
@@ -788,7 +787,8 @@ async function spinWheel(){
   segs.forEach(x=>x.classList.remove('on'));
   $('wheelDisp').textContent='🎡';
   wheelBusy=false;
-  if(!j){renderWheel();return}
+  renderWheel();
+  if(!j)return;
   segs[j.seg].classList.add('on');
   const txt=j.net>0?`🎉 ${j.label}! +${fmt(j.net)} xu`
           :j.net===0?`😐 ${j.label}: hòa vốn`
@@ -796,7 +796,6 @@ async function spinWheel(){
   $('wheelRes').innerHTML=`<span class="${j.net>=0?'up':'down'}">${txt}</span>`;
   txPush('Vòng quay',betLabel(j.bet),j.label,'',j.net);
   addFeed('🎡 Quay '+betLabel(j.bet)+': '+j.label+' ('+(j.net>=0?'+':'−')+fmt(Math.abs(j.net))+')');
-  renderWheel();renderWallet();
 }
 
 /* ===== SÚNG ===== */
@@ -1446,7 +1445,6 @@ async function loadLog(){
 
 /* ===== KHỞI TẠO ===== */
 renderAmmo();
-window.addEventListener('pagehide',()=>{});
 </script>
 </body>
 </html>
