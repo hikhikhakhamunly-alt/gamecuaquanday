@@ -21,7 +21,8 @@ input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;bor
 .price{color:#ffd34f;font-weight:900}
 .center{text-align:center}
 .w{width:100%;margin-top:6px}
-.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
 .screen{min-height:100vh;padding:16px;background:radial-gradient(ellipse at 50% 0,#07568b 0,#031735 44%,#02091b 100%)}
 .brand{text-align:center;font-size:clamp(28px,5vw,52px);font-weight:1000;color:#fff;text-shadow:0 3px 0 #0750a0,0 0 22px #00d9ff;margin-top:20px}
 .brand span{color:#ffd34f}
@@ -32,6 +33,8 @@ input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;bor
 .link{color:#7de8ff;text-decoration:underline;cursor:pointer}
 .topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px;margin-bottom:12px}
 .money{margin-left:auto;color:#ffd34f;font-weight:900;font-size:19px}
+#evtBadge{color:#ff9e5e;font-weight:800}
+#annBar{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#b91c48,#e5a900);color:#fff;text-align:center;padding:8px;font-weight:800;z-index:98}
 .layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.9fr);gap:12px}
 .panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:14px;overflow:hidden;margin-bottom:12px}
 .ph{padding:10px 12px;background:#092b50;border-bottom:1px solid #13537d;font-weight:900;display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -71,14 +74,14 @@ input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;bor
 .feed{padding:8px 10px;max-height:170px;overflow:auto;font-size:12px;color:#b5ddf8}
 .feed div{padding:4px 0;border-bottom:1px solid #123353}
 .over{position:fixed;inset:0;z-index:80;background:#010817f0;padding:14px;overflow:auto}
-.ob{max-width:1000px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:16px;padding:14px}
+.ob{max-width:1100px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:16px;padding:14px}
 .oh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .gc{border:1px solid #1c6090;border-radius:12px;background:#071b37;padding:10px;text-align:center}
 .gc.eq{border-color:#47ffb3}
 .gc svg{height:90px;width:auto}
 .gc button{width:100%;margin-top:6px;font-size:13px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;justify-content:center}
+.tabs2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;justify-content:center}
 .res{text-align:center;font-weight:900;font-size:18px;min-height:28px;margin-top:8px}
 .doors{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:14px 0}
 .door{width:130px;height:170px;border-radius:14px;border:2px solid #2edfff;background:linear-gradient(145deg,#1d4f8a,#0b2550);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:48px;cursor:pointer}
@@ -104,6 +107,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <body>
 
 <div id="notice" class="hidden" style="position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:10px 16px;z-index:99;max-width:90%;text-align:center"></div>
+<div id="annBar" class="hidden"></div>
 
 <!-- ĐĂNG NHẬP -->
 <section id="authScreen" class="screen">
@@ -141,6 +145,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <section id="gameScreen" class="screen hidden">
   <div class="topbar">
     <b>🌊 STOCK & FISH</b><span id="playerLabel" class="hint"></span><span id="gunName" style="color:#9edcff"></span>
+    <span id="evtBadge" class="hidden"></span>
     <span class="money">🪙 <span id="wallet">0</span></span>
     <button onclick="openShop()">🔫 Kho súng</button>
     <button onclick="openGames()">🎮 Trò chơi</button>
@@ -233,7 +238,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <div class="price">🪙 <span id="gameWallet"></span></div>
       <button onclick="closeGames()">← Đóng</button>
     </div>
-    <div class="tabs">
+    <div class="tabs2">
       <button onclick="gameTab('door')">🚪 Chọn cửa may rủi</button>
       <button onclick="gameTab('lock')">🔓 Đếm ngược mở khóa</button>
     </div>
@@ -319,12 +324,35 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
   <div class="ob">
     <div class="oh">
       <b style="font-size:22px">🛠️ QUẢN TRỊ</b>
+      <div class="tabs">
+        <button onclick="admTab('users')">👥 Người chơi</button>
+        <button onclick="admTab('stats')">📊 Thống kê</button>
+        <button onclick="admTab('event')">🔥 Sự kiện</button>
+        <button onclick="admTab('bonus')">🎁 Phát thưởng</button>
+        <button onclick="admTab('code')">🎟️ Mã quà</button>
+        <button onclick="admTab('log')">📜 Nhật ký</button>
+      </div>
       <button onclick="closeAdmin()">← Đóng</button>
     </div>
-    <div class="adm">
+
+    <!-- Tab người chơi -->
+    <div id="tab-users" class="adm">
       <div class="panel">
         <div class="ph">Người chơi <button onclick="loadAdmin()">⟳ Làm mới</button></div>
-        <div class="pb" id="admUsers" style="max-height:440px;overflow:auto"></div>
+        <div class="pb">
+          <input id="admSearch" placeholder="Tìm theo tên..." oninput="renderAdmin()">
+          <div class="btns">
+            <select id="admSort" class="inline" onchange="renderAdmin()">
+              <option value="wallet">Sắp xếp: xu</option>
+              <option value="kills">Sắp xếp: boss đã hạ</option>
+              <option value="name">Sắp xếp: tên</option>
+              <option value="locked">Sắp xếp: đang khóa</option>
+            </select>
+            <label class="hint"><input type="checkbox" id="admOnlyLocked" style="width:auto" onchange="renderAdmin()"> chỉ đang khóa</label>
+          </div>
+          <div id="admUsers" style="max-height:400px;overflow:auto;margin-top:8px"></div>
+          <div class="hint">🟢 hoạt động 24h • ⚪ không hoạt động • 🔒 đang khóa</div>
+        </div>
       </div>
       <div class="panel">
         <div class="ph">Chi tiết: <span id="admSel">—</span></div>
@@ -339,12 +367,82 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
             <button class="gold" onclick="admSetExact()">= Đặt số dư</button>
           </div>
           <hr style="border-color:#13537d">
-          <div class="btns"><button id="admLock" onclick="admToggleLock()">🔒 Khóa acc</button></div>
-          <input id="admNewPass" placeholder="Mật khẩu mới" style="margin-top:8px">
+          <input id="admReason" placeholder="Lý do khóa (tùy chọn)">
+          <div class="btns">
+            <button id="admLock" onclick="admToggleLock()">🔒 Khóa acc</button>
+            <button onclick="admKick()">👢 Đăng xuất</button>
+          </div>
+          <input id="admNewPass" placeholder="Mật khẩu mới (≥4 ký tự)" style="margin-top:8px">
           <button class="w" onclick="admResetPass()">🔑 Đổi mật khẩu</button>
-          <button class="red w" onclick="admDelete()">🗑️ Xóa tài khoản</button>
+          <div class="btns">
+            <button onclick="admResetDaily()">📅 Reset nhiệm vụ</button>
+            <button class="gold" onclick="admResetAccount()">♻️ Reset tài khoản</button>
+            <button class="red" onclick="admDelete()">🗑️ Xóa</button>
+          </div>
           <div class="res" id="admRes"></div>
+          <hr style="border-color:#13537d">
+          <b>Lịch sử giao dịch</b>
+          <div id="admTxs" style="max-height:180px;overflow:auto;margin-top:6px"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- Tab thống kê -->
+    <div id="tab-stats" class="hidden">
+      <div class="panel"><div class="ph">📊 Thống kê <button onclick="loadStats()">⟳</button></div><div class="pb" id="admStats"></div></div>
+    </div>
+
+    <!-- Tab sự kiện & thông báo -->
+    <div id="tab-event" class="hidden">
+      <div class="panel"><div class="ph">🔥 Sự kiện nhân đôi xu bắn cá</div><div class="pb">
+        <input id="evName" placeholder="Tên sự kiện" value="Nhân đôi xu bắn cá">
+        <div class="btns">
+          <span class="hint">Hệ số (1–10)</span><input id="evMult" type="number" min="1" max="10" step="0.5" value="2" class="inline" style="width:110px">
+          <span class="hint">Thời gian (phút)</span><input id="evMin" type="number" min="1" value="30" class="inline" style="width:110px">
+        </div>
+        <div class="btns">
+          <button class="gold" onclick="admEventOn()">▶ Bật sự kiện</button>
+          <button class="red" onclick="admEventOff()">■ Tắt sự kiện</button>
+        </div>
+      </div></div>
+      <div class="panel"><div class="ph">📢 Thông báo toàn server</div><div class="pb">
+        <input id="annText" placeholder="Nội dung thông báo (tối đa 200 ký tự)">
+        <div class="btns">
+          <span class="hint">Hiện trong (phút)</span><input id="annMin" type="number" min="1" value="60" class="inline" style="width:110px">
+        </div>
+        <div class="btns">
+          <button onclick="admAnnounce()">📢 Gửi thông báo</button>
+          <button class="red" onclick="admAnnounceOff()">Gỡ thông báo</button>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Tab phát thưởng -->
+    <div id="tab-bonus" class="hidden">
+      <div class="panel"><div class="ph">🎁 Phát thưởng xu</div><div class="pb">
+        <input id="bonusAmt" type="number" min="1000" step="1000" value="50000">
+        <div class="btns">
+          <button onclick="admBonus('active')">Phát cho người hoạt động 24h</button>
+          <button class="gold" onclick="admBonus('all')">Phát cho tất cả</button>
+        </div>
+        <div class="res" id="bonusRes"></div>
+      </div></div>
+    </div>
+
+    <!-- Tab mã quà admin -->
+    <div id="tab-code" class="hidden">
+      <div class="panel"><div class="ph">🎟️ Tạo mã quà từ admin</div><div class="pb">
+        <div class="hint">Mã này không trừ xu của admin, nên nó tạo thêm xu mới vào server. Dùng cẩn thận.</div>
+        <input id="admCodeAmt" type="number" min="1000" step="1000" value="100000" style="margin:6px 0">
+        <button class="w" onclick="admMakeCode()">Tạo mã</button>
+        <textarea id="admCodeOut" rows="2" readonly style="margin-top:6px"></textarea>
+      </div></div>
+    </div>
+
+    <!-- Tab nhật ký -->
+    <div id="tab-log" class="hidden">
+      <div class="panel"><div class="ph">📜 Nhật ký admin <button onclick="loadLog()">⟳</button></div>
+        <div class="pb" id="admLog" style="max-height:480px;overflow:auto"></div>
       </div>
     </div>
   </div>
@@ -425,8 +523,9 @@ const BOTF=['🦈','🐙','🧜','🐲','🐡','🐳','🐬','🦑','🐢','🦀
 const BC=[['bau','🎃','Bầu'],['cua','🦀','Cua'],['tom','🦐','Tôm'],['ca','🐟','Cá'],['ga','🐓','Gà'],['nai','🦌','Nai']];
 
 /* ===== TRẠNG THÁI ===== */
-let user=null, pass='', role='player', S=null, base=0;
+let user=null, pass='', role='player', S=null, base=0, since=0;
 let chain=Promise.resolve(), saveT=null, timersStarted=false;
+let EVENT=null, lastAnn=0;
 let fishes=[], autoT=null, bossRespawn=null;
 let B={alive:false,hp:0,max:0,enraged:false};
 let bcBets={}, bcBusy=false, bcHist=[];
@@ -445,8 +544,15 @@ const isAdmin=()=>role==='admin';
 const stateOnly=()=>{const c={...S};delete c.wallet;return c};
 const holdingsValue=()=>Object.entries(S.hold).reduce((s,[k,q])=>{const st=S.stocks.find(x=>x.s===k);return s+(st?q*st.p:0)},0);
 const score=()=>Math.round(S.wallet+holdingsValue());
+const evtMult=()=>EVENT&&EVENT.until>Date.now()?EVENT.mult:1;
 
 function notify(t){const n=$('notice');n.textContent=t;n.classList.remove('hidden');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.add('hidden'),2400)}
+function showBanner(t){const b=$('annBar');b.textContent='📢 '+t;b.classList.remove('hidden');clearTimeout(b._t);b._t=setTimeout(()=>b.classList.add('hidden'),20000)}
+function renderEvt(){
+  const on=EVENT&&EVENT.until>Date.now();
+  $('evtBadge').classList.toggle('hidden',!on);
+  if(on)$('evtBadge').textContent='🔥 '+EVENT.name+' x'+EVENT.mult+' • còn '+Math.ceil((EVENT.until-Date.now())/60000)+' phút';
+}
 function addFeed(t){const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' — '+t;$('feed').prepend(d);while($('feed').children.length>25)$('feed').lastChild.remove()}
 function txPush(type,sym,qty,price,total){S.txs.unshift({t:new Date().toLocaleTimeString(),type,sym,qty,price,total});S.txs=S.txs.slice(0,30)}
 function ensureDaily(){if(!S.daily||S.daily.date!==todayStr())S.daily={date:todayStr(),shots:0,fish:0,dmg:0,kills:0,claimed:{}}}
@@ -469,18 +575,20 @@ function sync(op,data){
     if(!user||!S)return null;
     const sentW=Math.floor(S.wallet), sentB=base;
     try{
-      const j=await api({action:'sync',name:user,pass,wallet:sentW,base:sentB,
+      const j=await api({action:'sync',name:user,pass,since,wallet:sentW,base:sentB,
                          state:stateOnly(),score:score(),op,data});
       S.wallet=j.wallet+(S.wallet-sentW);
       base=j.wallet;
+      EVENT=j.event||null;
+      if(j.announce&&j.announce.id!==lastAnn){lastAnn=j.announce.id;showBanner(j.announce.text)}
       if(!op&&j.wallet!==sentW){
         const d=j.wallet-sentW;
-        notify('🛠️ Quản trị đã cập nhật số dư: '+(d>0?'+':'')+fmt(d)+' xu');
+        notify('🛠️ Số dư được quản trị cập nhật: '+(d>0?'+':'')+fmt(d)+' xu');
       }
-      renderWallet();
+      renderWallet();renderEvt();
       return j;
     }catch(e){
-      if(e.code==='locked'){notify(e.message);endSession();return null}
+      if(e.code==='locked'||e.code==='kick'){notify(e.message);endSession();return null}
       if(e.code==='auth'){notify('Phiên đăng nhập không còn hợp lệ: '+e.message);endSession();return null}
       if(op)notify(e.message);
       return null;
@@ -515,7 +623,7 @@ async function register(){
 }
 
 function startSession(name,p,r,w,st){
-  user=name;pass=p;role=r;
+  user=name;pass=p;role=r;since=Date.now();
   S=Object.assign(newState(),st||{});
   S.wallet=w;base=w;
   S.stocks=(Array.isArray(S.stocks)&&S.stocks.length?S.stocks:DEF_STOCKS.map(s=>({...s,prev:s.p,hist:[s.p]})));
@@ -533,7 +641,7 @@ async function logout(){
 }
 function endSession(){
   stopAuto();stopLock();clearTimeout(saveT);
-  user=null;pass='';role='player';S=null;base=0;
+  user=null;pass='';role='player';S=null;base=0;EVENT=null;
   bcBets={};
   clearAll();
   document.querySelectorAll('.over').forEach(e=>e.classList.add('hidden'));
@@ -553,7 +661,7 @@ function enterGame(){
     setInterval(fishLoop,1800);
     setInterval(bossCharge,6000);
     setInterval(renderSkills,1000);
-    setInterval(()=>{if(!user||!S)return;ensureDaily();renderQuests();renderBuff()},5000);
+    setInterval(()=>{if(!user||!S)return;ensureDaily();renderQuests();renderBuff();renderEvt()},5000);
     setInterval(loadBoard,15000);
     window.addEventListener('pagehide',flushBeacon);
   }
@@ -561,7 +669,7 @@ function enterGame(){
 }
 function flushBeacon(){
   if(!user||!S)return;
-  const body=JSON.stringify({action:'sync',name:user,pass,wallet:Math.floor(S.wallet),base,state:stateOnly(),score:score()});
+  const body=JSON.stringify({action:'sync',name:user,pass,since,wallet:Math.floor(S.wallet),base,state:stateOnly(),score:score()});
   try{fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body,keepalive:true})}catch(e){}
 }
 function clearAll(){
@@ -570,7 +678,7 @@ function clearAll(){
 }
 function renderAll(){
   renderWallet();renderAmmo();applyGun();renderBossBar();renderQuests();
-  renderInv();renderSkills();renderFriends();renderStocks();renderBuff();
+  renderInv();renderSkills();renderFriends();renderStocks();renderBuff();renderEvt();
 }
 function renderWallet(){
   if(!S)return;
@@ -702,7 +810,7 @@ function shootAt(e,target,fishObj){
   beam(e);
   if(target==='fish'){
     if(Math.random()<Math.min(CFG.FISH_CATCH_MAX,CFG.FISH_CATCH/fishObj.sp.m)){
-      catchFish(fishObj,e,Math.round(cost*fishObj.sp.m*buffMult('luck')));
+      catchFish(fishObj,e,Math.round(cost*fishObj.sp.m*buffMult('luck')*evtMult()));
     }else{
       fishObj.el.animate([{transform:'translateX(0)'},{transform:'translateX(8px)'},{transform:'translateX(-8px)'},{transform:'translateX(0)'}],{duration:250});
     }
@@ -751,7 +859,7 @@ function castNet(){
   S.wallet-=bet;
   targets.forEach(f=>{
     const r=f.el.getBoundingClientRect();
-    catchFish(f,{clientX:r.left+r.width/2,clientY:r.top+r.height/2},Math.round(bet*f.sp.m*CFG.NET_MULT*buffMult('luck')));
+    catchFish(f,{clientX:r.left+r.width/2,clientY:r.top+r.height/2},Math.round(bet*f.sp.m*CFG.NET_MULT*buffMult('luck')*evtMult()));
   });
   S.netCD=Date.now()+CFG.NET_CD;
   notify('🕸️ Lưới bắt được '+targets.length+' con!');
@@ -1041,8 +1149,16 @@ function shakeBC(){
 }
 
 /* ===== QUẢN TRỊ ===== */
-function openAdmin(){if(!isAdmin())return;$('adminView').classList.remove('hidden');loadAdmin()}
+function openAdmin(){if(!isAdmin())return;$('adminView').classList.remove('hidden');admTab('users');loadAdmin()}
 function closeAdmin(){$('adminView').classList.add('hidden')}
+function admTab(n){
+  ['users','stats','event','bonus','code','log'].forEach(t=>{
+    const el=$('tab-'+t);
+    el.classList.toggle('hidden',t!==n);
+  });
+  if(n==='stats')loadStats();
+  if(n==='log')loadLog();
+}
 async function admCall(op,extra){
   try{return await api({action:'admin',name:user,pass,op,...extra})}
   catch(e){notify(e.message);return null}
@@ -1052,20 +1168,38 @@ async function loadAdmin(){
   if(!j)return;
   admList=j.users;
   renderAdmin();
+  if(admSel)loadDetail();
 }
 function renderAdmin(){
-  $('admUsers').innerHTML=admList.length
-    ?admList.map(u=>`<div class="row" style="cursor:pointer;${admSel===u.name?'background:#0c3a5e;border-radius:6px':''}" onclick="admPick('${u.name}')"><span>${u.locked?'🔒':'🟢'} ${u.name}</span><span class="price">🪙 ${fmt(u.wallet)}</span></div>`).join('')
-    :'<small class="hint">Chưa có người chơi.</small>';
+  const q=$('admSearch').value.trim().toLowerCase();
+  const sort=$('admSort').value,onlyLock=$('admOnlyLocked').checked;
+  const cmp={
+    wallet:(a,b)=>b.wallet-a.wallet,
+    kills:(a,b)=>b.info.kills-a.info.kills,
+    name:(a,b)=>a.name.localeCompare(b.name),
+    locked:(a,b)=>(b.locked?1:0)-(a.locked?1:0)
+  };
+  const list=admList
+    .filter(u=>u.name.toLowerCase().includes(q)&&(!onlyLock||u.locked))
+    .sort(cmp[sort]);
+  $('admUsers').innerHTML=list.length
+    ?list.map(u=>`<div class="row" style="cursor:pointer;${admSel===u.name?'background:#0c3a5e;border-radius:6px':''}" onclick="admPick('${u.name}')"><span>${u.locked?'🔒':(u.active?'🟢':'⚪')} ${u.name}</span><span class="price">🪙 ${fmt(u.wallet)}</span></div>`).join('')
+    :'<small class="hint">Không có người chơi phù hợp.</small>';
   const cur=admList.find(u=>u.name===admSel);
   $('admSel').textContent=cur?cur.name:'—';
   $('admBal').textContent=cur?fmt(cur.wallet)+' xu':'—';
   $('admLock').textContent=cur&&cur.locked?'🔓 Mở khóa acc':'🔒 Khóa acc';
-  $('admInfo').innerHTML=cur
-    ?`Trạng thái: ${cur.locked?'<span class="down">Đã khóa</span>':'<span class="up">Bình thường</span>'} • Súng: ${cur.info.gun} • Pháo cấp ${cur.info.power} • Boss đã hạ: ${cur.info.kills} • Cá: ${fmt(cur.info.fish)} • Lượt bắn: ${fmt(cur.info.shots)} • Cập nhật: ${cur.updated}`
-    :'';
 }
-function admPick(n){admSel=n;$('admRes').textContent='';renderAdmin()}
+async function loadDetail(){
+  if(!admSel)return;
+  const j=await admCall('detail',{target:admSel});
+  if(!j)return;
+  $('admInfo').innerHTML=`Trạng thái: ${j.locked?'<span class="down">Đã khóa'+(j.lockReason?' ('+j.lockReason+')':'')+'</span>':'<span class="up">Bình thường</span>'} • Súng: ${j.gunId} • Pháo cấp ${j.power} • Boss đã hạ: ${fmt(j.kills)} • Cá: ${fmt(j.fish)} • Lượt bắn: ${fmt(j.shots)} • Cập nhật: ${j.updated}`;
+  $('admTxs').innerHTML=j.txs.length
+    ?j.txs.map(x=>`<div class="row"><span>${x.t} ${x.type} ${x.sym||''}</span><span class="${x.total>=0?'up':'down'}">${x.total>=0?'+':''}${fmt(x.total)}</span></div>`).join('')
+    :'<small class="hint">Chưa có giao dịch.</small>';
+}
+function admPick(n){admSel=n;$('admRes').textContent='';renderAdmin();loadDetail()}
 async function admDo(op,extra,msg){
   if(!admSel)return notify('Chọn người chơi trước.');
   const j=await admCall(op,{target:admSel,...extra});
@@ -1084,14 +1218,21 @@ function admSetExact(){
 function admToggleLock(){
   const cur=admList.find(u=>u.name===admSel);
   if(!cur)return notify('Chọn người chơi trước.');
-  const v=!cur.locked;
-  admDo('lock',{value:v},v?'🔒 Đã khóa '+cur.name:'🔓 Đã mở khóa '+cur.name);
+  const v=!cur.locked,reason=$('admReason').value.trim();
+  admDo('lock',{value:v,reason},v?'🔒 Đã khóa '+cur.name:'🔓 Đã mở khóa '+cur.name);
 }
+function admKick(){admDo('kick',{},'👢 Đã đăng xuất '+admSel)}
 function admResetPass(){
   const p=$('admNewPass').value;
   if(p.length<4)return notify('Mật khẩu mới ≥4 ký tự.');
   admDo('resetPass',{newPass:p},'🔑 Đã đổi mật khẩu');
   $('admNewPass').value='';
+}
+function admResetDaily(){admDo('resetDaily',{},'📅 Đã reset nhiệm vụ ngày')}
+function admResetAccount(){
+  if(!admSel)return notify('Chọn người chơi trước.');
+  if(!confirm('Reset tài khoản '+admSel+' về 100.000 xu và xóa hết dữ liệu?'))return;
+  admDo('resetAccount',{},'♻️ Đã reset tài khoản');
 }
 async function admDelete(){
   if(!admSel)return notify('Chọn người chơi trước.');
@@ -1099,6 +1240,60 @@ async function admDelete(){
   const name=admSel;
   const j=await admCall('delete',{target:name});
   if(j){admSel=null;notify('Đã xóa '+name);await loadAdmin()}
+}
+
+async function loadStats(){
+  const j=await admCall('stats',{});
+  if(!j)return;
+  $('admStats').innerHTML=`
+    <div class="row"><span>Tổng tài khoản người chơi</span><b>${fmt(j.total)}</b></div>
+    <div class="row"><span>Hoạt động trong 24h</span><b>${fmt(j.active)}</b></div>
+    <div class="row"><span>Đang bị khóa</span><b>${fmt(j.locked)}</b></div>
+    <div class="row"><span>Tổng xu trong server</span><b class="price">${fmt(j.sumWallet)}</b></div>
+    <div class="row"><span>Tổng lượt bắn</span><b>${fmt(j.shots)}</b></div>
+    <div class="row"><span>Tổng boss đã hạ</span><b>${fmt(j.kills)}</b></div>
+    <div class="row"><span>Sự kiện đang chạy</span><b>${j.event?j.event.name+' x'+j.event.mult:'Không có'}</b></div>
+    <hr style="border-color:#13537d">
+    <b>Top 5 giàu nhất</b>
+    ${j.top.map((u,i)=>`<div class="row"><span>${i+1}. ${u.name}</span><span class="price">${fmt(u.wallet)}</span></div>`).join('')}`;
+}
+async function admEventOn(){
+  const j=await admCall('event',{name:$('evName').value.trim()||'Sự kiện',mult:Number($('evMult').value),minutes:Number($('evMin').value)});
+  if(j)notify(j.message);
+}
+async function admEventOff(){
+  const j=await admCall('event',{minutes:0});
+  if(j)notify(j.message);
+}
+async function admAnnounce(){
+  const text=$('annText').value.trim();
+  if(!text)return notify('Nhập nội dung thông báo.');
+  const j=await admCall('announce',{text,minutes:Number($('annMin').value)});
+  if(j){notify(j.message);$('annText').value=''}
+}
+async function admAnnounceOff(){
+  const j=await admCall('announce',{text:''});
+  if(j)notify(j.message);
+}
+async function admBonus(target){
+  const a=Math.floor(Number($('bonusAmt').value)||0);
+  if(a<=0)return notify('Nhập số xu lớn hơn 0.');
+  const label=target==='all'?'TẤT CẢ người chơi':'người hoạt động trong 24h';
+  if(!confirm('Phát '+fmt(a)+' xu cho '+label+'?'))return;
+  const j=await admCall('bulk',{target,amount:a});
+  if(j){$('bonusRes').textContent=j.message;notify(j.message);loadAdmin()}
+}
+async function admMakeCode(){
+  const a=Math.floor(Number($('admCodeAmt').value)||0);
+  const j=await admCall('adminCode',{amount:a});
+  if(j){$('admCodeOut').value=j.code;notify('Đã tạo mã')}
+}
+async function loadLog(){
+  const j=await admCall('log',{});
+  if(!j)return;
+  $('admLog').innerHTML=j.logs.length
+    ?j.logs.map(l=>`<div class="row"><span>${l.time.slice(0,21)} • <b>${l.admin}</b> ${l.action} ${l.target}</span><span class="hint">${l.detail}</span></div>`).join('')
+    :'<small class="hint">Chưa có nhật ký.</small>';
 }
 
 /* ===== KHỞI TẠO ===== */
