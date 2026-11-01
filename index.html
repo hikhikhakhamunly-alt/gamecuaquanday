@@ -20,6 +20,8 @@ input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;bor
 .up{color:#47ffb3}.down{color:#ff7099}
 .price{color:#ffd34f;font-weight:900}
 .center{text-align:center}
+.w{width:100%;margin-top:6px}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .screen{min-height:100vh;padding:16px;background:radial-gradient(ellipse at 50% 0,#07568b 0,#031735 44%,#02091b 100%)}
 .brand{text-align:center;font-size:clamp(28px,5vw,52px);font-weight:1000;color:#fff;text-shadow:0 3px 0 #0750a0,0 0 22px #00d9ff;margin-top:20px}
 .brand span{color:#ffd34f}
@@ -27,7 +29,6 @@ input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;bor
 .authwrap{max-width:820px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .card{border:1px solid #159fe8;border-radius:16px;background:linear-gradient(145deg,#07315bdb,#04132df2);padding:20px}
 .card input{margin:6px 0}
-.w{width:100%;margin-top:8px}
 .link{color:#7de8ff;text-decoration:underline;cursor:pointer}
 .topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px;margin-bottom:12px}
 .money{margin-left:auto;color:#ffd34f;font-weight:900;font-size:19px}
@@ -78,7 +79,7 @@ input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;bor
 .gc svg{height:90px;width:auto}
 .gc button{width:100%;margin-top:6px;font-size:13px}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;justify-content:center}
-.res{text-align:center;font-weight:900;font-size:20px;min-height:30px;margin-top:8px}
+.res{text-align:center;font-weight:900;font-size:18px;min-height:28px;margin-top:8px}
 .doors{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:14px 0}
 .door{width:130px;height:170px;border-radius:14px;border:2px solid #2edfff;background:linear-gradient(145deg,#1d4f8a,#0b2550);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:48px;cursor:pointer}
 .door small{font-size:12px;color:#9edcff;margin-top:6px}
@@ -96,7 +97,8 @@ input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;bor
 @keyframes bw{0%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}100%{transform:rotate(-10deg)}}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.arena{height:400px}.authwrap{grid-template-columns:1fr}.adm-grid{grid-template-columns:1fr!important}}
+.adm{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.arena{height:400px}.authwrap,.adm{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -113,7 +115,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <h2>Đại dương săn thưởng!</h2>
       <p>Bắn cá, boss, kho súng, bầu cua, cửa may rủi, chứng khoán giả lập, tặng xu và mã quà.</p>
       <p>🪙 Ví khởi đầu: <b class="price">100.000 xu</b></p>
-      <p class="hint">Chạy hoàn toàn trên trình duyệt. Xu ảo, không nạp rút tiền thật.</p>
+      <p class="hint">Xu ảo, không nạp rút tiền thật.</p>
     </div>
     <div class="card">
       <div id="loginForm">
@@ -181,16 +183,15 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
         <div class="ph">🎁 Tặng xu & mã quà</div>
         <div class="pb">
           <div style="display:flex;gap:6px">
-            <input id="friendName" list="userList" placeholder="Tên người chơi">
+            <input id="friendName" placeholder="Tên người chơi">
             <button onclick="addFriend()">+ Thêm</button>
           </div>
-          <datalist id="userList"></datalist>
           <select id="friendSel" style="margin:6px 0"></select>
-          <input id="giftAmt" type="number" min="1000" step="1000" value="10000" style="margin-bottom:6px">
+          <input id="giftAmt" type="number" min="1000" step="1000" value="10000">
           <button class="w" onclick="sendGift()">🎁 Tặng bạn (phí 5%)</button>
           <div id="friendList" style="margin-top:6px"></div>
           <hr style="border-color:#13537d">
-          <div class="hint">Tạo mã quà: mã nhận được số xu bạn nhập (đã trừ phí 5%). Mỗi mã chỉ nhận 1 lần trên mỗi máy.</div>
+          <div class="hint">Mã quà dùng được 1 lần trên toàn server.</div>
           <input id="codeAmt" type="number" min="1000" step="1000" value="50000" style="margin:6px 0">
           <button class="w" onclick="makeGiftCode()">🎟️ Tạo mã quà</button>
           <div class="hint" id="codeInfo"></div>
@@ -317,25 +318,31 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="adminView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <b style="font-size:22px">🛠️ QUẢN TRỊ TÀI KHOẢN</b>
+      <b style="font-size:22px">🛠️ QUẢN TRỊ</b>
       <button onclick="closeAdmin()">← Đóng</button>
     </div>
-    <div class="adm-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="adm">
       <div class="panel">
-        <div class="ph">Danh sách người chơi</div>
-        <div class="pb" id="admUsers" style="max-height:360px;overflow:auto"></div>
+        <div class="ph">Người chơi <button onclick="loadAdmin()">⟳ Làm mới</button></div>
+        <div class="pb" id="admUsers" style="max-height:440px;overflow:auto"></div>
       </div>
       <div class="panel">
-        <div class="ph">Chỉnh số xu</div>
+        <div class="ph">Chi tiết: <span id="admSel">—</span></div>
         <div class="pb">
-          <div>Đang chọn: <b id="admSel">—</b></div>
-          <div>Số dư hiện tại: <b class="price" id="admBal">—</b></div>
-          <input id="admAmt" type="number" min="0" step="1000" value="100000" style="margin:8px 0">
-          <div style="display:flex;gap:6px;flex-wrap:wrap">
-            <button onclick="admAdjust(1)">+ Cộng xu</button>
-            <button class="red" onclick="admAdjust(-1)">− Trừ xu</button>
+          <div>Số dư: <b class="price" id="admBal">—</b></div>
+          <div class="hint" id="admInfo" style="margin-top:4px"></div>
+          <hr style="border-color:#13537d">
+          <input id="admAmt" type="number" min="0" step="1000" value="100000">
+          <div class="btns">
+            <button onclick="admAdjust(1)">+ Cộng</button>
+            <button class="red" onclick="admAdjust(-1)">− Trừ</button>
             <button class="gold" onclick="admSetExact()">= Đặt số dư</button>
           </div>
+          <hr style="border-color:#13537d">
+          <div class="btns"><button id="admLock" onclick="admToggleLock()">🔒 Khóa acc</button></div>
+          <input id="admNewPass" placeholder="Mật khẩu mới" style="margin-top:8px">
+          <button class="w" onclick="admResetPass()">🔑 Đổi mật khẩu</button>
+          <button class="red w" onclick="admDelete()">🗑️ Xóa tài khoản</button>
           <div class="res" id="admRes"></div>
         </div>
       </div>
@@ -345,29 +352,20 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 
 <script>
 /* ==========================================================
-   CẤU HÌNH — chỉnh các số ở đây
+   CẤU HÌNH
    ========================================================== */
 const CFG={
-  ARMOR:.12,          // giáp boss (càng nhỏ càng khó)
-  CRIT:.08,           // tỉ lệ chí mạng khi bắn boss
-  FEE:.05,            // phí tặng xu / mã quà
-  MAX_FRIENDS:20,
-  FISH_CATCH:.7,      // tỉ lệ bắt cá = FISH_CATCH / hệ số cá
-  FISH_CATCH_MAX:.6,  // trần tỉ lệ bắt cá
-  NET_MULT:.05,       // lưới: thưởng = đạn × hệ số cá × NET_MULT
-  NET_CD:40000,       // hồi chiêu lưới (ms)
-  BOMB_PCT:.01,       // bom nước trừ % máu boss
-  BOMB_CD:90000,      // hồi chiêu bom (ms)
-  UPG:150000,         // giá nâng cấp = UPG × cấp pháo hiện tại
-  UPG_MAX:8,
-  // Tài khoản admin (được tạo sẵn khi mở game)
-  ADMINS:[
-    {name:'khoaitay1',pass:'1311'},
-    {name:'khoaitay2',pass:'131114'}
-  ]
+  API:'https://script.google.com/macros/s/AKfycbxWjJjYsgyLci4teWEdzp7SocLfpO9WnmwErbyq1-ZB2NYurcVftXgE0WjvTR2WLhh15A/exec',
+  ARMOR:.12, CRIT:.08, MAX_FRIENDS:20,
+  FISH_CATCH:.7, FISH_CATCH_MAX:.6,
+  NET_MULT:.05, NET_CD:40000,
+  BOMB_PCT:.01, BOMB_CD:90000,
+  UPG:150000, UPG_MAX:8,
+  SYNC_MS:4000
 };
+const START_WALLET_CLIENT=100000;
 
-/* ===== DỮ LIỆU ===== */
+/* ===== DỮ LIỆU TĨNH ===== */
 const $=id=>document.getElementById(id);
 const fmt=n=>Math.floor(Number(n)||0).toLocaleString('en-US');
 const rnd=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
@@ -401,7 +399,6 @@ const BOSSES=[
  {name:'CÁ MẬP LỬA',lv:15,hp:15e6,reward:6e6,svg:()=>fishArt('#ff7a3c','#ffe08a','#ff3b1f')},
  {name:'RÙA THẦN VÀNG',lv:20,hp:4e7,reward:15e6,svg:()=>turtleArt()}
 ];
-
 const FISH=[
  {m:2,w:.3,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
  {m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
@@ -410,7 +407,6 @@ const FISH=[
  {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},
  {m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}
 ];
-
 const CHESTS={common:['📦','Rương gỗ'],rare:['🎁','Rương bạc'],gold:['👑','Rương vàng']};
 const QUESTS=[
  {id:'shots',label:'Bắn 100 phát',target:100,reward:30000},
@@ -429,90 +425,144 @@ const BOTF=['🦈','🐙','🧜','🐲','🐡','🐳','🐬','🦑','🐢','🦀
 const BC=[['bau','🎃','Bầu'],['cua','🦀','Cua'],['tom','🦐','Tôm'],['ca','🐟','Cá'],['ga','🐓','Gà'],['nai','🦌','Nai']];
 
 /* ===== TRẠNG THÁI ===== */
-let user=null, S=null;
-let fishes=[], autoT=null, tickT=null, bossRespawn=null;
+let user=null, pass='', role='player', S=null, base=0;
+let chain=Promise.resolve(), saveT=null, timersStarted=false;
+let fishes=[], autoT=null, bossRespawn=null;
 let B={alive:false,hp:0,max:0,enraged:false};
 let bcBets={}, bcBusy=false, bcHist=[];
 let doorBusy=false, lockRAF=null, lockT0=0, lockP=.5, mkSel='VCB';
+let admSel=null, admList=[];
 
 function newState(){
   return{
-    wallet:100000, hold:{}, power:1, txs:[], inv:{common:0,rare:0,gold:0}, buff:null,
+    wallet:START_WALLET_CLIENT, hold:{}, power:1, txs:[], inv:{common:0,rare:0,gold:0}, buff:null,
     daily:null, totals:{kills:0,fish:0,shots:0}, friends:[], owned:{wood:true}, gunId:'wood',
-    bossIdx:0, bossLoop:0, ammo:0, netCD:0, bombCD:0,
-    stocks:DEF_STOCKS.map(s=>({...s,prev:s.p,hist:[s.p]}))
+    bossIdx:0, bossLoop:0, ammo:0, netCD:0, bombCD:0, stocks:null
   };
 }
 const gun=()=>GUNS.find(g=>g.id===S.gunId)||GUNS[0];
-const isAdminName=n=>CFG.ADMINS.some(a=>a.name===n);
-const isAdmin=()=>isAdminName(user);
+const isAdmin=()=>role==='admin';
+const stateOnly=()=>{const c={...S};delete c.wallet;return c};
+const holdingsValue=()=>Object.entries(S.hold).reduce((s,[k,q])=>{const st=S.stocks.find(x=>x.s===k);return s+(st?q*st.p:0)},0);
+const score=()=>Math.round(S.wallet+holdingsValue());
 
 function notify(t){const n=$('notice');n.textContent=t;n.classList.remove('hidden');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.add('hidden'),2400)}
-function getUsers(){return JSON.parse(localStorage.getItem('sf_users')||'[]')}
-function addUserName(n){const u=getUsers();if(!u.includes(n)){u.push(n);localStorage.setItem('sf_users',JSON.stringify(u))}}
-function txPush(type,sym,qty,price,total){S.txs.unshift({t:new Date().toLocaleTimeString(),type,sym,qty,price,total});S.txs=S.txs.slice(0,40)}
 function addFeed(t){const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' — '+t;$('feed').prepend(d);while($('feed').children.length>25)$('feed').lastChild.remove()}
+function txPush(type,sym,qty,price,total){S.txs.unshift({t:new Date().toLocaleTimeString(),type,sym,qty,price,total});S.txs=S.txs.slice(0,30)}
 function ensureDaily(){if(!S.daily||S.daily.date!==todayStr())S.daily={date:todayStr(),shots:0,fish:0,dmg:0,kills:0,claimed:{}}}
 
-/* ===== LƯU / TẢI ===== */
-function saveUser(){
-  if(!user||!S)return;
-  localStorage.setItem('sf_u_'+user,JSON.stringify(S));
-  updateBoard();
-}
-function readUser(n){return Object.assign(newState(),JSON.parse(localStorage.getItem('sf_u_'+n)||'null')||{})}
-function loadUser(n){
-  S=readUser(n);
-  S.stocks.forEach(s=>{if(!s.hist||!s.hist.length)s.hist=[s.p];if(!s.prev)s.prev=s.p});
-  ensureDaily();
+/* ===== GIAO TIẾP MÁY CHỦ ===== */
+async function api(body){
+  let r;
+  try{
+    r=await fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
+  }catch(e){throw new Error('Không kết nối được máy chủ. Kiểm tra CFG.API')}
+  let j;
+  try{j=await r.json()}catch(e){throw new Error('Máy chủ trả về sai định dạng. Kiểm tra quyền truy cập web app')}
+  if(!j.ok){const e=new Error(j.error||'Lỗi máy chủ');e.code=j.code;throw e}
+  return j;
 }
 
-/* ===== ĐĂNG KÝ / ĐĂNG NHẬP ===== */
-function ensureAdmins(){
-  CFG.ADMINS.forEach(a=>{localStorage.setItem('sf_pass_'+a.name,a.pass);addUserName(a.name)});
+/* Gửi nối tiếp để không cộng trùng số dư */
+function sync(op,data){
+  const run=async()=>{
+    if(!user||!S)return null;
+    const sentW=Math.floor(S.wallet), sentB=base;
+    try{
+      const j=await api({action:'sync',name:user,pass,wallet:sentW,base:sentB,
+                         state:stateOnly(),score:score(),op,data});
+      S.wallet=j.wallet+(S.wallet-sentW);
+      base=j.wallet;
+      if(!op&&j.wallet!==sentW){
+        const d=j.wallet-sentW;
+        notify('🛠️ Quản trị đã cập nhật số dư: '+(d>0?'+':'')+fmt(d)+' xu');
+      }
+      renderWallet();
+      return j;
+    }catch(e){
+      if(e.code==='locked'){notify(e.message);endSession();return null}
+      if(e.code==='auth'){notify('Phiên đăng nhập không còn hợp lệ: '+e.message);endSession();return null}
+      if(op)notify(e.message);
+      return null;
+    }
+  };
+  chain=chain.then(run,run);
+  return chain;
 }
+function saveUser(){if(!user)return;clearTimeout(saveT);saveT=setTimeout(()=>sync(),800)}
+
+/* ===== ĐĂNG KÝ / ĐĂNG NHẬP ===== */
 function showRegister(){$('loginForm').classList.add('hidden');$('registerForm').classList.remove('hidden')}
 function showLogin(){$('registerForm').classList.add('hidden');$('loginForm').classList.remove('hidden')}
-function register(){
+
+async function login(){
+  const name=$('loginName').value.trim(),p=$('loginPass').value;
+  if(!name||!p)return notify('Nhập tên và mật khẩu.');
+  try{
+    const j=await api({action:'login',name,pass:p});
+    startSession(name,p,j.role,j.wallet,j.state);
+    notify('Chào mừng '+name+'!');
+  }catch(e){notify(e.message)}
+}
+async function register(){
   const n=$('regName').value.trim(),p=$('regPass').value,p2=$('regPass2').value;
-  if(n.length<3||p.length<4)return notify('Tên ≥3 ký tự, mật khẩu ≥4 ký tự.');
   if(p!==p2)return notify('Mật khẩu nhập lại không khớp.');
-  if(isAdminName(n))return notify('Tên này dành riêng cho quản trị.');
-  if(localStorage.getItem('sf_pass_'+n))return notify('Tên này đã có người dùng.');
-  localStorage.setItem('sf_pass_'+n,p);addUserName(n);
-  user=n;loadUser(n);saveUser();enterGame();notify('Đăng ký xong! Bạn có 100.000 xu.');
+  try{
+    const j=await api({action:'register',name:n,pass:p});
+    startSession(n,p,'player',j.wallet,{});
+    notify('Đăng ký xong! Bạn có 100.000 xu.');
+  }catch(e){notify(e.message)}
 }
-function login(){
-  const n=$('loginName').value.trim(),p=$('loginPass').value;
-  const s=localStorage.getItem('sf_pass_'+n);
-  if(s===null)return notify('Chưa có tài khoản này.');
-  if(s!==p)return notify('Sai mật khẩu.');
-  user=n;addUserName(n);loadUser(n);enterGame();notify('Chào mừng '+n+'!');
+
+function startSession(name,p,r,w,st){
+  user=name;pass=p;role=r;
+  S=Object.assign(newState(),st||{});
+  S.wallet=w;base=w;
+  S.stocks=(Array.isArray(S.stocks)&&S.stocks.length?S.stocks:DEF_STOCKS.map(s=>({...s,prev:s.p,hist:[s.p]})));
+  S.stocks.forEach(s=>{if(!s.hist||!s.hist.length)s.hist=[s.p];if(!s.prev)s.prev=s.p});
+  ensureDaily();
+  enterGame();
 }
-function logout(){
+
+async function logout(){
   if(bcBusy)return notify('Đợi lắc bát xong đã.');
-  refundBC();stopAuto();stopLock();
-  saveUser();clearAll();
-  user=null;S=null;
+  refundBC();
+  stopAuto();stopLock();
+  await sync();
+  endSession();
+}
+function endSession(){
+  stopAuto();stopLock();clearTimeout(saveT);
+  user=null;pass='';role='player';S=null;base=0;
+  bcBets={};
+  clearAll();
   document.querySelectorAll('.over').forEach(e=>e.classList.add('hidden'));
   $('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden');
 }
+
 function enterGame(){
   $('authScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');
-  $('playerLabel').textContent='👤 '+user;
+  $('playerLabel').textContent='👤 '+user+(isAdmin()?' (admin)':'');
   $('adminBtn').classList.toggle('hidden',!isAdmin());
-  clearAll();
-  spawnBoss();
+  clearAll();spawnBoss();
   for(let i=0;i<10;i++)spawnFish();
-  if(!tickT){
-    tickT=setInterval(tickMarket,1500);
+  if(!timersStarted){
+    timersStarted=true;
+    setInterval(()=>{if(user)sync()},CFG.SYNC_MS);
+    setInterval(tickMarket,1500);
     setInterval(fishLoop,1800);
-    setInterval(claimGifts,3000);
     setInterval(bossCharge,6000);
     setInterval(renderSkills,1000);
-    setInterval(()=>{if(!user||!S)return;ensureDaily();saveUser();renderQuests();renderBuff()},5000);
+    setInterval(()=>{if(!user||!S)return;ensureDaily();renderQuests();renderBuff()},5000);
+    setInterval(loadBoard,15000);
+    window.addEventListener('pagehide',flushBeacon);
   }
-  renderAll();
+  renderAll();loadBoard();
+}
+function flushBeacon(){
+  if(!user||!S)return;
+  const body=JSON.stringify({action:'sync',name:user,pass,wallet:Math.floor(S.wallet),base,state:stateOnly(),score:score()});
+  try{fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body,keepalive:true})}catch(e){}
 }
 function clearAll(){
   document.querySelectorAll('#arena .fish').forEach(e=>e.remove());fishes=[];
@@ -520,7 +570,7 @@ function clearAll(){
 }
 function renderAll(){
   renderWallet();renderAmmo();applyGun();renderBossBar();renderQuests();
-  renderInv();renderSkills();renderBoard();renderFriends();renderStocks();renderBuff();
+  renderInv();renderSkills();renderFriends();renderStocks();renderBuff();
 }
 function renderWallet(){
   if(!S)return;
@@ -735,6 +785,7 @@ function openChest(t){
   renderWallet();renderInv();saveUser();
 }
 function renderInv(){
+  if(!S)return;
   $('invBox').innerHTML=Object.keys(CHESTS).map(t=>`<div class="row"><span>${CHESTS[t][0]} ${CHESTS[t][1]}: <b>${S.inv[t]||0}</b></span><button ${S.inv[t]?'':'disabled'} onclick="openChest('${t}')">Mở</button></div>`).join('')+'<div id="buffLine" class="hint" style="padding-top:6px"></div>';
   renderBuff();
 }
@@ -747,6 +798,7 @@ function renderBuff(){
 /* ===== NHIỆM VỤ ===== */
 function renderQuests(){
   if(!S)return;
+  ensureDaily();
   $('questBox').innerHTML=QUESTS.map(q=>{
     const v=S.daily[q.id]||0,done=v>=q.target,cl=!!S.daily.claimed[q.id],pct=Math.min(100,v/q.target*100);
     return `<div class="row"><div style="flex:1"><b>${q.label}</b><div style="height:6px;background:#0a2a4a;border-radius:6px;margin:4px 0;overflow:hidden"><div style="height:100%;width:${pct}%;background:#47ffb3"></div></div><small>${fmt(v)} / ${fmt(q.target)}</small></div>${cl?'<small>✅</small>':`<button ${done?'':'disabled'} onclick="claimQuest('${q.id}')">+${fmt(q.reward)}</button>`}</div>`;
@@ -763,35 +815,28 @@ function claimQuest(id){
 function getBots(){
   let b=JSON.parse(localStorage.getItem('sf_bots')||'null');
   if(!Array.isArray(b)){
-    b=Array.from({length:105},(_,i)=>({name:BOTF[i%10]+' '+BOTN[i%20]+' '+BOTT[(i*7)%14],score:Math.round((2e6+Math.random()*8e8)/1000)*1000,kills:rnd(0,120)}));
+    b=Array.from({length:105},(_,i)=>({name:BOTF[i%10]+' '+BOTN[i%20]+' '+BOTT[(i*7)%14],score:Math.round((2e6+Math.random()*8e8)/1000)*1000}));
     localStorage.setItem('sf_bots',JSON.stringify(b));
   }
   return b;
 }
-function holdingsValue(){return Object.entries(S.hold).reduce((s,[k,q])=>{const st=S.stocks.find(x=>x.s===k);return s+(st?q*st.p:0)},0)}
-function updateBoard(){
-  if(!user||!S||isAdmin())return;
-  const board=JSON.parse(localStorage.getItem('sf_board')||'[]');
-  const row={name:user,score:Math.round(S.wallet+holdingsValue()),kills:S.totals.kills};
-  const i=board.findIndex(r=>r.name===user);
-  if(i>=0)board[i]=row;else board.push(row);
-  localStorage.setItem('sf_board',JSON.stringify(board.slice(0,100)));
-  renderBoard();
-}
-function renderBoard(){
-  const players=JSON.parse(localStorage.getItem('sf_board')||'[]').filter(r=>!isAdminName(r.name));
+async function loadBoard(){
+  let players=[];
+  try{players=(await api({action:'board'})).board}catch(e){}
   const all=[...getBots(),...players].sort((a,b)=>b.score-a.score).slice(0,10);
   $('boardBox').innerHTML=all.map((r,i)=>`<div class="row" style="${r.name===user?'background:#0c3a5e;border-radius:6px':''}"><span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${r.name}</span><span>🪙 ${fmt(r.score)}</span></div>`).join('');
 }
 
 /* ===== BẠN BÈ & TẶNG XU ===== */
-function addFriend(){
+async function addFriend(){
+  if(!user)return;
   const n=$('friendName').value.trim();
   if(!n)return notify('Nhập tên người chơi.');
   if(n===user)return notify('Không thể thêm chính mình.');
-  if(!localStorage.getItem('sf_pass_'+n))return notify('Không tìm thấy "'+n+'" trên máy này.');
   if(S.friends.includes(n))return notify('Đã có trong danh sách.');
   if(S.friends.length>=CFG.MAX_FRIENDS)return notify('Tối đa '+CFG.MAX_FRIENDS+' bạn.');
+  const j=await sync('check',{to:n});
+  if(!j)return;
   S.friends.push(n);$('friendName').value='';renderFriends();saveUser();
 }
 function removeFriend(n){S.friends=S.friends.filter(x=>x!==n);renderFriends();saveUser()}
@@ -800,57 +845,33 @@ function renderFriends(){
   $('friendList').innerHTML=S.friends.length?S.friends.map(f=>`<div class="row"><span>👤 ${f}</span><button class="red" onclick="removeFriend('${f}')">Xóa</button></div>`).join(''):'<small class="hint">Chưa có bạn.</small>';
   const sel=$('friendSel').value;
   $('friendSel').innerHTML=S.friends.length?S.friends.map(f=>`<option ${f===sel?'selected':''}>${f}</option>`).join(''):'<option value="">— chưa có bạn —</option>';
-  $('userList').innerHTML=getUsers().filter(u=>u!==user).map(u=>`<option value="${u}">`).join('');
 }
-function sendGift(){
+async function sendGift(){
+  if(!user)return;
   const to=$('friendSel').value,amt=Math.floor(Number($('giftAmt').value)||0);
   if(!to)return notify('Chưa có bạn để tặng.');
-  if(amt<1000)return notify('Tặng tối thiểu 1.000 xu.');
-  if(amt>S.wallet)return notify('Ví không đủ xu.');
-  const got=Math.floor(amt*(1-CFG.FEE));
-  const key='sf_gifts_'+to,box=JSON.parse(localStorage.getItem(key)||'[]');
-  box.push({from:user,amount:got});localStorage.setItem(key,JSON.stringify(box));
-  S.wallet-=amt;txPush('Tặng',to,'','',-amt);
-  addFeed('🎁 Tặng '+fmt(got)+' xu cho '+to);notify('🎁 Đã gửi cho '+to);
-  renderWallet();saveUser();
+  const j=await sync('gift',{to,amount:amt});
+  if(j){notify('🎁 '+j.message);addFeed('🎁 Tặng '+fmt(j.got)+' xu cho '+to);txPush('Tặng',to,'','',-amt);renderWallet()}
 }
-function claimGifts(){
-  if(!user||!S)return;
-  const key='sf_gifts_'+user,box=JSON.parse(localStorage.getItem(key)||'[]');
-  if(!box.length)return;
-  localStorage.removeItem(key);
-  let sum=0;box.forEach(g=>{sum+=g.amount;txPush('Nhận',g.from,'','',g.amount)});
-  S.wallet+=sum;addFeed('🎁 Nhận '+box.length+' quà: +'+fmt(sum));
-  notify('🎁 Nhận quà +'+fmt(sum)+' xu');renderWallet();saveUser();
-}
-function makeGiftCode(){
+async function makeGiftCode(){
+  if(!user)return;
   const amt=Math.floor(Number($('codeAmt').value)||0);
-  if(amt<1000)return notify('Mã quà tối thiểu 1.000 xu.');
-  if(amt>S.wallet)return notify('Ví không đủ xu.');
-  const recv=Math.floor(amt*(1-CFG.FEE));
-  S.wallet-=amt;
-  const p={f:user,a:recv,id:Date.now().toString(36)+Math.random().toString(36).slice(2,8)};
-  $('codeOut').value='SF-'+btoa(unescape(encodeURIComponent(JSON.stringify(p))));
-  $('codeInfo').textContent='Mã này nhận được '+fmt(recv)+' xu. Đã trừ '+fmt(amt)+' xu từ ví.';
-  txPush('Mã quà','',1,'',-amt);
-  renderWallet();saveUser();notify('🎟️ Đã tạo mã quà');
+  const j=await sync('makeCode',{amount:amt});
+  if(j){
+    $('codeOut').value=j.code;
+    $('codeInfo').textContent='Mã nhận được '+fmt(j.got)+' xu. Đã trừ '+fmt(amt)+' xu. Mã chỉ dùng được 1 lần.';
+    txPush('Mã quà','',1,'',-amt);
+  }
 }
-function redeemCode(){
-  const raw=$('giftCodeIn').value.trim();
-  if(!raw.startsWith('SF-'))return notify('Mã không hợp lệ.');
-  let p;
-  try{p=JSON.parse(decodeURIComponent(escape(atob(raw.slice(3)))))}catch(e){return notify('Mã bị lỗi.')}
-  if(!p||!p.id||!p.a||!p.f)return notify('Mã không hợp lệ.');
-  if(p.f===user)return notify('Không thể nhận mã của chính mình.');
-  const used=JSON.parse(localStorage.getItem('sf_used')||'[]');
-  if(used.includes(p.id))return notify('Mã này đã dùng trên máy này.');
-  used.push(p.id);localStorage.setItem('sf_used',JSON.stringify(used));
-  S.wallet+=p.a;txPush('Nhận mã',p.f,'','',p.a);
-  $('giftCodeIn').value='';addFeed('🎟️ Nhận mã: +'+fmt(p.a));
-  notify('🎟️ +'+fmt(p.a)+' xu');renderWallet();saveUser();
+async function redeemCode(){
+  if(!user)return;
+  const code=$('giftCodeIn').value.trim();
+  if(!code)return notify('Dán mã quà vào.');
+  const j=await sync('redeem',{code});
+  if(j){$('giftCodeIn').value='';notify('🎟️ '+j.message);addFeed('🎟️ Nhận mã: +'+fmt(j.got));txPush('Nhận mã','',1,'',j.got)}
 }
 
-/* ===== CHỨNG KHOÁN ===== */
+/* ===== CHỨNG KHOÁN (giả lập, riêng từng tài khoản) ===== */
 function tickMarket(){
   if(!user||!S)return;
   if(Math.random()>.35)return;
@@ -991,7 +1012,7 @@ function placeBC(k){
   renderWallet();renderBC();
 }
 function clearBC(){
-  if(bcBusy)return;
+  if(bcBusy||!S)return;
   S.wallet+=bcTotal();bcBets={};
   renderWallet();renderBC();
 }
@@ -1020,41 +1041,68 @@ function shakeBC(){
 }
 
 /* ===== QUẢN TRỊ ===== */
-let admSel=null;
-function openAdmin(){if(!isAdmin())return;$('adminView').classList.remove('hidden');renderAdmin()}
+function openAdmin(){if(!isAdmin())return;$('adminView').classList.remove('hidden');loadAdmin()}
 function closeAdmin(){$('adminView').classList.add('hidden')}
-function admPick(n){admSel=n;$('admRes').textContent='';renderAdmin()}
+async function admCall(op,extra){
+  try{return await api({action:'admin',name:user,pass,op,...extra})}
+  catch(e){notify(e.message);return null}
+}
+async function loadAdmin(){
+  const j=await admCall('list',{});
+  if(!j)return;
+  admList=j.users;
+  renderAdmin();
+}
 function renderAdmin(){
-  const players=getUsers().filter(u=>!isAdminName(u));
-  $('admUsers').innerHTML=players.length
-    ?players.map(u=>`<div class="row" style="cursor:pointer;${admSel===u?'background:#0c3a5e;border-radius:6px':''}" onclick="admPick('${u}')"><span>👤 ${u}</span><span class="price">🪙 ${fmt(readUser(u).wallet)}</span></div>`).join('')
-    :'<small class="hint">Chưa có người chơi nào.</small>';
-  $('admSel').textContent=admSel||'—';
-  $('admBal').textContent=admSel?fmt(admSel===user?S.wallet:readUser(admSel).wallet)+' xu':'—';
+  $('admUsers').innerHTML=admList.length
+    ?admList.map(u=>`<div class="row" style="cursor:pointer;${admSel===u.name?'background:#0c3a5e;border-radius:6px':''}" onclick="admPick('${u.name}')"><span>${u.locked?'🔒':'🟢'} ${u.name}</span><span class="price">🪙 ${fmt(u.wallet)}</span></div>`).join('')
+    :'<small class="hint">Chưa có người chơi.</small>';
+  const cur=admList.find(u=>u.name===admSel);
+  $('admSel').textContent=cur?cur.name:'—';
+  $('admBal').textContent=cur?fmt(cur.wallet)+' xu':'—';
+  $('admLock').textContent=cur&&cur.locked?'🔓 Mở khóa acc':'🔒 Khóa acc';
+  $('admInfo').innerHTML=cur
+    ?`Trạng thái: ${cur.locked?'<span class="down">Đã khóa</span>':'<span class="up">Bình thường</span>'} • Súng: ${cur.info.gun} • Pháo cấp ${cur.info.power} • Boss đã hạ: ${cur.info.kills} • Cá: ${fmt(cur.info.fish)} • Lượt bắn: ${fmt(cur.info.shots)} • Cập nhật: ${cur.updated}`
+    :'';
 }
-function admApply(fn){
-  if(!isAdmin())return;
-  if(!admSel)return notify('Chọn một người chơi trước.');
-  if(isAdminName(admSel))return notify('Không thể chỉnh tài khoản admin.');
-  const amt=Math.floor(Number($('admAmt').value)||0);
-  if(amt<0)return notify('Nhập số không âm.');
-  const self=admSel===user;
-  const st=self?S:readUser(admSel);
-  const before=st.wallet;
-  st.wallet=Math.max(0,Math.floor(fn(st.wallet,amt)));
-  const diff=st.wallet-before;
-  st.txs=[{t:new Date().toLocaleTimeString(),type:'Admin ('+user+')',sym:'Điều chỉnh',qty:'',price:'',total:diff},...(st.txs||[])].slice(0,40);
-  if(self){renderWallet();saveUser()}
-  else localStorage.setItem('sf_u_'+admSel,JSON.stringify(st));
-  $('admRes').innerHTML=`<span class="${diff>=0?'up':'down'}">${diff>=0?'+':'−'}${fmt(Math.abs(diff))} xu → còn ${fmt(st.wallet)}</span>`;
-  renderAdmin();notify('Đã cập nhật '+admSel);
+function admPick(n){admSel=n;$('admRes').textContent='';renderAdmin()}
+async function admDo(op,extra,msg){
+  if(!admSel)return notify('Chọn người chơi trước.');
+  const j=await admCall(op,{target:admSel,...extra});
+  if(j){$('admRes').textContent=msg;notify(msg);await loadAdmin()}
 }
-function admAdjust(sign){admApply((w,a)=>w+sign*a)}
-function admSetExact(){admApply((w,a)=>a)}
+function admAdjust(sign){
+  const a=Math.floor(Number($('admAmt').value)||0);
+  if(a<=0)return notify('Nhập số lớn hơn 0.');
+  admDo('adjust',{amount:sign*a},(sign>0?'+':'−')+fmt(a)+' xu');
+}
+function admSetExact(){
+  const a=Math.floor(Number($('admAmt').value)||0);
+  if(a<0)return notify('Số không âm.');
+  admDo('set',{amount:a},'Đặt số dư = '+fmt(a)+' xu');
+}
+function admToggleLock(){
+  const cur=admList.find(u=>u.name===admSel);
+  if(!cur)return notify('Chọn người chơi trước.');
+  const v=!cur.locked;
+  admDo('lock',{value:v},v?'🔒 Đã khóa '+cur.name:'🔓 Đã mở khóa '+cur.name);
+}
+function admResetPass(){
+  const p=$('admNewPass').value;
+  if(p.length<4)return notify('Mật khẩu mới ≥4 ký tự.');
+  admDo('resetPass',{newPass:p},'🔑 Đã đổi mật khẩu');
+  $('admNewPass').value='';
+}
+async function admDelete(){
+  if(!admSel)return notify('Chọn người chơi trước.');
+  if(!confirm('Xóa vĩnh viễn tài khoản '+admSel+'?'))return;
+  const name=admSel;
+  const j=await admCall('delete',{target:name});
+  if(j){admSel=null;notify('Đã xóa '+name);await loadAdmin()}
+}
 
 /* ===== KHỞI TẠO ===== */
-ensureAdmins();
-window.addEventListener('pagehide',()=>{if(user)saveUser()});
+renderAmmo();
 </script>
 </body>
 </html>
