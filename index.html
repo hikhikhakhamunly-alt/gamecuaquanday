@@ -36,7 +36,6 @@ input[type=checkbox]{width:auto}
 .money{margin-left:auto;color:#ffd34f;font-weight:900;font-size:19px}
 #evtBadge{color:#ff9e5e;font-weight:800}
 #annBar{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#b91c48,#e5a900);color:#fff;text-align:center;padding:8px;font-weight:800;z-index:98}
-#maintBar{position:fixed;bottom:0;left:0;right:0;background:#5a0f2e;color:#ffd0d8;text-align:center;padding:8px;font-weight:800;z-index:98}
 .layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.9fr);gap:12px}
 .panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:14px;overflow:hidden;margin-bottom:12px}
 .ph{padding:10px 12px;background:#092b50;border-bottom:1px solid #13537d;font-weight:900;display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -49,18 +48,21 @@ input[type=checkbox]{width:auto}
 .fish svg{width:100%;height:auto;display:block}
 .fish.dying{opacity:0;transform:scale(.3) rotate(180deg);transition:all .4s}
 @keyframes swim{from{transform:translate(-10px,4px)}to{transform:translate(18px,-12px)}}
-.boss{position:absolute;left:50%;top:32%;width:min(250px,44%);transform:translate(-50%,-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);transition:opacity .6s}
+/* Boss bơi ngang màn hình */
+.boss{position:absolute;top:30%;left:-30%;width:min(230px,40%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation-timing-function:linear;animation-fill-mode:forwards}
 .boss svg{width:100%;height:auto;display:block}
+.boss.toRight{animation-name:swimRight;transform:translateY(-50%) scaleX(-1)}
+.boss.toLeft{animation-name:swimLeft}
+@keyframes swimRight{from{left:-30%}to{left:110%}}
+@keyframes swimLeft{from{left:110%}to{left:-30%}}
 .boss.rage{filter:drop-shadow(0 0 26px #ff1f5a) hue-rotate(-30deg)}
-.boss.hit{animation:bh .2s}
+.boss.hit svg{animation:bh .2s}
 @keyframes bh{0%{scale:1}40%{scale:.9}100%{scale:1}}
-.boss.charge{animation:chg 1.2s ease-in-out}
-@keyframes chg{0%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,30%)}100%{transform:translate(-50%,-50%)}}
-.boss.dying{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(200deg);transition:all .9s}
+.boss.dying{opacity:0;transform:translateY(-50%) scale(.3) rotate(200deg);transition:all .9s}
 .bossbar{position:absolute;left:10px;right:10px;top:8px;z-index:6;text-align:center;text-shadow:0 2px 4px #001a33}
 .hpo{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
 .hpi{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .25s}
-.cannon{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:90px;height:90px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
+.cannon{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:120px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
 .cannon svg{width:100%;height:100%}
 .dmg{position:absolute;font-weight:900;font-size:20px;pointer-events:none;z-index:9;text-shadow:0 2px 4px #001a33;animation:pop .85s forwards;white-space:nowrap}
 @keyframes pop{to{transform:translateY(-60px);opacity:0}}
@@ -81,7 +83,7 @@ input[type=checkbox]{width:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .gc{border:1px solid #1c6090;border-radius:12px;background:#071b37;padding:10px;text-align:center}
 .gc.eq{border-color:#47ffb3}
-.gc svg{height:90px;width:auto}
+.gc svg{height:110px;width:auto}
 .gc button{width:100%;margin-top:6px;font-size:13px}
 .tabs2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;justify-content:center}
 .res{text-align:center;font-weight:900;font-size:18px;min-height:28px;margin-top:8px}
@@ -98,8 +100,6 @@ input[type=checkbox]{width:auto}
 .bcdice{display:flex;gap:14px;justify-content:center;min-height:110px;align-items:center;margin:12px 0}
 .die{width:90px;height:90px;display:flex;align-items:center;justify-content:center;font-size:52px;background:#fff;border-radius:16px;box-shadow:0 5px 0 #9aa8c2;animation:dp .5s}
 @keyframes dp{from{transform:rotate(-180deg) scale(.2)}to{transform:none}}
-.bowl{font-size:70px;animation:bw .12s infinite}
-@keyframes bw{0%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}100%{transform:rotate(-10deg)}}
 .wheel{font-size:70px;text-align:center;margin:10px 0}
 .segs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
 .seg{border:1px solid #1c6090;border-radius:10px;padding:8px 10px;background:#071b37;font-size:13px;min-width:90px;text-align:center}
@@ -114,17 +114,16 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 
 <div id="notice" class="hidden" style="position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:10px 16px;z-index:99;max-width:90%;text-align:center"></div>
 <div id="annBar" class="hidden"></div>
-<div id="maintBar" class="hidden">🛠️ Máy chủ đang bảo trì</div>
 
 <!-- ĐĂNG NHẬP -->
 <section id="authScreen" class="screen">
   <div class="brand">STOCK <span>&</span> FISH</div>
-  <p class="sub">BẮN CÁ • BẦU CUA • VÒNG QUAY • ĐẦU TƯ • CHƠI BẰNG XU ẢO</p>
+  <p class="sub">BẮN CÁ • BẦU CUA ONLINE • VÒNG QUAY • ĐẦU TƯ • CHƠI BẰNG XU ẢO</p>
   <div class="authwrap">
     <div class="card">
       <div style="font-size:60px;text-align:center">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>Bắn cá, boss, kho súng, bầu cua, vòng quay, cửa may rủi, chứng khoán giả lập, tặng xu và mã quà.</p>
+      <p>Bắn cá, boss bơi ngang, kho súng, bầu cua online, vòng quay, cửa may rủi, chứng khoán giả lập, tặng xu và mã quà.</p>
       <p>🪙 Ví khởi đầu: <b class="price">100.000 xu</b></p>
       <p class="hint">Xu ảo, không nạp rút tiền thật.</p>
     </div>
@@ -226,6 +225,33 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
   <div class="center hint" style="padding:10px">Demo giải trí bằng xu ảo • Không nạp/rút tiền thật</div>
 </section>
 
+<!-- BẦU CUA ONLINE -->
+<div id="bcView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b style="font-size:22px">🎲 BẦU CUA ONLINE — SẢNH CHUNG</b>
+      <div class="price">🪙 <span id="bcWallet"></span></div>
+      <button onclick="closeBC()">← Đóng</button>
+    </div>
+    <div class="center" style="font-size:18px">Vòng hiện tại kết thúc sau: <b class="price"><span id="bcTimer">--</span></b> giây</div>
+    <div class="hint center">Mọi người trong sảnh cùng một vòng, kết quả do máy chủ quay. Mỗi vòng 30 giây.</div>
+    <div class="bcgrid" id="bcGrid"></div>
+    <div class="center">
+      Mức cược mỗi lần:
+      <select id="bcChip" class="inline">
+        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
+        <option value="50000">50.000</option><option value="100000">100.000</option>
+      </select>
+    </div>
+    <div class="bcdice" id="bcDice"><div class="hint">Đang chờ vòng trước...</div></div>
+    <div class="res" id="bcRes"></div>
+    <div class="panel" style="margin-top:10px"><div class="ph">Cược của mọi người trong vòng này</div>
+      <div class="pb" id="bcBetsList" style="max-height:180px;overflow:auto"></div>
+    </div>
+    <div class="hint center" id="bcHist"></div>
+  </div>
+</div>
+
 <!-- VÒNG QUAY -->
 <div id="wheelView" class="over hidden">
   <div class="ob">
@@ -248,7 +274,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="shopView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <div><b style="font-size:22px">🔫 KHO SÚNG</b><div class="hint">Súng càng mạnh, sát thương lên boss càng lớn.</div></div>
+      <div><b style="font-size:22px">🔫 KHO SÚNG</b><div class="hint">Súng càng đắt, hình càng đẹp và sát thương lên boss càng lớn.</div></div>
       <div class="price">🪙 <span id="shopWallet"></span></div>
       <button onclick="closeShop()">← Đóng</button>
     </div>
@@ -290,31 +316,6 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <div class="res" id="lockRes"></div>
       <div class="hint">Giữa đỏ ×3 • Gần giữa xanh ×1,5 • Vùng vàng ×1 • Ngoài vùng: mất cược</div>
     </div>
-  </div>
-</div>
-
-<!-- BẦU CUA -->
-<div id="bcView" class="over hidden">
-  <div class="ob">
-    <div class="oh">
-      <b style="font-size:22px">🎲 BẦU CUA TÔM CÁ</b>
-      <div class="price">🪙 <span id="bcWallet"></span></div>
-      <button onclick="closeBC()">← Đóng</button>
-    </div>
-    <div class="hint center">Đặt cược lên mặt bạn chọn. Mỗi xúc xắc trùng mặt sẽ trả thêm 1 lần cược. Không trùng mặt nào thì mất cược.</div>
-    <div class="bcgrid" id="bcGrid"></div>
-    <div class="center">
-      Mức cược mỗi lần:
-      <select id="bcChip" class="inline">
-        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
-        <option value="50000">50.000</option><option value="100000">100.000</option>
-      </select>
-      <button onclick="clearBC()">Xóa cược</button>
-    </div>
-    <div class="bcdice" id="bcDice"><div class="hint">Đặt cược rồi bấm Lắc bát</div></div>
-    <div class="center"><button id="bcShake" class="gold" style="font-size:18px;padding:12px 26px" onclick="shakeBC()">🎲 LẮC BÁT</button></div>
-    <div class="res" id="bcRes"></div>
-    <div class="hint center" id="bcHist"></div>
   </div>
 </div>
 
@@ -362,7 +363,6 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <button onclick="closeAdmin()">← Đóng</button>
     </div>
 
-    <!-- Người chơi -->
     <div id="tab-users" class="adm">
       <div class="panel">
         <div class="ph">Người chơi <button onclick="loadAdmin()">⟳ Làm mới</button></div>
@@ -414,12 +414,10 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       </div>
     </div>
 
-    <!-- Thống kê -->
     <div id="tab-stats" class="hidden">
       <div class="panel"><div class="ph">📊 Thống kê <button onclick="loadStats()">⟳</button></div><div class="pb" id="admStats"></div></div>
     </div>
 
-    <!-- Sự kiện & thông báo -->
     <div id="tab-event" class="hidden">
       <div class="panel"><div class="ph">🔥 Sự kiện nhân đôi xu bắn cá</div><div class="pb">
         <input id="evName" placeholder="Tên sự kiện" value="Nhân đôi xu bắn cá">
@@ -444,7 +442,6 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       </div></div>
     </div>
 
-    <!-- Phát thưởng -->
     <div id="tab-bonus" class="hidden">
       <div class="panel"><div class="ph">🎁 Phát thưởng xu</div><div class="pb">
         <input id="bonusAmt" type="number" min="1000" step="1000" value="50000">
@@ -456,7 +453,6 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       </div></div>
     </div>
 
-    <!-- Mã quà admin -->
     <div id="tab-code" class="hidden">
       <div class="panel"><div class="ph">🎟️ Tạo mã quà từ admin</div><div class="pb">
         <div class="hint">Mã này không trừ xu của admin, nên nó tạo thêm xu mới vào server. Dùng cẩn thận.</div>
@@ -466,7 +462,6 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       </div></div>
     </div>
 
-    <!-- Cấu hình -->
     <div id="tab-config" class="hidden">
       <div class="panel"><div class="ph">🛠️ Bảo trì</div><div class="pb">
         <label class="btns"><input type="checkbox" id="cfgMaint"> Bật chế độ bảo trì (chỉ admin vào được)</label>
@@ -480,7 +475,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       </div></div>
       <div class="panel"><div class="ph">🎮 Bật / tắt trò chơi</div><div class="pb">
         <div class="btns"><label><input type="checkbox" id="cfgG_fish"> 🐟 Bắn cá & boss</label></div>
-        <div class="btns"><label><input type="checkbox" id="cfgG_bc"> 🎲 Bầu cua</label></div>
+        <div class="btns"><label><input type="checkbox" id="cfgG_bc"> 🎲 Bầu cua online</label></div>
         <div class="btns"><label><input type="checkbox" id="cfgG_door"> 🚪 Cửa may rủi</label></div>
         <div class="btns"><label><input type="checkbox" id="cfgG_lock"> 🔓 Đếm ngược mở khóa</label></div>
         <div class="btns"><label><input type="checkbox" id="cfgG_wheel"> 🎡 Vòng quay</label></div>
@@ -488,7 +483,6 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <button class="gold" onclick="saveCfg()">💾 Lưu cấu hình</button>
     </div>
 
-    <!-- Nhật ký -->
     <div id="tab-log" class="hidden">
       <div class="panel"><div class="ph">📜 Nhật ký admin <button onclick="loadLog()">⟳</button></div>
         <div class="pb" id="admLog" style="max-height:480px;overflow:auto"></div>
@@ -508,7 +502,9 @@ const CFG={
   NET_MULT:.05, NET_CD:40000,
   BOMB_PCT:.01, BOMB_CD:90000,
   UPG:150000, UPG_MAX:8,
-  SYNC_MS:4000
+  SYNC_MS:4000,
+  BOSS_SPEED:[16,14,12,10],   // giây boss bơi qua màn, theo thứ tự boss
+  BOSS_RESPAWN_MS:3000
 };
 let GAMES={fish:true,bc:true,door:true,lock:true,wheel:true};
 const START_WALLET_CLIENT=100000;
@@ -540,7 +536,33 @@ const GUNS=[
 function fishArt(c1,c2,fin){return `<svg viewBox="0 -12 120 92"><path d="M90 40 L118 16 Q112 40 118 64 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="55" cy="40" rx="42" ry="28" fill="${c1}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".9"/><circle cx="32" cy="36" r="11" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="29" cy="37" r="6.5" fill="#0a1a3a"/></svg>`}
 function octoArt(c,l){return `<svg viewBox="0 -10 120 110"><g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round"><path d="M32 60 Q18 84 30 100"/><path d="M48 66 Q42 92 54 104"/><path d="M68 66 Q74 92 62 104"/><path d="M88 60 Q102 84 90 100"/></g><ellipse cx="60" cy="38" rx="42" ry="34" fill="${c}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="50" cy="20" rx="20" ry="8" fill="${l}" opacity=".7"/><circle cx="44" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="46" cy="40" r="6.5" fill="#0a1a3a"/><circle cx="76" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="78" cy="40" r="6.5" fill="#0a1a3a"/></svg>`}
 function turtleArt(){return `<svg viewBox="0 -4 130 100"><ellipse cx="112" cy="36" rx="14" ry="11" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/><ellipse cx="60" cy="46" rx="46" ry="30" fill="#ffd34f" stroke="#0a1a3a" stroke-width="3"/><g fill="#e0a52a" stroke="#0a1a3a" stroke-width="2"><circle cx="40" cy="38" r="9"/><circle cx="60" cy="30" r="9"/><circle cx="80" cy="38" r="9"/><circle cx="50" cy="54" r="9"/><circle cx="70" cy="54" r="9"/></g></svg>`}
-function gunSvg(g){const id='g'+g.id;return `<svg viewBox="0 0 100 100"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c1}"/><stop offset="1" stop-color="${g.c2}"/></linearGradient></defs><rect x="36" y="4" width="28" height="60" rx="10" fill="url(#${id})" stroke="#0a1a3a" stroke-width="3"/><rect x="26" y="50" width="48" height="34" rx="12" fill="url(#${id})" stroke="#0a1a3a" stroke-width="3"/><circle cx="50" cy="66" r="8" fill="${g.beam}"/></svg>`}
+
+/* Súng: hình đổi theo bậc giá */
+function gunSvg(g){
+  const t=GUNS.findIndex(x=>x.id===g.id),id='g'+g.id;
+  let deco='';
+  if(t>=3)deco+=`<path d="M40 70 L14 50 L22 80 Z" fill="${g.c1}" stroke="#0a1a3a" stroke-width="2"/><path d="M80 70 L106 50 L98 80 Z" fill="${g.c1}" stroke="#0a1a3a" stroke-width="2"/>`;
+  if(t>=7)deco+=`<circle cx="16" cy="88" r="7" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/><circle cx="104" cy="88" r="7" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/>`;
+  const flame=t>=4?`<path d="M48 26 Q60 2 72 26 Q60 16 48 26Z" fill="url(#fl${id})"/>`:'';
+  const aura=t>=9?`<circle cx="60" cy="62" r="56" fill="${g.beam}" opacity=".15"/><circle cx="60" cy="62" r="54" fill="none" stroke="${g.beam}" stroke-width="2" stroke-dasharray="6 6" opacity=".7"/>`:'';
+  return `<svg viewBox="0 0 120 120"><defs>
+    <linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c1}"/><stop offset="1" stop-color="${g.c2}"/></linearGradient>
+    <linearGradient id="fl${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6a0"/><stop offset="1" stop-color="#ff7a1a"/></linearGradient>
+    <radialGradient id="mz${id}"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="${g.beam}"/><stop offset="1" stop-color="${g.beam}" stop-opacity="0"/></radialGradient>
+  </defs>
+  ${aura}
+  <ellipse cx="60" cy="104" rx="34" ry="12" fill="${g.c2}" stroke="#0a1a3a" stroke-width="3"/>
+  ${deco}
+  <rect x="44" y="60" width="32" height="38" rx="10" fill="url(#${id})" stroke="#0a1a3a" stroke-width="3"/>
+  <rect x="50" y="26" width="20" height="42" rx="9" fill="url(#${id})" stroke="#0a1a3a" stroke-width="3"/>
+  <rect x="48" y="38" width="24" height="5" rx="2" fill="${g.beam}" opacity=".85"/>
+  <rect x="48" y="54" width="24" height="5" rx="2" fill="${g.beam}" opacity=".85"/>
+  ${flame}
+  <circle cx="60" cy="26" r="16" fill="url(#mz${id})"/>
+  <ellipse cx="60" cy="26" rx="8" ry="5" fill="#0a1a3a"/>
+  <circle cx="60" cy="78" r="5" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/>
+  </svg>`;
+}
 
 const BOSSES=[
  {name:'CÁ RỒNG BĂNG',lv:5,hp:2e6,reward:8e5,svg:()=>fishArt('#9ff3ff','#fff','#2a9fff')},
@@ -572,8 +594,6 @@ const BOTN=['Hải','Minh','Lan','Tuấn','Hoa','Nam','Linh','Đức','Mai','Kho
 const BOTT=['Sói','Rồng','Gấu','Hổ','Kiếm','Sao','Băng','Lửa','Cá Mập','Thợ Săn','Vua','Pro','Ninja','Mèo'];
 const BOTF=['🦈','🐙','🧜','🐲','🐡','🐳','🐬','🦑','🐢','🦀'];
 const BC=[['bau','🎃','Bầu'],['cua','🦀','Cua'],['tom','🦐','Tôm'],['ca','🐟','Cá'],['ga','🐓','Gà'],['nai','🦌','Nai']];
-
-/* Phải giống thứ tự WHEEL bên Code.gs */
 const WHEEL_BETS=[1e4,1e5,1e6,1e7,1e8,1e9,1e10,1e11];
 const WHEEL_UI=['Trượt','Hoàn 50%','Hoàn vốn','x2','x3','x5','x10'];
 
@@ -583,9 +603,9 @@ let chain=Promise.resolve(), saveT=null, timersStarted=false;
 let EVENT=null, lastAnn=0;
 let fishes=[], autoT=null, bossRespawn=null;
 let B={alive:false,hp:0,max:0,enraged:false};
-let bcBets={}, bcBusy=false, bcHist=[];
 let doorBusy=false, lockRAF=null, lockT0=0, lockP=.5, mkSel='VCB';
 let wheelBet=1e4, wheelBusy=false;
+let bcState=null, bcLoopT=null, bcLastPoll=0, bcShownId=null;
 let admSel=null, admList=[], admCfg=null;
 
 function newState(){
@@ -642,6 +662,10 @@ function sync(op,data){
       base=j.wallet;
       EVENT=j.event||null;
       applyCfg(j.cfg);
+      if(j.bc){
+        bcState=Object.assign({},j.bc,{recv:Date.now()});
+        if(!$('bcView').classList.contains('hidden'))renderBC();
+      }
       if(j.announce&&j.announce.id!==lastAnn){lastAnn=j.announce.id;showBanner(j.announce.text)}
       if(!op&&j.wallet!==sentW){
         const d=j.wallet-sentW;
@@ -697,16 +721,14 @@ function startSession(name,p,r,w,st){
 }
 
 async function logout(){
-  if(bcBusy||wheelBusy)return notify('Đợi thao tác đang chạy xong đã.');
-  refundBC();
-  stopAuto();stopLock();
+  if(wheelBusy)return notify('Đợi quay xong đã.');
+  stopAuto();stopLock();closeBC();
   await sync();
   endSession();
 }
 function endSession(){
-  stopAuto();stopLock();clearTimeout(saveT);
-  user=null;pass='';role='player';S=null;base=0;EVENT=null;
-  bcBets={};
+  stopAuto();stopLock();clearTimeout(saveT);closeBC();
+  user=null;pass='';role='player';S=null;base=0;EVENT=null;bcState=null;
   clearAll();
   document.querySelectorAll('.over').forEach(e=>e.classList.add('hidden'));
   $('gameScreen').classList.add('hidden');$('authScreen').classList.remove('hidden');
@@ -820,16 +842,30 @@ function buyGun(id){
 }
 function equipGun(id){if(!S.owned[id])return;S.gunId=id;applyGun();renderShop();saveUser()}
 
-/* ===== BOSS ===== */
+/* ===== BOSS BƠI NGANG ===== */
 function spawnBoss(){
   const b=BOSSES[S.bossIdx];
   B.max=Math.round(b.hp*(1+S.bossLoop*.6));B.hp=B.max;B.alive=true;B.enraged=false;
-  const bo=$('boss');bo.className='boss';bo.innerHTML=b.svg();bo.style.display='block';
+  const bo=$('boss');
+  const speed=Math.max(6,CFG.BOSS_SPEED[S.bossIdx]-S.bossLoop*2);
+  bo.className='boss '+(Math.random()<.5?'toRight':'toLeft');
+  bo.style.top=(18+Math.random()*40)+'%';
+  bo.style.animationDuration=speed+'s';
+  bo.innerHTML=b.svg();bo.style.display='block';
+  bo.onanimationend=e=>{if(e.target===bo&&e.animationName.indexOf('swim')===0&&B.alive)escapeBoss()};
   $('arena').classList.remove('rage');
   $('bossName').textContent=b.name+(S.bossLoop?' ⭐ x'+(S.bossLoop+1):'');
   $('bossLv').textContent=b.lv;
   $('status').textContent='Boss: '+b.name;
   renderBossBar();showWarn('🐉 '+b.name+' XUẤT HIỆN!');
+}
+function escapeBoss(){
+  B.alive=false;
+  $('boss').style.display='none';
+  showWarn('🐉 BOSS ĐÃ BƠI THOÁT!');
+  notify('Boss bơi sang bờ bên kia, boss mới sắp xuất hiện');
+  clearTimeout(bossRespawn);
+  bossRespawn=setTimeout(()=>{if(user)spawnBoss()},CFG.BOSS_RESPAWN_MS);
 }
 function renderBossBar(){
   const pct=B.max?Math.max(0,B.hp/B.max*100):0;
@@ -868,9 +904,8 @@ function killBoss(){
   renderWallet();saveUser();
 }
 function bossCharge(){
-  if(!user||!B.alive)return;
-  const bo=$('boss');bo.classList.remove('charge');void bo.offsetWidth;bo.classList.add('charge');
-  setTimeout(()=>bo.classList.remove('charge'),1200);
+  if(!user||!B.alive||Math.random()>.3)return;
+  showWarn('⚡ BOSS TĂNG TỐC!');shake();
 }
 function castBomb(){
   if(!user)return;
@@ -929,7 +964,7 @@ function shootAt(e,target,fishObj){
 }
 function beam(e){
   const a=$('arena'),r=a.getBoundingClientRect();
-  const sx=r.width/2,sy=r.height-40,x=e.clientX-r.left,y=e.clientY-r.top,dx=x-sx,dy=y-sy;
+  const sx=r.width/2,sy=r.height-70,x=e.clientX-r.left,y=e.clientY-r.top,dx=x-sx,dy=y-sy;
   const b=document.createElement('div');
   b.style.cssText=`position:absolute;height:5px;left:${sx}px;top:${sy}px;width:${Math.hypot(dx,dy)}px;transform-origin:0 50%;transform:rotate(${Math.atan2(dy,dx)}rad);background:linear-gradient(90deg,#fff,${gun().beam});z-index:7;border-radius:5px;pointer-events:none;transition:opacity .3s`;
   a.appendChild(b);setTimeout(()=>b.style.opacity=0,80);setTimeout(()=>b.remove(),350);
@@ -1094,6 +1129,65 @@ async function redeemCode(){
   if(j){$('giftCodeIn').value='';notify('🎟️ '+j.message);addFeed('🎟️ Nhận mã: +'+fmt(j.got));txPush('Nhận mã','',1,'',j.got)}
 }
 
+/* ===== BẦU CUA ONLINE (sảnh chung, máy chủ quyết định) ===== */
+function openBC(){
+  if(!user)return;
+  if(!GAMES.bc)return notify('Bầu cua đang tạm tắt.');
+  $('bcView').classList.remove('hidden');
+  renderBC();
+  if(!bcLoopT)bcLoopT=setInterval(bcLoop,1000);
+  bcLoop();
+}
+function closeBC(){
+  $('bcView').classList.add('hidden');
+  clearInterval(bcLoopT);bcLoopT=null;
+}
+function bcLoop(){
+  if(!user||$('bcView').classList.contains('hidden'))return;
+  const now=Date.now();
+  if(now-bcLastPoll>=2000){bcLastPoll=now;sync()}
+  updateBcTimer();
+}
+function updateBcTimer(){
+  if(!bcState)return;
+  const left=Math.max(0,Math.ceil((bcState.remain-(Date.now()-bcState.recv))/1000));
+  $('bcTimer').textContent=left;
+}
+function renderBC(){
+  if(!S)return;
+  renderWallet();
+  if(!bcState){$('bcGrid').innerHTML='<div class="hint">Đang tải sảnh...</div>';return}
+  $('bcGrid').innerHTML=BC.map(([k,e,n])=>`<div class="bcf" onclick="placeBC('${k}')"><div class="e">${e}</div><b>${n}</b><div class="price">Tổng: ${fmt(bcState.totals[k]||0)}</div><div class="hint">Bạn cược: ${fmt(bcState.mine[k]||0)}</div></div>`).join('');
+  $('bcBetsList').innerHTML=bcState.bets.length
+    ?bcState.bets.map(b=>{const f=BC.find(x=>x[0]===b.k);return `<div class="row"><span>${b.u}</span><span>${f[1]} ${f[2]}</span><span class="price">${fmt(b.a)}</span></div>`}).join('')
+    :'<small class="hint">Chưa có ai cược trong vòng này.</small>';
+  $('bcHist').textContent=bcState.hist&&bcState.hist.length
+    ?'Gần đây: '+bcState.hist.map(d=>d.map(k=>BC.find(x=>x[0]===k)[1]).join(' ')).join('  |  ')
+    :'';
+  updateBcTimer();
+  showLastResult();
+}
+function showLastResult(){
+  const last=bcState&&bcState.last;
+  if(!last||last.id===bcShownId)return;
+  bcShownId=last.id;
+  $('bcDice').innerHTML=last.dice.map(k=>`<div class="die">${BC.find(x=>x[0]===k)[1]}</div>`).join('');
+  const me=last.players.find(p=>p.name===user);
+  $('bcRes').innerHTML=me
+    ?(me.net>0?`<span class="up">🎉 Vòng #${last.id}: thắng +${fmt(me.net)} xu</span>`
+      :me.net===0?`<span>Vòng #${last.id}: hòa vốn</span>`
+      :`<span class="down">Vòng #${last.id}: thua −${fmt(-me.net)} xu</span>`)
+    :`<span class="hint">Vòng #${last.id}: bạn không cược</span>`;
+}
+async function placeBC(k){
+  if(!user||!S)return;
+  if(!GAMES.bc)return notify('Bầu cua đang tạm tắt.');
+  const amt=Number($('bcChip').value);
+  if(amt>S.wallet)return notify('Không đủ xu.');
+  const j=await sync('bcBet',{key:k,amount:amt});
+  if(j){notify('🎲 Đã cược '+fmt(amt)+' xu');renderBC()}
+}
+
 /* ===== CHỨNG KHOÁN (giả lập, riêng từng tài khoản) ===== */
 function tickMarket(){
   if(!user||!S)return;
@@ -1213,61 +1307,6 @@ function lockPress(){
   $('lockRes').innerHTML=`<span class="${net>=0?'up':'down'}">${label} ${net>=0?'+':'−'}${fmt(Math.abs(net))} xu</span>`;
   txPush('Mở khóa','',bet,'',net);
   renderWallet();saveUser();
-}
-
-/* ===== BẦU CUA ===== */
-const bcTotal=()=>Object.values(bcBets).reduce((a,b)=>a+b,0);
-function openBC(){
-  if(!GAMES.bc)return notify('Bầu cua đang tạm tắt.');
-  $('bcView').classList.remove('hidden');renderBC();
-}
-function refundBC(){const t=bcTotal();if(t&&S){S.wallet+=t;bcBets={}}}
-function closeBC(){
-  if(bcBusy)return;
-  refundBC();renderWallet();saveUser();
-  $('bcView').classList.add('hidden');
-}
-function renderBC(){
-  renderWallet();
-  $('bcGrid').innerHTML=BC.map(([k,e,n])=>`<div class="bcf" onclick="placeBC('${k}')"><div class="e">${e}</div><b>${n}</b><div class="price">${bcBets[k]?'🪙 '+fmt(bcBets[k]):'&nbsp;'}</div></div>`).join('');
-  $('bcHist').textContent=bcHist.length?'Gần đây: '+bcHist.join('  |  '):'';
-}
-function placeBC(k){
-  if(bcBusy||!S)return;
-  if(!GAMES.bc)return notify('Bầu cua đang tạm tắt.');
-  const chip=Number($('bcChip').value);
-  if(chip>S.wallet)return notify('Không đủ xu.');
-  S.wallet-=chip;bcBets[k]=(bcBets[k]||0)+chip;
-  renderWallet();renderBC();
-}
-function clearBC(){
-  if(bcBusy||!S)return;
-  S.wallet+=bcTotal();bcBets={};
-  renderWallet();renderBC();
-}
-function shakeBC(){
-  const total=bcTotal();
-  if(!GAMES.bc)return notify('Bầu cua đang tạm tắt.');
-  if(!total)return notify('Chưa đặt cược.');
-  bcBusy=true;$('bcShake').disabled=true;$('bcRes').textContent='';
-  $('bcDice').innerHTML='<div class="bowl">🥣</div>';
-  setTimeout(()=>{
-    const dice=[rnd(0,5),rnd(0,5),rnd(0,5)];
-    $('bcDice').innerHTML=dice.map(i=>`<div class="die">${BC[i][1]}</div>`).join('');
-    let back=0;
-    Object.entries(bcBets).forEach(([k,amt])=>{
-      const m=dice.filter(i=>BC[i][0]===k).length;
-      if(m)back+=amt*(1+m);
-    });
-    S.wallet+=back;
-    const net=back-total;
-    txPush('Bầu cua',dice.map(i=>BC[i][2]).join(', '),'','',net);
-    bcHist.unshift(dice.map(i=>BC[i][1]).join(' '));bcHist=bcHist.slice(0,8);
-    $('bcRes').innerHTML=net>0?`<span class="up">🎉 Thắng +${fmt(net)} xu</span>`
-      :net===0?'<span>Hòa vốn</span>':`<span class="down">Thua −${fmt(-net)} xu</span>`;
-    bcBets={};bcBusy=false;$('bcShake').disabled=false;
-    renderWallet();renderBC();saveUser();
-  },1500);
 }
 
 /* ===== QUẢN TRỊ ===== */
