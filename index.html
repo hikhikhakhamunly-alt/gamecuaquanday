@@ -515,7 +515,8 @@ const CFG={
   BOMB_PCT:.01, BOMB_CD:90000,
   UPG:150000, UPG_MAX:8,
   SYNC_MS:4000,
-  BOSS_SPEED:[16,14,12,10,8],   // giây boss bơi qua màn, theo thứ tự boss (boss 1→5)
+  BOSS_HIT_CAP:.05,   // một phát tối đa trừ 5% máu boss (chống one-shot)
+  BOSS_SPEED:[16,14,12,10,8],
   BOSS_RESPAWN_MS:3000
 };
 let GAMES={fish:true,bc:true,door:true,lock:true,wheel:true};
@@ -956,9 +957,11 @@ function renderBossBar(){
   $('bossText').textContent=fmt(Math.max(0,B.hp))+' / '+fmt(B.max)+' HP';
   $('bossHp').style.width=pct+'%';
 }
+/* Sát thương mỗi phát bị giới hạn ở BOSS_HIT_CAP (5% máu boss) để không one-shot */
 function bossHit(e,cost){
   const a=AMMOS[S.ammo],crit=Math.random()<CFG.CRIT,bm=buffMult('dmg');
-  const dmg=Math.round(cost*a[2]*S.power*gun().mult*CFG.ARMOR*(.75+Math.random()*.65)*(crit?2:1)*bm);
+  const raw=cost*a[2]*S.power*gun().mult*CFG.ARMOR*(.75+Math.random()*.65)*(crit?2:1)*bm;
+  const dmg=Math.round(Math.min(raw,B.max*CFG.BOSS_HIT_CAP));
   applyBossDamage(dmg,e,crit);
 }
 function applyBossDamage(dmg,e,crit){
