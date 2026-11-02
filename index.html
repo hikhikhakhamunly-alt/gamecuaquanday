@@ -121,12 +121,12 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <!-- ĐĂNG NHẬP -->
 <section id="authScreen" class="screen">
   <div class="brand">STOCK <span>&</span> FISH</div>
-  <p class="sub">BẮN CÁ THEO PHÒNG • BẦU CUA ONLINE • VÒNG QUAY • ĐẦU TƯ • CHƠI BẰNG XU ẢO</p>
+  <p class="sub">BẮN CÁ THEO PHÒNG • BẦU CUA ONLINE • VÒNG QUAY • ĐUA NGỰA • ĐẦU TƯ • CHƠI BẰNG XU ẢO</p>
   <div class="authwrap">
     <div class="card">
       <div style="font-size:60px;text-align:center">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>6 phòng từ Tập Bắn đến Huyền Thoại, mỗi phòng đủ 5 boss từ dễ đến siêu khó. Bầu cua online, vòng quay, cửa may rủi, chứng khoán giả lập.</p>
+      <p>6 phòng từ Tập Bắn đến Huyền Thoại, mỗi phòng đủ 5 boss từ dễ đến siêu khó. Bầu cua online, vòng quay, đua ngựa, cửa may rủi, chứng khoán giả lập.</p>
       <p>🪙 Ví khởi đầu: <b class="price">100.000 xu</b></p>
       <p class="hint">Xu ảo, không nạp rút tiền thật.</p>
     </div>
@@ -161,6 +161,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
     <button onclick="openGames()">🎮 Trò chơi</button>
     <button onclick="openBC()">🎲 Bầu cua</button>
     <button onclick="openWheel()">🎡 Vòng quay</button>
+    <button onclick="openHorse()">🐎 Đua ngựa</button>
     <button class="gold" onclick="openMarket()">📈 Chứng khoán</button>
     <button id="adminBtn" class="gold hidden" onclick="openAdmin()">🛠️ Admin</button>
     <button class="red" onclick="logout()">Thoát</button>
@@ -279,6 +280,30 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
     <div class="center"><button id="wheelBtn" class="gold" style="font-size:18px;padding:12px 26px" onclick="spinWheel()">🎡 QUAY</button></div>
     <div class="res" id="wheelRes"></div>
     <div class="hint center" id="wheelTable"></div>
+  </div>
+</div>
+
+<!-- ĐUA NGỰA -->
+<div id="horseView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b style="font-size:22px">🐎 ĐUA NGỰA</b>
+      <div class="price">🪙 <span id="horseWallet"></span></div>
+      <button onclick="closeHorse()">← Đóng</button>
+    </div>
+    <div class="hint center">Chọn 1 ngựa và mức cược, bấm XUẤT PHÁT. Ngựa về nhất trả ×5, về nhì ×2, còn lại mất cược.</div>
+    <div id="horseTrack" style="margin:12px 0"></div>
+    <div class="center">
+      Chọn ngựa:
+      <select id="horsePick" class="inline"></select>
+      Cược:
+      <select id="horseBet" class="inline">
+        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
+        <option value="50000">50.000</option><option value="100000">100.000</option>
+      </select>
+      <button class="gold" id="horseGo" onclick="startHorse()">🏁 XUẤT PHÁT</button>
+    </div>
+    <div class="res" id="horseRes"></div>
   </div>
 </div>
 
@@ -514,8 +539,8 @@ const CFG={
   NET_MULT:.05, NET_CD:40000,
   BOMB_PCT:.01, BOMB_CD:90000,
   UPG:150000, UPG_MAX:8,
-  SYNC_MS:4000,
-  BOSS_HIT_CAP:.05,   // một phát tối đa trừ 5% máu boss (chống one-shot)
+  SYNC_MS:10000,
+  BOSS_HIT_CAP:.05,
   BOSS_SPEED:[16,14,12,10,8],
   BOSS_RESPAWN_MS:3000
 };
@@ -634,6 +659,7 @@ let doorBusy=false, lockRAF=null, lockT0=0, lockP=.5, mkSel='VCB';
 let wheelBet=1e4, wheelBusy=false;
 let bcState=null, bcLoopT=null, bcLastPoll=0, bcShownId=null, bcErr='', bcRoomId=null;
 let admSel=null, admList=[], admCfg=null;
+let horseRunning=false;
 
 function newState(){
   return{
@@ -814,7 +840,7 @@ function renderBetOpts(){
 function renderWallet(){
   if(!S)return;
   $('wallet').textContent=fmt(S.wallet);
-  ['shopWallet','gameWallet','marketWallet','bcWallet','wheelWallet'].forEach(id=>$(id).textContent=fmt(S.wallet));
+  ['shopWallet','gameWallet','marketWallet','bcWallet','wheelWallet','horseWallet'].forEach(id=>{const el=$(id);if(el)el.textContent=fmt(S.wallet)});
 }
 function renderAmmo(){
   $('ammoList').innerHTML=AMMOS.map((a,i)=>`<div class="ammo ${i===S.ammo?'on':''}" onclick="S.ammo=${i};renderAmmo();saveUser()"><i>${a[0]}</i>${a[1]}<br><small>x${a[2]}</small></div>`).join('');
@@ -903,6 +929,58 @@ async function spinWheel(){
   $('wheelRes').innerHTML=`<span class="${j.net>=0?'up':'down'}">${txt}</span>`;
   txPush('Vòng quay',betLabel(j.bet),j.label,'',j.net);
   addFeed('🎡 Quay '+betLabel(j.bet)+': '+j.label+' ('+(j.net>=0?'+':'−')+fmt(Math.abs(j.net))+')');
+}
+
+/* ===== ĐUA NGỰA (chạy trên trình duyệt) ===== */
+const HORSES=[
+  {name:'Ngựa Trắng',e:'🐴'},
+  {name:'Ngựa Đen',e:'🐴'},
+  {name:'Ngựa Vàng',e:'🐴'},
+  {name:'Ngựa Xanh',e:'🐴'},
+  {name:'Ngựa Hồng',e:'🐴'},
+  {name:'Ngựa Tím',e:'🐴'}
+];
+function openHorse(){
+  if(!user)return;
+  $('horseView').classList.remove('hidden');
+  $('horsePick').innerHTML=HORSES.map((h,i)=>`<option value="${i}">${h.name}</option>`).join('');
+  $('horseTrack').innerHTML=HORSES.map((h,i)=>`<div style="position:relative;height:34px;margin:6px 0;background:#071b37;border-radius:10px;overflow:hidden"><div id="hr${i}" style="position:absolute;left:0;top:0;height:100%;width:0;display:flex;align-items:center;justify-content:flex-end;font-size:24px"></div><span style="position:absolute;left:8px;top:8px;font-size:12px;color:#9edcff">${h.name}</span></div>`).join('');
+  renderWallet();
+}
+function closeHorse(){if(horseRunning)return;$('horseView').classList.add('hidden')}
+function startHorse(){
+  if(!user||!S)return;
+  if(horseRunning)return;
+  const bet=Number($('horseBet').value),pick=Number($('horsePick').value);
+  if(bet>S.wallet)return notify('Không đủ xu.');
+  horseRunning=true;$('horseGo').disabled=true;$('horseRes').textContent='';
+  S.wallet-=bet;renderWallet();
+
+  /* Mỗi ngựa một quãng đường ngẫu nhiên, ngựa đi xa nhất về nhất */
+  const dist=HORSES.map(()=>85+Math.random()*15);
+  const order=dist.map((d,i)=>({i,d})).sort((a,b)=>b.d-a.d).map(x=>x.i);
+
+  HORSES.forEach((h,i)=>{
+    const el=$('hr'+i);
+    el.style.transition='none';el.style.width='0';el.textContent='';
+    void el.offsetWidth;
+    el.style.transition='width 3s linear';
+    el.style.width=dist[i]+'%';
+    el.textContent=h.e;
+  });
+
+  setTimeout(()=>{
+    const rank=order.indexOf(pick);
+    const mult=rank===0?5:rank===1?2:0;
+    const pay=Math.floor(bet*mult),net=pay-bet;
+    S.wallet+=pay;
+    txPush('Đua ngựa',HORSES[pick].name,'',bet,net);
+    $('horseRes').innerHTML=mult>0
+      ?`<span class="up">🏆 ${HORSES[pick].name} về ${rank===0?'NHẤT':'NHÌ'}! +${fmt(net)} xu</span>`
+      :`<span class="down">${HORSES[pick].name} về hạng ${rank+1}, mất ${fmt(bet)} xu</span>`;
+    renderWallet();saveUser();
+    horseRunning=false;$('horseGo').disabled=false;
+  },3200);
 }
 
 /* ===== SÚNG ===== */
