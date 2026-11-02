@@ -36,6 +36,7 @@ button:disabled, button.loading{
   transform:translateY(2px) scale(0.98);
   box-shadow:inset 0 3px 5px rgba(0,0,0,0.4);
 }
+button.loading{pointer-events:none}
 .spinner{
   display:inline-block;
   width:12px;
@@ -612,46 +613,61 @@ const GUNS=[
  {id:'silver',name:'Súng Bạc',price:200000,mult:1.5,c1:'#c0c0c0',c2:'#7f7f7f',beam:'#e0f7ff'}
 ];
 
-/* TỰ ĐỘNG THÊM HIỆU ỨNG DẸP NÚT & XOAY SPINNER CHO MỌI NÚT BẤM */
+/* HIỆU ỨNG DẸP NÚT & VÒNG QUAY KHI LOAD (không đụng tới onclick gốc) */
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('button').forEach(btn => {
-    const originalOnClick = btn.getAttribute('onclick');
-    if (originalOnClick && !btn.hasAttribute('data-no-load')) {
-      btn.removeAttribute('onclick');
-      btn.addEventListener('click', async function(e) {
-        if (btn.disabled || btn.classList.contains('loading')) return;
-        btn.classList.add('loading');
-        btn.disabled = true;
-        let spinner = btn.querySelector('.spinner');
-        if (!spinner) {
-          spinner = document.createElement('span');
-          spinner.className = 'spinner';
-          btn.appendChild(spinner);
-        }
-        try {
-          let fn;
-          try {
-            fn = new Function('return (' + originalOnClick + ')');
-          } catch {
-            fn = new Function(originalOnClick);
-          }
-          const res = fn.call(btn);
-          if (res && typeof res.then === 'function') {
-            await res;
-          } else {
-            await new Promise(r => setTimeout(r, 400));
-          }
-        } catch (err) {
-          console.error(err);
-        } finally {
-          btn.classList.remove('loading');
-          btn.disabled = false;
-          const sp = btn.querySelector('.spinner');
-          if (sp) sp.remove();
-        }
-      });
+  const start = btn => {
+    btn.classList.add('loading');
+    if (!btn.querySelector('.spinner')) {
+      const s = document.createElement('span');
+      s.className = 'spinner';
+      btn.appendChild(s);
     }
+  };
+  const stop = btn => {
+    btn.classList.remove('loading');
+    const sp = btn.querySelector('.spinner');
+    if (sp) sp.remove();
+  };
+  const fnName = btn => {
+    const m = (btn.getAttribute('onclick') || '').trim().match(/^([A-Za-z_$][\w$]*)\s*\(/);
+    return m ? m[1] : null;
+  };
+
+  const wrapped = new Set();
+  let current = null;
+
+  // Bọc các hàm toàn cục để biết khi nào chạy xong (hỗ trợ async)
+  document.querySelectorAll('button[onclick]').forEach(btn => {
+    if (btn.hasAttribute('data-no-load')) return;
+    const name = fnName(btn);
+    if (!name || wrapped.has(name) || typeof window[name] !== 'function') return;
+    const orig = window[name];
+    window[name] = function (...args) {
+      const b = current; current = null;
+      let r;
+      try { r = orig.apply(this, args); }
+      catch (e) { if (b) stop(b); throw e; }
+      if (b) {
+        if (r && typeof r.then === 'function') r.then(() => stop(b), () => stop(b));
+        else setTimeout(() => stop(b), 400);
+      }
+      return r;
+    };
+    wrapped.add(name);
   });
+
+  // Bắt click ở pha capture: bật vòng quay rồi để onclick gốc chạy bình thường
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('button[onclick]');
+    if (!btn || btn.hasAttribute('data-no-load')) return;
+    if (btn.classList.contains('loading')) { e.stopImmediatePropagation(); e.preventDefault(); return; }
+    start(btn);
+    current = btn;
+    const name = fnName(btn);
+    // hàm không bọc được thì tự tắt sau 0,6s; hàm đã bọc có chốt an toàn 20s
+    setTimeout(() => stop(btn), wrapped.has(name) ? 20000 : 600);
+    setTimeout(() => { if (current === btn) current = null; }, 0);
+  }, true);
 });
 </script>
 </body>
