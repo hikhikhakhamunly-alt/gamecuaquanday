@@ -48,7 +48,6 @@ input[type=checkbox]{width:auto}
 .fish svg{width:100%;height:auto;display:block}
 .fish.dying{opacity:0;transform:scale(.3) rotate(180deg);transition:all .4s}
 @keyframes swim{from{transform:translate(-10px,4px)}to{transform:translate(18px,-12px)}}
-/* Boss bơi ngang màn hình */
 .boss{position:absolute;top:30%;left:-30%;width:min(230px,40%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation-timing-function:linear;animation-fill-mode:forwards}
 .boss svg{width:100%;height:auto;display:block}
 .boss.toRight{animation-name:swimRight;transform:translateY(-50%) scaleX(-1)}
@@ -85,6 +84,10 @@ input[type=checkbox]{width:auto}
 .gc.eq{border-color:#47ffb3}
 .gc svg{height:110px;width:auto}
 .gc button{width:100%;margin-top:6px;font-size:13px}
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.rcard{border:1px solid #1c6090;border-radius:14px;background:#071b37;padding:12px}
+.rcard.cur{border-color:#47ffb3;box-shadow:0 0 12px #47ffb3}
+.rt{font-size:18px;font-weight:900;margin-bottom:4px}
 .tabs2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;justify-content:center}
 .res{text-align:center;font-weight:900;font-size:18px;min-height:28px;margin-top:8px}
 .doors{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:14px 0}
@@ -118,12 +121,12 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <!-- ĐĂNG NHẬP -->
 <section id="authScreen" class="screen">
   <div class="brand">STOCK <span>&</span> FISH</div>
-  <p class="sub">BẮN CÁ • BẦU CUA ONLINE • VÒNG QUAY • ĐẦU TƯ • CHƠI BẰNG XU ẢO</p>
+  <p class="sub">BẮN CÁ THEO PHÒNG • BẦU CUA ONLINE • VÒNG QUAY • ĐẦU TƯ • CHƠI BẰNG XU ẢO</p>
   <div class="authwrap">
     <div class="card">
       <div style="font-size:60px;text-align:center">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>Bắn cá, boss bơi ngang, kho súng, bầu cua online, vòng quay, cửa may rủi, chứng khoán giả lập, tặng xu và mã quà.</p>
+      <p>6 phòng từ Tập Bắn đến Huyền Thoại, mỗi phòng đủ 5 boss từ dễ đến siêu khó. Bầu cua online, vòng quay, cửa may rủi, chứng khoán giả lập.</p>
       <p>🪙 Ví khởi đầu: <b class="price">100.000 xu</b></p>
       <p class="hint">Xu ảo, không nạp rút tiền thật.</p>
     </div>
@@ -153,6 +156,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
     <b>🌊 STOCK & FISH</b><span id="playerLabel" class="hint"></span><span id="gunName" style="color:#9edcff"></span>
     <span id="evtBadge" class="hidden"></span>
     <span class="money">🪙 <span id="wallet">0</span></span>
+    <button onclick="openRoom()">🏝️ Phòng</button>
     <button onclick="openShop()">🔫 Kho súng</button>
     <button onclick="openGames()">🎮 Trò chơi</button>
     <button onclick="openBC()">🎲 Bầu cua</button>
@@ -176,11 +180,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
         </div>
         <div class="controls">
           <label>Đạn mỗi phát:</label>
-          <select id="bet">
-            <option value="100">100</option><option value="1000">1.000</option>
-            <option value="10000" selected>10.000</option><option value="50000">50.000</option>
-            <option value="100000">100.000</option>
-          </select>
+          <select id="bet"></select>
           <button id="autoBtn" onclick="toggleAuto()">▶ Bắn tự động</button>
           <button onclick="upgrade()">⚡ Nâng cấp pháo</button>
           <button id="netBtn" onclick="castNet()">🕸️ Lưới bắt cá</button>
@@ -225,16 +225,28 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
   <div class="center hint" style="padding:10px">Demo giải trí bằng xu ảo • Không nạp/rút tiền thật</div>
 </section>
 
+<!-- SẢNH CHỌN PHÒNG -->
+<div id="roomView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b style="font-size:22px">🏝️ CHỌN PHÒNG (ĐẢO)</b>
+      <button onclick="closeRoom()">← Đóng</button>
+    </div>
+    <div class="hint center" style="margin-bottom:10px">Mỗi phòng có đủ 5 boss, đi lần lượt từ dễ đến siêu khó. Tiến độ boss của từng phòng được lưu riêng. Phòng càng cao, boss càng trâu và thưởng càng lớn.</div>
+    <div class="rooms" id="roomList"></div>
+  </div>
+</div>
+
 <!-- BẦU CUA ONLINE -->
 <div id="bcView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <b style="font-size:22px">🎲 BẦU CUA ONLINE — SẢNH CHUNG</b>
+      <b style="font-size:22px">🎲 BẦU CUA ONLINE — <span id="bcRoom"></span></b>
       <div class="price">🪙 <span id="bcWallet"></span></div>
       <button onclick="closeBC()">← Đóng</button>
     </div>
     <div class="center" style="font-size:18px">Vòng hiện tại kết thúc sau: <b class="price"><span id="bcTimer">--</span></b> giây</div>
-    <div class="hint center">Mọi người trong sảnh cùng một vòng, kết quả do máy chủ quay. Mỗi vòng 30 giây.</div>
+    <div class="hint center">Mọi người trong cùng phòng chơi chung một vòng, kết quả do máy chủ quay. Mỗi vòng 30 giây.</div>
     <div class="bcgrid" id="bcGrid"></div>
     <div class="center">
       Mức cược mỗi lần:
@@ -503,7 +515,7 @@ const CFG={
   BOMB_PCT:.01, BOMB_CD:90000,
   UPG:150000, UPG_MAX:8,
   SYNC_MS:4000,
-  BOSS_SPEED:[16,14,12,10],   // giây boss bơi qua màn, theo thứ tự boss
+  BOSS_SPEED:[16,14,12,10,8],   // giây boss bơi qua màn, theo thứ tự boss (boss 1→5)
   BOSS_RESPAWN_MS:3000
 };
 let GAMES={fish:true,bc:true,door:true,lock:true,wheel:true};
@@ -515,6 +527,18 @@ const fmt=n=>Math.floor(Number(n)||0).toLocaleString('en-US');
 const betLabel=b=>b>=1e9?(b/1e9)+' tỉ':fmt(b);
 const rnd=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const todayStr=()=>new Date().toDateString();
+
+/* Phòng — phải khớp với ROOMS bên Code.gs */
+const ROOMS=[
+  {id:'tap',name:'🌊 Tập Bắn',bet:100,need:0,mult:0.6},
+  {id:'thuong',name:'🐟 Thường',bet:1000,need:0,mult:0.8},
+  {id:'haicau',name:'🦭 Hải Cẩu',bet:10000,need:0,mult:1},
+  {id:'daorua',name:'🐢 Đảo Rùa',bet:50000,need:0,mult:1.3},
+  {id:'daigia',name:'🦈 Đại Gia',bet:100000,need:10000000,mult:1.7},
+  {id:'huyenthoai',name:'🐉 Huyền Thoại',bet:1000000,need:100000000,mult:2.5}
+];
+const roomOf=id=>ROOMS.find(r=>r.id===id)||ROOMS[0];
+const BET_OPTS=[100,1000,10000,50000,100000,1000000];
 
 const AMMOS=[['🔹','Thường',1],['💥','Đạn hạt',2.2],['🔮','Laser',4],['🧊','Băng',5.5],
              ['⚡','Sét',8],['🌟','Pháo',12],['💠','Siêu',22],['🌈','Thiên hà',40]];
@@ -564,11 +588,13 @@ function gunSvg(g){
   </svg>`;
 }
 
+/* 5 boss mỗi phòng, đi theo thứ tự từ dễ đến khó */
 const BOSSES=[
  {name:'CÁ RỒNG BĂNG',lv:5,hp:2e6,reward:8e5,svg:()=>fishArt('#9ff3ff','#fff','#2a9fff')},
  {name:'BẠCH TUỘC TÍM',lv:10,hp:6e6,reward:25e5,svg:()=>octoArt('#b57bff','#e6d4ff')},
  {name:'CÁ MẬP LỬA',lv:15,hp:15e6,reward:6e6,svg:()=>fishArt('#ff7a3c','#ffe08a','#ff3b1f')},
- {name:'RÙA THẦN VÀNG',lv:20,hp:4e7,reward:15e6,svg:()=>turtleArt()}
+ {name:'RÙA THẦN VÀNG',lv:20,hp:4e7,reward:15e6,svg:()=>turtleArt()},
+ {name:'KRAKEN SẤM',lv:30,hp:1e8,reward:4e7,svg:()=>octoArt('#2a1f5a','#7a5cff')}
 ];
 const FISH=[
  {m:2,w:.3,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
@@ -605,14 +631,14 @@ let fishes=[], autoT=null, bossRespawn=null;
 let B={alive:false,hp:0,max:0,enraged:false};
 let doorBusy=false, lockRAF=null, lockT0=0, lockP=.5, mkSel='VCB';
 let wheelBet=1e4, wheelBusy=false;
-let bcState=null, bcLoopT=null, bcLastPoll=0, bcShownId=null;
+let bcState=null, bcLoopT=null, bcLastPoll=0, bcShownId=null, bcErr='', bcRoomId=null;
 let admSel=null, admList=[], admCfg=null;
 
 function newState(){
   return{
     wallet:START_WALLET_CLIENT, hold:{}, power:1, txs:[], inv:{common:0,rare:0,gold:0}, buff:null,
     daily:null, totals:{kills:0,fish:0,shots:0}, friends:[], owned:{wood:true}, gunId:'wood',
-    bossIdx:0, bossLoop:0, ammo:0, netCD:0, bombCD:0, stocks:null
+    room:'tap', prog:{}, ammo:0, netCD:0, bombCD:0, stocks:null
   };
 }
 const gun=()=>GUNS.find(g=>g.id===S.gunId)||GUNS[0];
@@ -621,6 +647,12 @@ const stateOnly=()=>{const c={...S};delete c.wallet;return c};
 const holdingsValue=()=>Object.entries(S.hold).reduce((s,[k,q])=>{const st=S.stocks.find(x=>x.s===k);return s+(st?q*st.p:0)},0);
 const score=()=>Math.round(S.wallet+holdingsValue());
 const evtMult=()=>EVENT&&EVENT.until>Date.now()?EVENT.mult:1;
+/* Tiến độ boss của phòng hiện tại (mỗi phòng một bộ riêng) */
+function P(){
+  if(!S.prog)S.prog={};
+  if(!S.prog[S.room])S.prog[S.room]={idx:0,loop:0};
+  return S.prog[S.room];
+}
 
 function notify(t){const n=$('notice');n.textContent=t;n.classList.remove('hidden');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.add('hidden'),2400)}
 function showBanner(t){const b=$('annBar');b.textContent='📢 '+t;b.classList.remove('hidden');clearTimeout(b._t);b._t=setTimeout(()=>b.classList.add('hidden'),20000)}
@@ -662,9 +694,8 @@ function sync(op,data){
       base=j.wallet;
       EVENT=j.event||null;
       applyCfg(j.cfg);
-      if(j.bc){
-        bcState=Object.assign({},j.bc,{recv:Date.now()});
-        if(!$('bcView').classList.contains('hidden'))renderBC();
+      if(j.bc&&!$('bcView').classList.contains('hidden')){
+        bcState=Object.assign({},j.bc,{recv:Date.now()});bcErr='';renderBC();
       }
       if(j.announce&&j.announce.id!==lastAnn){lastAnn=j.announce.id;showBanner(j.announce.text)}
       if(!op&&j.wallet!==sentW){
@@ -714,6 +745,10 @@ function startSession(name,p,r,w,st){
   user=name;pass=p;role=r;since=Date.now();
   S=Object.assign(newState(),st||{});
   S.wallet=w;base=w;
+  /* Chuyển dữ liệu cũ (boss đơn) sang phòng Tập Bắn */
+  if(!S.prog)S.prog={};
+  if(!S.prog.tap&&S.bossIdx!==undefined)S.prog.tap={idx:S.bossIdx||0,loop:S.bossLoop||0};
+  if(!ROOMS.some(x=>x.id===S.room))S.room='tap';
   S.stocks=(Array.isArray(S.stocks)&&S.stocks.length?S.stocks:DEF_STOCKS.map(s=>({...s,prev:s.p,hist:[s.p]})));
   S.stocks.forEach(s=>{if(!s.hist||!s.hist.length)s.hist=[s.p];if(!s.prev)s.prev=s.p});
   ensureDaily();
@@ -721,7 +756,6 @@ function startSession(name,p,r,w,st){
 }
 
 async function logout(){
-  if(wheelBusy)return notify('Đợi quay xong đã.');
   stopAuto();stopLock();closeBC();
   await sync();
   endSession();
@@ -736,7 +770,6 @@ function endSession(){
 
 function enterGame(){
   $('authScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');
-  $('playerLabel').textContent='👤 '+user+(isAdmin()?' (admin)':'');
   $('adminBtn').classList.toggle('hidden',!isAdmin());
   clearAll();spawnBoss();
   for(let i=0;i<10;i++)spawnFish();
@@ -765,6 +798,17 @@ function clearAll(){
 function renderAll(){
   renderWallet();renderAmmo();applyGun();renderBossBar();renderQuests();
   renderInv();renderSkills();renderFriends();renderStocks();renderBuff();renderEvt();
+  renderBetOpts();renderRoomLabel();
+}
+function renderRoomLabel(){
+  $('playerLabel').textContent='👤 '+user+(isAdmin()?' (admin)':'')+' • '+roomOf(S.room).name;
+}
+function renderBetOpts(){
+  const rm=roomOf(S.room);
+  const cur=Number($('bet').value)||rm.bet;
+  const opts=BET_OPTS.filter(v=>v>=rm.bet);
+  $('bet').innerHTML=opts.map(v=>`<option value="${v}">${fmt(v)}</option>`).join('');
+  $('bet').value=opts.includes(cur)?cur:rm.bet;
 }
 function renderWallet(){
   if(!S)return;
@@ -775,6 +819,46 @@ function renderAmmo(){
   $('ammoList').innerHTML=AMMOS.map((a,i)=>`<div class="ammo ${i===S.ammo?'on':''}" onclick="S.ammo=${i};renderAmmo();saveUser()"><i>${a[0]}</i>${a[1]}<br><small>x${a[2]}</small></div>`).join('');
 }
 function applyGun(){$('cannon').innerHTML=gunSvg(gun());$('gunName').textContent='🔫 '+gun().name+' x'+gun().mult}
+
+/* ===== SẢNH PHÒNG ===== */
+function openRoom(){
+  if(!user)return;
+  renderRooms();
+  $('roomView').classList.remove('hidden');
+}
+function closeRoom(){$('roomView').classList.add('hidden')}
+function renderRooms(){
+  $('roomList').innerHTML=ROOMS.map(r=>{
+    const cur=r.id===S.room,ok=S.wallet>=r.need;
+    const bossList=BOSSES.map(b=>b.name).join(' → ');
+    const btn=cur?'<button disabled>✅ Đang ở đây</button>'
+      :ok?`<button onclick="enterRoom('${r.id}')">Vào phòng</button>`
+      :'<button disabled>Chưa đủ xu</button>';
+    return `<div class="rcard ${cur?'cur':''}">
+      <div class="rt">${r.name}</div>
+      <div class="hint">Đạn từ ${fmt(r.bet)} xu • Vào cần ${r.need?fmt(r.need)+' xu':'không cần'}</div>
+      <div class="hint" style="margin:6px 0">Hệ số boss ×${r.mult}</div>
+      <div style="font-size:12px;color:#b5ddf8;margin-bottom:8px">Boss: ${bossList}</div>
+      ${btn}</div>`;
+  }).join('');
+}
+async function enterRoom(id){
+  if(!user||!S)return;
+  if(id===S.room)return closeRoom();
+  const rm=roomOf(id);
+  stopAuto();
+  const j=await sync('enterRoom',{room:id});
+  if(!j)return;
+  S.room=id;
+  clearAll();spawnBoss();
+  for(let i=0;i<10;i++)spawnFish();
+  renderBetOpts();renderRoomLabel();renderRooms();
+  closeRoom();
+  notify('Đã vào '+rm.name);
+  bcState=null;bcShownId=null;
+  if(!$('bcView').classList.contains('hidden'))pollBC();
+  saveUser();
+}
 
 /* ===== VÒNG QUAY ===== */
 function openWheel(){
@@ -842,21 +926,21 @@ function buyGun(id){
 }
 function equipGun(id){if(!S.owned[id])return;S.gunId=id;applyGun();renderShop();saveUser()}
 
-/* ===== BOSS BƠI NGANG ===== */
+/* ===== BOSS BƠI NGANG (5 boss mỗi phòng) ===== */
 function spawnBoss(){
-  const b=BOSSES[S.bossIdx];
-  B.max=Math.round(b.hp*(1+S.bossLoop*.6));B.hp=B.max;B.alive=true;B.enraged=false;
+  const p=P(),b=BOSSES[p.idx],rm=roomOf(S.room);
+  B.max=Math.round(b.hp*rm.mult*(1+p.loop*.6));B.hp=B.max;B.alive=true;B.enraged=false;
   const bo=$('boss');
-  const speed=Math.max(6,CFG.BOSS_SPEED[S.bossIdx]-S.bossLoop*2);
+  const speed=Math.max(6,CFG.BOSS_SPEED[p.idx]-p.loop*2);
   bo.className='boss '+(Math.random()<.5?'toRight':'toLeft');
   bo.style.top=(18+Math.random()*40)+'%';
   bo.style.animationDuration=speed+'s';
   bo.innerHTML=b.svg();bo.style.display='block';
   bo.onanimationend=e=>{if(e.target===bo&&e.animationName.indexOf('swim')===0&&B.alive)escapeBoss()};
   $('arena').classList.remove('rage');
-  $('bossName').textContent=b.name+(S.bossLoop?' ⭐ x'+(S.bossLoop+1):'');
+  $('bossName').textContent=b.name+(p.loop?' ⭐ x'+(p.loop+1):'');
   $('bossLv').textContent=b.lv;
-  $('status').textContent='Boss: '+b.name;
+  $('status').textContent=rm.name+' • Boss '+(p.idx+1)+'/'+BOSSES.length;
   renderBossBar();showWarn('🐉 '+b.name+' XUẤT HIỆN!');
 }
 function escapeBoss(){
@@ -891,15 +975,16 @@ function applyBossDamage(dmg,e,crit){
   renderBossBar();
 }
 function killBoss(){
-  const idx=S.bossIdx,r=Math.round(BOSSES[idx].reward*(1+S.bossLoop*.6));
+  const p=P(),b=BOSSES[p.idx],rm=roomOf(S.room);
+  const r=Math.round(b.reward*rm.mult*(1+p.loop*.6));
   B.alive=false;B.hp=0;renderBossBar();
   S.wallet+=r;S.totals.kills++;S.daily.kills++;
-  showWarn('🏆 HẠ GỤC!');notify('🐉 Hạ gục '+BOSSES[idx].name+'! +'+fmt(r));
-  addFeed('🏆 Hạ '+BOSSES[idx].name+' +'+fmt(r));
+  showWarn('🏆 HẠ GỤC!');notify('🐉 Hạ gục '+b.name+'! +'+fmt(r));
+  addFeed('🏆 '+rm.name+': hạ '+b.name+' +'+fmt(r));
   $('boss').classList.add('dying');
-  dropChest(idx<2?'common':idx<3?'rare':'gold');
+  dropChest(p.idx<2?'common':p.idx<4?'rare':'gold');
   txPush('Thưởng','Boss','','',r);
-  S.bossIdx++;if(S.bossIdx>=BOSSES.length){S.bossIdx=0;S.bossLoop++}
+  p.idx++;if(p.idx>=BOSSES.length){p.idx=0;p.loop++}
   clearTimeout(bossRespawn);bossRespawn=setTimeout(()=>{if(user)spawnBoss()},2600);
   renderWallet();saveUser();
 }
@@ -1129,14 +1214,15 @@ async function redeemCode(){
   if(j){$('giftCodeIn').value='';notify('🎟️ '+j.message);addFeed('🎟️ Nhận mã: +'+fmt(j.got));txPush('Nhận mã','',1,'',j.got)}
 }
 
-/* ===== BẦU CUA ONLINE (sảnh chung, máy chủ quyết định) ===== */
+/* ===== BẦU CUA ONLINE (sảnh theo phòng) ===== */
 function openBC(){
   if(!user)return;
   if(!GAMES.bc)return notify('Bầu cua đang tạm tắt.');
   $('bcView').classList.remove('hidden');
+  bcErr='';
   renderBC();
   if(!bcLoopT)bcLoopT=setInterval(bcLoop,1000);
-  bcLoop();
+  pollBC();
 }
 function closeBC(){
   $('bcView').classList.add('hidden');
@@ -1145,8 +1231,19 @@ function closeBC(){
 function bcLoop(){
   if(!user||$('bcView').classList.contains('hidden'))return;
   const now=Date.now();
-  if(now-bcLastPoll>=2000){bcLastPoll=now;sync()}
+  if(now-bcLastPoll>=2000){bcLastPoll=now;pollBC()}
   updateBcTimer();
+}
+async function pollBC(){
+  if(!user||!S)return;
+  try{
+    const j=await api({action:'bcPoll',name:user,pass,room:S.room});
+    bcErr='';
+    bcState=Object.assign({},j.bc,{recv:Date.now()});
+  }catch(e){
+    bcErr=e.message||'Lỗi không xác định';
+  }
+  renderBC();
 }
 function updateBcTimer(){
   if(!bcState)return;
@@ -1156,6 +1253,11 @@ function updateBcTimer(){
 function renderBC(){
   if(!S)return;
   renderWallet();
+  $('bcRoom').textContent=roomOf(S.room).name;
+  if(bcErr){
+    $('bcGrid').innerHTML=`<div class="down">Không kết nối được sảnh: ${bcErr}</div><div class="hint">Đang thử lại mỗi 2 giây. Nếu lỗi kéo dài, bấm F12 xem tab Console.</div>`;
+    return;
+  }
   if(!bcState){$('bcGrid').innerHTML='<div class="hint">Đang tải sảnh...</div>';return}
   $('bcGrid').innerHTML=BC.map(([k,e,n])=>`<div class="bcf" onclick="placeBC('${k}')"><div class="e">${e}</div><b>${n}</b><div class="price">Tổng: ${fmt(bcState.totals[k]||0)}</div><div class="hint">Bạn cược: ${fmt(bcState.mine[k]||0)}</div></div>`).join('');
   $('bcBetsList').innerHTML=bcState.bets.length
@@ -1184,8 +1286,8 @@ async function placeBC(k){
   if(!GAMES.bc)return notify('Bầu cua đang tạm tắt.');
   const amt=Number($('bcChip').value);
   if(amt>S.wallet)return notify('Không đủ xu.');
-  const j=await sync('bcBet',{key:k,amount:amt});
-  if(j){notify('🎲 Đã cược '+fmt(amt)+' xu');renderBC()}
+  const j=await sync('bcBet',{key:k,amount:amt,room:S.room});
+  if(j){notify('🎲 Đã cược '+fmt(amt)+' xu');pollBC()}
 }
 
 /* ===== CHỨNG KHOÁN (giả lập, riêng từng tài khoản) ===== */
@@ -1246,8 +1348,8 @@ function renderMarket(){
 function drawChart(){
   const s=S.stocks.find(x=>x.s===mkSel)||S.stocks[0];
   const h=s.hist.length>1?s.hist:[s.p,s.p];
-  const mn=Math.min(...h),mx=Math.max(...h),rg=(mx-mn)||1,W=600,H=160,P=10;
-  const pts=h.map((v,i)=>(i/(h.length-1)*W).toFixed(1)+','+(H-P-(v-mn)/rg*(H-2*P)).toFixed(1)).join(' ');
+  const mn=Math.min(...h),mx=Math.max(...h),rg=(mx-mn)||1,W=600,H=160,P0=10;
+  const pts=h.map((v,i)=>(i/(h.length-1)*W).toFixed(1)+','+(H-P0-(v-mn)/rg*(H-2*P0)).toFixed(1)).join(' ');
   const col=h[h.length-1]>=h[0]?'#25f1c6':'#ff7099';
   $('mkChart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:100%"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="3"/></svg>`;
   $('mkChartInfo').innerHTML=`<b>${s.s}</b> • ${fmt(s.p)} xu • ${((h[h.length-1]/h[0]-1)*100).toFixed(2)}% trong phiên`;
