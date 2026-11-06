@@ -52,8 +52,14 @@ input[type=checkbox]{width:auto}
 .fish svg{width:100%;height:auto;display:block}
 .fish.dying{opacity:0;transform:scale(.3) rotate(180deg);transition:all .4s}
 @keyframes swim{from{transform:translate(-10px,4px)}to{transform:translate(18px,-12px)}}
-.boss{position:absolute;top:30%;left:-30%;width:min(230px,40%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation-timing-function:linear;animation-fill-mode:forwards}
-.boss svg{width:100%;height:auto;display:block}
+.boss{position:absolute;top:30%;left:-30%;width:min(310px,54%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 12px #8beeff) drop-shadow(0 0 28px #168dff);animation-timing-function:linear;animation-fill-mode:forwards;transform-origin:center;will-change:left,transform,filter}
+.boss svg{width:100%;height:auto;display:block;overflow:visible;filter:saturate(1.18) contrast(1.08)}
+.boss:after{content:"";position:absolute;inset:12% 8%;border-radius:50%;background:radial-gradient(ellipse,rgba(74,220,255,.12),transparent 68%);pointer-events:none;z-index:-1}
+.boss.toRight{animation-name:swimRight,bossFloat;animation-duration:inherit,2.8s;animation-iteration-count:1,infinite}
+.boss.toLeft{animation-name:swimLeft,bossFloat;animation-duration:inherit,2.8s;animation-iteration-count:1,infinite}
+@keyframes bossFloat{0%,100%{margin-top:-5px}50%{margin-top:8px}}
+.boss.hit{filter:brightness(1.65) drop-shadow(0 0 30px #fff)}
+.boss.rage{filter:brightness(1.18) saturate(1.55) drop-shadow(0 0 18px #ff1f5a) drop-shadow(0 0 36px #ff6a25)}
 .boss.toRight{animation-name:swimRight;transform:translateY(-50%) scaleX(-1)}
 .boss.toLeft{animation-name:swimLeft}
 @keyframes swimRight{from{left:-30%}to{left:110%}}
@@ -62,7 +68,10 @@ input[type=checkbox]{width:auto}
 .boss.hit svg{animation:bh .2s}
 @keyframes bh{0%{scale:1}40%{scale:.9}100%{scale:1}}
 .boss.dying{opacity:0;transform:translateY(-50%) scale(.3) rotate(200deg);transition:all .9s}
-.bossbar{position:absolute;left:10px;right:10px;top:8px;z-index:6;text-align:center;text-shadow:0 2px 4px #001a33}
+.bossbar{position:absolute;left:10px;right:10px;top:8px;z-index:6;text-align:center;text-shadow:0 2px 4px #001a33;background:linear-gradient(90deg,transparent,rgba(0,16,40,.42),transparent);padding:5px 10px 8px;border-radius:12px;letter-spacing:.3px}
+.bossbar b{color:#f5fcff;font-size:clamp(12px,2vw,16px);text-shadow:0 0 10px #2dcfff,0 2px 4px #001a33}
+.hpo{height:17px;border-radius:20px;background:linear-gradient(90deg,#21091d,#4b1735);border:1px solid #ff9aab;overflow:hidden;margin-top:6px;box-shadow:0 0 12px #ff326b66}
+.hpi{height:100%;width:100%;background:linear-gradient(90deg,#ff174f,#ff693d 58%,#ffe47a);transition:width .25s;box-shadow:0 0 12px #ff315f}
 .hpo{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
 .hpi{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .25s}
 .cannon{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:120px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
@@ -114,7 +123,7 @@ input[type=checkbox]{width:auto}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 .adm{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.arena{height:400px}.authwrap,.adm{grid-template-columns:1fr}}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.arena{height:400px}.boss{width:min(270px,64%)}.authwrap,.adm{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -592,6 +601,24 @@ const GUNS=[
 function fishArt(c1,c2,fin){return `<svg viewBox="0 -12 120 92"><path d="M90 40 L118 16 Q112 40 118 64 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="55" cy="40" rx="42" ry="28" fill="${c1}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".9"/><circle cx="32" cy="36" r="11" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="29" cy="37" r="6.5" fill="#0a1a3a"/></svg>`}
 function octoArt(c,l){return `<svg viewBox="0 -10 120 110"><g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round"><path d="M32 60 Q18 84 30 100"/><path d="M48 66 Q42 92 54 104"/><path d="M68 66 Q74 92 62 104"/><path d="M88 60 Q102 84 90 100"/></g><ellipse cx="60" cy="38" rx="42" ry="34" fill="${c}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="50" cy="20" rx="20" ry="8" fill="${l}" opacity=".7"/><circle cx="44" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="46" cy="40" r="6.5" fill="#0a1a3a"/><circle cx="76" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="78" cy="40" r="6.5" fill="#0a1a3a"/></svg>`}
 function turtleArt(){return `<svg viewBox="0 -4 130 100"><ellipse cx="112" cy="36" rx="14" ry="11" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/><ellipse cx="60" cy="46" rx="46" ry="30" fill="#ffd34f" stroke="#0a1a3a" stroke-width="3"/><g fill="#e0a52a" stroke="#0a1a3a" stroke-width="2"><circle cx="40" cy="38" r="9"/><circle cx="60" cy="30" r="9"/><circle cx="80" cy="38" r="9"/><circle cx="50" cy="54" r="9"/><circle cx="70" cy="54" r="9"/></g></svg>`}
+function bossCinematicArt(kind){
+ const palettes={ice:['#e9ffff','#5bd9ff','#176bba','#baf8ff'],octo:['#e8b8ff','#8a42d5','#32106d','#ff8bfa'],shark:['#fff0d0','#ff733c','#7b1727','#ffd05b'],turtle:['#fff4a8','#c58a25','#514018','#70e7a4'],kraken:['#d6caff','#6544d8','#160d46','#70f7ff']};
+ const [hi,mid,dark,glow]=palettes[kind];
+ const defs=`<defs>
+ <linearGradient id="skin" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="${hi}"/><stop offset=".38" stop-color="${mid}"/><stop offset="1" stop-color="${dark}"/></linearGradient>
+ <linearGradient id="belly" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="${hi}" stop-opacity=".25"/></linearGradient>
+ <radialGradient id="eye"><stop stop-color="#fff"/><stop offset=".6" stop-color="#dffaff"/><stop offset="1" stop-color="#13243c"/></radialGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ </defs>`;
+ const fin=`<g fill="url(#skin)" stroke="${dark}" stroke-width="3" stroke-linejoin="round"><path d="M155 145 Q205 72 250 75 Q228 130 250 188 Q205 188 155 160Z"/><path d="M70 100 Q80 35 120 28 Q120 72 108 115Z"/><path d="M75 185 Q35 220 22 250 Q90 245 125 205Z"/></g>`;
+ const eyes=`<g filter="url(#glow)"><ellipse cx="112" cy="132" rx="17" ry="22" fill="url(#eye)"/><ellipse cx="114" cy="135" rx="7" ry="12" fill="#071326"/><circle cx="116" cy="127" r="4" fill="#fff"/><ellipse cx="164" cy="132" rx="17" ry="22" fill="url(#eye)"/><ellipse cx="162" cy="135" rx="7" ry="12" fill="#071326"/><circle cx="160" cy="127" r="4" fill="#fff"/></g>`;
+ let body='';
+ if(kind==='ice'||kind==='shark') body=`${fin}<path d="M32 150 Q45 75 132 78 Q210 78 220 145 Q212 210 125 216 Q45 215 32 150Z" fill="url(#skin)" stroke="${dark}" stroke-width="5"/><path d="M55 170 Q125 205 202 166 Q182 218 115 215 Q72 208 55 170Z" fill="url(#belly)"/><path d="M190 146 L215 130 L205 153 L220 168 L190 160Z" fill="${hi}" stroke="${dark}" stroke-width="3"/>${eyes}<path d="M125 174 Q140 184 155 173" fill="none" stroke="${dark}" stroke-width="4" stroke-linecap="round"/>`;
+ if(kind==='octo'||kind==='kraken') body=`<g fill="none" stroke="url(#skin)" stroke-width="17" stroke-linecap="round" filter="url(#glow)"><path d="M75 165 Q15 195 34 250 Q44 267 61 244"/><path d="M100 178 Q62 230 82 265 Q98 276 106 248"/><path d="M145 178 Q178 220 154 265 Q140 277 136 246"/><path d="M175 162 Q230 190 218 244 Q206 260 193 235"/><path d="M85 105 Q52 48 75 26"/><path d="M160 105 Q190 50 175 25"/></g><path d="M55 140 Q52 70 125 62 Q200 65 195 143 Q190 207 125 208 Q60 202 55 140Z" fill="url(#skin)" stroke="${dark}" stroke-width="5"/>${eyes}<path d="M112 174 Q128 184 145 173" fill="none" stroke="${dark}" stroke-width="4"/>`;
+ if(kind==='turtle') body=`<g fill="url(#skin)" stroke="${dark}" stroke-width="4"><path d="M65 150 Q15 130 24 180 Q45 210 80 185Z"/><path d="M175 150 Q230 125 226 180 Q205 210 170 185Z"/><path d="M78 185 Q45 218 65 245 Q95 255 110 205Z"/><path d="M160 185 Q195 218 177 245 Q147 255 132 205Z"/><ellipse cx="125" cy="150" rx="91" ry="66" fill="url(#skin)"/><path d="M58 145 Q60 65 125 68 Q190 65 192 145 Q177 188 125 190 Q72 188 58 145Z" fill="${dark}"/><path d="M68 140 L125 82 L180 140 L125 183Z" fill="none" stroke="${hi}" stroke-width="5"/><path d="M191 128 Q226 102 246 132 Q252 170 212 183 L185 165Z" fill="url(#skin)"/></g>${eyes}<path d="M210 166 Q226 176 237 164" fill="none" stroke="${dark}" stroke-width="4"/>`;
+ const spikes=kind==='ice'?`<g fill="${glow}" stroke="#fff" stroke-width="2"><path d="M65 90 L78 28 L95 92Z"/><path d="M142 78 L158 15 L171 84Z"/><path d="M190 112 L220 65 L214 132Z"/></g>`:kind==='shark'?`<g fill="${glow}" stroke="#fff1c2" stroke-width="2"><path d="M65 91 L80 32 L100 91Z"/><path d="M146 83 L163 28 L178 92Z"/></g>`:`<g fill="${glow}" filter="url(#glow)"><circle cx="125" cy="38" r="8"/><circle cx="36" cy="95" r="6"/><circle cx="218" cy="90" r="7"/></g>`;
+ return `<svg viewBox="0 0 260 290" role="img" aria-label="Boss ${kind}">${defs}<ellipse cx="130" cy="266" rx="92" ry="12" fill="${glow}" opacity=".22"/>${body}${spikes}<path d="M30 110 Q8 130 20 156 M225 105 Q250 125 239 155" fill="none" stroke="${glow}" stroke-width="3" opacity=".8"/><g fill="${glow}" opacity=".8"><circle cx="28" cy="70" r="3"/><circle cx="232" cy="55" r="4"/><circle cx="42" cy="220" r="3"/><circle cx="220" cy="225" r="3"/></g></svg>`;
+}
 
 /* Súng: hình đổi theo bậc giá */
 function gunSvg(g){
@@ -622,11 +649,11 @@ function gunSvg(g){
 
 /* 5 boss mỗi phòng, đi theo thứ tự từ dễ đến khó */
 const BOSSES=[
- {name:'CÁ RỒNG BĂNG',lv:5,hp:2e6,reward:8e5,svg:()=>fishArt('#9ff3ff','#fff','#2a9fff')},
- {name:'BẠCH TUỘC TÍM',lv:10,hp:6e6,reward:25e5,svg:()=>octoArt('#b57bff','#e6d4ff')},
- {name:'CÁ MẬP LỬA',lv:15,hp:15e6,reward:6e6,svg:()=>fishArt('#ff7a3c','#ffe08a','#ff3b1f')},
- {name:'RÙA THẦN VÀNG',lv:20,hp:4e7,reward:15e6,svg:()=>turtleArt()},
- {name:'KRAKEN SẤM',lv:30,hp:1e8,reward:4e7,svg:()=>octoArt('#2a1f5a','#7a5cff')}
+ {name:'CÁ RỒNG BĂNG',lv:5,hp:2e6,reward:8e5,svg:()=>bossCinematicArt('ice')},
+ {name:'BẠCH TUỘC TÍM',lv:10,hp:6e6,reward:25e5,svg:()=>bossCinematicArt('octo')},
+ {name:'CÁ MẬP LỬA',lv:15,hp:15e6,reward:6e6,svg:()=>bossCinematicArt('shark')},
+ {name:'RÙA THẦN VÀNG',lv:20,hp:4e7,reward:15e6,svg:()=>bossCinematicArt('turtle')},
+ {name:'KRAKEN SẤM',lv:30,hp:1e8,reward:4e7,svg:()=>bossCinematicArt('kraken')}
 ];
 const FISH=[
  {m:2,w:.3,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
