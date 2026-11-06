@@ -48,11 +48,11 @@ input[type=checkbox]{width:auto}
 .arena.rage{background:radial-gradient(ellipse at 50% 0,#ffb3b3 0,#c4305a 25%,#5a0f2e 60%,#1a0212 100%)}
 .arena.shake{animation:shk .35s}
 @keyframes shk{0%,100%{transform:translate(0,0)}25%{transform:translate(-6px,4px)}50%{transform:translate(5px,-4px)}75%{transform:translate(-3px,2px)}}
-.fish{position:absolute;width:84px;cursor:pointer;z-index:2;filter:drop-shadow(0 0 8px #16dfff);animation:swim 4s ease-in-out infinite alternate}
-.fish svg{width:100%;height:auto;display:block}
+.fish{position:absolute;width:var(--fish-size,82px);cursor:pointer;z-index:2;filter:drop-shadow(0 0 5px var(--fish-glow,#16dfff)) drop-shadow(0 0 12px var(--fish-glow,#16dfff));animation:swim var(--fish-speed,4s) ease-in-out infinite alternate;transform-origin:center;will-change:transform,filter}
+.fish svg{width:100%;height:auto;display:block;overflow:visible}.fish svg path,.fish svg ellipse,.fish svg circle{vector-effect:non-scaling-stroke}.fish:nth-child(odd){animation-duration:4.8s}.fish:nth-child(even){animation-duration:3.7s}
 .fish.dying{opacity:0;transform:scale(.3) rotate(180deg);transition:all .4s}
 @keyframes swim{from{transform:translate(-10px,4px)}to{transform:translate(18px,-12px)}}
-.boss{position:absolute;top:30%;left:-30%;width:min(310px,54%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 12px #8beeff) drop-shadow(0 0 28px #168dff);animation-timing-function:linear;animation-fill-mode:forwards;transform-origin:center;will-change:left,transform,filter}
+.boss{position:absolute;top:30%;left:-30%;width:min(360px,60%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 12px #8beeff) drop-shadow(0 0 28px #168dff);animation-timing-function:linear;animation-fill-mode:forwards;transform-origin:center;will-change:left,transform,filter}
 .boss svg{width:100%;height:auto;display:block;overflow:visible;filter:saturate(1.18) contrast(1.08)}
 .boss:after{content:"";position:absolute;inset:12% 8%;border-radius:50%;background:radial-gradient(ellipse,rgba(74,220,255,.12),transparent 68%);pointer-events:none;z-index:-1}
 .boss.toRight{animation-name:swimRight,bossFloat;animation-duration:inherit,2.8s;animation-iteration-count:1,infinite}
@@ -123,7 +123,7 @@ input[type=checkbox]{width:auto}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 .adm{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.arena{height:400px}.boss{width:min(270px,64%)}.authwrap,.adm{grid-template-columns:1fr}}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.arena{height:400px}.boss{width:min(310px,72%)}.authwrap,.adm{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -556,7 +556,7 @@ const CFG={
   UPG:150000, UPG_MAX:8,
   SYNC_MS:10000,
   BOSS_HIT_CAP:.05,
-  BOSS_SPEED:[16,14,12,10,8],
+  BOSS_SPEED:[18,17,16,15,14,13,12,11,10,9],
   BOSS_RESPAWN_MS:3000
 };
 let GAMES={fish:true,bc:true,door:true,lock:true,wheel:true};
@@ -598,26 +598,49 @@ const GUNS=[
  {id:'galaxy',name:'Súng Thiên Hà',price:500000000,mult:22,c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8'}
 ];
 
-function fishArt(c1,c2,fin){return `<svg viewBox="0 -12 120 92"><path d="M90 40 L118 16 Q112 40 118 64 Z" fill="${fin}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="55" cy="40" rx="42" ry="28" fill="${c1}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".9"/><circle cx="32" cy="36" r="11" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="29" cy="37" r="6.5" fill="#0a1a3a"/></svg>`}
-function octoArt(c,l){return `<svg viewBox="0 -10 120 110"><g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round"><path d="M32 60 Q18 84 30 100"/><path d="M48 66 Q42 92 54 104"/><path d="M68 66 Q74 92 62 104"/><path d="M88 60 Q102 84 90 100"/></g><ellipse cx="60" cy="38" rx="42" ry="34" fill="${c}" stroke="#0a1a3a" stroke-width="3"/><ellipse cx="50" cy="20" rx="20" ry="8" fill="${l}" opacity=".7"/><circle cx="44" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="46" cy="40" r="6.5" fill="#0a1a3a"/><circle cx="76" cy="38" r="12" fill="#fff" stroke="#0a1a3a" stroke-width="2.5"/><circle cx="78" cy="40" r="6.5" fill="#0a1a3a"/></svg>`}
-function turtleArt(){return `<svg viewBox="0 -4 130 100"><ellipse cx="112" cy="36" rx="14" ry="11" fill="#9fe36b" stroke="#0a1a3a" stroke-width="2.5"/><ellipse cx="60" cy="46" rx="46" ry="30" fill="#ffd34f" stroke="#0a1a3a" stroke-width="3"/><g fill="#e0a52a" stroke="#0a1a3a" stroke-width="2"><circle cx="40" cy="38" r="9"/><circle cx="60" cy="30" r="9"/><circle cx="80" cy="38" r="9"/><circle cx="50" cy="54" r="9"/><circle cx="70" cy="54" r="9"/></g></svg>`}
+/* Nghệ thuật sinh vật biển: SVG nhiều lớp, phối màu và hoa văn riêng từng loài */
+function fishArt(c1,c2,fin,style='classic',accent='#f8fdff'){
+  const id='fish-'+style;
+  let tail=`<path d="M119 55 Q145 20 163 20 Q153 54 164 88 Q143 82 119 55Z" fill="${fin}" stroke="#183b58" stroke-width="3"/>`;
+  let body=`<ellipse cx="78" cy="55" rx="55" ry="34" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`;
+  let fins=`<path d="M65 26 Q77 4 103 17 L91 37Z" fill="${fin}" stroke="#183b58" stroke-width="2.5"/><path d="M68 82 Q86 104 108 88 L88 75Z" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`;
+  let marks=`<path d="M52 29 Q43 54 53 80 M80 23 Q69 54 80 86" fill="none" stroke="${accent}" stroke-width="8" opacity=".9"/>`;
+  if(style==='tang') marks=`<path d="M35 31 Q77 43 112 23 M35 73 Q77 62 113 83" fill="none" stroke="#ffe35b" stroke-width="7"/><path d="M98 28 Q122 53 98 80" fill="none" stroke="#0b4e9b" stroke-width="5"/>`;
+  if(style==='butterfly') { body=`<ellipse cx="78" cy="55" rx="48" ry="39" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`; fins=`<path d="M52 23 Q70 -8 95 15 L88 33Z M54 87 Q78 119 101 91 L87 75Z" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`; marks=`<path d="M64 18 Q52 54 65 93 M87 17 Q77 54 90 93" stroke="${accent}" stroke-width="8" fill="none"/>`; }
+  if(style==='lion') { fins=`<path d="M44 27 L25 2 L53 23 L48 -7 L65 24 L78 -8 L82 25 L108 -2 L98 31" fill="${fin}" stroke="#183b58" stroke-width="2.5"/><path d="M56 82 L35 109 L69 83 L84 112 L91 80" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`; marks=`<path d="M38 31 L107 79 M35 45 L98 86 M46 22 L113 67" stroke="${accent}" stroke-width="5" opacity=".9"/>`; }
+  if(style==='puffer') { body=`<circle cx="77" cy="55" r="39" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`; tail=`<path d="M112 55 L151 27 L145 55 L151 84Z" fill="${fin}" stroke="#183b58" stroke-width="3"/>`; fins=`<g stroke="${fin}" stroke-width="3" stroke-linecap="round"><path d="M77 13V3 M47 23L39 13 M29 53H18 M43 83L35 94 M77 96V107 M110 83L120 94 M118 52H130 M105 22L114 12"/></g>`; marks=`<g fill="${accent}" opacity=".55"><circle cx="54" cy="40" r="4"/><circle cx="89" cy="32" r="4"/><circle cx="98" cy="63" r="4"/><circle cx="61" cy="72" r="4"/><circle cx="81" cy="56" r="3"/></g>`; }
+  if(style==='koi') marks=`<path d="M36 34 Q55 11 72 34 Q83 48 101 29 M51 77 Q70 57 89 77" fill="none" stroke="#f7f4e9" stroke-width="12" stroke-linecap="round"/><path d="M36 34 Q55 11 72 34" fill="none" stroke="#e34c36" stroke-width="5"/>`;
+  if(style==='gold') { tail=`<path d="M118 55 Q144 12 167 8 Q156 49 177 55 Q154 63 167 103 Q143 98 118 55Z" fill="${fin}" stroke="#183b58" stroke-width="3"/><path d="M63 24 Q75 5 96 20 M64 85 Q83 107 104 87" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`; marks=`<path d="M48 34 Q72 54 49 78" stroke="${accent}" stroke-width="5" fill="none" opacity=".65"/>`; }
+  if(style==='angel') { body=`<ellipse cx="77" cy="55" rx="37" ry="43" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`; tail=`<path d="M109 55 L151 37 L148 73Z" fill="${fin}" stroke="#183b58" stroke-width="3"/>`; fins=`<path d="M60 19 Q77 -3 99 9 L89 28 M57 90 Q79 117 100 100 L87 80" fill="${fin}" stroke="#183b58" stroke-width="2.5"/><path d="M47 33 L22 55 L48 76Z" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`; marks=`<path d="M64 15V94 M85 13V96" stroke="${accent}" stroke-width="7"/>`; }
+  if(style==='barracuda') { body=`<path d="M20 55 Q54 23 120 43 L133 55 L120 67 Q53 88 20 55Z" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`; tail=`<path d="M122 55 L165 22 L155 55 L165 88Z" fill="${fin}" stroke="#183b58" stroke-width="3"/>`; fins=`<path d="M72 39 L88 12 L99 39Z M72 70 L91 96 L101 68Z" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`; marks=`<path d="M48 48 L116 48" stroke="${accent}" stroke-width="3" opacity=".55"/>`; }
+  if(style==='seahorse') { body=`<path d="M88 90 Q53 80 67 56 Q81 39 69 26 Q60 11 78 7 Q105 5 103 28 Q101 42 88 49 Q111 60 96 78 Q90 84 88 90Z" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`; tail=`<path d="M87 78 Q113 87 103 103 Q94 111 82 102 Q75 96 82 91" fill="none" stroke="${fin}" stroke-width="9" stroke-linecap="round"/>`; fins=`<path d="M84 45 Q117 36 120 58 Q106 66 92 59Z" fill="${fin}" stroke="#183b58" stroke-width="2"/>`; marks=`<path d="M72 29 Q86 34 98 27 M76 44 Q89 50 100 42 M78 59 Q89 66 98 59" fill="none" stroke="${accent}" stroke-width="3"/>`; }
+  if(style==='ray') { body=`<path d="M18 56 Q57 5 83 34 Q112 4 149 56 Q121 70 97 67 Q85 88 68 68 Q43 73 18 56Z" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`; tail=`<path d="M83 67 Q99 87 126 108" fill="none" stroke="${fin}" stroke-width="5" stroke-linecap="round"/>`; fins=''; marks=`<path d="M48 46 Q78 28 118 46" stroke="${accent}" stroke-width="4" fill="none" opacity=".7"/>`; }
+  if(style==='squid') { body=`<path d="M46 71 Q34 43 77 8 Q120 43 108 71 Q79 94 46 71Z" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`; tail=`<g fill="none" stroke="${fin}" stroke-width="5" stroke-linecap="round"><path d="M53 70 Q35 95 51 107 M68 76 Q59 100 68 109 M84 76 Q97 99 88 109 M100 70 Q122 91 108 105"/></g>`; fins=`<path d="M45 48 L22 69 L49 68 M109 48 L132 69 L105 68" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`; marks=`<path d="M59 32 Q78 43 96 32" stroke="${accent}" stroke-width="5" fill="none"/>`; }
+  if(style==='parrot') { body=`<path d="M20 55 Q35 19 101 24 Q128 35 123 58 Q112 86 49 83 Q27 76 20 55Z" fill="url(#${id}-skin)" stroke="#183b58" stroke-width="3"/>`; tail=`<path d="M116 54 L162 27 L153 56 L161 85Z" fill="${fin}" stroke="#183b58" stroke-width="3"/>`; fins=`<path d="M65 27 L83 5 L102 29 M64 79 L88 101 L104 79" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`; marks=`<path d="M42 36 Q73 48 104 34" stroke="${accent}" stroke-width="6" fill="none"/>`; }
+  if(style==='glow') { marks=`<g fill="${accent}" filter="url(#${id}-glow)"><circle cx="48" cy="36" r="5"/><circle cx="66" cy="28" r="4"/><circle cx="88" cy="34" r="5"/><circle cx="101" cy="59" r="4"/><circle cx="63" cy="73" r="4"/></g>`; }
+  if(style==='dragonet') { fins=`<path d="M43 31 L26 8 L56 27 L67 2 L77 29 L100 8 L94 37 M55 82 L43 105 L76 82 L91 108 L103 77" fill="${fin}" stroke="#183b58" stroke-width="2.5"/>`; marks=`<path d="M35 37 Q76 55 116 37 M35 72 Q76 59 116 72" stroke="${accent}" stroke-width="5" fill="none"/>`; }
+  const eyeX=style==='seahorse'?91:style==='squid'?91:style==='ray'?77:style==='puffer'?63:39;
+  return `<svg viewBox="0 0 180 112" role="img" aria-label="Cá ${style}"><defs><linearGradient id="${id}-skin" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#ffffff" stop-opacity=".7"/><stop offset=".18" stop-color="${c1}"/><stop offset=".68" stop-color="${c2}"/><stop offset="1" stop-color="#102e52" stop-opacity=".8"/></linearGradient><radialGradient id="${id}-shine"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><filter id="${id}-glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>${tail}${fins}${body}<ellipse cx="75" cy="35" rx="35" ry="10" fill="url(#${id}-shine)" opacity=".65"/>${marks}<path d="M${style==='seahorse'?90:style==='squid'?93:style==='ray'?91:54} 43 Q${style==='ray'?99:69} 54 ${style==='ray'?91:54} 69" fill="none" stroke="#183b58" stroke-width="2" opacity=".35"/><circle cx="${eyeX}" cy="${style==='seahorse'?23:style==='squid'?53:style==='ray'?51:style==='puffer'?46:44}" r="8" fill="#fff" stroke="#17344c" stroke-width="2"/><circle cx="${eyeX-1}" cy="${style==='seahorse'?23:style==='squid'?53:style==='ray'?51:style==='puffer'?46:44}" r="4.2" fill="#09213e"/><circle cx="${eyeX-2}" cy="${style==='seahorse'?20:style==='squid'?50:style==='ray'?48:style==='puffer'?43:41}" r="1.8" fill="#fff"/><path d="M${style==='seahorse'?96:style==='squid'?105:style==='ray'?104:style==='puffer'?91:104} 69 Q110 73 117 68" fill="none" stroke="#17344c" stroke-width="2" opacity=".55"/></svg>`;
+}
+function octoArt(c,l){return `<svg viewBox="0 0 180 150"><defs><linearGradient id="octoSkin" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".7"/><stop offset=".35" stop-color="${l}"/><stop offset="1" stop-color="${c}"/></linearGradient></defs><g fill="none" stroke="url(#octoSkin)" stroke-width="13" stroke-linecap="round"><path d="M49 90 Q13 115 28 143 Q42 151 51 131"/><path d="M65 99 Q44 126 60 147"/><path d="M83 103 Q76 133 88 148"/><path d="M101 103 Q112 130 101 148"/><path d="M119 99 Q145 126 128 146"/><path d="M135 90 Q169 112 153 140"/></g><ellipse cx="91" cy="66" rx="58" ry="47" fill="url(#octoSkin)" stroke="#172e55" stroke-width="4"/><path d="M49 57 Q88 12 132 52" fill="none" stroke="#fff" stroke-width="9" opacity=".24"/><ellipse cx="70" cy="67" rx="12" ry="15" fill="#fff"/><ellipse cx="112" cy="67" rx="12" ry="15" fill="#fff"/><ellipse cx="72" cy="69" rx="5" ry="9" fill="#07152c"/><ellipse cx="110" cy="69" rx="5" ry="9" fill="#07152c"/><path d="M78 91 Q91 100 104 91" fill="none" stroke="#3d164e" stroke-width="4" stroke-linecap="round"/></svg>`}
+function turtleArt(){return `<svg viewBox="0 0 190 145"><defs><linearGradient id="shell" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff3aa"/><stop offset=".35" stop-color="#d89a2d"/><stop offset="1" stop-color="#5b3918"/></linearGradient><linearGradient id="turtleSkin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c9ff9a"/><stop offset="1" stop-color="#26865e"/></linearGradient></defs><g fill="url(#turtleSkin)" stroke="#214b3b" stroke-width="3"><path d="M48 81 Q5 72 15 110 Q29 130 63 103Z"/><path d="M127 81 Q178 70 173 111 Q154 132 122 103Z"/><path d="M65 95 Q32 110 47 137 Q69 143 84 111Z"/><path d="M112 95 Q145 110 130 137 Q109 143 94 111Z"/><path d="M141 58 Q161 37 181 53 Q190 76 161 88 L137 80Z"/></g><ellipse cx="93" cy="76" rx="65" ry="49" fill="url(#shell)" stroke="#503316" stroke-width="5"/><path d="M34 75 Q44 27 94 27 Q145 28 153 75 Q140 112 94 119 Q47 111 34 75Z" fill="none" stroke="#ffeab0" stroke-width="3"/><g fill="none" stroke="#71471e" stroke-width="4"><path d="M94 29V119 M40 59L70 45L94 29L120 45L148 61 M38 87L68 100L94 119L120 100L149 86"/><path d="M69 45L69 100 M120 45V100"/></g><circle cx="169" cy="58" r="4" fill="#fff"/><circle cx="171" cy="58" r="2" fill="#172b35"/></svg>`}
 function bossCinematicArt(kind){
- const palettes={ice:['#e9ffff','#5bd9ff','#176bba','#baf8ff'],octo:['#e8b8ff','#8a42d5','#32106d','#ff8bfa'],shark:['#fff0d0','#ff733c','#7b1727','#ffd05b'],turtle:['#fff4a8','#c58a25','#514018','#70e7a4'],kraken:['#d6caff','#6544d8','#160d46','#70f7ff']};
- const [hi,mid,dark,glow]=palettes[kind];
- const defs=`<defs>
- <linearGradient id="skin" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="${hi}"/><stop offset=".38" stop-color="${mid}"/><stop offset="1" stop-color="${dark}"/></linearGradient>
- <linearGradient id="belly" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="${hi}" stop-opacity=".25"/></linearGradient>
- <radialGradient id="eye"><stop stop-color="#fff"/><stop offset=".6" stop-color="#dffaff"/><stop offset="1" stop-color="#13243c"/></radialGradient>
- <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
- </defs>`;
- const fin=`<g fill="url(#skin)" stroke="${dark}" stroke-width="3" stroke-linejoin="round"><path d="M155 145 Q205 72 250 75 Q228 130 250 188 Q205 188 155 160Z"/><path d="M70 100 Q80 35 120 28 Q120 72 108 115Z"/><path d="M75 185 Q35 220 22 250 Q90 245 125 205Z"/></g>`;
- const eyes=`<g filter="url(#glow)"><ellipse cx="112" cy="132" rx="17" ry="22" fill="url(#eye)"/><ellipse cx="114" cy="135" rx="7" ry="12" fill="#071326"/><circle cx="116" cy="127" r="4" fill="#fff"/><ellipse cx="164" cy="132" rx="17" ry="22" fill="url(#eye)"/><ellipse cx="162" cy="135" rx="7" ry="12" fill="#071326"/><circle cx="160" cy="127" r="4" fill="#fff"/></g>`;
+ const pal={ice:['#f3ffff','#67dfff','#1766ad','#b9f6ff'],octo:['#efd0ff','#974ad8','#35105e','#ff9af4'],shark:['#ffe3b9','#ef7442','#622238','#ffc05b'],turtle:['#fff1a2','#d6a03b','#5d401c','#8df0a6'],kraken:['#e2d7ff','#7657df','#190f48','#7af5ff'],whale:['#d8f5ff','#4c7fa8','#142c4b','#70e6ff'],sword:['#fff0c8','#d79c45','#563b26','#ffe18a'],jelly:['#ffe4ff','#c66bdf','#54266f','#ff8df3'],manta:['#e6eeff','#5473b5','#182746','#8ebaff'],dragon:['#fff0ca','#dc6248','#5e1f34','#ffcc73']};
+ const [hi,mid,dark,glow]=pal[kind]||pal.ice;
+ const id='boss-'+kind;
+ const defs=`<defs><linearGradient id="${id}-skin" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="${hi}"/><stop offset=".35" stop-color="${mid}"/><stop offset="1" stop-color="${dark}"/></linearGradient><linearGradient id="${id}-belly" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="${hi}" stop-opacity=".3"/></linearGradient><radialGradient id="${id}-eye"><stop stop-color="#fff"/><stop offset=".45" stop-color="${glow}"/><stop offset="1" stop-color="#07152c"/></radialGradient><filter id="${id}-glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
+ const eye=(x,y,r=13)=>`<g filter="url(#${id}-glow)"><ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r+5}" fill="url(#${id}-eye)" stroke="#10233d" stroke-width="3"/><ellipse cx="${x}" cy="${y+1}" rx="4" ry="8" fill="#071326"/><circle cx="${x-3}" cy="${y-4}" r="3" fill="#fff"/></g>`;
  let body='';
- if(kind==='ice'||kind==='shark') body=`${fin}<path d="M32 150 Q45 75 132 78 Q210 78 220 145 Q212 210 125 216 Q45 215 32 150Z" fill="url(#skin)" stroke="${dark}" stroke-width="5"/><path d="M55 170 Q125 205 202 166 Q182 218 115 215 Q72 208 55 170Z" fill="url(#belly)"/><path d="M190 146 L215 130 L205 153 L220 168 L190 160Z" fill="${hi}" stroke="${dark}" stroke-width="3"/>${eyes}<path d="M125 174 Q140 184 155 173" fill="none" stroke="${dark}" stroke-width="4" stroke-linecap="round"/>`;
- if(kind==='octo'||kind==='kraken') body=`<g fill="none" stroke="url(#skin)" stroke-width="17" stroke-linecap="round" filter="url(#glow)"><path d="M75 165 Q15 195 34 250 Q44 267 61 244"/><path d="M100 178 Q62 230 82 265 Q98 276 106 248"/><path d="M145 178 Q178 220 154 265 Q140 277 136 246"/><path d="M175 162 Q230 190 218 244 Q206 260 193 235"/><path d="M85 105 Q52 48 75 26"/><path d="M160 105 Q190 50 175 25"/></g><path d="M55 140 Q52 70 125 62 Q200 65 195 143 Q190 207 125 208 Q60 202 55 140Z" fill="url(#skin)" stroke="${dark}" stroke-width="5"/>${eyes}<path d="M112 174 Q128 184 145 173" fill="none" stroke="${dark}" stroke-width="4"/>`;
- if(kind==='turtle') body=`<g fill="url(#skin)" stroke="${dark}" stroke-width="4"><path d="M65 150 Q15 130 24 180 Q45 210 80 185Z"/><path d="M175 150 Q230 125 226 180 Q205 210 170 185Z"/><path d="M78 185 Q45 218 65 245 Q95 255 110 205Z"/><path d="M160 185 Q195 218 177 245 Q147 255 132 205Z"/><ellipse cx="125" cy="150" rx="91" ry="66" fill="url(#skin)"/><path d="M58 145 Q60 65 125 68 Q190 65 192 145 Q177 188 125 190 Q72 188 58 145Z" fill="${dark}"/><path d="M68 140 L125 82 L180 140 L125 183Z" fill="none" stroke="${hi}" stroke-width="5"/><path d="M191 128 Q226 102 246 132 Q252 170 212 183 L185 165Z" fill="url(#skin)"/></g>${eyes}<path d="M210 166 Q226 176 237 164" fill="none" stroke="${dark}" stroke-width="4"/>`;
- const spikes=kind==='ice'?`<g fill="${glow}" stroke="#fff" stroke-width="2"><path d="M65 90 L78 28 L95 92Z"/><path d="M142 78 L158 15 L171 84Z"/><path d="M190 112 L220 65 L214 132Z"/></g>`:kind==='shark'?`<g fill="${glow}" stroke="#fff1c2" stroke-width="2"><path d="M65 91 L80 32 L100 91Z"/><path d="M146 83 L163 28 L178 92Z"/></g>`:`<g fill="${glow}" filter="url(#glow)"><circle cx="125" cy="38" r="8"/><circle cx="36" cy="95" r="6"/><circle cx="218" cy="90" r="7"/></g>`;
- return `<svg viewBox="0 0 260 290" role="img" aria-label="Boss ${kind}">${defs}<ellipse cx="130" cy="266" rx="92" ry="12" fill="${glow}" opacity=".22"/>${body}${spikes}<path d="M30 110 Q8 130 20 156 M225 105 Q250 125 239 155" fill="none" stroke="${glow}" stroke-width="3" opacity=".8"/><g fill="${glow}" opacity=".8"><circle cx="28" cy="70" r="3"/><circle cx="232" cy="55" r="4"/><circle cx="42" cy="220" r="3"/><circle cx="220" cy="225" r="3"/></g></svg>`;
+ if(kind==='ice') body=`<path d="M54 143 L18 102 L54 115 L63 68 L88 112 L121 47 L135 116 L189 81 L169 135 L219 145 L178 178 L205 217 L150 202 L123 237 L99 198 L47 220 L66 178Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M42 148 Q77 78 153 96 Q214 113 224 163 Q213 222 125 230 Q52 220 42 148Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M70 180 Q128 208 199 174 Q177 226 118 224 Q85 214 70 180Z" fill="url(#${id}-belly)"/>${eye(101,139,13)}${eye(151,139,13)}<path d="M119 179 Q139 190 159 178" fill="none" stroke="${dark}" stroke-width="5"/>`;
+ if(kind==='octo'||kind==='kraken') {let arms='';for(let i=0;i<8;i++){const x=35+i*28,dx=(i%2?1:-1)*(22+((i*7)%20));arms+=`<path d="M${x} 179 Q${x+dx} 216 ${x+dx*1.4} 259 Q${x+dx*1.8} 277 ${x+dx*1.2} 284" fill="none" stroke="url(#${id}-skin)" stroke-width="17" stroke-linecap="round"/><path d="M${x} 184 Q${x+dx} 222 ${x+dx*1.4} 259" fill="none" stroke="${glow}" stroke-width="3" opacity=".65"/>`; } body=`${arms}<path d="M55 132 Q53 63 130 55 Q207 63 205 132 Q200 202 130 211 Q60 202 55 132Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M76 99 Q128 57 183 99" fill="none" stroke="#fff" stroke-width="10" opacity=".22"/>${eye(102,135,14)}${eye(158,135,14)}<path d="M109 174 Q130 185 151 174" fill="none" stroke="${dark}" stroke-width="5"/>`; }
+ if(kind==='shark') body=`<path d="M37 159 Q78 74 162 105 L216 151 L261 132 L237 170 L263 198 L213 183 Q143 249 70 204Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M105 111 L134 54 L158 117Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M94 192 Q150 231 215 183 Q184 230 126 227Z" fill="url(#${id}-belly)"/><path d="M220 157 L241 173 L219 178 L237 192 L215 184Z" fill="#fff" stroke="${dark}" stroke-width="2"/>${eye(177,143,13)}<path d="M181 177 L202 184 L216 177" fill="none" stroke="#fff" stroke-width="6"/>`;
+ if(kind==='turtle') body=`<g fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"><path d="M72 162 Q12 131 24 196 Q47 224 92 190Z"/><path d="M181 162 Q242 131 230 196 Q207 224 162 190Z"/><path d="M93 188 Q48 215 73 260 Q111 269 121 205Z"/><path d="M160 188 Q205 215 180 260 Q142 269 132 205Z"/><path d="M196 115 Q235 81 261 111 Q271 154 223 174 L186 157Z"/></g><ellipse cx="130" cy="164" rx="91" ry="62" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="7"/><path d="M50 158 Q55 95 130 91 Q205 95 210 158 Q189 220 130 225 Q71 220 50 158Z" fill="${dark}"/><path d="M62 155 L130 96 L198 155 L130 215Z M62 155 L100 215 M198 155 L160 215 M130 96V215" fill="none" stroke="${hi}" stroke-width="6"/>${eye(240,130,9)}<path d="M229 158 Q244 166 256 154" fill="none" stroke="${dark}" stroke-width="4"/>`;
+ if(kind==='whale') body=`<path d="M34 158 Q22 112 67 94 Q124 57 194 102 Q236 126 240 163 Q214 205 149 218 Q82 226 42 190Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M226 157 Q254 115 278 119 Q266 150 281 168 Q252 166 226 157Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M94 193 Q162 230 229 176 Q206 229 145 235 Q111 228 94 193Z" fill="url(#${id}-belly)"/><path d="M104 102 Q128 75 148 101" fill="none" stroke="${glow}" stroke-width="5"/>${eye(195,145,12)}<path d="M94 91 Q80 52 102 39 M111 89 Q111 46 128 32" fill="none" stroke="${glow}" stroke-width="5" stroke-linecap="round"/>`;
+ if(kind==='sword') body=`<path d="M37 154 L9 140 L37 133 L140 136 L268 115 L156 156 L268 191 L139 174 Q69 229 38 190Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M91 132 L123 78 L152 137Z M91 177 L122 220 L151 174Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M53 179 Q105 214 177 177" fill="none" stroke="url(#${id}-belly)" stroke-width="16"/>${eye(177,145,11)}<path d="M186 167 Q205 174 221 165" fill="none" stroke="#fff" stroke-width="4"/>`;
+ if(kind==='jelly') {let tent='';for(let i=0;i<7;i++){const x=75+i*18;tent+=`<path d="M${x} 156 Q${x-18} 205 ${x+5} 248 Q${x+22} 269 ${x+7} 290" fill="none" stroke="${i%2?glow:mid}" stroke-width="7" stroke-linecap="round"/>`; }body=`${tent}<path d="M44 142 Q41 60 130 49 Q219 60 216 142 Q199 176 130 177 Q61 176 44 142Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M57 125 Q77 73 130 75 Q183 73 203 125" fill="none" stroke="#fff" stroke-width="11" opacity=".35"/><path d="M75 146 Q130 166 185 146" fill="none" stroke="${glow}" stroke-width="5"/>${eye(105,126,10)}${eye(155,126,10)}`; }
+ if(kind==='manta') body=`<path d="M129 144 Q86 68 18 79 Q30 147 85 181 Q101 198 129 186 Q157 198 173 181 Q228 147 240 79 Q172 68 129 144Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M116 154 Q83 179 90 219 Q105 238 123 211 L129 182 L136 211 Q154 238 169 219 Q175 179 142 154Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M129 181 Q157 225 204 269" fill="none" stroke="${mid}" stroke-width="8" stroke-linecap="round"/><path d="M52 111 Q94 121 119 153 M206 111 Q164 121 139 153" fill="none" stroke="${glow}" stroke-width="5" opacity=".7"/>${eye(108,157,8)}${eye(150,157,8)}`;
+ if(kind==='dragon') body=`<path d="M37 169 Q56 96 120 107 Q174 64 217 111 Q243 150 209 191 Q172 231 112 209 Q59 207 37 169Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M64 117 L40 66 L88 99 L104 48 L127 103 L163 50 L168 109 L212 82 L192 137" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M74 190 Q139 224 207 174 Q183 223 127 226Z" fill="url(#${id}-belly)"/><path d="M211 143 Q248 112 278 139 Q258 157 279 178 Q241 182 211 163Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/>${eye(185,145,12)}<path d="M78 112 Q42 82 22 99 M85 119 Q44 101 14 125" fill="none" stroke="${glow}" stroke-width="5" stroke-linecap="round"/>`;
+ return `<svg viewBox="0 0 300 300" role="img" aria-label="Boss ${kind}">${defs}<ellipse cx="150" cy="270" rx="105" ry="15" fill="${glow}" opacity=".18"/><g filter="url(#${id}-glow)">${body}</g><g fill="${glow}" opacity=".85"><circle cx="28" cy="69" r="4"/><circle cx="267" cy="62" r="5"/><circle cx="39" cy="225" r="3"/><circle cx="255" cy="236" r="4"/></g></svg>`;
 }
 
 /* Súng: hình đổi theo bậc giá */
@@ -647,21 +670,37 @@ function gunSvg(g){
   </svg>`;
 }
 
-/* 5 boss mỗi phòng, đi theo thứ tự từ dễ đến khó */
+/* 10 boss huyền thoại: mỗi boss có silhouette, màu da và hiệu ứng riêng */
 const BOSSES=[
  {name:'CÁ RỒNG BĂNG',lv:5,hp:2e6,reward:8e5,svg:()=>bossCinematicArt('ice')},
  {name:'BẠCH TUỘC TÍM',lv:10,hp:6e6,reward:25e5,svg:()=>bossCinematicArt('octo')},
  {name:'CÁ MẬP LỬA',lv:15,hp:15e6,reward:6e6,svg:()=>bossCinematicArt('shark')},
- {name:'RÙA THẦN VÀNG',lv:20,hp:4e7,reward:15e6,svg:()=>bossCinematicArt('turtle')},
- {name:'KRAKEN SẤM',lv:30,hp:1e8,reward:4e7,svg:()=>bossCinematicArt('kraken')}
+ {name:'RÙA THẦN KIM CƯƠNG',lv:20,hp:4e7,reward:15e6,svg:()=>bossCinematicArt('turtle')},
+ {name:'KRAKEN SẤM',lv:30,hp:1e8,reward:4e7,svg:()=>bossCinematicArt('kraken')},
+ {name:'CÁ VOI BÓNG ĐÊM',lv:40,hp:2.4e8,reward:9e7,svg:()=>bossCinematicArt('whale')},
+ {name:'KIẾM NGƯ HOÀNG KIM',lv:50,hp:5e8,reward:1.6e8,svg:()=>bossCinematicArt('sword')},
+ {name:'SỨA HOÀNG HẬU',lv:60,hp:1e9,reward:3e8,svg:()=>bossCinematicArt('jelly')},
+ {name:'ĐUỐI TỬ THẦN',lv:75,hp:2.2e9,reward:6e8,svg:()=>bossCinematicArt('manta')},
+ {name:'LONG VƯƠNG SAN HÔ',lv:90,hp:5e9,reward:1.2e9,svg:()=>bossCinematicArt('dragon')}
 ];
+/* 16 loài cá nhỏ, skin/hoa văn/độ hiếm khác nhau để đại dương không bị lặp */
 const FISH=[
- {m:2,w:.3,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
- {m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
- {m:5,w:.18,svg:fishArt('#ff8ad8','#fff0fa','#ff4fb8')},
- {m:8,w:.14,svg:fishArt('#ffe066','#fffbe0','#ffb020')},
- {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},
- {m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}
+ {name:'Cá hề',m:2,w:.16,size:76,glow:'#ff9b54',svg:fishArt('#ff9c36','#ffe6b8','#f15a24','clown','#fff8e9')},
+ {name:'Cá xanh đại dương',m:3,w:.13,size:80,glow:'#48d9ff',svg:fishArt('#27c8f4','#0876c9','#1353a4','tang','#ffe35b')},
+ {name:'Cá bướm vàng',m:4,w:.11,size:72,glow:'#ffdc6b',svg:fishArt('#ffdc45','#ff9f18','#e47718','butterfly','#fff5bc')},
+ {name:'Cá sư tử',m:7,w:.08,size:82,glow:'#ff9b70',svg:fishArt('#dc754a','#873c42','#f2b16e','lion','#fff0d2')},
+ {name:'Cá nóc',m:8,w:.08,size:70,glow:'#c9ef7d',svg:fishArt('#b8d66b','#6c9a41','#e4c45b','puffer','#f5e9a7')},
+ {name:'Cá koi',m:10,w:.075,size:84,glow:'#ff9872',svg:fishArt('#f1eee5','#e6a04b','#dd513a','koi','#fffaf0')},
+ {name:'Cá vàng đuôi dài',m:12,w:.065,size:86,glow:'#ffc75a',svg:fishArt('#ffc34e','#e77a21','#ffdf83','gold','#fff2c1')},
+ {name:'Cá thiên thần',m:15,w:.06,size:78,glow:'#bd9cff',svg:fishArt('#d6b9ff','#784fc4','#ffdd8a','angel','#fff0b5')},
+ {name:'Cá nhồng',m:18,w:.055,size:92,glow:'#8fe5dc',svg:fishArt('#8bc9bd','#3e7a87','#4fd6c8','barracuda','#defcf5')},
+ {name:'Cá ngựa',m:22,w:.045,size:68,glow:'#ffcf72',svg:fishArt('#ffc66e','#cf6b37','#f8e1a0','seahorse','#fff6d8')},
+ {name:'Cá đuối con',m:25,w:.04,size:86,glow:'#9bbcff',svg:fishArt('#a9c4ed','#536f9e','#7495c9','ray','#e8f3ff')},
+ {name:'Mực ống',m:30,w:.035,size:76,glow:'#e3a2ff',svg:fishArt('#e6a0df','#8e55b9','#d5a1ff','squid','#fff0ff')},
+ {name:'Cá vẹt',m:35,w:.025,size:88,glow:'#83efb1',svg:fishArt('#59d89b','#168e84','#ff9c55','parrot','#f3ffe2')},
+ {name:'Cá phát sáng',m:45,w:.02,size:72,glow:'#6cfff0',svg:fishArt('#62f6e2','#2879c7','#69ffe6','glow','#c9fff9')},
+ {name:'Cá rồng con',m:60,w:.01,size:92,glow:'#ffcf69',svg:fishArt('#ffc46a','#a94f32','#f8d88c','dragonet','#fff2c7')},
+ {name:'Cá ngọc trai',m:75,w:.01,size:78,glow:'#e2d9ff',svg:fishArt('#e6e4ff','#8a9bd7','#d8c8ff','glow','#fff')}
 ];
 const CHESTS={common:['📦','Rương gỗ'],rare:['🎁','Rương bạc'],gold:['👑','Rương vàng']};
 const QUESTS=[
@@ -1052,12 +1091,12 @@ function buyGun(id){
 }
 function equipGun(id){if(!S.owned[id])return;S.gunId=id;applyGun();renderShop();saveUser()}
 
-/* ===== BOSS BƠI NGANG (5 boss mỗi phòng) ===== */
+/* ===== BOSS BƠI NGANG (10 boss mỗi phòng) ===== */
 function spawnBoss(){
   const p=P(),b=BOSSES[p.idx],rm=roomOf(S.room);
   B.max=Math.round(b.hp*rm.mult*(1+p.loop*.6));B.hp=B.max;B.alive=true;B.enraged=false;
   const bo=$('boss');
-  const speed=Math.max(6,CFG.BOSS_SPEED[p.idx]-p.loop*2);
+  const speed=Math.max(7,(CFG.BOSS_SPEED[p.idx]||9)-p.loop*1.5);
   bo.className='boss '+(Math.random()<.5?'toRight':'toLeft');
   bo.style.top=(18+Math.random()*40)+'%';
   bo.style.animationDuration=speed+'s';
@@ -1137,8 +1176,13 @@ function pickFish(){let r=Math.random();for(const f of FISH){r-=f.w;if(r<0)retur
 function spawnFish(){
   const sp=pickFish(),el=document.createElement('div');
   el.className='fish';el.innerHTML=sp.svg;
+  el.title=sp.name||'Cá biển';
+  el.style.setProperty('--fish-size',(sp.size||82)+'px');
+  el.style.setProperty('--fish-glow',sp.glow||'#16dfff');
+  el.style.setProperty('--fish-speed',(3.4+Math.random()*2.4)+'s');
   el.style.left=(3+Math.random()*80)+'%';el.style.top=(15+Math.random()*60)+'%';
   el.style.animationDelay=(-Math.random()*4)+'s';
+  if(Math.random()<.5)el.style.scale='-1 1';
   const f={sp,el,dead:false};
   el.onclick=e=>{e.stopPropagation();if(!f.dead)shootAt(e,'fish',f)};
   $('arena').appendChild(el);fishes.push(f);
@@ -1147,7 +1191,7 @@ function spawnFish(){
 function fishLoop(){
   if(!user)return;
   fishes=fishes.filter(f=>!f.dead);
-  while(fishes.length<12)spawnFish();
+  while(fishes.length<16)spawnFish();
 }
 function catchFish(f,e,reward){
   f.dead=true;S.wallet+=reward;S.totals.fish++;S.daily.fish++;
