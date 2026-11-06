@@ -52,7 +52,7 @@ input[type=checkbox]{width:auto}
 .fish svg{width:100%;height:auto;display:block;overflow:visible}.fish svg path,.fish svg ellipse,.fish svg circle{vector-effect:non-scaling-stroke}.fish:nth-child(odd){animation-duration:4.8s}.fish:nth-child(even){animation-duration:3.7s}
 .fish.dying{opacity:0;transform:scale(.3) rotate(180deg);transition:all .4s}
 @keyframes swim{from{transform:translate(-10px,4px)}to{transform:translate(18px,-12px)}}
-.boss{position:absolute;top:30%;left:-30%;width:min(360px,60%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 12px #8beeff) drop-shadow(0 0 28px #168dff);animation-timing-function:linear;animation-fill-mode:forwards;transform-origin:center;will-change:left,transform,filter}
+.boss{position:absolute;top:30%;left:-30%;width:min(410px,68%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 12px #8beeff) drop-shadow(0 0 28px #168dff);animation-timing-function:linear;animation-fill-mode:forwards;transform-origin:center;will-change:left,transform,filter}
 .boss svg{width:100%;height:auto;display:block;overflow:visible;filter:saturate(1.18) contrast(1.08)}
 .boss:after{content:"";position:absolute;inset:12% 8%;border-radius:50%;background:radial-gradient(ellipse,rgba(74,220,255,.12),transparent 68%);pointer-events:none;z-index:-1}
 .boss.toRight{animation-name:swimRight,bossFloat;animation-duration:inherit,2.8s;animation-iteration-count:1,infinite}
@@ -632,7 +632,7 @@ function bossCinematicArt(kind){
  const eye=(x,y,r=13)=>`<g filter="url(#${id}-glow)"><ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r+5}" fill="url(#${id}-eye)" stroke="#10233d" stroke-width="3"/><ellipse cx="${x}" cy="${y+1}" rx="4" ry="8" fill="#071326"/><circle cx="${x-3}" cy="${y-4}" r="3" fill="#fff"/></g>`;
  let body='';
  if(kind==='ice') body=`<path d="M54 143 L18 102 L54 115 L63 68 L88 112 L121 47 L135 116 L189 81 L169 135 L219 145 L178 178 L205 217 L150 202 L123 237 L99 198 L47 220 L66 178Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M42 148 Q77 78 153 96 Q214 113 224 163 Q213 222 125 230 Q52 220 42 148Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M70 180 Q128 208 199 174 Q177 226 118 224 Q85 214 70 180Z" fill="url(#${id}-belly)"/>${eye(101,139,13)}${eye(151,139,13)}<path d="M119 179 Q139 190 159 178" fill="none" stroke="${dark}" stroke-width="5"/>`;
- if(kind==='octo'||kind==='kraken') {let arms='';for(let i=0;i<8;i++){const x=35+i*28,dx=(i%2?1:-1)*(22+((i*7)%20));arms+=`<path d="M${x} 179 Q${x+dx} 216 ${x+dx*1.4} 259 Q${x+dx*1.8} 277 ${x+dx*1.2} 284" fill="none" stroke="url(#${id}-skin)" stroke-width="17" stroke-linecap="round"/><path d="M${x} 184 Q${x+dx} 222 ${x+dx*1.4} 259" fill="none" stroke="${glow}" stroke-width="3" opacity=".65"/>`; } body=`${arms}<path d="M55 132 Q53 63 130 55 Q207 63 205 132 Q200 202 130 211 Q60 202 55 132Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M76 99 Q128 57 183 99" fill="none" stroke="#fff" stroke-width="10" opacity=".22"/>${eye(102,135,14)}${eye(158,135,14)}<path d="M109 174 Q130 185 151 174" fill="none" stroke="${dark}" stroke-width="5"/>`; }
+ if(kind==='octo'||kind==='kraken') {let arms='';for(let i=0;i<8;i++){const x=35+i*28,dx=(i%2?1:-1)*(22+((i*7)%20));arms+=`<path d="M${x} 179 Q${x+dx} 216 ${x+dx*1.4} 259 Q${x+dx*1.8} 277 ${x+dx*1.2} 284" fill="none" stroke="url(#${id}-skin)" stroke-width="${kind==='kraken'?20:15}" stroke-linecap="round"/><path d="M${x} 184 Q${x+dx} 222 ${x+dx*1.4} 259" fill="none" stroke="${glow}" stroke-width="${kind==='kraken'?5:3}" opacity=".75"/>`; }const crown=kind==='kraken'?`<path d="M75 81 L61 31 L101 60 L130 16 L159 60 L199 31 L185 81Z" fill="url(#${id}-skin)" stroke="${glow}" stroke-width="6"/><path d="M80 84 L180 84" stroke="${glow}" stroke-width="8"/>`:'';body=`${arms}<path d="M55 132 Q53 63 130 55 Q207 63 205 132 Q200 202 130 211 Q60 202 55 132Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/>${crown}<path d="M76 99 Q128 57 183 99" fill="none" stroke="#fff" stroke-width="10" opacity=".22"/>${eye(102,135,14)}${eye(158,135,14)}<path d="M109 174 Q130 185 151 174" fill="none" stroke="${dark}" stroke-width="5"/>`; }
  if(kind==='shark') body=`<path d="M37 159 Q78 74 162 105 L216 151 L261 132 L237 170 L263 198 L213 183 Q143 249 70 204Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M105 111 L134 54 L158 117Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M94 192 Q150 231 215 183 Q184 230 126 227Z" fill="url(#${id}-belly)"/><path d="M220 157 L241 173 L219 178 L237 192 L215 184Z" fill="#fff" stroke="${dark}" stroke-width="2"/>${eye(177,143,13)}<path d="M181 177 L202 184 L216 177" fill="none" stroke="#fff" stroke-width="6"/>`;
  if(kind==='turtle') body=`<g fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"><path d="M72 162 Q12 131 24 196 Q47 224 92 190Z"/><path d="M181 162 Q242 131 230 196 Q207 224 162 190Z"/><path d="M93 188 Q48 215 73 260 Q111 269 121 205Z"/><path d="M160 188 Q205 215 180 260 Q142 269 132 205Z"/><path d="M196 115 Q235 81 261 111 Q271 154 223 174 L186 157Z"/></g><ellipse cx="130" cy="164" rx="91" ry="62" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="7"/><path d="M50 158 Q55 95 130 91 Q205 95 210 158 Q189 220 130 225 Q71 220 50 158Z" fill="${dark}"/><path d="M62 155 L130 96 L198 155 L130 215Z M62 155 L100 215 M198 155 L160 215 M130 96V215" fill="none" stroke="${hi}" stroke-width="6"/>${eye(240,130,9)}<path d="M229 158 Q244 166 256 154" fill="none" stroke="${dark}" stroke-width="4"/>`;
  if(kind==='whale') body=`<path d="M34 158 Q22 112 67 94 Q124 57 194 102 Q236 126 240 163 Q214 205 149 218 Q82 226 42 190Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="6"/><path d="M226 157 Q254 115 278 119 Q266 150 281 168 Q252 166 226 157Z" fill="url(#${id}-skin)" stroke="${dark}" stroke-width="5"/><path d="M94 193 Q162 230 229 176 Q206 229 145 235 Q111 228 94 193Z" fill="url(#${id}-belly)"/><path d="M104 102 Q128 75 148 101" fill="none" stroke="${glow}" stroke-width="5"/>${eye(195,145,12)}<path d="M94 91 Q80 52 102 39 M111 89 Q111 46 128 32" fill="none" stroke="${glow}" stroke-width="5" stroke-linecap="round"/>`;
@@ -749,8 +749,24 @@ const evtMult=()=>EVENT&&EVENT.until>Date.now()?EVENT.mult:1;
 /* Tiến độ boss của phòng hiện tại (mỗi phòng một bộ riêng) */
 function P(){
   if(!S.prog)S.prog={};
-  if(!S.prog[S.room])S.prog[S.room]={idx:0,loop:0};
-  return S.prog[S.room];
+  /* Mỗi phòng có vòng boss riêng; phòng mới bắt đầu bằng một boss ngẫu nhiên. */
+  if(!S.prog[S.room])S.prog[S.room]={idx:Math.floor(Math.random()*BOSSES.length),loop:0,seen:0};
+  const p=S.prog[S.room];
+  p.idx=Math.max(0,Math.floor(Number(p.idx)||0));
+  p.loop=Math.max(0,Math.floor(Number(p.loop)||0));
+  p.seen=Math.max(0,Math.floor(Number(p.seen)||0));
+  if(p.idx>=BOSSES.length){p.loop+=Math.floor(p.idx/BOSSES.length);p.idx=p.idx%BOSSES.length;}
+  return p;
+}
+/* Mỗi lượt chọn ngẫu nhiên một boss khác lượt trước; cứ đủ 10 lượt thì tăng vòng thưởng. */
+function advanceBossProgress(){
+  const p=P(),old=p.idx;
+  let next=Math.floor(Math.random()*(BOSSES.length-1));
+  if(next>=old)next++;
+  p.idx=next;
+  p.seen++;
+  if(p.seen%BOSSES.length===0)p.loop++;
+  return p;
 }
 
 function notify(t){const n=$('notice');n.textContent=t;n.classList.remove('hidden');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.add('hidden'),2400)}
@@ -943,7 +959,7 @@ function closeRoom(){$('roomView').classList.add('hidden')}
 function renderRooms(){
   $('roomList').innerHTML=ROOMS.map(r=>{
     const cur=r.id===S.room,ok=S.wallet>=r.need;
-    const bossList=BOSSES.map(b=>b.name).join(' → ');
+    const bossList='10 boss ngẫu nhiên • tự xuất hiện liên tục';
     const btn=cur?'<button disabled>✅ Đang ở đây</button>'
       :ok?`<button onclick="enterRoom('${r.id}')">Vào phòng</button>`
       :'<button disabled>Chưa đủ xu</button>';
@@ -1091,30 +1107,43 @@ function buyGun(id){
 }
 function equipGun(id){if(!S.owned[id])return;S.gunId=id;applyGun();renderShop();saveUser()}
 
-/* ===== BOSS BƠI NGANG (10 boss mỗi phòng) ===== */
+/* ===== BOSS BƠI NGẪU NHIÊN, XUẤT HIỆN LIÊN TỤC Ở TỪNG PHÒNG ===== */
 function spawnBoss(){
+  if(!user||!S)return;
+  clearTimeout(bossRespawn);bossRespawn=null;
   const p=P(),b=BOSSES[p.idx],rm=roomOf(S.room);
   B.max=Math.round(b.hp*rm.mult*(1+p.loop*.6));B.hp=B.max;B.alive=true;B.enraged=false;
   const bo=$('boss');
-  const speed=Math.max(7,(CFG.BOSS_SPEED[p.idx]||9)-p.loop*1.5);
+  /* Mỗi boss bơi theo hướng, độ cao và tốc độ ngẫu nhiên để cảnh không bị lặp. */
+  const speed=8.5+Math.random()*4.5;
   bo.className='boss '+(Math.random()<.5?'toRight':'toLeft');
-  bo.style.top=(18+Math.random()*40)+'%';
+  bo.style.top=(12+Math.random()*56)+'%';
+  bo.style.width='min('+(330+Math.floor(Math.random()*100))+'px, '+(60+Math.floor(Math.random()*13))+'%)';
   bo.style.animationDuration=speed+'s';
+  bo.dataset.bossIndex=String(p.idx);
   bo.innerHTML=b.svg();bo.style.display='block';
-  bo.onanimationend=e=>{if(e.target===bo&&e.animationName.indexOf('swim')===0&&B.alive)escapeBoss()};
+  bo.onanimationend=e=>{if(e.target===bo&&e.animationName.indexOf('swim')===0&&B.alive)escapeBoss('bơi hết màn hình')};
   $('arena').classList.remove('rage');
   $('bossName').textContent=b.name+(p.loop?' ⭐ x'+(p.loop+1):'');
   $('bossLv').textContent=b.lv;
-  $('status').textContent=rm.name+' • Boss '+(p.idx+1)+'/'+BOSSES.length;
-  renderBossBar();showWarn('🐉 '+b.name+' XUẤT HIỆN!');
+  $('status').textContent=rm.name+' • Boss ngẫu nhiên '+(p.idx+1)+'/10 • Tự đổi boss, không cần hạ';
+  renderBossBar();showWarn('🐉 BOSS '+(p.idx+1)+'/10: '+b.name+' XUẤT HIỆN!');
+  /* Dự phòng nếu trình duyệt không phát animationend: boss vẫn tự đổi sau một lượt bơi. */
+  bossRespawn=setTimeout(()=>{if(user&&S&&B.alive)escapeBoss('hết lượt bơi')},speed*1000+500);
 }
-function escapeBoss(){
+function escapeBoss(reason='bơi hết màn hình'){
+  if(!B.alive)return;
+  const bo=$('boss'),oldName=BOSSES[Number(bo.dataset.bossIndex)]?.name||'Boss';
   B.alive=false;
-  $('boss').style.display='none';
-  showWarn('🐉 BOSS ĐÃ BƠI THOÁT!');
-  notify('Boss bơi sang bờ bên kia, boss mới sắp xuất hiện');
+  const next=advanceBossProgress();
+  bo.style.display='none';bo.classList.remove('dying','hit','rage');
+  $('arena').classList.remove('rage');
   clearTimeout(bossRespawn);
-  bossRespawn=setTimeout(()=>{if(user)spawnBoss()},CFG.BOSS_RESPAWN_MS);
+  showWarn('🐉 '+oldName+' RỜI SÂN — BOSS MỚI ĐANG TỚI!');
+  addFeed('🌊 '+roomOf(S.room).name+': '+oldName+' '+reason+'; lượt tiếp theo '+BOSSES[next.idx].name);
+  notify('Boss mới sắp xuất hiện: '+BOSSES[next.idx].name);
+  saveUser();
+  bossRespawn=setTimeout(()=>{if(user&&S)spawnBoss()},550);
 }
 function renderBossBar(){
   const pct=B.max?Math.max(0,B.hp/B.max*100):0;
@@ -1151,8 +1180,8 @@ function killBoss(){
   $('boss').classList.add('dying');
   dropChest(p.idx<2?'common':p.idx<4?'rare':'gold');
   txPush('Thưởng','Boss','','',r);
-  p.idx++;if(p.idx>=BOSSES.length){p.idx=0;p.loop++}
-  clearTimeout(bossRespawn);bossRespawn=setTimeout(()=>{if(user)spawnBoss()},2600);
+  advanceBossProgress();
+  clearTimeout(bossRespawn);bossRespawn=setTimeout(()=>{if(user&&S)spawnBoss()},1400);
   renderWallet();saveUser();
 }
 function bossCharge(){
