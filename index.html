@@ -14,6 +14,7 @@ button:active:not(:disabled){transform:translateY(2px) scale(.97)}
 button:disabled{opacity:.45;cursor:not-allowed}
 button.red{background:linear-gradient(135deg,#b91c48,#f44d75);border-color:#ff7fa0}
 button.gold{background:linear-gradient(135deg,#e5a900,#ffdf62);color:#17223a;border-color:#ffe066}
+button.ghost{background:transparent;color:#7de8ff}
 button.busy{pointer-events:none;opacity:.85}
 .spin{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
@@ -48,7 +49,7 @@ input[type=checkbox]{width:auto}
 .gtile b{display:block;margin-top:6px;font-size:15px}
 .gtile small{color:#92b6d1;font-size:12px}
 
-/* Topbar & layout bắn cá */
+/* Bắn cá */
 .topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px;margin-bottom:12px}
 .money{margin-left:auto;color:#ffd34f;font-weight:900;font-size:19px}
 #evtBadge{color:#ff9e5e;font-weight:800}
@@ -94,7 +95,7 @@ input[type=checkbox]{width:auto}
 .feed{padding:8px 10px;max-height:170px;overflow:auto;font-size:12px;color:#b5ddf8}
 .feed div{padding:4px 0;border-bottom:1px solid #123353}
 
-/* Overlay cửa sổ trò chơi */
+/* Cửa sổ */
 .over{position:fixed;inset:0;z-index:80;background:#010817f0;padding:14px;overflow:auto}
 .ob{max-width:1100px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:16px;padding:14px}
 .oh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
@@ -124,19 +125,17 @@ input[type=checkbox]{width:auto}
 @keyframes dp{from{transform:rotate(-180deg) scale(.2)}to{transform:none}}
 .wheel{font-size:70px;text-align:center;margin:10px 0}
 .segs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
-.seg{border:1px solid #1c6090;border-radius:10px;padding:8px 10px;background:#071b37;font-size:13px;min-width:90px;text-align:center}
+.seg{border:1px solid #1c6090;border-radius:10px;padding:8px 10px;background:#071b37;font-size:13px;min-width:70px;text-align:center}
 .seg.on{border-color:#ffe66b;background:#13385b;box-shadow:0 0 12px #ffe66b}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 
-/* Thích ứng điện thoại */
 @media(max-width:850px){
   .screen{padding:10px}
   .authwrap{grid-template-columns:1fr}
   .layout{grid-template-columns:1fr}
   .arena{height:360px}
   .money{font-size:16px}
-  .ammos{grid-template-columns:repeat(4,1fr)}
   .controls button{flex:1 1 auto}
   .over{padding:6px}
   .ob{padding:10px}
@@ -159,12 +158,12 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <!-- ĐĂNG NHẬP -->
 <section id="authScreen" class="screen">
   <div class="brand">STOCK <span>&</span> FISH</div>
-  <p class="sub">BẮN CÁ THEO PHÒNG • BẦU CUA • VÒNG QUAY • ĐUA NGỰA • CHỨNG KHOÁN • CHƠI BẰNG XU ẢO</p>
+  <p class="sub">CÁC TRÒ CHƠI GIẢI TRÍ • CHƠI BẰNG XU ẢO</p>
   <div class="authwrap">
     <div class="card">
       <div style="font-size:50px;text-align:center">🐉 🐠 🐬 🦈</div>
       <h2>Đại dương săn thưởng!</h2>
-      <p>6 phòng từ Tập Bắn đến Huyền Thoại, mỗi phòng 5 boss. Bầu cua online, vòng quay, đua ngựa, cửa may rủi, chứng khoán giả lập.</p>
+      <p>6 phòng từ Tập Bắn đến Huyền Thoại, mỗi phòng 5 boss. Bầu cua online, vòng quay, đua ngựa, 6 trò nhanh, chứng khoán giả lập.</p>
       <p>🪙 Ví khởi đầu: <b class="price">100.000 xu</b></p>
       <p class="hint">Xu ảo, không nạp rút tiền thật.</p>
     </div>
@@ -188,7 +187,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
   </div>
 </section>
 
-<!-- TRANG CHỦ CHỌN TRÒ CHƠI -->
+<!-- TRANG CHỦ -->
 <section id="homeScreen" class="screen hidden">
   <div class="home">
     <div class="home-top">
@@ -204,6 +203,12 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <div class="gtile" onclick="goGame('lock')"><div class="ic">🔓</div><b>Mở khóa</b><small>Dừng kim đúng giữa</small></div>
       <div class="gtile" onclick="goGame('market')"><div class="ic">📈</div><b>Chứng khoán</b><small>Mua bán cổ phiếu ảo</small></div>
       <div class="gtile" onclick="goGame('shop')"><div class="ic">🔫</div><b>Kho súng</b><small>Mua và trang bị súng</small></div>
+      <div class="gtile" onclick="openMini('guess')"><div class="ic">🔢</div><b>Đoán số</b><small>1–100, 7 lượt</small></div>
+      <div class="gtile" onclick="openMini('scratch')"><div class="ic">🎟️</div><b>Cào thẻ</b><small>Trùng biểu tượng</small></div>
+      <div class="gtile" onclick="openMini('memory')"><div class="ic">🃏</div><b>Lật bài</b><small>Tìm đủ 6 đôi</small></div>
+      <div class="gtile" onclick="openMini('hilo')"><div class="ic">🎲</div><b>Lớn nhỏ</b><small>Đoán 3 xúc xắc</small></div>
+      <div class="gtile" onclick="openMini('pick')"><div class="ic">🎫</div><b>Bốc thăm</b><small>10 lá, 1 lá trúng</small></div>
+      <div class="gtile" onclick="openMini('treasure')"><div class="ic">⛏️</div><b>Kho báu</b><small>Lưới 5×5, tránh bom</small></div>
     </div>
     <div class="center" style="margin-top:16px"><button class="red" onclick="logout()">Thoát</button></div>
   </div>
@@ -294,7 +299,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
     <div class="oh">
       <b style="font-size:22px">🎲 BẦU CUA — <span id="bcRoom"></span></b>
       <div class="price">🪙 <span id="bcWallet"></span></div>
-      <button onclick="closeBC()">← Đóng</button>
+      <button onclick="backHome('bcView')">🏠 Trang chủ</button>
     </div>
     <div class="center" style="font-size:18px">Vòng kết thúc sau: <b class="price"><span id="bcTimer">--</span></b> giây</div>
     <div class="hint center">Mọi người trong phòng chơi chung một vòng, kết quả do máy chủ quay.</div>
@@ -321,7 +326,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
     <div class="oh">
       <b style="font-size:22px">🎡 VÒNG QUAY</b>
       <div class="price">🪙 <span id="wheelWallet"></span></div>
-      <button onclick="closeWheel()">← Đóng</button>
+      <button onclick="closeWheel()">🏠 Trang chủ</button>
     </div>
     <div class="hint center">Chọn mệnh giá rồi quay. Kết quả do máy chủ quyết định.</div>
     <div class="center" id="wheelBets" style="margin:10px 0"></div>
@@ -339,7 +344,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
     <div class="oh">
       <b style="font-size:22px">🐎 ĐUA NGỰA</b>
       <div class="price">🪙 <span id="horseWallet"></span></div>
-      <button onclick="closeHorse()">← Đóng</button>
+      <button onclick="closeHorse()">🏠 Trang chủ</button>
     </div>
     <div class="hint center">Chọn ngựa và mức cược. Về nhất ×5, về nhì ×2, còn lại mất cược.</div>
     <div id="horseTrack" style="margin:12px 0"></div>
@@ -363,19 +368,19 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
     <div class="oh">
       <div><b style="font-size:22px">🔫 KHO SÚNG</b><div class="hint">Súng đắt hơn thì hình đẹp hơn và sát thương cao hơn.</div></div>
       <div class="price">🪙 <span id="shopWallet"></span></div>
-      <button onclick="closeShop()">← Đóng</button>
+      <button onclick="closeShop()">🏠 Trang chủ</button>
     </div>
     <div class="grid" id="shopGrid"></div>
   </div>
 </div>
 
-<!-- TRÒ CHƠI: CỬA MAY RỦI & MỞ KHÓA -->
+<!-- CỬA & MỞ KHÓA -->
 <div id="gamesView" class="over hidden">
   <div class="ob">
     <div class="oh">
       <b style="font-size:22px">🎮 CỬA & MỞ KHÓA</b>
       <div class="price">🪙 <span id="gameWallet"></span></div>
-      <button onclick="closeGames()">← Đóng</button>
+      <button onclick="closeGames()">🏠 Trang chủ</button>
     </div>
     <div class="tabs2">
       <button onclick="gameTab('door')">🚪 Cửa may rủi</button>
@@ -412,7 +417,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
     <div class="oh">
       <b style="font-size:22px">📈 CHỨNG KHOÁN</b>
       <div class="price">🪙 <span id="marketWallet"></span></div>
-      <button onclick="closeMarket()">← Quay lại</button>
+      <button onclick="closeMarket()">🏠 Trang chủ</button>
     </div>
     <div class="panel" style="overflow:auto">
       <table>
@@ -430,6 +435,18 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <div class="panel"><div class="ph">💼 Danh mục</div><div class="pb" id="mkPort"></div></div>
       <div class="panel"><div class="ph">🧾 Lịch sử</div><div class="pb" id="mkTx" style="max-height:220px;overflow:auto"></div></div>
     </div>
+  </div>
+</div>
+
+<!-- TRÒ NHANH (đợt 1) -->
+<div id="miniView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b id="miniTitle" style="font-size:22px"></b>
+      <div class="price">🪙 <span id="miniWallet"></span></div>
+      <button onclick="closeMini()">🏠 Trang chủ</button>
+    </div>
+    <div id="miniBody"></div>
   </div>
 </div>
 
@@ -485,7 +502,7 @@ const GUNS=[
  {id:'galaxy',name:'Súng Thiên Hà',price:500000000,mult:22,c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8'}
 ];
 
-/* ===== HÌNH CÁ & BOSS (phong cách anime) ===== */
+/* ===== HÌNH CÁ & BOSS ===== */
 const SHADOW='<ellipse cx="100" cy="122" rx="70" ry="7" fill="#000" opacity=".35"/>';
 const SPARK='<circle cx="150" cy="30" r="3" fill="#fff"/><circle cx="36" cy="44" r="2" fill="#fff"/>';
 
@@ -785,7 +802,7 @@ function endSession(){
   $('authScreen').classList.remove('hidden');
 }
 
-/* ===== ĐIỀU HƯỚNG: TRANG CHỦ <-> TRÒ CHƠI ===== */
+/* ===== ĐIỀU HƯỚNG ===== */
 function enterGame(){
   $('authScreen').classList.add('hidden');
   showHome();
@@ -808,8 +825,8 @@ function showHome(){
   $('gameScreen').classList.add('hidden');
   $('authScreen').classList.add('hidden');
   $('homeScreen').classList.remove('hidden');
-  if(S)$('homeWallet').textContent=fmt(S.wallet);
   clearAll();
+  renderWallet();
 }
 function goGame(g){
   $('homeScreen').classList.add('hidden');
@@ -828,7 +845,6 @@ function goGame(g){
   if(g==='market')return openMarket();
   if(g==='shop')return openShop();
 }
-/* Khi đóng cửa sổ trò chơi thì quay về trang chủ */
 function backHome(viewId){$(viewId).classList.add('hidden');showHome()}
 
 function flushBeacon(){
@@ -858,7 +874,7 @@ function renderBetOpts(){
 function renderWallet(){
   if(!S)return;
   $('wallet').textContent=fmt(S.wallet);
-  ['homeWallet','shopWallet','gameWallet','marketWallet','bcWallet','wheelWallet','horseWallet'].forEach(id=>{const el=$(id);if(el)el.textContent=fmt(S.wallet)});
+  ['homeWallet','shopWallet','gameWallet','marketWallet','bcWallet','wheelWallet','horseWallet','miniWallet'].forEach(id=>{const el=$(id);if(el)el.textContent=fmt(S.wallet)});
 }
 function renderAmmo(){
   $('ammoList').innerHTML=AMMOS.map((a,i)=>`<div class="ammo ${i===S.ammo?'on':''}" onclick="S.ammo=${i};renderAmmo();saveUser()"><i>${a[0]}</i>${a[1]}<br><small>x${a[2]}</small></div>`).join('');
@@ -1007,7 +1023,7 @@ function buyGun(id){
 }
 function equipGun(id){if(!S.owned[id])return;S.gunId=id;applyGun();renderShop();saveUser()}
 
-/* ===== BOSS BƠI NGANG ===== */
+/* ===== BOSS ===== */
 function spawnBoss(){
   const p=P(),b=BOSSES[p.idx],rm=roomOf(S.room);
   B.max=Math.round(b.hp*rm.mult*(1+p.loop*.6));B.hp=B.max;B.alive=true;B.enraged=false;
@@ -1164,7 +1180,6 @@ function autoShot(){
 }
 $('boss').onclick=e=>{e.stopPropagation();if(B.alive)shootAt(e,'boss')};
 
-/* ===== KỸ NĂNG ===== */
 function castNet(){
   if(!user)return;
   if(!GAMES.fish)return notify('Trò chơi bắn cá đang tạm tắt.');
@@ -1252,7 +1267,7 @@ async function loadBoard(){
   $('boardBox').innerHTML=all.map((r,i)=>`<div class="row" style="${r.name===user?'background:#0c3a5e;border-radius:6px':''}"><span>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${r.name}</span><span>🪙 ${fmt(r.score)}</span></div>`).join('');
 }
 
-/* ===== BẠN BÈ & TẶNG XU & NHẬP MÃ ===== */
+/* ===== BẠN BÈ, TẶNG XU, NHẬP MÃ ===== */
 async function addFriend(){
   if(!user)return;
   const n=$('friendName').value.trim();
@@ -1424,7 +1439,7 @@ function drawChart(){
   $('mkChartInfo').innerHTML=`<b>${s.s}</b> • ${fmt(s.p)} xu • ${((h[h.length-1]/h[0]-1)*100).toFixed(2)}% trong phiên`;
 }
 
-/* ===== CỬA MAY RỦI & MỞ KHÓA ===== */
+/* ===== CỬA & MỞ KHÓA ===== */
 function openGames(){$('gamesView').classList.remove('hidden');gameTab('door')}
 function closeGames(){$('gamesView').classList.add('hidden');stopLock();showHome()}
 function gameTab(n){
@@ -1478,6 +1493,223 @@ function lockPress(){
   $('lockRes').innerHTML=`<span class="${net>=0?'up':'down'}">${label} ${net>=0?'+':'−'}${fmt(Math.abs(net))} xu</span>`;
   txPush('Mở khóa','',bet,'',net);
   renderWallet();saveUser();
+}
+
+/* ===== TRÒ NHANH (đợt 1, chạy trên trình duyệt) ===== */
+const MINI_GAMES={
+  guess:{name:'Đoán số 1–100',icon:'🔢'},
+  scratch:{name:'Cào thẻ',icon:'🎟️'},
+  memory:{name:'Lật bài tìm đôi',icon:'🃏'},
+  hilo:{name:'Đoán lớn nhỏ',icon:'🎲'},
+  pick:{name:'Bốc thăm',icon:'🎫'},
+  treasure:{name:'Đào kho báu 5×5',icon:'⛏️'}
+};
+const MINI_BETS=[1000,10000,50000,100000];
+function openMini(id){
+  if(!user||!S)return;
+  if(!GAMES.fish&&false)return;
+  $('miniTitle').textContent=MINI_GAMES[id].icon+' '+MINI_GAMES[id].name;
+  $('miniView').classList.remove('hidden');
+  $('homeScreen').classList.add('hidden');
+  ({guess:miniGuess,scratch:miniScratch,memory:miniMemory,hilo:miniHiLo,pick:miniPick,treasure:miniTreasure})[id]();
+  renderWallet();
+}
+function closeMini(){$('miniView').classList.add('hidden');showHome()}
+function miniBetSelect(id){
+  return `<select id="${id}Bet" class="inline">${MINI_BETS.map(b=>`<option value="${b}">${fmt(b)}</option>`).join('')}</select>`;
+}
+function canBet(b){if(b>S.wallet){notify('Không đủ xu.');return false}return true}
+
+/* 1. Đoán số 1–100: 7 lượt */
+let guessSecret=0,guessTry=0,guessBet=0;
+function miniGuess(){
+  guessSecret=rnd(1,100);guessTry=0;guessBet=0;
+  $('miniBody').innerHTML=`<div class="center">
+    <div class="hint">Máy nghĩ một số từ 1 đến 100. Bạn có 7 lượt. Đoán càng sớm thưởng càng lớn.</div>
+    <div style="margin:10px 0">Cược: ${miniBetSelect('guess')}</div>
+    <div class="btns" style="justify-content:center"><input id="guessIn" type="number" min="1" max="100" style="width:140px"><button onclick="guessDo()">Đoán</button></div>
+    <div id="guessMsg" class="res"></div>
+    <div class="hint" id="guessInfo"></div>
+    <button class="ghost" onclick="miniGuess()">Ván mới</button></div>`;
+}
+function guessDo(){
+  const v=Math.floor(Number($('guessIn').value));
+  if(guessTry===0){
+    const b=Number($('guessBet').value);
+    if(!canBet(b))return;
+    S.wallet-=b;guessBet=b;
+  }
+  if(!(v>=1&&v<=100))return notify('Nhập số từ 1 đến 100');
+  guessTry++;
+  if(v===guessSecret){
+    const mult=[5,4,3,2,2,1.5,1][guessTry-1]||1;
+    const pay=Math.floor(guessBet*mult);S.wallet+=pay;
+    $('guessMsg').innerHTML=`<span class="up">🎉 Đúng! Lượt ${guessTry}, nhận ${fmt(pay)} xu</span>`;
+    txPush('Đoán số','',guessBet,'',pay-guessBet);guessTry=99;
+  }else if(guessTry>=7){
+    $('guessMsg').innerHTML=`<span class="down">Hết lượt. Số đúng là ${guessSecret}</span>`;
+    txPush('Đoán số','',guessBet,'',-guessBet);guessTry=99;
+  }else{
+    $('guessMsg').textContent=v<guessSecret?'Số cần tìm lớn hơn':'Số cần tìm nhỏ hơn';
+  }
+  $('guessInfo').textContent=guessTry<99?'Lượt '+guessTry+'/7':'';
+  renderWallet();saveUser();
+}
+
+/* 2. Cào thẻ */
+const SCR=[['🍒',2],['🍋',3],['💎',5],['⭐',10],['🔔',0],['🍀',0]];
+function miniScratch(){
+  $('miniBody').innerHTML=`<div class="center">
+    <div class="hint">Cào 3 ô. Trùng 2 biểu tượng nhận ×2, trùng 3 nhận thưởng lớn.</div>
+    <div style="margin:10px 0">Cược: ${miniBetSelect('scr')}</div>
+    <div class="segs" id="scrCells"><div class="seg">❔</div><div class="seg">❔</div><div class="seg">❔</div></div>
+    <button onclick="scratchDo()">🎟️ Cào</button><div class="res" id="scrRes"></div></div>`;
+}
+function scratchDo(){
+  const b=Number($('scrBet').value);if(!canBet(b))return;
+  S.wallet-=b;
+  const cells=[0,1,2].map(()=>SCR[rnd(0,SCR.length-1)]);
+  $('scrCells').innerHTML=cells.map(c=>`<div class="seg on" style="font-size:30px">${c[0]}</div>`).join('');
+  let mult=0;
+  if(cells[0][0]===cells[1][0]&&cells[1][0]===cells[2][0])mult=cells[0][1]*5;
+  else if(cells[0][0]===cells[1][0]||cells[1][0]===cells[2][0]||cells[0][0]===cells[2][0])mult=2;
+  const pay=Math.floor(b*mult);S.wallet+=pay;
+  $('scrRes').innerHTML=pay>0?`<span class="up">🎉 Nhận ${fmt(pay)} xu (×${mult})</span>`:`<span class="down">Không trúng, mất ${fmt(b)} xu</span>`;
+  txPush('Cào thẻ','',b,'',pay-b);renderWallet();saveUser();
+}
+
+/* 3. Lật bài tìm đôi: 12 lá, tìm đủ 6 đôi thưởng ×4 */
+let memCards=[],memOpen=[],memFound=0,memLock=false,memBet=0;
+function miniMemory(){
+  $('miniBody').innerHTML=`<div class="center">
+    <div class="hint">Lật 2 lá mỗi lượt, tìm đôi giống nhau. Tìm đủ 6 đôi nhận ×4.</div>
+    <div style="margin:10px 0">Cược: ${miniBetSelect('mem')}</div>
+    <button onclick="memoryStart()">Bắt đầu</button>
+    <div id="memGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:340px;margin:12px auto"></div>
+    <div class="res" id="memRes"></div></div>`;
+}
+function memoryStart(){
+  memBet=Number($('memBet').value);if(!canBet(memBet))return;
+  S.wallet-=memBet;
+  const vals=['🐠','🐙','🦀','🐢','🐬','🦈'];
+  memCards=[...vals,...vals].sort(()=>Math.random()-.5).map((v,i)=>({v,i,up:false,done:false}));
+  memOpen=[];memFound=0;memLock=false;
+  $('memRes').textContent='';renderMem();renderWallet();
+}
+function renderMem(){
+  $('memGrid').innerHTML=memCards.map(c=>`<div class="seg ${c.up||c.done?'on':''}" style="font-size:24px;cursor:pointer;padding:12px 0" onclick="memFlip(${c.i})">${c.up||c.done?c.v:'❔'}</div>`).join('');
+}
+function memFlip(i){
+  const c=memCards[i];
+  if(memLock||c.up||c.done)return;
+  c.up=true;memOpen.push(c);renderMem();
+  if(memOpen.length===2){
+    memLock=true;
+    const [a,b]=memOpen;
+    setTimeout(()=>{
+      if(a.v===b.v){a.done=b.done=true;memFound++}
+      else{a.up=b.up=false}
+      memOpen=[];memLock=false;renderMem();
+      if(memFound===6){
+        const pay=memBet*4;S.wallet+=pay;
+        $('memRes').innerHTML=`<span class="up">🎉 Tìm đủ 6 đôi! Nhận ${fmt(pay)} xu</span>`;
+        txPush('Lật bài','',memBet,'',pay-memBet);renderWallet();saveUser();
+      }
+    },600);
+  }
+}
+
+/* 4. Đoán lớn nhỏ: 3 xúc xắc, 11–17 là LỚN, 4–10 là NHỎ, đúng ×1,95 */
+function miniHiLo(){
+  $('miniBody').innerHTML=`<div class="center">
+    <div class="hint">Tổng 3 xúc xắc 11–17 là LỚN, 4–10 là NHỎ. Đoán đúng nhận ×1,95.</div>
+    <div style="margin:10px 0">Cược: ${miniBetSelect('hl')}</div>
+    <div class="btns" style="justify-content:center">
+      <button class="gold" onclick="hiloDo('L')">⬆️ LỚN</button>
+      <button class="red" onclick="hiloDo('N')">⬇️ NHỎ</button></div>
+    <div class="bcdice" id="hlDice"></div><div class="res" id="hlRes"></div></div>`;
+}
+function hiloDo(pick){
+  const b=Number($('hlBet').value);if(!canBet(b))return;
+  S.wallet-=b;
+  const d=[rnd(1,6),rnd(1,6),rnd(1,6)],t=d[0]+d[1]+d[2];
+  const win=(t>=11?'L':'N')===pick;
+  $('hlDice').innerHTML=d.map(x=>`<div class="die">${['⚀','⚁','⚂','⚃','⚄','⚅'][x-1]}</div>`).join('');
+  const pay=win?Math.floor(b*1.95):0;S.wallet+=pay;
+  $('hlRes').innerHTML=win?`<span class="up">🎉 Tổng ${t}. Thắng +${fmt(pay-b)} xu</span>`:`<span class="down">Tổng ${t}. Thua ${fmt(b)} xu</span>`;
+  txPush('Lớn nhỏ','',b,'',pay-b);renderWallet();saveUser();
+}
+
+/* 5. Bốc thăm: 10 lá, 1 lá ×4, 2 lá hoàn cược, 7 lá trượt */
+let pkBetHold=0,pkArr=[],pkPlaying=false;
+function miniPick(){
+  $('miniBody').innerHTML=`<div class="center">
+    <div class="hint">10 lá: 1 lá ×4, 2 lá hoàn cược, 7 lá trượt. Bấm bốc thăm rồi chọn 1 lá.</div>
+    <div style="margin:10px 0">Cược: ${miniBetSelect('pk')}</div>
+    <button onclick="pickDo()">🎫 Bốc thăm</button>
+    <div class="grid" id="pkGrid" style="grid-template-columns:repeat(5,1fr);max-width:400px;margin:12px auto"></div>
+    <div class="res" id="pkRes"></div></div>`;
+  $('pkGrid').innerHTML=[...Array(10)].map((_,i)=>`<div class="seg" style="cursor:pointer;font-size:22px;padding:14px 0" onclick="pickChoose(${i})">🎫</div>`).join('');
+}
+function pickDo(){
+  const b=Number($('pkBet').value);if(!canBet(b))return;
+  S.wallet-=b;pkBetHold=b;
+  pkArr=['x4','h','h','t','t','t','t','t','t','t'].sort(()=>Math.random()-.5);
+  pkPlaying=true;$('pkRes').textContent='Chọn một lá';
+  renderWallet();
+}
+function pickChoose(i){
+  if(!pkPlaying)return notify('Bấm 🎫 Bốc thăm trước');
+  const r=pkArr[i];pkPlaying=false;
+  const pay=r==='x4'?pkBetHold*4:r==='h'?pkBetHold:0;
+  S.wallet+=pay;
+  const txt={x4:'🎉 Trúng ×4!',h:'😐 Hoàn cược',t:'💥 Trượt'}[r];
+  $('pkRes').innerHTML=`<span class="${pay>pkBetHold?'up':pay===pkBetHold?'':'down'}">${txt} Nhận ${fmt(pay)} xu</span>`;
+  txPush('Bốc thăm','',pkBetHold,'',pay-pkBetHold);renderWallet();saveUser();
+}
+
+/* 6. Đào kho báu 5×5: 1 kho báu ×5, 4 bom */
+let trCells=[],trBet=0,trDone=false;
+function miniTreasure(){
+  $('miniBody').innerHTML=`<div class="center">
+    <div class="hint">Lưới 5×5 có 1 kho báu (×5) và 4 bom. Đào trúng bom là mất cược.</div>
+    <div style="margin:10px 0">Cược: ${miniBetSelect('tr')}</div>
+    <button onclick="treasureStart()">⛏️ Bắt đầu</button>
+    <div id="trGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:320px;margin:12px auto"></div>
+    <div class="res" id="trRes"></div></div>`;
+}
+function treasureStart(){
+  trBet=Number($('trBet').value);if(!canBet(trBet))return;
+  S.wallet-=trBet;
+  const pos=[...Array(25).keys()].sort(()=>Math.random()-.5);
+  trCells=Array(25).fill('');
+  trCells[pos[0]]='gold';
+  for(let i=1;i<=4;i++)trCells[pos[i]]='bomb';
+  trDone=false;renderTreasure();
+  $('trRes').textContent='Chọn một ô để đào';
+  renderWallet();
+}
+function renderTreasure(){
+  $('trGrid').innerHTML=trCells.map((c,i)=>`<div class="seg" style="cursor:pointer;padding:10px 0;font-size:20px" onclick="digCell(${i})">${c==='gold'&&trDone?'👑':c==='bomb'&&trDone?'💣':(c==='dug'?'🟫':'⬜')}</div>`).join('');
+}
+function digCell(i){
+  if(trDone)return;
+  const c=trCells[i];
+  if(c==='gold'||c==='bomb'){
+    trDone=true;
+    if(c==='gold'){
+      const pay=trBet*5;S.wallet+=pay;
+      $('trRes').innerHTML=`<span class="up">👑 Tìm thấy kho báu! Nhận ${fmt(pay)} xu</span>`;
+      txPush('Kho báu','',trBet,'',pay-trBet);
+    }else{
+      $('trRes').innerHTML=`<span class="down">💣 Trúng bom, mất ${fmt(trBet)} xu</span>`;
+      txPush('Kho báu','',trBet,'',-trBet);
+    }
+    renderTreasure();renderWallet();saveUser();
+  }else{
+    trCells[i]='dug';renderTreasure();
+    $('trRes').textContent='Ô an toàn. Tiếp tục đào.';
+  }
 }
 
 renderAmmo();
