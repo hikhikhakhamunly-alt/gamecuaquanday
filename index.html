@@ -3,416 +3,554 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Stock & Fish — Đại Dương Cyber Neon</title>
+<title>Stock & Fish — Đại dương Cyber Neon</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#01040f;color:#eefaff;font:14px/1.4 system-ui,sans-serif;overflow-x:hidden}
-button{cursor:pointer;border:1px solid #00f0ff;color:#fff;background:linear-gradient(135deg,#0055ff,#00d9ff);border-radius:10px;padding:8px 14px;font-weight:800;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 0 12px rgba(0,217,255,0.4)}
-button:hover{filter:brightness(1.2);box-shadow:0 0 20px rgba(0,240,255,0.8);transform:translateY(-1px)}
-button:active{transform:translateY(2px) scale(.97)}
-button.red{background:linear-gradient(135deg,#ff0055,#ff3b00);border-color:#ff6699;box-shadow:0 0 12px rgba(255,0,85,0.4)}
-button.gold{background:linear-gradient(135deg,#ffaa00,#ffe600);color:#0a0e1a;border-color:#fff066;box-shadow:0 0 12px rgba(255,230,0,0.5)}
-button.ghost{background:transparent;color:#7de8ff;border-color:#176ca6;box-shadow:none}
-
-.screen{min-height:100vh;padding:16px;background:radial-gradient(ellipse at 50% 0,#0a457a 0,#031838 50%,#01040f 100%)}
-.brand{text-align:center;font-size:clamp(32px,6vw,56px);font-weight:1000;color:#fff;text-shadow:0 0 12px #00f0ff, 0 0 24px #0055ff;margin-top:20px}
-.brand span{color:#ffe600;text-shadow:0 0 12px #ffe600}
-.sub{text-align:center;color:#9cecff;margin:6px 0 24px;font-weight:600}
-
-.authwrap{max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.card{border:1px solid #00f0ff44;border-radius:16px;background:linear-gradient(145deg,#07315be6,#04132df2);padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
-input,select{background:#06132a;color:#fff;border:1px solid #147bb3;border-radius:8px;padding:10px;width:100%;margin:6px 0;outline:none}
-input:focus,select:focus{border-color:#00f0ff;box-shadow:0 0 10px rgba(0,240,255,0.5)}
-
-.home{max-width:1100px;margin:0 auto;padding:6px}
-.home-top{display:flex;justify-content:space-between;align-items:center;background:#04142be8;border:1px solid #00f0ff55;border-radius:14px;padding:14px 20px;box-shadow:0 0 20px rgba(0,240,255,0.2)}
-.gamegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
-@media(min-width:760px){.gamegrid{grid-template-columns:repeat(4,1fr)}}
-.gtile{border:1px solid #147bb3;border-radius:16px;background:linear-gradient(145deg,#072b4f,#04142d);padding:20px 10px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.gtile:hover{transform:translateY(-4px);border-color:#00f0ff;box-shadow:0 6px 20px rgba(0,240,255,0.4)}
-.gtile .ic{font-size:44px;filter:drop-shadow(0 0 10px rgba(0,240,255,0.6))}
-.gtile b{display:block;margin-top:8px;font-size:16px;color:#fff}
-.gtile small{color:#8daec7;font-size:12px}
-
-.topbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#04142be8;border:1px solid #147bb3;border-radius:14px;padding:12px 18px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,0.4)}
-.money{margin-left:auto;color:#ffe600;font-weight:900;font-size:20px;text-shadow:0 0 10px rgba(255,230,0,0.6)}
-
-/* ARENA BẮN CÁ ĐỈNH CAO */
-.arena-wrap{position:relative;width:100%;height:520px;background:#02091d;border-radius:16px;border:2px solid #00f0ff66;overflow:hidden;box-shadow:inset 0 0 50px rgba(0,0,0,0.9), 0 0 30px rgba(0,240,255,0.2)}
-canvas{display:block;width:100%;height:100%}
-
-.controls{display:flex;gap:10px;align-items:center;background:#03132b;padding:12px 16px;border-radius:14px;margin-top:12px;border:1px solid #147bb3}
-.controls select{width:auto;margin:0}
-
-.price{color:#ffe600;font-weight:900}
+body{margin:0;background:#01040f;color:#eefaff;font:14px/1.4 system-ui,Segoe UI,Arial,sans-serif;overflow-x:hidden}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:1px solid #2edfff;color:#fff;background:linear-gradient(135deg,#0876ed,#09c8f1);border-radius:10px;padding:8px 12px;font-weight:800;transition:transform .12s,filter .15s,opacity .15s;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 0 10px rgba(46,223,255,0.3)}
+button:hover:not(:disabled){filter:brightness(1.2);box-shadow:0 0 16px rgba(46,223,255,0.6)}
+button:active:not(:disabled){transform:translateY(2px) scale(.97)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.red{background:linear-gradient(135deg,#b91c48,#f44d75);border-color:#ff7fa0;box-shadow:0 0 10px rgba(244,77,117,0.3)}
+button.gold{background:linear-gradient(135deg,#e5a900,#ffdf62);color:#17223a;border-color:#ffe066;box-shadow:0 0 10px rgba(255,223,98,0.4)}
+button.ghost{background:transparent;color:#7de8ff}
+button.busy{pointer-events:none;opacity:.85}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:9px;width:100%}
+input[type=checkbox]{width:auto}
+.inline{width:auto;display:inline-block}
 .hidden{display:none!important}
+.hint{color:#92b6d1;font-size:12px}
+.up{color:#47ffb3}.down{color:#ff7099}
+.price{color:#ffd34f;font-weight:900}
+.center{text-align:center}
+.w{width:100%;margin-top:6px}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center}
+.screen{min-height:100vh;padding:16px;background:radial-gradient(ellipse at 50% 0,#07568b 0,#031735 44%,#02091b 100%)}
+.brand{text-align:center;font-size:clamp(28px,5vw,52px);font-weight:1000;color:#fff;text-shadow:0 3px 0 #0750a0,0 0 22px #00d9ff;margin-top:20px}
+.brand span{color:#ffd34f}
+.sub{text-align:center;color:#9cecff;margin:6px 0 20px}
+.authwrap{max-width:820px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{border:1px solid #159fe8;border-radius:16px;background:linear-gradient(145deg,#07315bdb,#04132df2);padding:20px}
+.card input{margin:6px 0}
+.link{color:#7de8ff;text-decoration:underline;cursor:pointer}
+.home{max-width:1100px;margin:0 auto;padding:6px}
+.home-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:12px 16px}
+.home-top h2{margin:0;font-size:20px}
+.gamegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:760px){.gamegrid{grid-template-columns:repeat(4,1fr)}}
+.gtile{border:1px solid #1c6090;border-radius:16px;background:linear-gradient(145deg,#07315b,#04132d);padding:18px 10px;text-align:center;cursor:pointer;transition:transform .15s,border-color .15s;min-height:132px;display:flex;flex-direction:column;justify-content:center;align-items:center;color:inherit;text-decoration:none}
+.gtile:hover{transform:translateY(-3px);border-color:#ffd34f;box-shadow:0 0 15px rgba(255,211,79,0.3)}
+.gtile .ic{font-size:40px;filter:drop-shadow(0 0 8px rgba(0,217,255,0.5))}
+.gtile b{display:block;margin-top:6px;font-size:15px}
+.gtile small{color:#92b6d1;font-size:12px}
+.topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px;margin-bottom:12px}
+.money{margin-left:auto;color:#ffd34f;font-weight:900;font-size:19px}
+#evtBadge{color:#ff9e5e;font-weight:800}
+#annBar{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#b91c48,#e5a900);color:#fff;text-align:center;padding:8px;font-weight:800;z-index:98}
+.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.9fr);gap:12px}
+.panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:14px;overflow:hidden;margin-bottom:12px}
+.ph{padding:10px 12px;background:#092b50;border-bottom:1px solid #13537d;font-weight:900;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.pb{padding:10px 12px;font-size:13px;color:#b5ddf8}
+.arena{position:relative;height:480px;overflow:hidden;background:radial-gradient(ellipse at 50% 0,#16dfff 0,#0a5fa8 35%,#02091b 100%)}
+.arena.rage{background:radial-gradient(ellipse at 50% 0,#ffb3b3 0,#c4305a 25%,#5a0f2e 60%,#1a0212 100%)}
+.arena.shake{animation:shk .35s}
+@keyframes shk{0%,100%{transform:translate(0,0)}25%{transform:translate(-6px,4px)}50%{transform:translate(5px,-4px)}75%{transform:translate(-3px,2px)}}
+.fish{position:absolute;width:84px;cursor:pointer;z-index:2;filter:drop-shadow(0 0 10px #00f0ff);transition:filter .2s}
+.fish:hover{filter:drop-shadow(0 0 18px #ffe600) brightness(1.2)}
+.fish svg{width:100%;height:auto;display:block}
+.fish.dying{opacity:0;transform:scale(.3) rotate(180deg);transition:all .4s}
+.boss{position:absolute;top:30%;left:-30%;width:min(230px,40%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 20px #ff0055)}
+.boss svg{width:100%;height:auto;display:block}
+.boss.toRight{animation-name:swimRight;transform:translateY(-50%) scaleX(-1)}
+.boss.toLeft{animation-name:swimLeft}
+@keyframes swimRight{from{left:-30%}to{left:110%}}
+@keyframes swimLeft{from{left:110%}to{left:-30%}}
+.boss.rage{filter:drop-shadow(0 0 30px #ff1f5a) hue-rotate(-30deg)}
+.boss.hit svg{animation:bh .2s}
+@keyframes bh{0%{scale:1}40%{scale:.9}100%{scale:1}}
+.boss.dying{opacity:0;transform:translateY(-50%) scale(.3) rotate(200deg);transition:all .9s}
+.bossbar{position:absolute;left:10px;right:10px;top:8px;z-index:6;text-align:center;text-shadow:0 2px 4px #001a33}
+.hpo{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
+.hpi{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .25s}
+.cannon{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:120px;z-index:6;filter:drop-shadow(0 0 15px #00f0ff)}
+.cannon svg{width:100%;height:100%}
+.dmg{position:absolute;font-weight:900;font-size:20px;pointer-events:none;z-index:9;text-shadow:0 2px 4px #001a33;animation:pop .85s forwards;white-space:nowrap;color:#ffd34f}
+@keyframes pop{to{transform:translateY(-60px);opacity:0}}
+.warn{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);font-size:clamp(22px,4vw,44px);font-weight:1000;color:#ffe600;text-shadow:0 0 16px #ff0055;z-index:20;pointer-events:none;animation:wp 1s forwards;white-space:nowrap}
+@keyframes wp{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:0}}
+.controls{padding:10px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;background:#03132b}
+.controls select{width:auto}
+.ammos{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px}
+.ammo{padding:8px 4px;text-align:center;border:1px solid #165b90;border-radius:10px;background:#071b37;cursor:pointer;font-size:12px}
+.ammo.on{border-color:#ffe66b;background:#13385b}
+.ammo i{font-style:normal;font-size:22px;display:block}
+.row{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid #123a60}
+.feed{padding:8px 10px;max-height:170px;overflow:auto;font-size:12px;color:#b5ddf8}
+.feed div{padding:4px 0;border-bottom:1px solid #123353}
+.over{position:fixed;inset:0;z-index:80;background:#010817f0;padding:14px;overflow:auto}
+.ob{max-width:1100px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:16px;padding:14px}
+.oh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.gc{border:1px solid #1c6090;border-radius:12px;background:#071b37;padding:10px;text-align:center}
+.gc.eq{border-color:#47ffb3}
+.gc svg{height:100px;width:auto}
+.gc button{width:100%;margin-top:6px;font-size:13px}
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.rcard{border:1px solid #1c6090;border-radius:14px;background:#071b37;padding:12px}
+.rcard.cur{border-color:#47ffb3;box-shadow:0 0 12px #47ffb3}
+.rt{font-size:18px;font-weight:900;margin-bottom:4px}
+.tabs2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;justify-content:center}
+.res{text-align:center;font-weight:900;font-size:18px;min-height:28px;margin-top:8px}
+.doors{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:14px 0}
+.door{width:120px;height:160px;border-radius:14px;border:2px solid #2edfff;background:linear-gradient(145deg,#1d4f8a,#0b2550);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:44px;cursor:pointer}
+.door small{font-size:12px;color:#9edcff;margin-top:6px}
+.lock{position:relative;height:50px;margin:24px auto;max-width:600px;border-radius:14px;background:#071b37;border:2px solid #2edfff;overflow:hidden}
+.zn{position:absolute;top:0;bottom:0}
+.needle{position:absolute;top:-6px;bottom:-6px;width:6px;margin-left:-3px;background:#fff;box-shadow:0 0 12px #fff;border-radius:4px}
+.bcgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:600px;margin:10px auto}
+.bcf{border:2px solid #1c6090;border-radius:14px;background:#071b37;padding:10px;text-align:center;cursor:pointer;user-select:none}
+.bcf:hover{border-color:#ffd34f}
+.bcf .e{font-size:40px}
+.bcdice{display:flex;gap:14px;justify-content:center;min-height:110px;align-items:center;margin:12px 0}
+.die{width:90px;height:90px;display:flex;align-items:center;justify-content:center;font-size:52px;background:#fff;border-radius:16px;box-shadow:0 5px 0 #9aa8c2;animation:dp .5s}
+@keyframes dp{from{transform:rotate(-180deg) scale(.2)}to{transform:none}}
+.wheel{font-size:70px;text-align:center;margin:10px 0}
+.segs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.seg{border:1px solid #1c6090;border-radius:10px;padding:8px 10px;background:#071b37;font-size:13px;min-width:70px;text-align:center}
+.seg.on{border-color:#ffe66b;background:#13385b;box-shadow:0 0 12px #ffe66b}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
+@media(max-width:850px){
+  .screen{padding:10px}
+  .authwrap{grid-template-columns:1fr}
+  .layout{grid-template-columns:1fr}
+  .arena{height:360px}
+  .money{font-size:16px}
+  .controls button{flex:1 1 auto}
+  .over{padding:6px}
+  .ob{padding:10px}
+  .bcgrid{grid-template-columns:repeat(3,1fr);gap:6px}
+  .bcf .e{font-size:30px}
+}
+@media(max-width:480px){
+  .arena{height:300px}
+  .cannon{width:90px;height:90px}
+  .boss{width:min(170px,45%)}
+  .topbar button{padding:6px 8px;font-size:12px}
+}
 </style>
 </head>
 <body>
 
-<!-- MÀN ĐĂNG NHẬP -->
+<div id="notice" class="hidden" style="position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:10px 16px;z-index:99;max-width:90%;text-align:center"></div>
+<div id="annBar" class="hidden"></div>
+
+<!-- ĐĂNG NHẬP -->
 <section id="authScreen" class="screen">
   <div class="brand">STOCK <span>&</span> FISH</div>
-  <p class="sub">ĐẠI CHIẾN ĐẠI DƯƠNG • ĐỒ HỌA CYBER NEON AAA</p>
+  <p class="sub">BẮN CÁ THEO PHÒNG • BẦU CUA • VÒNG QUAY • ĐUA NGỰA • TRÒ NHANH • CHỨNG KHOÁN • CHƠI BẰNG XU ẢO</p>
   <div class="authwrap">
     <div class="card">
-      <div style="font-size:55px;text-align:center;filter:drop-shadow(0 0 12px #00f0ff)">🦈 🐋 🐬 🐠</div>
-      <h2 style="color:#00f0ff;margin-top:10px">Thủy Cung Săn Thưởng</h2>
-      <p style="color:#b5ddf8">Hệ thống sinh vật biển sinh động, hiệu ứng ánh sáng Neon và đạn pháo rực rỡ.</p>
-      <p>🪙 Vốn khởi điểm: <b class="price">100.000 xu</b></p>
+      <div style="font-size:50px;text-align:center">🐉 🐠 🐬 🦈</div>
+      <h2>Đại dương săn thưởng!</h2>
+      <p>6 phòng từ Tập Bắn đến Huyền Thoại, mỗi phòng 5 boss. Bầu cua online, vòng quay, đua ngựa, 6 trò nhanh, chứng khoán giả lập.</p>
+      <p>🪙 Ví khởi đầu: <b class="price">100.000 xu</b></p>
+      <p class="hint">Xu ảo, không nạp rút tiền thật.</p>
     </div>
     <div class="card">
-      <h2>Vào Sảnh</h2>
-      <input id="loginName" placeholder="Tên người chơi">
-      <button class="w gold" style="width:100%;margin-top:10px;padding:12px" onclick="login()">VÀO GAME NGAY</button>
+      <div id="loginForm">
+        <h2>Đăng nhập</h2>
+        <input id="loginName" placeholder="Tên đăng nhập">
+        <input id="loginPass" type="password" placeholder="Mật khẩu">
+        <button class="w" onclick="login()">Vào đại dương</button>
+        <p>Chưa có tài khoản? <span class="link" onclick="showRegister()">Đăng ký</span></p>
+      </div>
+      <div id="registerForm" class="hidden">
+        <h2>Tạo tài khoản</h2>
+        <input id="regName" placeholder="Tên đăng nhập (≥3 ký tự)">
+        <input id="regPass" type="password" placeholder="Mật khẩu (≥4 ký tự)">
+        <input id="regPass2" type="password" placeholder="Nhập lại mật khẩu">
+        <button class="w" onclick="register()">Tạo tài khoản</button>
+        <p>Đã có tài khoản? <span class="link" onclick="showLogin()">Đăng nhập</span></p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- MÀN TRANG CHỦ -->
+<!-- TRANG CHỦ -->
 <section id="homeScreen" class="screen hidden">
   <div class="home">
     <div class="home-top">
-      <h2 style="color:#00f0ff;margin:0">🌊 Chọn Phòng Săn Cá</h2>
-      <div class="price">🪙 <span id="homeWallet">100,000</span></div>
+      <h2>🌊 Chọn trò chơi</h2>
+      <div class="price">🪙 <span id="homeWallet">0</span></div>
     </div>
     <div class="gamegrid">
-      <div class="gtile" onclick="goGame('fish')"><div class="ic">🐟</div><b>Bắn Cá Siêu Cấp</b><small>Đại chiến Thủy Cung</small></div>
-      <div class="gtile" onclick="showNotice('Sắp ra mắt!')"><div class="ic">🎲</div><b>Bầu Cua Neon</b><small>Sảnh online</small></div>
-      <div class="gtile" onclick="showNotice('Sắp ra mắt!')"><div class="ic">🎡</div><b>Vòng Quay</b><small>Quay thưởng mỗi ngày</small></div>
-      <div class="gtile" onclick="showNotice('Sắp ra mắt!')"><div class="ic">📈</div><b>Chứng Khoán</b><small>Đầu tư tài chính</small></div>
+      <div class="gtile" onclick="goGame('fish')"><div class="ic">🐟</div><b>Bắn cá</b><small>Đại chiến đại dương</small></div>
+      <div class="gtile" onclick="goGame('bc')"><div class="ic">🎲</div><b>Bầu cua</b><small>Sảnh online theo phòng</small></div>
+      <div class="gtile" onclick="goGame('wheel')"><div class="ic">🎡</div><b>Vòng quay</b><small>Quay may mắn</small></div>
+      <div class="gtile" onclick="goGame('horse')"><div class="ic">🐎</div><b>Đua ngựa</b><small>Cược ngựa về nhất</small></div>
+      <div class="gtile" onclick="goGame('door')"><div class="ic">🚪</div><b>Cửa may rủi</b><small>Chọn 1 trong 3 cửa</small></div>
+      <div class="gtile" onclick="goGame('lock')"><div class="ic">🔓</div><b>Mở khóa</b><small>Dừng kim đúng giữa</small></div>
+      <div class="gtile" onclick="goGame('market')"><div class="ic">📈</div><b>Chứng khoán</b><small>Mua bán cổ phiếu ảo</small></div>
+      <div class="gtile" onclick="goGame('shop')"><div class="ic">🔫</div><b>Kho súng</b><small>Mua và trang bị súng</small></div>
+      <div class="gtile" onclick="openMini('guess')"><div class="ic">🔢</div><b>Đoán số</b><small>1–100, 7 lượt</small></div>
+      <div class="gtile" onclick="openMini('scratch')"><div class="ic">🎟️</div><b>Cào thẻ</b><small>Trùng biểu tượng</small></div>
+      <div class="gtile" onclick="openMini('memory')"><div class="ic">🃏</div><b>Lật bài</b><small>Tìm đủ 6 đôi</small></div>
+      <div class="gtile" onclick="openMini('hilo')"><div class="ic">🎲</div><b>Lớn nhỏ</b><small>Đoán 3 xúc xắc</small></div>
+      <div class="gtile" onclick="openMini('pick')"><div class="ic">🎫</div><b>Bốc thăm</b><small>10 lá, 1 lá trúng</small></div>
+      <div class="gtile" onclick="openMini('treasure')"><div class="ic">⛏️</div><b>Kho báu</b><small>Lưới 5×5, tránh bom</small></div>
+      <a class="gtile" href="https://hikhikhakhamunly-alt.github.io/keyadmin/reward.html" target="_blank" rel="noopener"><div class="ic">🎁</div><b>Nhận quà</b><small>Nhập mã sự kiện</small></a>
+      <a class="gtile" href="https://zalo.me/g/juyluzssqjuxvan7jqk6" target="_blank" rel="noopener"><div class="ic">📢</div><b>Nhóm Zalo</b><small>Tin thông báo sự kiện</small></a>
+      <a class="gtile" href="https://www.tiktok.com/@toandiemcaodetennyc1tuan" target="_blank" rel="noopener"><div class="ic">🎮</div><b>Tham gia admin</b><small>Ghi chú 5 vòng · cọc 100k</small></a>
+      <a class="gtile" href="https://www.tiktok.com/@toandiemcaodetennyc1tuan" target="_blank" rel="noopener"><div class="ic">📱</div><b>Liên hệ admin</b><small>TikTok: toandiemcaodetennyc1tuan</small></a>
     </div>
-    <div style="text-align:center;margin-top:24px"><button class="red" onclick="logout()">Thoát Tài Khoản</button></div>
+    <div class="center" style="margin-top:16px"><button class="red" onclick="logout()">Thoát</button></div>
   </div>
 </section>
 
-<!-- MÀN BẮN CÁ CHÍNH THỨC -->
+<!-- MÀN BẮN CÁ -->
 <section id="gameScreen" class="screen hidden">
   <div class="topbar">
-    <button class="ghost" onclick="showHome()">🏠 Trang Chủ</button>
-    <b style="color:#00f0ff">🐟 SẢNH BẮN CÁ VIP</b>
-    <span class="money">🪙 <span id="wallet">100,000</span></span>
+    <button onclick="showHome()">🏠 Trang chủ</button>
+    <b>🌊 STOCK & FISH</b><span id="playerLabel" class="hint"></span><span id="gunName" style="color:#9edcff"></span>
+    <span id="evtBadge" class="hidden"></span>
+    <span class="money">🪙 <span id="wallet">0</span></span>
+    <button onclick="openRoom()">🏝️ Phòng</button>
+    <button onclick="openShop()">🔫 Kho súng</button>
     <button class="red" onclick="logout()">Thoát</button>
   </div>
-  
-  <div class="arena-wrap">
-    <canvas id="gameCanvas"></canvas>
+  <div class="layout">
+    <div>
+      <div class="panel">
+        <div class="ph"><span>🐟 ĐẠI CHIẾN ĐẠI DƯƠNG</span><span id="status" class="hint"></span></div>
+        <div id="arena" class="arena">
+          <div class="bossbar">
+            <b>👑 <span id="bossName"></span> • Lv <span id="bossLv"></span> — <span id="bossText"></span></b>
+            <div class="hpo"><div id="bossHp" class="hpi"></div></div>
+          </div>
+          <div id="boss" class="boss" style="display:none"></div>
+          <div id="cannon" class="cannon"></div>
+        </div>
+        <div class="controls">
+          <label>Đạn:</label>
+          <select id="bet"></select>
+          <button id="autoBtn" onclick="toggleAuto()">▶ Bắn tự động</button>
+          <button onclick="upgrade()">⚡ Nâng cấp</button>
+          <button id="netBtn" onclick="castNet()">🕸️ Lưới</button>
+          <button id="bombBtn" onclick="castBomb()">💣 Bom</button>
+        </div>
+        <div class="ammos" id="ammoList"></div>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="ph">🎁 Tặng xu & mã quà</div>
+        <div class="pb">
+          <div style="display:flex;gap:6px">
+            <input id="friendName" placeholder="Tên người chơi">
+            <button onclick="addFriend()">+ Thêm</button>
+          </div>
+          <select id="friendSel" style="margin:6px 0"></select>
+          <input id="giftAmt" type="number" min="1000" step="1000" value="10000">
+          <button class="w" onclick="sendGift()">🎁 Tặng bạn (phí 5%)</button>
+          <div id="friendList" style="margin-top:6px"></div>
+          <hr style="border-color:#13537d">
+          <div class="hint">Nhập mã quà do admin phát để nhận xu. Mỗi mã dùng 1 lần.</div>
+          <input id="giftCodeIn" placeholder="Dán mã quà" style="margin-top:6px">
+          <button class="w" onclick="redeemCode()">📥 Nhận bằng mã</button>
+        </div>
+      </div>
+      <div class="panel"><div class="ph">🎯 Nhiệm vụ hôm nay</div><div class="pb" id="questBox"></div></div>
+      <div class="panel"><div class="ph">🎒 Kho đồ</div><div class="pb" id="invBox"></div></div>
+      <div class="panel"><div class="ph">🏆 Bảng xếp hạng</div><div class="pb" id="boardBox"></div></div>
+      <div class="panel">
+        <div class="ph">📈 Thị trường nhanh</div>
+        <div class="pb"><table><tbody id="stockRows"></tbody></table></div>
+        <div class="feed" id="feed"></div>
+      </div>
+    </div>
   </div>
-
-  <div class="controls">
-    <label style="color:#00f0ff;font-weight:700">Mức Đạn:</label>
-    <select id="betAmount">
-      <option value="100">100 xu / viên</option>
-      <option value="500">500 xu / viên</option>
-      <option value="1000" selected>1.000 xu / viên</option>
-      <option value="5000">5.000 xu / viên</option>
-    </select>
-    <button id="autoBtn" class="gold" onclick="toggleAutoFire()">▶ Tự Động Bắn</button>
-    <span id="hintInfo" style="margin-left:auto;color:#7de8ff;font-size:13px">Click chuột hoặc chạm vào màn hình để bắn!</span>
-  </div>
+  <div class="center hint" style="padding:10px">Demo giải trí bằng xu ảo • Không nạp/rút tiền thật</div>
 </section>
 
-<div id="notice" class="hidden" style="position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#09284a;border:1px solid #00f0ff;border-radius:12px;padding:10px 24px;z-index:99;box-shadow:0 0 20px rgba(0,240,255,0.5)"></div>
+<!-- SẢNH PHÒNG -->
+<div id="roomView" class="over hidden">
+  <div class="ob">
+    <div class="oh"><b style="font-size:22px">🏝️ CHỌN PHÒNG</b><button onclick="closeRoom()">← Đóng</button></div>
+    <div class="hint center" style="margin-bottom:10px">Mỗi phòng có 5 boss, đi lần lượt từ dễ đến siêu khó. Tiến độ lưu riêng từng phòng.</div>
+    <div class="rooms" id="roomList"></div>
+  </div>
+</div>
+
+<!-- BẦU CUA -->
+<div id="bcView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b style="font-size:22px">🎲 BẦU CUA — <span id="bcRoom"></span></b>
+      <div class="price">🪙 <span id="bcWallet"></span></div>
+      <button onclick="backHome('bcView')">🏠 Trang chủ</button>
+    </div>
+    <div class="center" style="font-size:18px">Vòng kết thúc sau: <b class="price"><span id="bcTimer">--</span></b> giây</div>
+    <div class="hint center">Mọi người trong phòng chơi chung một vòng, kết quả do máy chủ quay.</div>
+    <div class="bcgrid" id="bcGrid"></div>
+    <div class="center">
+      Mức cược:
+      <select id="bcChip" class="inline">
+        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
+        <option value="50000">50.000</option><option value="100000">100.000</option>
+      </select>
+    </div>
+    <div class="bcdice" id="bcDice"><div class="hint">Đang chờ vòng trước...</div></div>
+    <div class="res" id="bcRes"></div>
+    <div class="panel" style="margin-top:10px"><div class="ph">Cược của mọi người trong vòng</div>
+      <div class="pb" id="bcBetsList" style="max-height:180px;overflow:auto"></div>
+    </div>
+    <div class="hint center" id="bcHist"></div>
+  </div>
+</div>
+
+<!-- VÒNG QUAY -->
+<div id="wheelView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b style="font-size:22px">🎡 VÒNG QUAY</b>
+      <div class="price">🪙 <span id="wheelWallet"></span></div>
+      <button onclick="closeWheel()">🏠 Trang chủ</button>
+    </div>
+    <div class="hint center">Chọn mệnh giá rồi quay. Kết quả do máy chủ quyết định.</div>
+    <div class="center" id="wheelBets" style="margin:10px 0"></div>
+    <div class="wheel" id="wheelDisp">🎡</div>
+    <div class="segs" id="wheelSegs"></div>
+    <div class="center"><button id="wheelBtn" class="gold" style="font-size:18px;padding:12px 26px" onclick="spinWheel()">🎡 QUAY</button></div>
+    <div class="res" id="wheelRes"></div>
+    <div class="hint center" id="wheelTable"></div>
+  </div>
+</div>
+
+<!-- ĐUA NGỰA -->
+<div id="horseView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b style="font-size:22px">🐎 ĐUA NGỰA</b>
+      <div class="price">🪙 <span id="horseWallet"></span></div>
+      <button onclick="closeHorse()">🏠 Trang chủ</button>
+    </div>
+    <div class="hint center">Chọn ngựa và mức cược. Về nhất ×5, về nhì ×2, còn lại mất cược.</div>
+    <div id="horseTrack" style="margin:12px 0"></div>
+    <div class="center">
+      Ngựa:
+      <select id="horsePick" class="inline"></select>
+      Cược:
+      <select id="horseBet" class="inline">
+        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
+        <option value="50000">50.000</option><option value="100000">100.000</option>
+      </select>
+      <button class="gold" id="horseGo" onclick="startHorse()">🏁 XUẤT PHÁT</button>
+    </div>
+    <div class="res" id="horseRes"></div>
+  </div>
+</div>
+
+<!-- KHO SÚNG -->
+<div id="shopView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <div><b style="font-size:22px">🔫 KHO SÚNG</b><div class="hint">Súng đắt hơn thì hình đẹp hơn và sát thương cao hơn.</div></div>
+      <div class="price">🪙 <span id="shopWallet"></span></div>
+      <button onclick="closeShop()">🏠 Trang chủ</button>
+    </div>
+    <div class="grid" id="shopGrid"></div>
+  </div>
+</div>
+
+<!-- CỬA & MỞ KHÓA -->
+<div id="gamesView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b style="font-size:22px">🎮 CỬA & MỞ KHÓA</b>
+      <div class="price">🪙 <span id="gameWallet"></span></div>
+      <button onclick="closeGames()">🏠 Trang chủ</button>
+    </div>
+    <div class="tabs2">
+      <button onclick="gameTab('door')">🚪 Cửa may rủi</button>
+      <button onclick="gameTab('lock')">🔓 Mở khóa</button>
+    </div>
+    <div id="panelDoor" class="center">
+      <div>Cược: <select id="doorBet" class="inline">
+        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
+        <option value="50000">50.000</option><option value="100000">100.000</option></select></div>
+      <div class="doors" id="doors"></div>
+      <div class="res" id="doorRes"></div>
+      <div class="hint">🪙 Xu ×1,2 • 🎁 Rương ×2,2 • 👾 Quái vật mất cược</div>
+    </div>
+    <div id="panelLock" class="hidden center">
+      <div>Cược: <select id="lockBet" class="inline">
+        <option value="1000">1.000</option><option value="10000" selected>10.000</option>
+        <option value="50000">50.000</option><option value="100000">100.000</option></select></div>
+      <div class="lock">
+        <div class="zn" style="left:20%;width:60%;background:#ffd34f33"></div>
+        <div class="zn" style="left:38%;width:24%;background:#47ffb355"></div>
+        <div class="zn" style="left:46%;width:8%;background:#ff4d6d99"></div>
+        <div class="needle" id="needle" style="left:0%"></div>
+      </div>
+      <button class="gold" style="font-size:18px;padding:12px 26px" onclick="lockPress()">🔓 MỞ KHÓA</button>
+      <div class="res" id="lockRes"></div>
+      <div class="hint">Giữa đỏ ×3 • Gần giữa xanh ×1,5 • Vùng vàng ×1 • Ngoài vùng mất cược</div>
+    </div>
+  </div>
+</div>
+
+<!-- CHỨNG KHOÁN -->
+<div id="marketView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b style="font-size:22px">📈 CHỨNG KHOÁN</b>
+      <div class="price">🪙 <span id="marketWallet"></span></div>
+      <button onclick="closeMarket()">🏠 Trang chủ</button>
+    </div>
+    <div class="panel" style="overflow:auto">
+      <table>
+        <thead><tr><th>Mã</th><th>Ngành</th><th>Giá</th><th>Đổi</th><th>Đang giữ</th><th></th></tr></thead>
+        <tbody id="mkRows"></tbody>
+      </table>
+    </div>
+    <div class="panel"><div class="ph">📉 Biểu đồ (giả lập)</div>
+      <div class="pb">
+        <div id="mkChart" style="height:160px;border:1px solid #14517d;border-radius:10px;background:#04162d;padding:6px"></div>
+        <div id="mkChartInfo" style="padding-top:6px"></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="panel"><div class="ph">💼 Danh mục</div><div class="pb" id="mkPort"></div></div>
+      <div class="panel"><div class="ph">🧾 Lịch sử</div><div class="pb" id="mkTx" style="max-height:220px;overflow:auto"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRÒ NHANH -->
+<div id="miniView" class="over hidden">
+  <div class="ob">
+    <div class="oh">
+      <b id="miniTitle" style="font-size:22px"></b>
+      <div class="price">🪙 <span id="miniWallet"></span></div>
+      <button onclick="closeMini()">🏠 Trang chủ</button>
+    </div>
+    <div id="miniBody"></div>
+  </div>
+</div>
 
 <script>
-let wallet = 100000;
-function showNotice(msg) {
-  const el = document.getElementById('notice');
-  el.innerText = msg;
-  el.classList.remove('hidden');
-  setTimeout(() => el.classList.add('hidden'), 2200);
-}
-function updateWallet() {
-  document.getElementById('homeWallet').innerText = wallet.toLocaleString();
-  document.getElementById('wallet').innerText = wallet.toLocaleString();
-}
-function login() {
-  const name = document.getElementById('loginName').value.trim() || 'Game Thủ';
-  document.getElementById('authScreen').classList.add('hidden');
-  document.getElementById('homeScreen').classList.remove('hidden');
-  updateWallet();
-  showNotice(`Chào mừng ${name} đến với thế giới Bắn Cá Cyber!`);
-}
-function logout() {
-  document.getElementById('homeScreen').classList.add('hidden');
-  document.getElementById('gameScreen').classList.add('hidden');
-  document.getElementById('authScreen').classList.remove('hidden');
-  if(isAutoFiring) toggleAutoFire();
-}
-function goGame(type) {
-  if(type === 'fish') {
-    document.getElementById('homeScreen').classList.add('hidden');
-    document.getElementById('gameScreen').classList.remove('hidden');
-    initCanvasGame();
-  }
-}
-function showHome() {
-  document.getElementById('gameScreen').classList.add('hidden');
-  document.getElementById('homeScreen').classList.remove('hidden');
-  if(isAutoFiring) toggleAutoFire();
-  cancelAnimationFrame(animId);
+const CFG={
+  API:'https://script.google.com/macros/s/AKfycbxWjJjYsgyLci4teWEdzp7SocLfpO9WnmwErbyq1-ZB2NYurcVftXgE0WjvTR2WLhh15A/exec',
+  ARMOR:.12, CRIT:.08, MAX_FRIENDS:20,
+  FISH_CATCH:.7, FISH_CATCH_MAX:.6,
+  NET_MULT:.05, NET_CD:40000,
+  BOMB_PCT:.01, BOMB_CD:90000,
+  UPG:150000, UPG_MAX:8,
+  SYNC_MS:10000,
+  BOSS_HIT_CAP:.05,
+  BOSS_SPEED:[16,14,12,10,8],
+  BOSS_RESPAWN_MS:3000
+};
+let GAMES={fish:true,bc:true,door:true,lock:true,wheel:true};
+const WHEEL_LABELS=['Trượt','Hoàn 50%','Hoàn vốn','x2','x3','x5','x10'];
+const WHEEL_MULT=[0,0.5,1,2,3,5,10];
+const START_WALLET_CLIENT=100000;
+
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.floor(Number(n)||0).toLocaleString('en-US');
+const betLabel=b=>b>=1e9?(b/1e9)+' tỉ':fmt(b);
+const rnd=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
+const todayStr=()=>new Date().toDateString();
+
+function deviceId(){
+  let id=localStorage.getItem('sf_fp');
+  if(!id){id=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('sf_fp',id)}
+  return id;
 }
 
-// --- ENGINE BẮN CÁ CANVAS NÂNG CAO ---
-let canvas, ctx, animId;
-let fishList = [], bullets = [], particles = [], bubbles = [];
-let cannonAngle = 0;
-let mouseX = 0, mouseY = 0;
-let isAutoFiring = false, autoTimer = null;
+const ROOMS=[
+  {id:'tap',name:'🌊 Tập Bắn',bet:100,need:0,mult:0.6},
+  {id:'thuong',name:'🐟 Thường',bet:1000,need:0,mult:0.8},
+  {id:'haicau',name:'🦭 Hải Cẩu',bet:10000,need:0,mult:1},
+  {id:'daorua',name:'🐢 Đảo Rùa',bet:50000,need:0,mult:1.3},
+  {id:'daigia',name:'🦈 Đại Gia',bet:100000,need:10000000,mult:1.7},
+  {id:'huyenthoai',name:'🐉 Huyền Thoại',bet:1000000,need:100000000,mult:2.5}
+];
+const roomOf=id=>ROOMS.find(r=>r.id===id)||ROOMS[0];
+const BET_OPTS=[100,1000,10000,50000,100000,1000000];
 
-const FISH_TYPES = [
-  {name: 'Cá Neon Nhỏ', r: 22, speed: 2.2, hp: 1, reward: 2, color: '#00ffaa', type: 'small'},
-  {name: 'Cá Vàng Hoàng Gia', r: 32, speed: 1.8, hp: 3, reward: 8, color: '#ffe600', type: 'normal'},
-  {name: 'Cá Mập Xanh Cyber', r: 52, speed: 1.2, hp: 10, reward: 35, color: '#00f0ff', type: 'big'},
-  {name: 'Rùa Thần Thoại', r: 45, speed: 0.9, hp: 15, reward: 60, color: '#ff00aa', type: 'boss'}
+const AMMOS=[['🔹','Thường',1],['💥','Đạn hạt',2.2],['🔮','Laser',4],['🧊','Băng',5.5],
+             ['⚡','Sét',8],['🌟','Pháo',12],['💠','Siêu',22],['🌈','Thiên hà',40]];
+
+const GUNS=[
+ {id:'wood',name:'Súng Gỗ',price:10000,mult:1,c1:'#c58a52',c2:'#6b4226',beam:'#ffd9a0'},
+ {id:'copper',name:'Súng Đồng',price:50000,mult:1.3,c1:'#f0b070',c2:'#8a4b1c',beam:'#ffb36b'},
+ {id:'silver',name:'Súng Bạc',price:200000,mult:1.6,c1:'#eef4ff',c2:'#7d8ca8',beam:'#cfe6ff'},
+ {id:'ruby',name:'Súng Hồng Ngọc',price:1000000,mult:2.2,c1:'#ff6f8f',c2:'#7a0a2a',beam:'#ff6f91'},
+ {id:'fire',name:'Súng Lửa',price:5000000,mult:3,c1:'#ffae55',c2:'#b3300b',beam:'#ffb020'},
+ {id:'ice',name:'Súng Băng',price:20000000,mult:4.5,c1:'#c8f6ff',c2:'#2a7fb0',beam:'#8ff7ff'},
+ {id:'thunder',name:'Súng Sét',price:60000000,mult:6,c1:'#fff58a',c2:'#6b5a00',beam:'#fff27a'},
+ {id:'dragon',name:'Súng Rồng',price:150000000,mult:9,c1:'#4ff09a',c2:'#0b5a33',beam:'#7dffb0'},
+ {id:'meteor',name:'Súng Thiên Thạch',price:250000000,mult:12,c1:'#9d82ff',c2:'#2a1659',beam:'#b49bff'},
+ {id:'gold',name:'Súng Hoàng Kim',price:350000000,mult:15,c1:'#ffe66b',c2:'#a06b00',beam:'#ffe066'},
+ {id:'galaxy',name:'Súng Thiên Hà',price:500000000,mult:22,c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8'}
 ];
 
-function initCanvasGame() {
-  canvas = document.getElementById('gameCanvas');
-  ctx = canvas.getContext('2d');
-  resizeGameCanvas();
-  window.addEventListener('resize', resizeGameCanvas);
+const SHADOW='<ellipse cx="100" cy="122" rx="70" ry="7" fill="#000" opacity=".35"/>';
+const SPARK='<circle cx="150" cy="30" r="3" fill="#fff"/><circle cx="36" cy="44" r="2" fill="#fff"/>';
 
-  canvas.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
-    updateCannonAngle();
-  });
-
-  canvas.addEventListener('click', () => {
-    fireBullet();
-  });
-
-  fishList = [];
-  for(let i=0; i<8; i++) spawnFish();
-  for(let i=0; i<15; i++) bubbles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*3+1, speed: Math.random()*1.5+0.5});
-
-  if(animId) cancelAnimationFrame(animId);
-  loop();
+/* NÂNG CẤP ĐỒ HỌA HÌNH ẢNH CÁ SẮC NÉT & SỐNG ĐỘNG HƠN */
+function fishArt(c1,c2,fin){
+  return `<svg viewBox="0 -12 120 92" style="filter:drop-shadow(0 0 8px ${c1})">
+    <defs>
+      <linearGradient id="fg_${c1.replace('#','')}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/>
+      </linearGradient>
+    </defs>
+    <path d="M90 40 L120 12 Q112 40 120 68 Z" fill="${fin}" stroke="#fff" stroke-width="1.5"/>
+    <ellipse cx="55" cy="40" rx="44" ry="29" fill="url(#fg_${c1.replace('#','')})" stroke="#fff" stroke-width="2"/>
+    <path d="M35 25 Q55 12 75 25" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.6"/>
+    <ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".7"/>
+    <circle cx="32" cy="35" r="12" fill="#fff" stroke="#06142e" stroke-width="2"/>
+    <circle cx="28" cy="35" r="6" fill="#01040f"/><circle cx="31" cy="32" r="2.5" fill="#fff"/>
+  </svg>`;
 }
 
-function resizeGameCanvas() {
-  const wrap = canvas.parentElement;
-  canvas.width = wrap.clientWidth;
-  canvas.height = wrap.clientHeight;
+function octoArt(c,l){
+  return `<svg viewBox="0 -10 120 110" style="filter:drop-shadow(0 0 10px ${c})">
+    <g stroke="${c}" stroke-width="9" fill="none" stroke-linecap="round">
+      <path d="M32 60 Q15 85 28 105"/><path d="M48 66 Q40 92 52 108"/><path d="M68 66 Q76 92 64 108"/><path d="M88 60 Q105 85 92 105"/>
+    </g>
+    <ellipse cx="60" cy="38" rx="44" ry="36" fill="${c}" stroke="#fff" stroke-width="2"/>
+    <ellipse cx="50" cy="20" rx="22" ry="8" fill="${l}" opacity=".8"/>
+    <circle cx="44" cy="38" r="12" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="46" cy="40" r="6" fill="#000"/><circle cx="48" cy="37" r="2" fill="#fff"/>
+    <circle cx="76" cy="38" r="12" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="78" cy="40" r="6" fill="#000"/><circle cx="80" cy="37" r="2" fill="#fff"/>
+  </svg>`;
 }
 
-function updateCannonAngle() {
-  const cx = canvas.width / 2;
-  const cy = canvas.height;
-  const dx = mouseX - cx;
-  const dy = mouseY - cy;
-  cannonAngle = Math.atan2(dy, dx);
-}
-
-function spawnFish() {
-  const template = FISH_TYPES[Math.floor(Math.random() * FISH_TYPES.length)];
-  const fromLeft = Math.random() < 0.5;
-  fishList.push({
-    ...template,
-    x: fromLeft ? -50 : canvas.width + 50,
-    y: Math.random() * (canvas.height * 0.6) + 40,
-    vx: (fromLeft ? 1 : -1) * (template.speed + Math.random()*0.5),
-    vy: (Math.random() - 0.5) * 0.6,
-    angle: 0,
-    maxHp: template.hp,
-    animOffset: Math.random() * 100
-  });
-}
-
-function fireBullet() {
-  const bet = parseInt(document.getElementById('betAmount').value);
-  if(wallet < bet) {
-    showNotice('Không đủ xu để bắn!');
-    if(isAutoFiring) toggleAutoFire();
-    return;
-  }
-  wallet -= bet;
-  updateWallet();
-
-  const cx = canvas.width / 2;
-  const cy = canvas.height;
-  const speed = 14;
-  bullets.push({
-    x: cx, y: cy,
-    vx: Math.cos(cannonAngle) * speed,
-    vy: Math.sin(cannonAngle) * speed,
-    bet: bet
-  });
-
-  for(let i=0; i<8; i++) {
-    particles.push({
-      x: cx, y: cy,
-      vx: (Math.random()-0.5)*6,
-      vy: (Math.random()-0.5)*6,
-      size: Math.random()*3+1,
-      color: '#ffe600',
-      alpha: 1,
-      life: 0.08
-    });
-  }
-}
-
-function toggleAutoFire() {
-  isAutoFiring = !isAutoFiring;
-  const btn = document.getElementById('autoBtn');
-  if(isAutoFiring) {
-    btn.innerText = '⏸ Dừng Tự Động';
-    btn.classList.remove('gold');
-    btn.classList.add('red');
-    autoTimer = setInterval(fireBullet, 250);
-  } else {
-    btn.innerText = '▶ Tự Động Bắn';
-    btn.classList.remove('red');
-    btn.classList.add('gold');
-    clearInterval(autoTimer);
-  }
-}
-
-function loop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = 'rgba(255,255,255,0.25)';
-  bubbles.forEach(b => {
-    b.y -= b.speed;
-    if(b.y < 0) { b.y = canvas.height + 10; b.x = Math.random() * canvas.width; }
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
-    ctx.fill();
-  });
-
-  if(fishList.length < 10 && Math.random() < 0.03) spawnFish();
-
-  fishList.forEach((f, idx) => {
-    f.x += f.vx;
-    f.y += f.vy + Math.sin(Date.now()*0.005 + f.animOffset)*0.3;
-    f.angle = Math.atan2(f.vy, f.vx);
-
-    if(f.x < -120 || f.x > canvas.width + 120) {
-      fishList.splice(idx, 1);
-      return;
-    }
-
-    ctx.save();
-    ctx.translate(f.x, f.y);
-    if(f.vx < 0) ctx.scale(-1, 1);
-
-    ctx.shadowBlur = 18;
-    ctx.shadowColor = f.color;
-    ctx.fillStyle = f.color;
-
-    ctx.beginPath();
-    ctx.ellipse(0, 0, f.r*1.4, f.r*0.9, 0, 0, Math.PI*2);
-    ctx.fill();
-
-    const tailWave = Math.sin(Date.now()*0.01 + f.animOffset) * 8;
-    ctx.beginPath();
-    ctx.moveTo(-f.r*1.2, 0);
-    ctx.lineTo(-f.r*2.2, -f.r + tailWave);
-    ctx.lineTo(-f.r*2.2, f.r + tailWave);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = '#fff';
-    ctx.beginPath();
-    ctx.arc(f.r*0.6, -f.r*0.2, f.r*0.28, 0, Math.PI*2);
-    ctx.fill();
-    ctx.fillStyle = '#01040f';
-    ctx.beginPath();
-    ctx.arc(f.r*0.7, -f.r*0.2, f.r*0.12, 0, Math.PI*2);
-    ctx.fill();
-
-    ctx.restore();
-  });
-
-  bullets.forEach((b, bIdx) => {
-    b.x += b.vx;
-    b.y += b.vy;
-
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#00f0ff';
-    ctx.fillStyle = '#fff';
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, 4, 0, Math.PI*2);
-    ctx.fill();
-    ctx.shadowBlur = 0;
-
-    fishList.forEach((f, fIdx) => {
-      const dist = Math.hypot(b.x - f.x, b.y - f.y);
-      if(dist < f.r + 10) {
-        bullets.splice(bIdx, 1);
-        f.hp -= 1;
-
-        for(let i=0; i<6; i++) {
-          particles.push({
-            x: b.x, y: b.y,
-            vx: (Math.random()-0.5)*5, vy: (Math.random()-0.5)*5,
-            size: 2, color: f.color, alpha: 1, life: 0.05
-          });
-        }
-
-        if(f.hp <= 0) {
-          const earned = f.reward * b.bet;
-          wallet += earned;
-          updateWallet();
-          showNotice(`+${earned.toLocaleString()} xu (${f.name})`);
-
-          for(let i=0; i<25; i++) {
-            particles.push({
-              x: f.x, y: f.y,
-              vx: (Math.random()-0.5)*8, vy: (Math.random()-0.5)*8,
-              size: Math.random()*4+2, color: '#ffe600', alpha: 1, life: 0.02
-            });
-          }
-          fishList.splice(fIdx, 1);
-        }
-      }
-    });
-
-    if(b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
-      bullets.splice(bIdx, 1);
-    }
-  });
-
-  particles.forEach((p, idx) => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.alpha -= p.life;
-    ctx.globalAlpha = Math.max(0, p.alpha);
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-    ctx.fill();
-    if(p.alpha <= 0) particles.splice(idx, 1);
-  });
-  ctx.globalAlpha = 1;
-
-  const cx = canvas.width / 2;
-  const cy = canvas.height;
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.rotate(cannonAngle);
-
-  ctx.shadowBlur = 15;
-  ctx.shadowColor = '#00f0ff';
-  ctx.fillStyle = '#00d9ff';
-  ctx.fillRect(0, -14, 50, 28);
-  ctx.fillStyle = '#0055ff';
-  ctx.fillRect(10, -10, 35, 20);
-
-  ctx.restore();
-
-  ctx.beginPath();
-  ctx.arc(cx, cy, 32, Math.PI, 0, false);
-  ctx.fillStyle = '#04142e';
-  ctx.strokeStyle = '#00f0ff';
-  ctx.lineWidth = 3;
-  ctx.fill();
-  ctx.stroke();
-
-  animId = requestAnimationFrame(loop);
+function gunSvg(g){
+  const t=GUNS.findIndex(x=>x.id===g.id),id='g'+g.id;
+  let deco='';
+  if(t>=3)deco+=`<path d="M40 70 L14 50 L22 80 Z" fill="${g.c1}" stroke="#fff" stroke-width="1.5"/><path d="M80 70 L106 50 L98 80 Z" fill="${g.c1}" stroke="#fff" stroke-width="1.5"/>`;
+  if(t>=7)deco+=`<circle cx="16" cy="88" r="7" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/><circle cx="104" cy="88" r="7" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/>`;
+  const flame=t>=4?`<path d="M48 26 Q60 2 72 26 Q60 16 48 26Z" fill="url(#fl${id})"/>`:'';
+  const aura=t>=9?`<circle cx="60" cy="62" r="56" fill="${g.beam}" opacity=".2"/><circle cx="60" cy="62" r="54" fill="none" stroke="${g.beam}" stroke-width="2" stroke-dasharray="6 6" opacity=".8"/>`:'';
+  return `<svg viewBox="0 0 120 120" style="filter:drop-shadow(0 0 10px ${g.beam})"><defs>
+    <linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c1}"/><stop offset="1" stop-color="${g.c2}"/></linearGradient>
+    <linearGradient id="fl${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6a0"/><stop offset="1" stop-color="#ff7a1a"/></linearGradient>
+  </defs>
+  ${aura}
+  <ellipse cx="60" cy="104" rx="34" ry="12" fill="${g.c2}" stroke="#fff" stroke-width="2"/>
+  ${deco}
+  <rect x="44" y="60" width="32" height="38" rx="10" fill="url(#${id})" stroke="#fff" stroke-width="2"/>
+  <rect x="50" y="26" width="20" height="42" rx="9" fill="url(#${id})" stroke="#fff" stroke-width="2"/>
+  <circle cx="60" cy="28" r="10" fill="${g.beam}" stroke="#fff" stroke-width="2"/>
+  ${flame}
+  </svg>`;
 }
 </script>
 </body>
