@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Stock & Fish — Đại dương Anime</title>
+<title>Stock & Fish — Đại dương</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#020a20;color:#eefaff;font:14px/1.4 system-ui,Segoe UI,Arial,sans-serif;overflow-x:hidden}
@@ -58,32 +58,17 @@ input[type=checkbox]{width:auto}
 .arena.rage{background:radial-gradient(ellipse at 50% 0,#ffb3b3 0,#c4305a 25%,#5a0f2e 60%,#1a0212 100%)}
 .arena.shake{animation:shk .35s}
 @keyframes shk{0%,100%{transform:translate(0,0)}25%{transform:translate(-6px,4px)}50%{transform:translate(5px,-4px)}75%{transform:translate(-3px,2px)}}
-
-/* CÁ ANIME HIỆU ỨNG ĐẸP */
-.fish{position:absolute;width:96px;cursor:pointer;z-index:2;filter:drop-shadow(0 0 12px #00f0ff) drop-shadow(0 0 4px #ffffff88);animation:swim 3.6s ease-in-out infinite alternate;transition:filter .2s}
-.fish:hover{filter:drop-shadow(0 0 18px #ffe600) brightness(1.2)}
-.fish svg{width:100%;height:auto;display:block;overflow:visible}
-.fish.dying{opacity:0;transform:scale(.2) rotate(220deg);filter:drop-shadow(0 0 25px #ffe600) brightness(2);transition:all .45s cubic-bezier(.2,.8,.3,1)}
-@keyframes swim{
-  0%{transform:translate(-12px,6px) rotate(-3deg) scaleY(1)}
-  50%{transform:translate(4px,-8px) rotate(2deg) scaleY(.97)}
-  100%{transform:translate(20px,-14px) rotate(-2deg) scaleY(1)}
-}
-@keyframes finWave{
-  0%,100%{transform:rotate(0deg)}
-  50%{transform:rotate(8deg)}
-}
-.anime-tail{transform-origin:88px 40px;animation:finWave .6s ease-in-out infinite}
-.anime-sparkle{animation:pulseSpark 1.2s ease-in-out infinite alternate}
-@keyframes pulseSpark{from{opacity:.3;transform:scale(.8)}to{opacity:1;transform:scale(1.2)}}
-
-.boss{position:absolute;top:30%;left:-30%;width:min(240px,42%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 22px #26e8ff) drop-shadow(0 0 8px #ffffff66);animation-timing-function:linear;animation-fill-mode:forwards}
-.boss svg{width:100%;height:auto;display:block;overflow:visible}
+.fish{position:absolute;width:84px;cursor:pointer;z-index:2;filter:drop-shadow(0 0 8px #16dfff);animation:swim 4s ease-in-out infinite alternate}
+.fish svg{width:100%;height:auto;display:block}
+.fish.dying{opacity:0;transform:scale(.3) rotate(180deg);transition:all .4s}
+@keyframes swim{from{transform:translate(-10px,4px)}to{transform:translate(18px,-12px)}}
+.boss{position:absolute;top:30%;left:-30%;width:min(230px,40%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation-timing-function:linear;animation-fill-mode:forwards}
+.boss svg{width:100%;height:auto;display:block}
 .boss.toRight{animation-name:swimRight;transform:translateY(-50%) scaleX(-1)}
 .boss.toLeft{animation-name:swimLeft}
 @keyframes swimRight{from{left:-30%}to{left:110%}}
 @keyframes swimLeft{from{left:110%}to{left:-30%}}
-.boss.rage{filter:drop-shadow(0 0 30px #ff1f5a) drop-shadow(0 0 12px #ffe600) hue-rotate(-25deg)}
+.boss.rage{filter:drop-shadow(0 0 26px #ff1f5a) hue-rotate(-30deg)}
 .boss.hit svg{animation:bh .2s}
 @keyframes bh{0%{scale:1}40%{scale:.9}100%{scale:1}}
 .boss.dying{opacity:0;transform:translateY(-50%) scale(.3) rotate(200deg);transition:all .9s}
@@ -519,73 +504,8 @@ const GUNS=[
 const SHADOW='<ellipse cx="100" cy="122" rx="70" ry="7" fill="#000" opacity=".35"/>';
 const SPARK='<circle cx="150" cy="30" r="3" fill="#fff"/><circle cx="36" cy="44" r="2" fill="#fff"/>';
 
-/* NÂNG CẤP CÁ PHONG CÁCH ANIME NEON + HIỆU ỨNG VÂY LƯỢN + MẮT LONG LANH */
-let svgUid=0;
-function fishArt(c1,c2,fin){
-  const uid='f'+(++svgUid);
-  return `<svg viewBox="0 -14 125 96" style="filter:drop-shadow(0 0 8px ${fin})">
-    <defs>
-      <linearGradient id="bg_${uid}" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#ffffff"/><stop offset="28%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/>
-      </linearGradient>
-      <linearGradient id="fn_${uid}" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="${fin}"/><stop offset="100%" stop-color="#ffffff"/>
-      </linearGradient>
-    </defs>
-    <!-- Vây lưng Anime -->
-    <path d="M48 14 Q62 -6 78 16 Z" fill="url(#fn_${uid})" stroke="#fff" stroke-width="1.5" opacity=".9"/>
-    <!-- Đuôi lụa vẫy mềm mại -->
-    <g class="anime-tail">
-      <path d="M88 40 L122 10 Q110 40 122 70 Z" fill="url(#fn_${uid})" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M90 40 L114 24 Q108 40 114 56 Z" fill="#fff" opacity=".45"/>
-    </g>
-    <!-- Thân cá ánh kim -->
-    <ellipse cx="55" cy="40" rx="43" ry="28" fill="url(#bg_${uid})" stroke="#fff" stroke-width="2.5"/>
-    <!-- Điểm nhấn ánh sáng thân -->
-    <path d="M36 22 Q58 10 80 24" stroke="#fff" stroke-width="3.5" fill="none" opacity=".75" stroke-linecap="round"/>
-    <ellipse cx="56" cy="53" rx="28" ry="9" fill="#fff" opacity=".35"/>
-    <!-- Vây bụng nhỏ -->
-    <path d="M54 46 L72 60 L64 42 Z" fill="url(#fn_${uid})" stroke="#fff" stroke-width="1.5"/>
-    <!-- Má hồng Kawaii Anime -->
-    <ellipse cx="42" cy="47" rx="6" ry="3.2" fill="#ff5599" opacity=".65"/>
-    <!-- Mắt Anime to long lanh 3 tầng sáng -->
-    <ellipse cx="30" cy="35" rx="12" ry="13.5" fill="#070d24" stroke="#fff" stroke-width="2.2"/>
-    <ellipse cx="29" cy="36" rx="8.5" ry="9.5" fill="${fin}"/>
-    <ellipse cx="29" cy="34" rx="5.5" ry="6.5" fill="#070d24"/>
-    <circle cx="26" cy="30" r="4.2" fill="#fff"/>
-    <circle cx="33" cy="39" r="2" fill="#fff"/>
-    <circle cx="25" cy="38" r="1.2" fill="#fff"/>
-    <!-- Lông mi sắc nét -->
-    <path d="M18 28 Q26 19 39 24" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <!-- Hạt sáng ma thuật -->
-    <path class="anime-sparkle" d="M10 14 L12 19 L17 21 L12 23 L10 28 L8 23 L3 21 L8 19 Z" fill="#fff"/>
-    <circle class="anime-sparkle" cx="95" cy="14" r="2.2" fill="#fff"/>
-  </svg>`;
-}
-
-function octoArt(c,l){
-  const uid='o'+(++svgUid);
-  return `<svg viewBox="0 -12 120 115" style="filter:drop-shadow(0 0 10px ${c})">
-    <defs>
-      <radialGradient id="ob_${uid}" cx=".4" cy=".3" r=".7">
-        <stop offset="0%" stop-color="#fff"/><stop offset="40%" stop-color="${c}"/><stop offset="100%" stop-color="#2a0855"/>
-      </radialGradient>
-    </defs>
-    <g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round">
-      <path d="M32 60 Q16 86 28 104"/><path d="M48 66 Q40 94 52 108"/><path d="M68 66 Q76 94 64 108"/><path d="M88 60 Q104 86 92 104"/>
-    </g>
-    <g stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".6">
-      <path d="M32 60 Q16 86 28 104"/><path d="M88 60 Q104 86 92 104"/>
-    </g>
-    <ellipse cx="60" cy="38" rx="43" ry="35" fill="url(#ob_${uid})" stroke="#fff" stroke-width="2.5"/>
-    <ellipse cx="50" cy="19" rx="22" ry="8" fill="${l}" opacity=".8"/>
-    <!-- Mắt Anime đôi -->
-    <ellipse cx="43" cy="38" rx="11.5" ry="13" fill="#070d24" stroke="#fff" stroke-width="2"/><circle cx="42" cy="37" r="7" fill="${c}"/><circle cx="40" cy="33" r="3.8" fill="#fff"/><circle cx="46" cy="41" r="1.8" fill="#fff"/>
-    <ellipse cx="77" cy="38" rx="11.5" ry="13" fill="#070d24" stroke="#fff" stroke-width="2"/><circle cx="76" cy="37" r="7" fill="${c}"/><circle cx="74" cy="33" r="3.8" fill="#fff"/><circle cx="80" cy="41" r="1.8" fill="#fff"/>
-    <path d="M55 48 Q60 53 65 48" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-    <path class="anime-sparkle" d="M18 14 L20 18 L24 20 L20 22 L18 26 L16 22 L12 20 L16 18 Z" fill="#fff"/>
-  </svg>`;
-}
+function fishArt(c1,c2,fin){return `<svg viewBox="0 -12 120 92"><path d="M90 40 L118 16 Q112 40 118 64 Z" fill="${fin}" stroke="#06142e" stroke-width="3"/><ellipse cx="55" cy="40" rx="42" ry="28" fill="${c1}" stroke="#06142e" stroke-width="3"/><ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".9"/><circle cx="32" cy="36" r="11" fill="#fff" stroke="#06142e" stroke-width="2.5"/><circle cx="29" cy="37" r="6.5" fill="#06142e"/><circle cx="32" cy="33" r="2.5" fill="#fff"/></svg>`}
+function octoArt(c,l){return `<svg viewBox="0 -10 120 110"><g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round"><path d="M32 60 Q18 84 30 100"/><path d="M48 66 Q42 92 54 104"/><path d="M68 66 Q74 92 62 104"/><path d="M88 60 Q102 84 90 100"/></g><ellipse cx="60" cy="38" rx="42" ry="34" fill="${c}" stroke="#06142e" stroke-width="3"/><ellipse cx="50" cy="20" rx="20" ry="8" fill="${l}" opacity=".7"/><circle cx="44" cy="38" r="12" fill="#fff" stroke="#06142e" stroke-width="2.5"/><circle cx="46" cy="40" r="6.5" fill="#06142e"/><circle cx="76" cy="38" r="12" fill="#fff" stroke="#06142e" stroke-width="2.5"/><circle cx="78" cy="40" r="6.5" fill="#06142e"/></svg>`}
 
 function gunSvg(g){
   const t=GUNS.findIndex(x=>x.id===g.id),id='g'+g.id;
@@ -614,88 +534,94 @@ function gunSvg(g){
 }
 
 const BOSSES=[
- {name:'CÁ RỒNG BĂNG ANIME',lv:5,hp:2e6,reward:8e5,svg:()=>`<svg viewBox="0 0 200 130">
+ {name:'CÁ RỒNG BĂNG',lv:5,hp:2e6,reward:8e5,svg:()=>`<svg viewBox="0 0 200 130">
   <defs>
-    <linearGradient id="b1body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#8fe9ff"/><stop offset="1" stop-color="#1f6fd6"/></linearGradient>
-    <linearGradient id="b1fin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a9fff"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+    <linearGradient id="b1body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4feff"/><stop offset=".45" stop-color="#8fe9ff"/><stop offset="1" stop-color="#1f6fd6"/></linearGradient>
+    <linearGradient id="b1fin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a9fff"/><stop offset="1" stop-color="#bff7ff"/></linearGradient>
   </defs>
   ${SHADOW}
-  <path d="M158 65 L198 22 Q186 65 198 108 Z" fill="url(#b1fin)" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M18 65 Q36 14 108 18 Q164 24 164 65 Q164 106 108 112 Q36 116 18 65 Z" fill="url(#b1body)" stroke="#fff" stroke-width="4"/>
-  <path d="M60 36 Q98 22 138 38" stroke="#fff" stroke-width="7" fill="none" opacity=".8" stroke-linecap="round"/>
-  <path d="M96 20 L104 2 L114 20" fill="#bff7ff" stroke="#fff" stroke-width="2.5"/>
-  <ellipse cx="62" cy="58" rx="19" ry="23" fill="#06142e" stroke="#fff" stroke-width="3.5"/>
-  <ellipse cx="65" cy="60" rx="12" ry="15" fill="#00f0ff"/><circle cx="62" cy="52" r="6" fill="#fff"/><circle cx="70" cy="66" r="2.5" fill="#fff"/>
+  <path d="M158 65 L196 26 Q186 65 196 104 Z" fill="url(#b1fin)" stroke="#06142e" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M18 65 Q36 14 108 18 Q164 24 164 65 Q164 106 108 112 Q36 116 18 65 Z" fill="url(#b1body)" stroke="#06142e" stroke-width="5"/>
+  <path d="M60 36 Q98 22 138 38" stroke="#fff" stroke-width="7" fill="none" opacity=".75" stroke-linecap="round"/>
+  <path d="M50 96 Q96 112 140 94" stroke="#1f6fd6" stroke-width="5" fill="none" opacity=".45" stroke-linecap="round"/>
+  <path d="M96 22 L104 6 L112 22" fill="#bff7ff" stroke="#06142e" stroke-width="3"/>
+  <ellipse cx="62" cy="58" rx="18" ry="22" fill="#fff" stroke="#06142e" stroke-width="4"/>
+  <ellipse cx="66" cy="62" rx="11" ry="14" fill="#06142e"/>
+  <circle cx="71" cy="54" r="5" fill="#fff"/><circle cx="61" cy="70" r="2" fill="#7fe3ff"/>
+  <path d="M42 56 Q34 64 42 74" stroke="#06142e" stroke-width="3" fill="none" stroke-linecap="round"/>
   ${SPARK}
  </svg>`},
- {name:'BẠCH TUỘC TÍM ANIME',lv:10,hp:6e6,reward:25e5,svg:()=>`<svg viewBox="0 0 200 150">
-  <defs><radialGradient id="b2body" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#b87aff"/><stop offset="1" stop-color="#5a2fb3"/></radialGradient></defs>
+ {name:'BẠCH TUỘC TÍM',lv:10,hp:6e6,reward:25e5,svg:()=>`<svg viewBox="0 0 200 150">
+  <defs><radialGradient id="b2body" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#e7d4ff"/><stop offset=".6" stop-color="#a76bff"/><stop offset="1" stop-color="#5a2fb3"/></radialGradient></defs>
   ${SHADOW}
-  <g stroke="#b87aff" stroke-width="13" fill="none" stroke-linecap="round">
+  <g stroke="#a76bff" stroke-width="13" fill="none" stroke-linecap="round">
     <path d="M60 96 Q24 120 40 142"/><path d="M80 104 Q70 134 88 146"/><path d="M118 104 Q128 134 112 146"/><path d="M140 96 Q176 120 160 142"/>
   </g>
-  <path d="M30 62 Q34 12 100 10 Q166 12 170 62 Q168 100 100 104 Q32 100 30 62 Z" fill="url(#b2body)" stroke="#fff" stroke-width="4"/>
-  <path d="M62 30 Q100 16 138 30" stroke="#fff" stroke-width="6" fill="none" opacity=".7" stroke-linecap="round"/>
-  <ellipse cx="72" cy="66" rx="19" ry="23" fill="#06142e" stroke="#fff" stroke-width="3.5"/>
-  <ellipse cx="74" cy="68" rx="11" ry="14" fill="#ff66d9"/><circle cx="71" cy="60" r="5.5" fill="#fff"/>
-  <ellipse cx="128" cy="66" rx="19" ry="23" fill="#06142e" stroke="#fff" stroke-width="3.5"/>
-  <ellipse cx="130" cy="68" rx="11" ry="14" fill="#ff66d9"/><circle cx="127" cy="60" r="5.5" fill="#fff"/>
-  <path d="M88 84 Q100 94 112 84" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M30 62 Q34 12 100 10 Q166 12 170 62 Q168 100 100 104 Q32 100 30 62 Z" fill="url(#b2body)" stroke="#06142e" stroke-width="5"/>
+  <path d="M62 30 Q100 16 138 30" stroke="#fff" stroke-width="6" fill="none" opacity=".6" stroke-linecap="round"/>
+  <ellipse cx="72" cy="66" rx="19" ry="23" fill="#fff" stroke="#06142e" stroke-width="4"/>
+  <ellipse cx="76" cy="70" rx="11" ry="14" fill="#06142e"/><circle cx="81" cy="62" r="5" fill="#fff"/>
+  <ellipse cx="128" cy="66" rx="19" ry="23" fill="#fff" stroke="#06142e" stroke-width="4"/>
+  <ellipse cx="132" cy="70" rx="11" ry="14" fill="#06142e"/><circle cx="137" cy="62" r="5" fill="#fff"/>
+  <path d="M88 84 Q100 92 112 84" stroke="#06142e" stroke-width="3" fill="none" stroke-linecap="round"/>
   ${SPARK}
  </svg>`},
- {name:'CÁ MẬP LỬA ANIME',lv:15,hp:15e6,reward:6e6,svg:()=>`<svg viewBox="0 0 200 130">
+ {name:'CÁ MẬP LỬA',lv:15,hp:15e6,reward:6e6,svg:()=>`<svg viewBox="0 0 200 130">
   <defs>
-    <linearGradient id="b3body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4b8"/><stop offset=".5" stop-color="#ff6b35"/><stop offset="1" stop-color="#8a1c0c"/></linearGradient>
-    <linearGradient id="b3fin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff3b1f"/><stop offset="1" stop-color="#ffe66b"/></linearGradient>
+    <linearGradient id="b3body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset=".5" stop-color="#ff7a3c"/><stop offset="1" stop-color="#8a1c0c"/></linearGradient>
+    <linearGradient id="b3fin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff3b1f"/><stop offset="1" stop-color="#ffd27a"/></linearGradient>
   </defs>
   ${SHADOW}
-  <path d="M156 62 L200 18 Q188 62 200 106 Z" fill="url(#b3fin)" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M16 64 Q34 10 112 14 Q168 22 166 64 Q166 108 112 116 Q34 118 16 64 Z" fill="url(#b3body)" stroke="#fff" stroke-width="4"/>
-  <path d="M58 30 L70 6 L86 28 L100 2 L114 26 L130 8 L140 32" fill="#ffbe0b" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/>
-  <ellipse cx="60" cy="60" rx="19" ry="23" fill="#06142e" stroke="#fff" stroke-width="3.5"/>
-  <ellipse cx="63" cy="62" rx="11" ry="14" fill="#ffbe0b"/><circle cx="60" cy="54" r="5.5" fill="#fff"/>
-  <path d="M38 48 L58 58" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M156 62 L198 22 Q188 62 198 102 Z" fill="url(#b3fin)" stroke="#06142e" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M16 64 Q34 10 112 14 Q168 22 166 64 Q166 108 112 116 Q34 118 16 64 Z" fill="url(#b3body)" stroke="#06142e" stroke-width="5"/>
+  <path d="M58 30 L70 8 L86 28 L100 4 L114 26 L130 10 L140 32" fill="#ffb020" stroke="#06142e" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M40 92 Q96 110 150 92" stroke="#ffe08a" stroke-width="5" fill="none" opacity=".5" stroke-linecap="round"/>
+  <ellipse cx="60" cy="60" rx="18" ry="22" fill="#fff" stroke="#06142e" stroke-width="4"/>
+  <ellipse cx="64" cy="64" rx="11" ry="14" fill="#06142e"/><circle cx="69" cy="56" r="5" fill="#fff"/>
+  <path d="M40 52 L56 60" stroke="#06142e" stroke-width="4" stroke-linecap="round"/>
   ${SPARK}
  </svg>`},
- {name:'RÙA THẦN VÀNG ANIME',lv:20,hp:4e7,reward:15e6,svg:()=>`<svg viewBox="0 0 200 140">
+ {name:'RÙA THẦN VÀNG',lv:20,hp:4e7,reward:15e6,svg:()=>`<svg viewBox="0 0 200 140">
   <defs>
-    <radialGradient id="b4shell" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#ffd13b"/><stop offset="1" stop-color="#9a6a00"/></radialGradient>
+    <radialGradient id="b4shell" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="#fff6b0"/><stop offset=".6" stop-color="#ffc83a"/><stop offset="1" stop-color="#9a6a00"/></radialGradient>
   </defs>
   ${SHADOW}
-  <path d="M170 56 Q196 50 186 70 Q176 84 160 76 Z" fill="#7dffb0" stroke="#fff" stroke-width="2.5"/>
-  <path d="M28 102 L12 122 L40 116 Z M80 112 L70 136 L98 124 Z M124 112 L134 136 L150 118 Z" fill="#7dffb0" stroke="#fff" stroke-width="2.5"/>
-  <ellipse cx="96" cy="78" rx="72" ry="44" fill="url(#b4shell)" stroke="#fff" stroke-width="4"/>
-  <path d="M60 52 Q96 36 132 52" stroke="#fff" stroke-width="6" fill="none" opacity=".8" stroke-linecap="round"/>
-  <ellipse cx="174" cy="48" rx="14" ry="16" fill="#06142e" stroke="#fff" stroke-width="3"/>
-  <circle cx="176" cy="49" r="8" fill="#00ffaa"/><circle cx="174" cy="44" r="4" fill="#fff"/>
+  <path d="M170 56 Q196 50 186 70 Q176 84 160 76 Z" fill="#9fe36b" stroke="#06142e" stroke-width="3"/>
+  <path d="M28 102 L12 122 L40 116 Z M80 112 L70 136 L98 124 Z M124 112 L134 136 L150 118 Z" fill="#9fe36b" stroke="#06142e" stroke-width="3"/>
+  <ellipse cx="96" cy="78" rx="72" ry="44" fill="url(#b4shell)" stroke="#06142e" stroke-width="5"/>
+  <path d="M46 70 L96 42 L146 70 L96 102 Z" fill="none" stroke="#9a6a00" stroke-width="3" opacity=".7"/>
+  <path d="M60 52 Q96 36 132 52" stroke="#fff" stroke-width="6" fill="none" opacity=".7" stroke-linecap="round"/>
+  <ellipse cx="174" cy="48" rx="13" ry="14" fill="#fff" stroke="#06142e" stroke-width="3"/>
+  <ellipse cx="177" cy="50" rx="7" ry="8" fill="#06142e"/><circle cx="180" cy="46" r="3" fill="#fff"/>
   ${SPARK}
  </svg>`},
- {name:'KRAKEN SẤM ANIME',lv:30,hp:1e8,reward:4e7,svg:()=>`<svg viewBox="0 0 200 160">
+ {name:'KRAKEN SẤM',lv:30,hp:1e8,reward:4e7,svg:()=>`<svg viewBox="0 0 200 160">
   <defs>
-    <radialGradient id="b5body" cx=".4" cy=".3" r=".75"><stop offset="0" stop-color="#c4b5ff"/><stop offset=".55" stop-color="#3b289c"/><stop offset="1" stop-color="#0b0628"/></radialGradient>
+    <radialGradient id="b5body" cx=".4" cy=".3" r=".75"><stop offset="0" stop-color="#8f7cff"/><stop offset=".55" stop-color="#2a1f6a"/><stop offset="1" stop-color="#0b0628"/></radialGradient>
   </defs>
   ${SHADOW}
-  <g stroke="#4f37c9" stroke-width="15" fill="none" stroke-linecap="round">
+  <g stroke="#2a1f6a" stroke-width="15" fill="none" stroke-linecap="round">
     <path d="M52 100 Q14 124 26 152"/><path d="M76 110 Q66 144 84 156"/><path d="M124 110 Q134 144 116 156"/><path d="M148 100 Q186 124 174 152"/>
   </g>
-  <path d="M28 70 Q34 8 100 6 Q166 8 172 70 Q170 106 100 110 Q30 106 28 70 Z" fill="url(#b5body)" stroke="#fff" stroke-width="4"/>
-  <path d="M100 8 L90 -4 M100 8 L110 -4" stroke="#ffe600" stroke-width="3.5" stroke-linecap="round"/>
-  <ellipse cx="70" cy="66" rx="20" ry="24" fill="#06142e" stroke="#fff" stroke-width="3.5"/>
-  <ellipse cx="72" cy="68" rx="11" ry="15" fill="#ffe600"/><circle cx="69" cy="60" r="5" fill="#fff"/>
-  <ellipse cx="130" cy="66" rx="20" ry="24" fill="#06142e" stroke="#fff" stroke-width="3.5"/>
-  <ellipse cx="132" cy="68" rx="11" ry="15" fill="#ffe600"/><circle cx="129" cy="60" r="5" fill="#fff"/>
-  <path d="M84 96 Q100 106 116 96" stroke="#ffe600" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M28 70 Q34 8 100 6 Q166 8 172 70 Q170 106 100 110 Q30 106 28 70 Z" fill="url(#b5body)" stroke="#06142e" stroke-width="5"/>
+  <path d="M60 28 Q100 12 140 28" stroke="#c9bfff" stroke-width="6" fill="none" opacity=".55" stroke-linecap="round"/>
+  <path d="M100 8 L92 -2 M100 8 L108 -2" stroke="#ffe600" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="70" cy="66" rx="20" ry="24" fill="#ffe600" stroke="#06142e" stroke-width="4"/>
+  <ellipse cx="74" cy="70" rx="10" ry="16" fill="#06142e"/><circle cx="79" cy="62" r="4" fill="#fff"/>
+  <ellipse cx="130" cy="66" rx="20" ry="24" fill="#ffe600" stroke="#06142e" stroke-width="4"/>
+  <ellipse cx="134" cy="70" rx="10" ry="16" fill="#06142e"/><circle cx="139" cy="62" r="4" fill="#fff"/>
+  <path d="M84 96 Q100 104 116 96" stroke="#ffe600" stroke-width="3" fill="none" stroke-linecap="round"/>
   ${SPARK}
  </svg>`}
 ];
 
 const FISH=[
- {m:2,w:.3,svg:fishArt('#ffaa44','#ff5500','#ffe66b')},
- {m:3,w:.25,svg:fishArt('#00f0ff','#0066ff','#8ff7ff')},
- {m:5,w:.18,svg:fishArt('#ff66d9','#b30077','#ffb3ec')},
- {m:8,w:.14,svg:fishArt('#ffe600','#cc8800','#fff599')},
- {m:15,w:.08,octoArt('#55ffaa','#e0fff0')},
- {m:30,w:.05,svg:fishArt('#b87aff','#4a00b3','#e5ccff')}
+ {m:2,w:.3,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
+ {m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
+ {m:5,w:.18,svg:fishArt('#ff8ad8','#fff0fa','#ff4fb8')},
+ {m:8,w:.14,svg:fishArt('#ffe066','#fffbe0','#ffb020')},
+ {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},
+ {m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}
 ];
 const CHESTS={common:['📦','Rương gỗ'],rare:['🎁','Rương bạc'],gold:['👑','Rương vàng']};
 const QUESTS=[
