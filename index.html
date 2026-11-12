@@ -3,178 +3,185 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Stock & Fish — Đại dương</title>
+<title>Stock & Fish — Đại Dương Anime Edition</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#020a20;color:#eefaff;font:14px/1.4 system-ui,Segoe UI,Arial,sans-serif;overflow-x:hidden}
+body{margin:0;background:#020514;color:#eefaff;font:14px/1.4 system-ui,Segoe UI,Arial,sans-serif;overflow-x:hidden}
 button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:1px solid #2edfff;color:#fff;background:linear-gradient(135deg,#0876ed,#09c8f1);border-radius:10px;padding:8px 12px;font-weight:800;transition:transform .12s,filter .15s,opacity .15s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-button:hover:not(:disabled){filter:brightness(1.15)}
+button{cursor:pointer;border:1px solid #00f0ff;color:#fff;background:linear-gradient(135deg,#0055ff,#00d9ff);border-radius:10px;padding:8px 12px;font-weight:800;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 0 10px rgba(0,240,255,0.4)}
+button:hover:not(:disabled){filter:brightness(1.2);box-shadow:0 0 18px rgba(0,240,255,0.8);transform:translateY(-1px)}
 button:active:not(:disabled){transform:translateY(2px) scale(.97)}
-button:disabled{opacity:.45;cursor:not-allowed}
-button.red{background:linear-gradient(135deg,#b91c48,#f44d75);border-color:#ff7fa0}
-button.gold{background:linear-gradient(135deg,#e5a900,#ffdf62);color:#17223a;border-color:#ffe066}
-button.ghost{background:transparent;color:#7de8ff}
+button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+button.red{background:linear-gradient(135deg,#ff0055,#ff3b00);border-color:#ff6699;box-shadow:0 0 10px rgba(255,0,85,0.4)}
+button.gold{background:linear-gradient(135deg,#ffaa00,#ffe600);color:#0a0e1a;border-color:#fff066;box-shadow:0 0 10px rgba(255,230,0,0.5)}
+button.ghost{background:transparent;color:#7de8ff;border-color:#176ca6}
 button.busy{pointer-events:none;opacity:.85}
-.spin{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite}
-@keyframes rot{to{transform:rotate(360deg)}}
-input,select,textarea{background:#06132a;color:#fff;border:1px solid #21649a;border-radius:8px;padding:9px;width:100%}
-input[type=checkbox]{width:auto}
+
+input,select,textarea{background:#06132a;color:#fff;border:1px solid #00f0ff55;border-radius:8px;padding:9px;width:100%;outline:none}
+input:focus,select:focus{border-color:#00f0ff;box-shadow:0 0 8px rgba(0,240,255,0.5)}
 .inline{width:auto;display:inline-block}
 .hidden{display:none!important}
-.hint{color:#92b6d1;font-size:12px}
-.up{color:#47ffb3}.down{color:#ff7099}
-.price{color:#ffd34f;font-weight:900}
+.hint{color:#8daec7;font-size:12px}
+.up{color:#00ffaa;text-shadow:0 0 6px #00ffaa}.down{color:#ff3366;text-shadow:0 0 6px #ff3366}
+.price{color:#ffe600;font-weight:900;text-shadow:0 0 8px rgba(255,230,0,0.4)}
 .center{text-align:center}
 .w{width:100%;margin-top:6px}
-.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center}
-.screen{min-height:100vh;padding:16px;background:radial-gradient(ellipse at 50% 0,#07568b 0,#031735 44%,#02091b 100%)}
-.brand{text-align:center;font-size:clamp(28px,5vw,52px);font-weight:1000;color:#fff;text-shadow:0 3px 0 #0750a0,0 0 22px #00d9ff;margin-top:20px}
-.brand span{color:#ffd34f}
-.sub{text-align:center;color:#9cecff;margin:6px 0 20px}
+
+.screen{min-height:100vh;padding:16px;background:radial-gradient(ellipse at 50% 0,#0a3a60 0,#04142e 50%,#020514 100%)}
+.brand{text-align:center;font-size:clamp(28px,5vw,52px);font-weight:1000;color:#fff;text-shadow:0 0 15px #00f0ff,0 0 30px #0055ff;margin-top:20px}
+.brand span{color:#ffe600;text-shadow:0 0 15px #ffe600}
+.sub{text-align:center;color:#9cecff;margin:6px 0 20px;font-weight:600}
+
 .authwrap{max-width:820px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.card{border:1px solid #159fe8;border-radius:16px;background:linear-gradient(145deg,#07315bdb,#04132df2);padding:20px}
+.card{border:1px solid #00f0ff44;border-radius:16px;background:linear-gradient(145deg,#07315be6,#04132df2);padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.6)}
 .card input{margin:6px 0}
-.link{color:#7de8ff;text-decoration:underline;cursor:pointer}
+.link{color:#00f0ff;text-decoration:underline;cursor:pointer}
+
 .home{max-width:1100px;margin:0 auto;padding:6px}
-.home-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:12px 16px}
-.home-top h2{margin:0;font-size:20px}
+.home-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;background:#04142be8;border:1px solid #00f0ff55;border-radius:14px;padding:12px 16px;box-shadow:0 0 15px rgba(0,240,255,0.2)}
+.home-top h2{margin:0;font-size:20px;color:#00f0ff}
+
 .gamegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(min-width:760px){.gamegrid{grid-template-columns:repeat(4,1fr)}}
-.gtile{border:1px solid #1c6090;border-radius:16px;background:linear-gradient(145deg,#07315b,#04132d);padding:18px 10px;text-align:center;cursor:pointer;transition:transform .15s,border-color .15s;min-height:132px;display:flex;flex-direction:column;justify-content:center;align-items:center;color:inherit;text-decoration:none}
-.gtile:hover{transform:translateY(-3px);border-color:#ffd34f}
-.gtile .ic{font-size:40px}
-.gtile b{display:block;margin-top:6px;font-size:15px}
-.gtile small{color:#92b6d1;font-size:12px}
-.topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#04142be8;border:1px solid #176ca6;border-radius:14px;padding:10px;margin-bottom:12px}
-.money{margin-left:auto;color:#ffd34f;font-weight:900;font-size:19px}
-#evtBadge{color:#ff9e5e;font-weight:800}
-#annBar{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#b91c48,#e5a900);color:#fff;text-align:center;padding:8px;font-weight:800;z-index:98}
+.gtile{border:1px solid #147bb3;border-radius:16px;background:linear-gradient(145deg,#072b4f,#04142d);padding:18px 10px;text-align:center;cursor:pointer;transition:all .2s;min-height:132px;display:flex;flex-direction:column;justify-content:center;align-items:center;color:inherit;text-decoration:none}
+.gtile:hover{transform:translateY(-4px);border-color:#00f0ff;box-shadow:0 6px 20px rgba(0,240,255,0.4)}
+.gtile .ic{font-size:40px;filter:drop-shadow(0 0 8px rgba(0,240,255,0.6))}
+.gtile b{display:block;margin-top:6px;font-size:15px;color:#fff}
+.gtile small{color:#8daec7;font-size:12px}
+
+.topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#04142be8;border:1px solid #00f0ff55;border-radius:14px;padding:10px 14px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,0.4)}
+.money{margin-left:auto;color:#ffe600;font-weight:900;font-size:19px;text-shadow:0 0 10px rgba(255,230,0,0.5)}
+#annBar{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#ff0055,#ffaa00);color:#fff;text-align:center;padding:8px;font-weight:800;z-index:98}
+
 .layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.9fr);gap:12px}
-.panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:14px;overflow:hidden;margin-bottom:12px}
-.ph{padding:10px 12px;background:#092b50;border-bottom:1px solid #13537d;font-weight:900;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.panel{background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+.ph{padding:10px 14px;background:#092b50;border-bottom:1px solid #13537d;font-weight:900;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;color:#00f0ff}
 .pb{padding:10px 12px;font-size:13px;color:#b5ddf8}
-.arena{position:relative;height:480px;overflow:hidden;background:radial-gradient(ellipse at 50% 0,#8ff7ff 0,#1aa8e0 22%,#0a5fa8 52%,#052a5c 80%,#020d2c 100%)}
-.arena.rage{background:radial-gradient(ellipse at 50% 0,#ffb3b3 0,#c4305a 25%,#5a0f2e 60%,#1a0212 100%)}
+
+/* ARENA ANIME THỦY CUNG */
+.arena{position:relative;height:480px;overflow:hidden;background:radial-gradient(ellipse at 50% 10%,#0055aa 0,#031d42 55%,#010714 100%);border-radius:12px;border:1px solid #00f0ff44;box-shadow:inset 0 0 40px rgba(0,0,0,0.8)}
+.arena.rage{background:radial-gradient(ellipse at 50% 10%,#ff3366 0,#5a0f2e 55%,#1a0212 100%)}
 .arena.shake{animation:shk .35s}
 @keyframes shk{0%,100%{transform:translate(0,0)}25%{transform:translate(-6px,4px)}50%{transform:translate(5px,-4px)}75%{transform:translate(-3px,2px)}}
-.fish{position:absolute;width:84px;cursor:pointer;z-index:2;filter:drop-shadow(0 0 8px #16dfff);animation:swim 4s ease-in-out infinite alternate}
+
+.fish{position:absolute;width:90px;cursor:pointer;z-index:2;filter:drop-shadow(0 0 10px #00f0ff);animation:swim 4s ease-in-out infinite alternate;transition:transform .2s}
+.fish:hover{filter:drop-shadow(0 0 16px #ffe600) brightness(1.2)}
 .fish svg{width:100%;height:auto;display:block}
-.fish.dying{opacity:0;transform:scale(.3) rotate(180deg);transition:all .4s}
+.fish.dying{opacity:0;transform:scale(.2) rotate(180deg);transition:all .4s ease-out}
 @keyframes swim{from{transform:translate(-10px,4px)}to{transform:translate(18px,-12px)}}
-.boss{position:absolute;top:30%;left:-30%;width:min(230px,40%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 18px #26e8ff);animation-timing-function:linear;animation-fill-mode:forwards}
+
+.boss{position:absolute;top:30%;left:-30%;width:min(230px,40%);transform:translateY(-50%);z-index:5;cursor:pointer;filter:drop-shadow(0 0 20px #ff0055)}
 .boss svg{width:100%;height:auto;display:block}
 .boss.toRight{animation-name:swimRight;transform:translateY(-50%) scaleX(-1)}
 .boss.toLeft{animation-name:swimLeft}
 @keyframes swimRight{from{left:-30%}to{left:110%}}
 @keyframes swimLeft{from{left:110%}to{left:-30%}}
-.boss.rage{filter:drop-shadow(0 0 26px #ff1f5a) hue-rotate(-30deg)}
+.boss.rage{filter:drop-shadow(0 0 30px #ff0055) hue-rotate(-20deg)}
 .boss.hit svg{animation:bh .2s}
 @keyframes bh{0%{scale:1}40%{scale:.9}100%{scale:1}}
 .boss.dying{opacity:0;transform:translateY(-50%) scale(.3) rotate(200deg);transition:all .9s}
-.bossbar{position:absolute;left:10px;right:10px;top:8px;z-index:6;text-align:center;text-shadow:0 2px 4px #001a33}
-.hpo{height:14px;border-radius:20px;background:#35142c;border:1px solid #ff5da9;overflow:hidden;margin-top:4px}
-.hpi{height:100%;width:100%;background:linear-gradient(90deg,#ff176e,#ffbc3e);transition:width .25s}
-.cannon{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:120px;z-index:6;filter:drop-shadow(0 0 12px #00eaff)}
+
+.bossbar{position:absolute;left:10px;right:10px;top:8px;z-index:6;text-align:center;text-shadow:0 2px 4px #000}
+.hpo{height:14px;border-radius:20px;background:#1a0514;border:1px solid #ff0055;overflow:hidden;margin-top:4px;box-shadow:0 0 10px rgba(255,0,85,0.4)}
+.hpi{height:100%;width:100%;background:linear-gradient(90deg,#ff0055,#ffe600);transition:width .25s}
+
+.cannon{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:120px;z-index:6;filter:drop-shadow(0 0 15px #00f0ff)}
 .cannon svg{width:100%;height:100%}
-.dmg{position:absolute;font-weight:900;font-size:20px;pointer-events:none;z-index:9;text-shadow:0 2px 4px #001a33;animation:pop .85s forwards;white-space:nowrap}
-@keyframes pop{to{transform:translateY(-60px);opacity:0}}
+
+.dmg{position:absolute;font-weight:900;font-size:20px;pointer-events:none;z-index:9;text-shadow:0 2px 6px #000;animation:pop .85s forwards;white-space:nowrap;color:#ffe600}
+@keyframes pop{to{transform:translateY(-60px) scale(1.2);opacity:0}}
+
 .warn{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);font-size:clamp(22px,4vw,44px);font-weight:1000;color:#ffe600;text-shadow:0 0 16px #ff0055;z-index:20;pointer-events:none;animation:wp 1s forwards;white-space:nowrap}
 @keyframes wp{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:0}}
-.controls{padding:10px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;background:#03132b}
+
+.controls{padding:10px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;background:#03132b;border-top:1px solid #147bb3}
 .controls select{width:auto}
 .ammos{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px}
-.ammo{padding:8px 4px;text-align:center;border:1px solid #165b90;border-radius:10px;background:#071b37;cursor:pointer;font-size:12px}
-.ammo.on{border-color:#ffe66b;background:#13385b}
+.ammo{padding:8px 4px;text-align:center;border:1px solid #147bb3;border-radius:10px;background:#071b37;cursor:pointer;font-size:12px;transition:all .2s}
+.ammo:hover{border-color:#00f0ff}
+.ammo.on{border-color:#ffe600;background:#13385b;box-shadow:0 0 10px rgba(255,230,0,0.3)}
 .ammo i{font-style:normal;font-size:22px;display:block}
+
 .row{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid #123a60}
 .feed{padding:8px 10px;max-height:170px;overflow:auto;font-size:12px;color:#b5ddf8}
 .feed div{padding:4px 0;border-bottom:1px solid #123353}
-.over{position:fixed;inset:0;z-index:80;background:#010817f0;padding:14px;overflow:auto}
-.ob{max-width:1100px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #147bb3;border-radius:16px;padding:14px}
+
+.over{position:fixed;inset:0;z-index:80;background:rgba(2,5,20,0.92);padding:14px;overflow:auto;backdrop-filter:blur(8px)}
+.ob{max-width:1100px;margin:auto;background:linear-gradient(150deg,#06264b,#04142e);border:1px solid #00f0ff55;border-radius:16px;padding:16px;box-shadow:0 0 30px rgba(0,0,0,0.8)}
 .oh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
-.gc{border:1px solid #1c6090;border-radius:12px;background:#071b37;padding:10px;text-align:center}
-.gc.eq{border-color:#47ffb3}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.gc{border:1px solid #147bb3;border-radius:12px;background:#071b37;padding:12px;text-align:center;transition:all .2s}
+.gc:hover{border-color:#00f0ff}
+.gc.eq{border-color:#00ffaa;box-shadow:0 0 12px rgba(0,255,170,0.4)}
 .gc svg{height:100px;width:auto}
-.gc button{width:100%;margin-top:6px;font-size:13px}
+.gc button{width:100%;margin-top:8px;font-size:13px}
+
 .rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-.rcard{border:1px solid #1c6090;border-radius:14px;background:#071b37;padding:12px}
-.rcard.cur{border-color:#47ffb3;box-shadow:0 0 12px #47ffb3}
-.rt{font-size:18px;font-weight:900;margin-bottom:4px}
+.rcard{border:1px solid #147bb3;border-radius:14px;background:#071b37;padding:14px}
+.rcard.cur{border-color:#00ffaa;box-shadow:0 0 15px rgba(0,255,170,0.4)}
+.rt{font-size:18px;font-weight:900;margin-bottom:4px;color:#00f0ff}
+
 .tabs2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;justify-content:center}
 .res{text-align:center;font-weight:900;font-size:18px;min-height:28px;margin-top:8px}
 .doors{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:14px 0}
-.door{width:120px;height:160px;border-radius:14px;border:2px solid #2edfff;background:linear-gradient(145deg,#1d4f8a,#0b2550);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:44px;cursor:pointer}
+.door{width:120px;height:160px;border-radius:14px;border:2px solid #00f0ff;background:linear-gradient(145deg,#1d4f8a,#0b2550);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:44px;cursor:pointer;transition:transform .2s}
+.door:hover{transform:translateY(-4px);box-shadow:0 0 15px rgba(0,240,255,0.5)}
 .door small{font-size:12px;color:#9edcff;margin-top:6px}
-.lock{position:relative;height:50px;margin:24px auto;max-width:600px;border-radius:14px;background:#071b37;border:2px solid #2edfff;overflow:hidden}
+
+.lock{position:relative;height:50px;margin:24px auto;max-width:600px;border-radius:14px;background:#071b37;border:2px solid #00f0ff;overflow:hidden}
 .zn{position:absolute;top:0;bottom:0}
 .needle{position:absolute;top:-6px;bottom:-6px;width:6px;margin-left:-3px;background:#fff;box-shadow:0 0 12px #fff;border-radius:4px}
 .bcgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:600px;margin:10px auto}
-.bcf{border:2px solid #1c6090;border-radius:14px;background:#071b37;padding:10px;text-align:center;cursor:pointer;user-select:none}
-.bcf:hover{border-color:#ffd34f}
+.bcf{border:2px solid #147bb3;border-radius:14px;background:#071b37;padding:12px;text-align:center;cursor:pointer;user-select:none;transition:all .2s}
+.bcf:hover{border-color:#ffe600;box-shadow:0 0 12px rgba(255,230,0,0.3)}
 .bcf .e{font-size:40px}
+
 .bcdice{display:flex;gap:14px;justify-content:center;min-height:110px;align-items:center;margin:12px 0}
-.die{width:90px;height:90px;display:flex;align-items:center;justify-content:center;font-size:52px;background:#fff;border-radius:16px;box-shadow:0 5px 0 #9aa8c2;animation:dp .5s}
+.die{width:90px;height:90px;display:flex;align-items:center;justify-content:center;font-size:52px;background:#fff;border-radius:16px;box-shadow:0 5px 0 #9aa8c2;color:#000;animation:dp .5s}
 @keyframes dp{from{transform:rotate(-180deg) scale(.2)}to{transform:none}}
+
 .wheel{font-size:70px;text-align:center;margin:10px 0}
 .segs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
-.seg{border:1px solid #1c6090;border-radius:10px;padding:8px 10px;background:#071b37;font-size:13px;min-width:70px;text-align:center}
-.seg.on{border-color:#ffe66b;background:#13385b;box-shadow:0 0 12px #ffe66b}
+.seg{border:1px solid #147bb3;border-radius:10px;padding:8px 10px;background:#071b37;font-size:13px;min-width:70px;text-align:center}
+.seg.on{border-color:#ffe600;background:#13385b;box-shadow:0 0 12px #ffe600}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
-@media(max-width:850px){
-  .screen{padding:10px}
-  .authwrap{grid-template-columns:1fr}
-  .layout{grid-template-columns:1fr}
-  .arena{height:360px}
-  .money{font-size:16px}
-  .controls button{flex:1 1 auto}
-  .over{padding:6px}
-  .ob{padding:10px}
-  .bcgrid{grid-template-columns:repeat(3,1fr);gap:6px}
-  .bcf .e{font-size:30px}
-}
-@media(max-width:480px){
-  .arena{height:300px}
-  .cannon{width:90px;height:90px}
-  .boss{width:min(170px,45%)}
-  .topbar button{padding:6px 8px;font-size:12px}
-}
+th,td{padding:8px;text-align:left;border-bottom:1px solid #147bb3}
+th{color:#00f0ff}
 </style>
 </head>
 <body>
 
-<div id="notice" class="hidden" style="position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#09284a;border:1px solid #35eaff;border-radius:12px;padding:10px 16px;z-index:99;max-width:90%;text-align:center"></div>
+<div id="notice" class="hidden" style="position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#061f3d;border:1px solid #00f0ff;border-radius:12px;padding:10px 20px;z-index:99;max-width:90%;text-align:center;box-shadow:0 0 20px rgba(0,240,255,0.4)"></div>
 <div id="annBar" class="hidden"></div>
 
 <!-- ĐĂNG NHẬP -->
 <section id="authScreen" class="screen">
   <div class="brand">STOCK <span>&</span> FISH</div>
-  <p class="sub">BẮN CÁ THEO PHÒNG • BẦU CUA • VÒNG QUAY • ĐUA NGỰA • TRÒ NHANH • CHỨNG KHOÁN • CHƠI BẰNG XU ẢO</p>
+  <p class="sub">BẮN CÁ ANIME • BẦU CUA • VÒNG QUAY • ĐUA NGỰA • TRÒ NHANH • CHỨNG KHOÁN</p>
   <div class="authwrap">
     <div class="card">
-      <div style="font-size:50px;text-align:center">🐉 🐠 🐬 🦈</div>
-      <h2>Đại dương săn thưởng!</h2>
-      <p>6 phòng từ Tập Bắn đến Huyền Thoại, mỗi phòng 5 boss. Bầu cua online, vòng quay, đua ngựa, 6 trò nhanh, chứng khoán giả lập.</p>
+      <div style="font-size:50px;text-align:center;filter:drop-shadow(0 0 10px #00f0ff)">✨ 🌸 🐬 🦈</div>
+      <h2 style="color:#00f0ff">Thủy Cung Anime!</h2>
+      <p>6 phòng săn thưởng, boss khủng, hiệu ứng Anime neon rực rỡ và các minigames hấp dẫn.</p>
       <p>🪙 Ví khởi đầu: <b class="price">100.000 xu</b></p>
-      <p class="hint">Xu ảo, không nạp rút tiền thật.</p>
+      <p class="hint">Chơi giải trí bằng xu ảo, không nạp rút tiền thật.</p>
     </div>
     <div class="card">
       <div id="loginForm">
-        <h2>Đăng nhập</h2>
+        <h2 style="color:#ffe600">Đăng nhập</h2>
         <input id="loginName" placeholder="Tên đăng nhập">
         <input id="loginPass" type="password" placeholder="Mật khẩu">
-        <button class="w" onclick="login()">Vào đại dương</button>
-        <p>Chưa có tài khoản? <span class="link" onclick="showRegister()">Đăng ký</span></p>
+        <button class="w gold" onclick="login()">VÀO THỦY CUNG</button>
+        <p style="margin-top:10px">Chưa có tài khoản? <span class="link" onclick="showRegister()">Đăng ký</span></p>
       </div>
       <div id="registerForm" class="hidden">
-        <h2>Tạo tài khoản</h2>
+        <h2 style="color:#00ffaa">Tạo tài khoản</h2>
         <input id="regName" placeholder="Tên đăng nhập (≥3 ký tự)">
         <input id="regPass" type="password" placeholder="Mật khẩu (≥4 ký tự)">
         <input id="regPass2" type="password" placeholder="Nhập lại mật khẩu">
         <button class="w" onclick="register()">Tạo tài khoản</button>
-        <p>Đã có tài khoản? <span class="link" onclick="showLogin()">Đăng nhập</span></p>
+        <p style="margin-top:10px">Đã có tài khoản? <span class="link" onclick="showLogin()">Đăng nhập</span></p>
       </div>
     </div>
   </div>
@@ -188,7 +195,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <div class="price">🪙 <span id="homeWallet">0</span></div>
     </div>
     <div class="gamegrid">
-      <div class="gtile" onclick="goGame('fish')"><div class="ic">🐟</div><b>Bắn cá</b><small>Đại chiến đại dương</small></div>
+      <div class="gtile" onclick="goGame('fish')"><div class="ic">🐟</div><b>Bắn cá Anime</b><small>Đại chiến thủy cung</small></div>
       <div class="gtile" onclick="goGame('bc')"><div class="ic">🎲</div><b>Bầu cua</b><small>Sảnh online theo phòng</small></div>
       <div class="gtile" onclick="goGame('wheel')"><div class="ic">🎡</div><b>Vòng quay</b><small>Quay may mắn</small></div>
       <div class="gtile" onclick="goGame('horse')"><div class="ic">🐎</div><b>Đua ngựa</b><small>Cược ngựa về nhất</small></div>
@@ -202,20 +209,20 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
       <div class="gtile" onclick="openMini('hilo')"><div class="ic">🎲</div><b>Lớn nhỏ</b><small>Đoán 3 xúc xắc</small></div>
       <div class="gtile" onclick="openMini('pick')"><div class="ic">🎫</div><b>Bốc thăm</b><small>10 lá, 1 lá trúng</small></div>
       <div class="gtile" onclick="openMini('treasure')"><div class="ic">⛏️</div><b>Kho báu</b><small>Lưới 5×5, tránh bom</small></div>
-      <a class="gtile" href="https://hikhikhakhamunly-alt.github.io/nhanquaad/" target="_blank" rel="noopener"><div class="ic">🎁</div><b>Nhận quà</b><small>Nhập mã sự kiện</small></a>
+      <a class="gtile" href="https://hikhikhakhamunly-alt.github.io/keyadmin/reward.html" target="_blank" rel="noopener"><div class="ic">🎁</div><b>Nhận quà</b><small>Nhập mã sự kiện</small></a>
       <a class="gtile" href="https://zalo.me/g/juyluzssqjuxvan7jqk6" target="_blank" rel="noopener"><div class="ic">📢</div><b>Nhóm Zalo</b><small>Tin thông báo sự kiện</small></a>
       <a class="gtile" href="https://www.tiktok.com/@toandiemcaodetennyc1tuan" target="_blank" rel="noopener"><div class="ic">🎮</div><b>Tham gia admin</b><small>Ghi chú 5 vòng · cọc 100k</small></a>
       <a class="gtile" href="https://www.tiktok.com/@toandiemcaodetennyc1tuan" target="_blank" rel="noopener"><div class="ic">📱</div><b>Liên hệ admin</b><small>TikTok: toandiemcaodetennyc1tuan</small></a>
     </div>
-    <div class="center" style="margin-top:16px"><button class="red" onclick="logout()">Thoát</button></div>
+    <div class="center" style="margin-top:20px"><button class="red" onclick="logout()">Thoát tài khoản</button></div>
   </div>
 </section>
 
 <!-- MÀN BẮN CÁ -->
 <section id="gameScreen" class="screen hidden">
   <div class="topbar">
-    <button onclick="showHome()">🏠 Trang chủ</button>
-    <b>🌊 STOCK & FISH</b><span id="playerLabel" class="hint"></span><span id="gunName" style="color:#9edcff"></span>
+    <button class="ghost" onclick="showHome()">🏠 Trang chủ</button>
+    <b style="color:#00f0ff">🌊 ANIME FISH</b><span id="playerLabel" class="hint"></span><span id="gunName" style="color:#ffe600"></span>
     <span id="evtBadge" class="hidden"></span>
     <span class="money">🪙 <span id="wallet">0</span></span>
     <button onclick="openRoom()">🏝️ Phòng</button>
@@ -225,7 +232,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
   <div class="layout">
     <div>
       <div class="panel">
-        <div class="ph"><span>🐟 ĐẠI CHIẾN ĐẠI DƯƠNG</span><span id="status" class="hint"></span></div>
+        <div class="ph"><span>🐟 ĐẠI CHIẾN THỦY CUNG ANIME</span><span id="status" class="hint"></span></div>
         <div id="arena" class="arena">
           <div class="bossbar">
             <b>👑 <span id="bossName"></span> • Lv <span id="bossLv"></span> — <span id="bossText"></span></b>
@@ -235,7 +242,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
           <div id="cannon" class="cannon"></div>
         </div>
         <div class="controls">
-          <label>Đạn:</label>
+          <label style="color:#00f0ff">Đạn:</label>
           <select id="bet"></select>
           <button id="autoBtn" onclick="toggleAuto()">▶ Bắn tự động</button>
           <button onclick="upgrade()">⚡ Nâng cấp</button>
@@ -279,7 +286,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <!-- SẢNH PHÒNG -->
 <div id="roomView" class="over hidden">
   <div class="ob">
-    <div class="oh"><b style="font-size:22px">🏝️ CHỌN PHÒNG</b><button onclick="closeRoom()">← Đóng</button></div>
+    <div class="oh"><b style="font-size:22px;color:#00f0ff">🏝️ CHỌN PHÒNG</b><button onclick="closeRoom()">← Đóng</button></div>
     <div class="hint center" style="margin-bottom:10px">Mỗi phòng có 5 boss, đi lần lượt từ dễ đến siêu khó. Tiến độ lưu riêng từng phòng.</div>
     <div class="rooms" id="roomList"></div>
   </div>
@@ -289,12 +296,11 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="bcView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <b style="font-size:22px">🎲 BẦU CUA — <span id="bcRoom"></span></b>
+      <b style="font-size:22px;color:#00f0ff">🎲 BẦU CUA — <span id="bcRoom"></span></b>
       <div class="price">🪙 <span id="bcWallet"></span></div>
       <button onclick="backHome('bcView')">🏠 Trang chủ</button>
     </div>
     <div class="center" style="font-size:18px">Vòng kết thúc sau: <b class="price"><span id="bcTimer">--</span></b> giây</div>
-    <div class="hint center">Mọi người trong phòng chơi chung một vòng, kết quả do máy chủ quay.</div>
     <div class="bcgrid" id="bcGrid"></div>
     <div class="center">
       Mức cược:
@@ -316,11 +322,10 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="wheelView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <b style="font-size:22px">🎡 VÒNG QUAY</b>
+      <b style="font-size:22px;color:#00f0ff">🎡 VÒNG QUAY</b>
       <div class="price">🪙 <span id="wheelWallet"></span></div>
       <button onclick="closeWheel()">🏠 Trang chủ</button>
     </div>
-    <div class="hint center">Chọn mệnh giá rồi quay. Kết quả do máy chủ quyết định.</div>
     <div class="center" id="wheelBets" style="margin:10px 0"></div>
     <div class="wheel" id="wheelDisp">🎡</div>
     <div class="segs" id="wheelSegs"></div>
@@ -334,17 +339,14 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="horseView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <b style="font-size:22px">🐎 ĐUA NGỰA</b>
+      <b style="font-size:22px;color:#00f0ff">🐎 ĐUA NGỰA</b>
       <div class="price">🪙 <span id="horseWallet"></span></div>
       <button onclick="closeHorse()">🏠 Trang chủ</button>
     </div>
-    <div class="hint center">Chọn ngựa và mức cược. Về nhất ×5, về nhì ×2, còn lại mất cược.</div>
     <div id="horseTrack" style="margin:12px 0"></div>
     <div class="center">
-      Ngựa:
-      <select id="horsePick" class="inline"></select>
-      Cược:
-      <select id="horseBet" class="inline">
+      Ngựa: <select id="horsePick" class="inline"></select>
+      Cược: <select id="horseBet" class="inline">
         <option value="1000">1.000</option><option value="10000" selected>10.000</option>
         <option value="50000">50.000</option><option value="100000">100.000</option>
       </select>
@@ -358,7 +360,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="shopView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <div><b style="font-size:22px">🔫 KHO SÚNG</b><div class="hint">Súng đắt hơn thì hình đẹp hơn và sát thương cao hơn.</div></div>
+      <div><b style="font-size:22px;color:#00f0ff">🔫 KHO SÚNG</b><div class="hint">Súng anime tối tân tăng sát thương mạnh mẽ.</div></div>
       <div class="price">🪙 <span id="shopWallet"></span></div>
       <button onclick="closeShop()">🏠 Trang chủ</button>
     </div>
@@ -370,7 +372,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="gamesView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <b style="font-size:22px">🎮 CỬA & MỞ KHÓA</b>
+      <b style="font-size:22px;color:#00f0ff">🎮 CỬA & MỞ KHÓA</b>
       <div class="price">🪙 <span id="gameWallet"></span></div>
       <button onclick="closeGames()">🏠 Trang chủ</button>
     </div>
@@ -384,21 +386,19 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
         <option value="50000">50.000</option><option value="100000">100.000</option></select></div>
       <div class="doors" id="doors"></div>
       <div class="res" id="doorRes"></div>
-      <div class="hint">🪙 Xu ×1,2 • 🎁 Rương ×2,2 • 👾 Quái vật mất cược</div>
     </div>
     <div id="panelLock" class="hidden center">
       <div>Cược: <select id="lockBet" class="inline">
         <option value="1000">1.000</option><option value="10000" selected>10.000</option>
         <option value="50000">50.000</option><option value="100000">100.000</option></select></div>
       <div class="lock">
-        <div class="zn" style="left:20%;width:60%;background:#ffd34f33"></div>
-        <div class="zn" style="left:38%;width:24%;background:#47ffb355"></div>
-        <div class="zn" style="left:46%;width:8%;background:#ff4d6d99"></div>
+        <div class="zn" style="left:20%;width:60%;background:#00f0ff33"></div>
+        <div class="zn" style="left:38%;width:24%;background:#00ffaa55"></div>
+        <div class="zn" style="left:46%;width:8%;background:#ff005599"></div>
         <div class="needle" id="needle" style="left:0%"></div>
       </div>
       <button class="gold" style="font-size:18px;padding:12px 26px" onclick="lockPress()">🔓 MỞ KHÓA</button>
       <div class="res" id="lockRes"></div>
-      <div class="hint">Giữa đỏ ×3 • Gần giữa xanh ×1,5 • Vùng vàng ×1 • Ngoài vùng mất cược</div>
     </div>
   </div>
 </div>
@@ -407,7 +407,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="marketView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <b style="font-size:22px">📈 CHỨNG KHOÁN</b>
+      <b style="font-size:22px;color:#00f0ff">📈 CHỨNG KHOÁN</b>
       <div class="price">🪙 <span id="marketWallet"></span></div>
       <button onclick="closeMarket()">🏠 Trang chủ</button>
     </div>
@@ -417,7 +417,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
         <tbody id="mkRows"></tbody>
       </table>
     </div>
-    <div class="panel"><div class="ph">📉 Biểu đồ (giả lập)</div>
+    <div class="panel"><div class="ph">📉 Biểu đồ</div>
       <div class="pb">
         <div id="mkChart" style="height:160px;border:1px solid #14517d;border-radius:10px;background:#04162d;padding:6px"></div>
         <div id="mkChartInfo" style="padding-top:6px"></div>
@@ -434,7 +434,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
 <div id="miniView" class="over hidden">
   <div class="ob">
     <div class="oh">
-      <b id="miniTitle" style="font-size:22px"></b>
+      <b id="miniTitle" style="font-size:22px;color:#00f0ff"></b>
       <div class="price">🪙 <span id="miniWallet"></span></div>
       <button onclick="closeMini()">🏠 Trang chủ</button>
     </div>
@@ -466,7 +466,6 @@ const betLabel=b=>b>=1e9?(b/1e9)+' tỉ':fmt(b);
 const rnd=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const todayStr=()=>new Date().toDateString();
 
-/* Mã thiết bị: lưu trong trình duyệt để máy chủ nhận diện spam */
 function deviceId(){
   let id=localStorage.getItem('sf_fp');
   if(!id){id=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('sf_fp',id)}
@@ -488,140 +487,133 @@ const AMMOS=[['🔹','Thường',1],['💥','Đạn hạt',2.2],['🔮','Laser',
              ['⚡','Sét',8],['🌟','Pháo',12],['💠','Siêu',22],['🌈','Thiên hà',40]];
 
 const GUNS=[
- {id:'wood',name:'Súng Gỗ',price:10000,mult:1,c1:'#c58a52',c2:'#6b4226',beam:'#ffd9a0'},
- {id:'copper',name:'Súng Đồng',price:50000,mult:1.3,c1:'#f0b070',c2:'#8a4b1c',beam:'#ffb36b'},
- {id:'silver',name:'Súng Bạc',price:200000,mult:1.6,c1:'#eef4ff',c2:'#7d8ca8',beam:'#cfe6ff'},
- {id:'ruby',name:'Súng Hồng Ngọc',price:1000000,mult:2.2,c1:'#ff6f8f',c2:'#7a0a2a',beam:'#ff6f91'},
- {id:'fire',name:'Súng Lửa',price:5000000,mult:3,c1:'#ffae55',c2:'#b3300b',beam:'#ffb020'},
- {id:'ice',name:'Súng Băng',price:20000000,mult:4.5,c1:'#c8f6ff',c2:'#2a7fb0',beam:'#8ff7ff'},
- {id:'thunder',name:'Súng Sét',price:60000000,mult:6,c1:'#fff58a',c2:'#6b5a00',beam:'#fff27a'},
- {id:'dragon',name:'Súng Rồng',price:150000000,mult:9,c1:'#4ff09a',c2:'#0b5a33',beam:'#7dffb0'},
- {id:'meteor',name:'Súng Thiên Thạch',price:250000000,mult:12,c1:'#9d82ff',c2:'#2a1659',beam:'#b49bff'},
- {id:'gold',name:'Súng Hoàng Kim',price:350000000,mult:15,c1:'#ffe66b',c2:'#a06b00',beam:'#ffe066'},
- {id:'galaxy',name:'Súng Thiên Hà',price:500000000,mult:22,c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8'}
+ {id:'wood',name:'Súng Gỗ Anime',price:10000,mult:1,c1:'#ff9ae0',c2:'#b33b8a',beam:'#ffb3de'},
+ {id:'copper',name:'Súng Đồng Cyber',price:50000,mult:1.3,c1:'#ffaa00',c2:'#a86600',beam:'#ffe66b'},
+ {id:'silver',name:'Súng Bạc Thủy Cung',price:200000,mult:1.6,c1:'#00f0ff',c2:'#0055ff',beam:'#8ff7ff'},
+ {id:'ruby',name:'Súng Hồng Ngọc',price:1000000,mult:2.2,c1:'#ff0055',c2:'#8a002e',beam:'#ff6699'},
+ {id:'fire',name:'Súng Lửa Magma',price:5000000,mult:3,c1:'#ff5500',c2:'#b32400',beam:'#ffaa44'},
+ {id:'ice',name:'Súng Băng Tinh Thể',price:20000000,mult:4.5,c1:'#8fe9ff',c2:'#1f6fd6',beam:'#c8f6ff'},
+ {id:'thunder',name:'Súng Sét Điện Tử',price:60000000,mult:6,c1:'#ffe600',c2:'#8a7a00',beam:'#fff58a'},
+ {id:'dragon',name:'Súng Long Tộc',price:150000000,mult:9,c1:'#00ffaa',c2:'#007a52',beam:'#7dffb0'},
+ {id:'meteor',name:'Súng Thiên Thạch',price:250000000,mult:12,c1:'#9d82ff',c2:'#3a1f7a',beam:'#d4c5ff'},
+ {id:'gold',name:'Súng Hoàng Kim',price:350000000,mult:15,c1:'#ffea75',c2:'#c29600',beam:'#fff099'},
+ {id:'galaxy',name:'Súng Vũ Trụ Anime',price:500000000,mult:22,c1:'#d48aff',c2:'#4a008a',beam:'#f0bfff'}
 ];
 
 const SHADOW='<ellipse cx="100" cy="122" rx="70" ry="7" fill="#000" opacity=".35"/>';
 const SPARK='<circle cx="150" cy="30" r="3" fill="#fff"/><circle cx="36" cy="44" r="2" fill="#fff"/>';
 
-function fishArt(c1,c2,fin){return `<svg viewBox="0 -12 120 92"><path d="M90 40 L118 16 Q112 40 118 64 Z" fill="${fin}" stroke="#06142e" stroke-width="3"/><ellipse cx="55" cy="40" rx="42" ry="28" fill="${c1}" stroke="#06142e" stroke-width="3"/><ellipse cx="52" cy="52" rx="30" ry="11" fill="${c2}" opacity=".9"/><circle cx="32" cy="36" r="11" fill="#fff" stroke="#06142e" stroke-width="2.5"/><circle cx="29" cy="37" r="6.5" fill="#06142e"/><circle cx="32" cy="33" r="2.5" fill="#fff"/></svg>`}
-function octoArt(c,l){return `<svg viewBox="0 -10 120 110"><g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round"><path d="M32 60 Q18 84 30 100"/><path d="M48 66 Q42 92 54 104"/><path d="M68 66 Q74 92 62 104"/><path d="M88 60 Q102 84 90 100"/></g><ellipse cx="60" cy="38" rx="42" ry="34" fill="${c}" stroke="#06142e" stroke-width="3"/><ellipse cx="50" cy="20" rx="20" ry="8" fill="${l}" opacity=".7"/><circle cx="44" cy="38" r="12" fill="#fff" stroke="#06142e" stroke-width="2.5"/><circle cx="46" cy="40" r="6.5" fill="#06142e"/><circle cx="76" cy="38" r="12" fill="#fff" stroke="#06142e" stroke-width="2.5"/><circle cx="78" cy="40" r="6.5" fill="#06142e"/></svg>`}
+/* ĐỒ HỌA CÁ ANIME: Mắt to long lanh, viền phát quang neon rực rỡ */
+function fishArt(c1,c2,fin){
+  return `<svg viewBox="0 -12 120 92" style="filter:drop-shadow(0 0 10px ${c1})">
+    <defs>
+      <linearGradient id="an_${c1.replace('#','')}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/>
+      </linearGradient>
+    </defs>
+    <path d="M90 40 L122 14 Q114 40 122 66 Z" fill="${fin}" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+    <ellipse cx="55" cy="40" rx="44" ry="29" fill="url(#an_${c1.replace('#','')})" stroke="#fff" stroke-width="2.5"/>
+    <path d="M38 24 Q55 12 72 24" fill="none" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/>
+    <!-- Mắt anime long lanh -->
+    <circle cx="32" cy="35" r="13" fill="#060b1e" stroke="#fff" stroke-width="2"/>
+    <circle cx="29" cy="33" r="8" fill="${c1}"/>
+    <circle cx="27" cy="31" r="4.5" fill="#fff"/><circle cx="33" cy="38" r="2" fill="#fff"/>
+    <path d="M22 22 Q32 18 38 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function octoArt(c,l){
+  return `<svg viewBox="0 -10 120 110" style="filter:drop-shadow(0 0 12px ${c})">
+    <g stroke="${c}" stroke-width="10" fill="none" stroke-linecap="round">
+      <path d="M32 60 Q16 86 28 106"/><path d="M48 66 Q40 94 52 110"/><path d="M68 66 Q76 94 64 110"/><path d="M88 60 Q104 86 92 106"/>
+    </g>
+    <ellipse cx="60" cy="38" rx="44" ry="36" fill="${c}" stroke="#fff" stroke-width="2.5"/>
+    <ellipse cx="50" cy="20" rx="22" ry="8" fill="${l}" opacity=".85"/>
+    <circle cx="43" cy="38" r="12" fill="#060b1e" stroke="#fff" stroke-width="2"/><circle cx="41" cy="36" r="7" fill="${c}"/><circle cx="39" cy="34" r="3" fill="#fff"/><circle cx="45" cy="41" r="1.5" fill="#fff"/>
+    <circle cx="77" cy="38" r="12" fill="#060b1e" stroke="#fff" stroke-width="2"/><circle cx="75" cy="36" r="7" fill="${c}"/><circle cx="73" cy="34" r="3" fill="#fff"/><circle cx="79" cy="41" r="1.5" fill="#fff"/>
+  </svg>`;
+}
 
 function gunSvg(g){
   const t=GUNS.findIndex(x=>x.id===g.id),id='g'+g.id;
   let deco='';
-  if(t>=3)deco+=`<path d="M40 70 L14 50 L22 80 Z" fill="${g.c1}" stroke="#06142e" stroke-width="2"/><path d="M80 70 L106 50 L98 80 Z" fill="${g.c1}" stroke="#06142e" stroke-width="2"/>`;
+  if(t>=3)deco+=`<path d="M40 70 L14 50 L22 80 Z" fill="${g.c1}" stroke="#fff" stroke-width="2"/><path d="M80 70 L106 50 L98 80 Z" fill="${g.c1}" stroke="#fff" stroke-width="2"/>`;
   if(t>=7)deco+=`<circle cx="16" cy="88" r="7" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/><circle cx="104" cy="88" r="7" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/>`;
   const flame=t>=4?`<path d="M48 26 Q60 2 72 26 Q60 16 48 26Z" fill="url(#fl${id})"/>`:'';
-  const aura=t>=9?`<circle cx="60" cy="62" r="56" fill="${g.beam}" opacity=".15"/><circle cx="60" cy="62" r="54" fill="none" stroke="${g.beam}" stroke-width="2" stroke-dasharray="6 6" opacity=".7"/>`:'';
-  return `<svg viewBox="0 0 120 120"><defs>
+  const aura=t>=9?`<circle cx="60" cy="62" r="56" fill="${g.beam}" opacity=".25"/><circle cx="60" cy="62" r="54" fill="none" stroke="${g.beam}" stroke-width="2.5" stroke-dasharray="6 6" opacity=".8"/>`:'';
+  return `<svg viewBox="0 0 120 120" style="filter:drop-shadow(0 0 12px ${g.beam})"><defs>
     <linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c1}"/><stop offset="1" stop-color="${g.c2}"/></linearGradient>
-    <linearGradient id="fl${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6a0"/><stop offset="1" stop-color="#ff7a1a"/></linearGradient>
-    <radialGradient id="mz${id}"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="${g.beam}"/><stop offset="1" stop-color="${g.beam}" stop-opacity="0"/></radialGradient>
+    <linearGradient id="fl${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="${g.beam}"/></linearGradient>
   </defs>
   ${aura}
-  <ellipse cx="60" cy="104" rx="34" ry="12" fill="${g.c2}" stroke="#06142e" stroke-width="3"/>
+  <ellipse cx="60" cy="104" rx="34" ry="12" fill="${g.c2}" stroke="#fff" stroke-width="2"/>
   ${deco}
-  <rect x="44" y="60" width="32" height="38" rx="10" fill="url(#${id})" stroke="#06142e" stroke-width="3"/>
-  <rect x="50" y="26" width="20" height="42" rx="9" fill="url(#${id})" stroke="#06142e" stroke-width="3"/>
-  <rect x="48" y="38" width="24" height="5" rx="2" fill="${g.beam}" opacity=".85"/>
-  <rect x="48" y="54" width="24" height="5" rx="2" fill="${g.beam}" opacity=".85"/>
+  <rect x="44" y="60" width="32" height="38" rx="10" fill="url(#${id})" stroke="#fff" stroke-width="2"/>
+  <rect x="50" y="26" width="20" height="42" rx="9" fill="url(#${id})" stroke="#fff" stroke-width="2"/>
+  <circle cx="60" cy="28" r="10" fill="${g.beam}" stroke="#fff" stroke-width="2"/>
   ${flame}
-  <circle cx="60" cy="26" r="16" fill="url(#mz${id})"/>
-  <ellipse cx="60" cy="26" rx="8" ry="5" fill="#06142e"/>
-  <circle cx="60" cy="78" r="5" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/>
   </svg>`;
 }
 
 const BOSSES=[
- {name:'CÁ RỒNG BĂNG',lv:5,hp:2e6,reward:8e5,svg:()=>`<svg viewBox="0 0 200 130">
-  <defs>
-    <linearGradient id="b1body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4feff"/><stop offset=".45" stop-color="#8fe9ff"/><stop offset="1" stop-color="#1f6fd6"/></linearGradient>
-    <linearGradient id="b1fin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a9fff"/><stop offset="1" stop-color="#bff7ff"/></linearGradient>
-  </defs>
+ {name:'CÁ RỒNG ANIME',lv:5,hp:2e6,reward:8e5,svg:()=>`<svg viewBox="0 0 200 130" style="filter:drop-shadow(0 0 15px #00f0ff)">
+  <defs><linearGradient id="b1body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#00f0ff"/><stop offset="1" stop-color="#0033aa"/></linearGradient></defs>
   ${SHADOW}
-  <path d="M158 65 L196 26 Q186 65 196 104 Z" fill="url(#b1fin)" stroke="#06142e" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M18 65 Q36 14 108 18 Q164 24 164 65 Q164 106 108 112 Q36 116 18 65 Z" fill="url(#b1body)" stroke="#06142e" stroke-width="5"/>
-  <path d="M60 36 Q98 22 138 38" stroke="#fff" stroke-width="7" fill="none" opacity=".75" stroke-linecap="round"/>
-  <path d="M50 96 Q96 112 140 94" stroke="#1f6fd6" stroke-width="5" fill="none" opacity=".45" stroke-linecap="round"/>
-  <path d="M96 22 L104 6 L112 22" fill="#bff7ff" stroke="#06142e" stroke-width="3"/>
-  <ellipse cx="62" cy="58" rx="18" ry="22" fill="#fff" stroke="#06142e" stroke-width="4"/>
-  <ellipse cx="66" cy="62" rx="11" ry="14" fill="#06142e"/>
-  <circle cx="71" cy="54" r="5" fill="#fff"/><circle cx="61" cy="70" r="2" fill="#7fe3ff"/>
-  <path d="M42 56 Q34 64 42 74" stroke="#06142e" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M158 65 L198 24 Q188 65 198 106 Z" fill="#00f0ff" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M18 64 Q36 12 108 16 Q166 22 164 64 Q164 106 108 112 Q36 116 18 64 Z" fill="url(#b1body)" stroke="#fff" stroke-width="3.5"/>
+  <ellipse cx="62" cy="56" rx="20" ry="24" fill="#060b1e" stroke="#fff" stroke-width="3"/>
+  <circle cx="67" cy="52" rx="12" fill="#00f0ff"/><circle cx="64" cy="48" r="5" fill="#fff"/><circle cx="70" cy="58" r="2" fill="#fff"/>
   ${SPARK}
  </svg>`},
- {name:'BẠCH TUỘC TÍM',lv:10,hp:6e6,reward:25e5,svg:()=>`<svg viewBox="0 0 200 150">
-  <defs><radialGradient id="b2body" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#e7d4ff"/><stop offset=".6" stop-color="#a76bff"/><stop offset="1" stop-color="#5a2fb3"/></radialGradient></defs>
+ {name:'BẠCH TUỘC MAGICAL',lv:10,hp:6e6,reward:25e5,svg:()=>`<svg viewBox="0 0 200 150" style="filter:drop-shadow(0 0 15px #ff00ea)">
+  <defs><radialGradient id="b2body" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffb3e6"/><stop offset=".6" stop-color="#ff00aa"/><stop offset="1" stop-color="#660044"/></radialGradient></defs>
   ${SHADOW}
-  <g stroke="#a76bff" stroke-width="13" fill="none" stroke-linecap="round">
+  <g stroke="#ff00aa" stroke-width="13" fill="none" stroke-linecap="round">
     <path d="M60 96 Q24 120 40 142"/><path d="M80 104 Q70 134 88 146"/><path d="M118 104 Q128 134 112 146"/><path d="M140 96 Q176 120 160 142"/>
   </g>
-  <path d="M30 62 Q34 12 100 10 Q166 12 170 62 Q168 100 100 104 Q32 100 30 62 Z" fill="url(#b2body)" stroke="#06142e" stroke-width="5"/>
-  <path d="M62 30 Q100 16 138 30" stroke="#fff" stroke-width="6" fill="none" opacity=".6" stroke-linecap="round"/>
-  <ellipse cx="72" cy="66" rx="19" ry="23" fill="#fff" stroke="#06142e" stroke-width="4"/>
-  <ellipse cx="76" cy="70" rx="11" ry="14" fill="#06142e"/><circle cx="81" cy="62" r="5" fill="#fff"/>
-  <ellipse cx="128" cy="66" rx="19" ry="23" fill="#fff" stroke="#06142e" stroke-width="4"/>
-  <ellipse cx="132" cy="70" rx="11" ry="14" fill="#06142e"/><circle cx="137" cy="62" r="5" fill="#fff"/>
-  <path d="M88 84 Q100 92 112 84" stroke="#06142e" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M30 62 Q34 12 100 10 Q166 12 170 62 Q168 100 100 104 Q32 100 30 62 Z" fill="url(#b2body)" stroke="#fff" stroke-width="3.5"/>
+  <ellipse cx="72" cy="64" rx="20" ry="24" fill="#060b1e" stroke="#fff" stroke-width="3"/>
+  <circle cx="77" cy="60" rx="12" fill="#ff00aa"/><circle cx="74" cy="56" r="5" fill="#fff"/>
+  <ellipse cx="128" cy="64" rx="20" ry="24" fill="#060b1e" stroke="#fff" stroke-width="3"/>
+  <circle cx="133" cy="60" rx="12" fill="#ff00aa"/><circle cx="130" cy="56" r="5" fill="#fff"/>
   ${SPARK}
  </svg>`},
- {name:'CÁ MẬP LỬA',lv:15,hp:15e6,reward:6e6,svg:()=>`<svg viewBox="0 0 200 130">
-  <defs>
-    <linearGradient id="b3body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset=".5" stop-color="#ff7a3c"/><stop offset="1" stop-color="#8a1c0c"/></linearGradient>
-    <linearGradient id="b3fin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff3b1f"/><stop offset="1" stop-color="#ffd27a"/></linearGradient>
-  </defs>
+ {name:'CÁ MẬP MECHA',lv:15,hp:15e6,reward:6e6,svg:()=>`<svg viewBox="0 0 200 130" style="filter:drop-shadow(0 0 15px #ff5500)">
+  <defs><linearGradient id="b3body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffea75"/><stop offset=".5" stop-color="#ff5500"/><stop offset="1" stop-color="#8a0000"/></linearGradient></defs>
   ${SHADOW}
-  <path d="M156 62 L198 22 Q188 62 198 102 Z" fill="url(#b3fin)" stroke="#06142e" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M16 64 Q34 10 112 14 Q168 22 166 64 Q166 108 112 116 Q34 118 16 64 Z" fill="url(#b3body)" stroke="#06142e" stroke-width="5"/>
-  <path d="M58 30 L70 8 L86 28 L100 4 L114 26 L130 10 L140 32" fill="#ffb020" stroke="#06142e" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M40 92 Q96 110 150 92" stroke="#ffe08a" stroke-width="5" fill="none" opacity=".5" stroke-linecap="round"/>
-  <ellipse cx="60" cy="60" rx="18" ry="22" fill="#fff" stroke="#06142e" stroke-width="4"/>
-  <ellipse cx="64" cy="64" rx="11" ry="14" fill="#06142e"/><circle cx="69" cy="56" r="5" fill="#fff"/>
-  <path d="M40 52 L56 60" stroke="#06142e" stroke-width="4" stroke-linecap="round"/>
+  <path d="M156 62 L200 20 Q190 62 200 104 Z" fill="#ff5500" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M16 64 Q34 10 112 14 Q168 22 166 64 Q166 108 112 116 Q34 118 16 64 Z" fill="url(#b3body)" stroke="#fff" stroke-width="3.5"/>
+  <ellipse cx="60" cy="58" rx="20" ry="24" fill="#060b1e" stroke="#fff" stroke-width="3"/>
+  <circle cx="65" cy="54" rx="12" fill="#ffaa00"/><circle cx="62" cy="50" r="5" fill="#fff"/>
   ${SPARK}
  </svg>`},
- {name:'RÙA THẦN VÀNG',lv:20,hp:4e7,reward:15e6,svg:()=>`<svg viewBox="0 0 200 140">
-  <defs>
-    <radialGradient id="b4shell" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="#fff6b0"/><stop offset=".6" stop-color="#ffc83a"/><stop offset="1" stop-color="#9a6a00"/></radialGradient>
-  </defs>
+ {name:'RÙA THẦN MECHA',lv:20,hp:4e7,reward:15e6,svg:()=>`<svg viewBox="0 0 200 140" style="filter:drop-shadow(0 0 15px #00ffaa)">
+  <defs><radialGradient id="b4shell" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="#e0fff0"/><stop offset=".6" stop-color="#00ffaa"/><stop offset="1" stop-color="#006644"/></radialGradient></defs>
   ${SHADOW}
-  <path d="M170 56 Q196 50 186 70 Q176 84 160 76 Z" fill="#9fe36b" stroke="#06142e" stroke-width="3"/>
-  <path d="M28 102 L12 122 L40 116 Z M80 112 L70 136 L98 124 Z M124 112 L134 136 L150 118 Z" fill="#9fe36b" stroke="#06142e" stroke-width="3"/>
-  <ellipse cx="96" cy="78" rx="72" ry="44" fill="url(#b4shell)" stroke="#06142e" stroke-width="5"/>
-  <path d="M46 70 L96 42 L146 70 L96 102 Z" fill="none" stroke="#9a6a00" stroke-width="3" opacity=".7"/>
-  <path d="M60 52 Q96 36 132 52" stroke="#fff" stroke-width="6" fill="none" opacity=".7" stroke-linecap="round"/>
-  <ellipse cx="174" cy="48" rx="13" ry="14" fill="#fff" stroke="#06142e" stroke-width="3"/>
-  <ellipse cx="177" cy="50" rx="7" ry="8" fill="#06142e"/><circle cx="180" cy="46" r="3" fill="#fff"/>
+  <ellipse cx="96" cy="78" rx="72" ry="44" fill="url(#b4shell)" stroke="#fff" stroke-width="4"/>
+  <ellipse cx="174" cy="48" rx="16" ry="18" fill="#060b1e" stroke="#fff" stroke-width="3"/>
+  <circle cx="178" cy="46" rx="9" fill="#00ffaa"/><circle cx="176" cy="43" r="4" fill="#fff"/>
   ${SPARK}
  </svg>`},
- {name:'KRAKEN SẤM',lv:30,hp:1e8,reward:4e7,svg:()=>`<svg viewBox="0 0 200 160">
-  <defs>
-    <radialGradient id="b5body" cx=".4" cy=".3" r=".75"><stop offset="0" stop-color="#8f7cff"/><stop offset=".55" stop-color="#2a1f6a"/><stop offset="1" stop-color="#0b0628"/></radialGradient>
-  </defs>
+ {name:'KRAKEN VŨ TRỤ',lv:30,hp:1e8,reward:4e7,svg:()=>`<svg viewBox="0 0 200 160" style="filter:drop-shadow(0 0 20px #b18aff)">
+  <defs><radialGradient id="b5body" cx=".4" cy=".3" r=".75"><stop offset="0" stop-color="#f0cbff"/><stop offset=".5" stop-color="#8a2be2"/><stop offset="1" stop-color="#220044"/></radialGradient></defs>
   ${SHADOW}
-  <g stroke="#2a1f6a" stroke-width="15" fill="none" stroke-linecap="round">
-    <path d="M52 100 Q14 124 26 152"/><path d="M76 110 Q66 144 84 156"/><path d="M124 110 Q134 144 116 156"/><path d="M148 100 Q186 124 174 152"/>
-  </g>
-  <path d="M28 70 Q34 8 100 6 Q166 8 172 70 Q170 106 100 110 Q30 106 28 70 Z" fill="url(#b5body)" stroke="#06142e" stroke-width="5"/>
-  <path d="M60 28 Q100 12 140 28" stroke="#c9bfff" stroke-width="6" fill="none" opacity=".55" stroke-linecap="round"/>
-  <path d="M100 8 L92 -2 M100 8 L108 -2" stroke="#ffe600" stroke-width="3" stroke-linecap="round"/>
-  <ellipse cx="70" cy="66" rx="20" ry="24" fill="#ffe600" stroke="#06142e" stroke-width="4"/>
-  <ellipse cx="74" cy="70" rx="10" ry="16" fill="#06142e"/><circle cx="79" cy="62" r="4" fill="#fff"/>
-  <ellipse cx="130" cy="66" rx="20" ry="24" fill="#ffe600" stroke="#06142e" stroke-width="4"/>
-  <ellipse cx="134" cy="70" rx="10" ry="16" fill="#06142e"/><circle cx="139" cy="62" r="4" fill="#fff"/>
-  <path d="M84 96 Q100 104 116 96" stroke="#ffe600" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M28 70 Q34 8 100 6 Q166 8 172 70 Q170 106 100 110 Q30 106 28 70 Z" fill="url(#b5body)" stroke="#fff" stroke-width="3.5"/>
+  <ellipse cx="70" cy="64" rx="20" ry="24" fill="#060b1e" stroke="#fff" stroke-width="3"/>
+  <circle cx="75" cy="60" rx="12" fill="#d48aff"/><circle cx="72" cy="56" r="5" fill="#fff"/>
+  <ellipse cx="130" cy="64" rx="20" ry="24" fill="#060b1e" stroke="#fff" stroke-width="3"/>
+  <circle cx="135" cy="60" rx="12" fill="#d48aff"/><circle cx="132" cy="56" r="5" fill="#fff"/>
   ${SPARK}
  </svg>`}
 ];
 
 const FISH=[
- {m:2,w:.3,svg:fishArt('#ffb14a','#fff3d6','#ff7a2f')},
- {m:3,w:.25,svg:fishArt('#58e6ff','#e8fdff','#1aa6ff')},
- {m:5,w:.18,svg:fishArt('#ff8ad8','#fff0fa','#ff4fb8')},
- {m:8,w:.14,svg:fishArt('#ffe066','#fffbe0','#ffb020')},
- {m:15,w:.08,svg:octoArt('#7dffb0','#e0fff0')},
- {m:30,w:.05,svg:fishArt('#a98bff','#f0eaff','#6f4cff')}
+ {m:2,w:.3,svg:fishArt('#ff9ae0','#b33b8a','#ffb3de')},
+ {m:3,w:.25,svg:fishArt('#00f0ff','#0055ff','#8ff7ff')},
+ {m:5,w:.18,svg:fishArt('#ffaa00','#ff5500','#ffe66b')},
+ {m:8,w:.14,svg:fishArt('#00ffaa','#008a5c','#7dffb0')},
+ {m:15,w:.08,octoArt('#d48aff','#4a008a')},
+ {m:30,w:.05,svg:fishArt('#ffff8a','#cca300','#fff')}
 ];
 const CHESTS={common:['📦','Rương gỗ'],rare:['🎁','Rương bạc'],gold:['👑','Rương vàng']};
 const QUESTS=[
@@ -706,9 +698,9 @@ async function api(body){
 async function apiRaw(body){
   let r;
   try{r=await fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})}
-  catch(e){throw new Error('Không kết nối được máy chủ. Kiểm tra CFG.API')}
+  catch(e){throw new Error('Không kết nối được máy chủ.')}
   let j;
-  try{j=await r.json()}catch(e){throw new Error('Máy chủ trả về sai định dạng. Kiểm tra quyền truy cập web app')}
+  try{j=await r.json()}catch(e){throw new Error('Máy chủ trả về sai định dạng.')}
   if(!j.ok){const e=new Error(j.error||'Lỗi máy chủ');e.code=j.code;throw e}
   return j;
 }
@@ -729,15 +721,11 @@ function sync(op,data){
         bcState=Object.assign({},j.bc,{recv:Date.now()});bcErr='';renderBC();
       }
       if(j.announce&&j.announce.id!==lastAnn){lastAnn=j.announce.id;showBanner(j.announce.text)}
-      if(!op&&j.wallet!==sentW){
-        const d=j.wallet-sentW;
-        notify('🛠️ Số dư được quản trị cập nhật: '+(d>0?'+':'')+fmt(d)+' xu');
-      }
       renderWallet();renderEvt();
       return j;
     }catch(e){
       if(e.code==='locked'||e.code==='kick'||e.code==='maint'||e.code==='devban'){notify(e.message);endSession();return null}
-      if(e.code==='auth'){notify('Phiên đăng nhập không còn hợp lệ: '+e.message);endSession();return null}
+      if(e.code==='auth'){notify('Phiên đăng nhập hết hạn');endSession();return null}
       if(op)notify(e.message);
       return null;
     }
@@ -809,7 +797,6 @@ function enterGame(){
     setInterval(renderSkills,1000);
     setInterval(()=>{if(!user||!S)return;ensureDaily();renderQuests();renderBuff();renderEvt()},5000);
     setInterval(loadBoard,15000);
-    window.addEventListener('pagehide',flushBeacon);
   }
   renderAll();loadBoard();
 }
@@ -841,11 +828,6 @@ function goGame(g){
 }
 function backHome(viewId){$(viewId).classList.add('hidden');showHome()}
 
-function flushBeacon(){
-  if(!user||!S)return;
-  const body=JSON.stringify({action:'sync',name:user,pass,since,wallet:Math.floor(S.wallet),base,state:stateOnly(),score:score(),fp:deviceId()});
-  try{fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body,keepalive:true})}catch(e){}
-}
 function clearAll(){
   document.querySelectorAll('#arena .fish').forEach(e=>e.remove());fishes=[];
   clearTimeout(bossRespawn);B.alive=false;$('boss').style.display='none';
@@ -927,7 +909,7 @@ function renderWheel(){
 async function spinWheel(){
   if(!user||!S||wheelBusy)return;
   if(!GAMES.wheel)return notify('Vòng quay đang tạm tắt.');
-  if(wheelBet>S.wallet)return notify('Không đủ xu để quay mệnh giá '+betLabel(wheelBet)+'.');
+  if(wheelBet>S.wallet)return notify('Không đủ xu.');
   wheelBusy=true;$('wheelBtn').disabled=true;$('wheelRes').textContent='';
   const segs=[...document.querySelectorAll('#wheelSegs .seg')];
   let k=0;
@@ -1050,7 +1032,7 @@ function applyBossDamage(dmg,e,crit){
   if(!B.alive)return;
   B.hp-=dmg;S.daily.dmg=(S.daily.dmg||0)+dmg;
   const bo=$('boss');bo.classList.remove('hit');void bo.offsetWidth;bo.classList.add('hit');
-  if(e)floatText(e,(crit?'CHÍ MẠNG ':'-')+fmt(dmg),crit?'#ff4d6d':'#ffed65');
+  if(e)floatText(e,(crit?'CHÍ MẠNG ':'-')+fmt(dmg),crit?'#ff0055':'#ffe600');
   if(crit)showWarn('💥 CHÍ MẠNG!');
   if(B.hp<=0){killBoss();return}
   if(!B.enraged&&B.hp/B.max<.35){
@@ -1108,7 +1090,7 @@ function fishLoop(){
 function catchFish(f,e,reward){
   f.dead=true;S.wallet+=reward;S.totals.fish++;S.daily.fish++;
   f.el.classList.add('dying');setTimeout(()=>f.el.remove(),450);
-  floatText(e,'+'+fmt(reward),'#8dffb5');
+  floatText(e,'+'+fmt(reward),'#00ffaa');
   if(f.sp.m>=15){notify('✨ Hạ cá hiếm! +'+fmt(reward));shake()}
   if(Math.random()<.02)dropChest('common');
 }
@@ -1118,7 +1100,7 @@ function shootAt(e,target,fishObj){
   if(!GAMES.fish){stopAuto();return notify('Trò chơi bắn cá đang tạm tắt.')}
   if(target==='boss'&&!B.alive)return;
   const cost=Number($('bet').value);
-  if(S.wallet<cost){notify('Không đủ xu, chọn mức đạn thấp hơn.');stopAuto();return}
+  if(S.wallet<cost){notify('Không đủ xu.');stopAuto();return}
   S.wallet-=cost;S.totals.shots++;S.daily.shots++;
   beam(e);
   if(target==='fish'){
@@ -1224,7 +1206,7 @@ function renderQuests(){
   ensureDaily();
   $('questBox').innerHTML=QUESTS.map(q=>{
     const v=S.daily[q.id]||0,done=v>=q.target,cl=!!S.daily.claimed[q.id],pct=Math.min(100,v/q.target*100);
-    return `<div class="row"><div style="flex:1"><b>${q.label}</b><div style="height:6px;background:#0a2a4a;border-radius:6px;margin:4px 0;overflow:hidden"><div style="height:100%;width:${pct}%;background:#47ffb3"></div></div><small>${fmt(v)} / ${fmt(q.target)}</small></div>${cl?'<small>✅</small>':`<button ${done?'':'disabled'} onclick="claimQuest('${q.id}')">+${fmt(q.reward)}</button>`}</div>`;
+    return `<div class="row"><div style="flex:1"><b>${q.label}</b><div style="height:6px;background:#0a2a4a;border-radius:6px;margin:4px 0;overflow:hidden"><div style="height:100%;width:${pct}%;background:#00ffaa"></div></div><small>${fmt(v)} / ${fmt(q.target)}</small></div>${cl?'<small>✅</small>':`<button ${done?'':'disabled'} onclick="claimQuest('${q.id}')">+${fmt(q.reward)}</button>`}</div>`;
   }).join('');
 }
 function claimQuest(id){
@@ -1306,7 +1288,7 @@ async function pollBC(){
     const j=await apiRaw({action:'bcPoll',name:user,pass,room:S.room});
     bcErr='';
     bcState=Object.assign({},j.bc,{recv:Date.now()});
-  }catch(e){bcErr=e.message||'Lỗi không xác định'}
+  }catch(e){bcErr=e.message||'Lỗi'}
   renderBC();
 }
 function updateBcTimer(){
@@ -1319,7 +1301,7 @@ function renderBC(){
   renderWallet();
   $('bcRoom').textContent=roomOf(S.room).name;
   if(bcErr){
-    $('bcGrid').innerHTML=`<div class="down">Không kết nối được sảnh: ${bcErr}</div><div class="hint">Đang thử lại mỗi 2 giây.</div>`;
+    $('bcGrid').innerHTML=`<div class="down">Không kết nối được sảnh: ${bcErr}</div>`;
     return;
   }
   if(!bcState){$('bcGrid').innerHTML='<div class="hint">Đang tải sảnh...</div>';return}
@@ -1413,7 +1395,7 @@ function drawChart(){
   const h=s.hist.length>1?s.hist:[s.p,s.p];
   const mn=Math.min(...h),mx=Math.max(...h),rg=(mx-mn)||1,W=600,H=160,P0=10;
   const pts=h.map((v,i)=>(i/(h.length-1)*W).toFixed(1)+','+(H-P0-(v-mn)/rg*(H-2*P0)).toFixed(1)).join(' ');
-  const col=h[h.length-1]>=h[0]?'#25f1c6':'#ff7099';
+  const col=h[h.length-1]>=h[0]?'#00ffaa':'#ff3366';
   $('mkChart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:100%"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="3"/></svg>`;
   $('mkChartInfo').innerHTML=`<b>${s.s}</b> • ${fmt(s.p)} xu • ${((h[h.length-1]/h[0]-1)*100).toFixed(2)}% trong phiên`;
 }
@@ -1441,7 +1423,7 @@ function playDoor(pick){
   const rolled=[rollDoor(),rollDoor(),rollDoor()];
   const mult=rolled[pick][3],net=Math.floor(bet*mult)-bet;
   S.wallet+=net;S.totals.shots++;
-  $('doors').innerHTML=rolled.map((d,i)=>`<div class="door" style="border-color:${i===pick?(net>=0?'#47ffb3':'#ff7099'):'#2edfff'}">${d[1]}<small>${d[2]}</small></div>`).join('');
+  $('doors').innerHTML=rolled.map((d,i)=>`<div class="door" style="border-color:${i===pick?(net>=0?'#00ffaa':'#ff3366'):'#00f0ff'}">${d[1]}<small>${d[2]}</small></div>`).join('');
   $('doorRes').innerHTML=net>0?`<span class="up">🎉 +${fmt(net)} xu</span>`:net===0?'<span>Hòa vốn</span>':`<span class="down">💥 −${fmt(-net)} xu</span>`;
   txPush('Cửa may rủi','',bet,'',net);
   renderWallet();saveUser();doorBusy=false;
@@ -1460,7 +1442,7 @@ function startLock(){
 function stopLock(){if(lockRAF)cancelAnimationFrame(lockRAF);lockRAF=null}
 function lockPress(){
   if(!user)return;
-  if(!GAMES.lock)return notify('Đếm ngược mở khóa đang tạm tắt.');
+  if(!GAMES.lock)return notify('Mở khóa đang tạm tắt.');
   const bet=Number($('lockBet').value);
   if(bet>S.wallet)return notify('Không đủ xu.');
   const d=Math.abs(lockP-.5);
@@ -1500,7 +1482,7 @@ let guessSecret=0,guessTry=0,guessBet=0;
 function miniGuess(){
   guessSecret=rnd(1,100);guessTry=0;guessBet=0;
   $('miniBody').innerHTML=`<div class="center">
-    <div class="hint">Máy nghĩ một số từ 1 đến 100. Bạn có 7 lượt. Đoán càng sớm thưởng càng lớn.</div>
+    <div class="hint">Máy nghĩ một số từ 1 đến 100. Bạn có 7 lượt.</div>
     <div style="margin:10px 0">Cược: ${miniBetSelect('guess')}</div>
     <div class="btns" style="justify-content:center"><input id="guessIn" type="number" min="1" max="100" style="width:140px"><button onclick="guessDo()">Đoán</button></div>
     <div id="guessMsg" class="res"></div>
@@ -1519,13 +1501,13 @@ function guessDo(){
   if(v===guessSecret){
     const mult=[5,4,3,2,2,1.5,1][guessTry-1]||1;
     const pay=Math.floor(guessBet*mult);S.wallet+=pay;
-    $('guessMsg').innerHTML=`<span class="up">🎉 Đúng! Lượt ${guessTry}, nhận ${fmt(pay)} xu</span>`;
+    $('guessMsg').innerHTML=`<span class="up">🎉 Đúng! Nhận ${fmt(pay)} xu</span>`;
     txPush('Đoán số','',guessBet,'',pay-guessBet);guessTry=99;
   }else if(guessTry>=7){
     $('guessMsg').innerHTML=`<span class="down">Hết lượt. Số đúng là ${guessSecret}</span>`;
     txPush('Đoán số','',guessBet,'',-guessBet);guessTry=99;
   }else{
-    $('guessMsg').textContent=v<guessSecret?'Số cần tìm lớn hơn':'Số cần tìm nhỏ hơn';
+    $('guessMsg').textContent=v<guessSecret?'Số lớn hơn':'Số nhỏ hơn';
   }
   $('guessInfo').textContent=guessTry<99?'Lượt '+guessTry+'/7':'';
   renderWallet();saveUser();
@@ -1534,7 +1516,7 @@ function guessDo(){
 const SCR=[['🍒',2],['🍋',3],['💎',5],['⭐',10],['🔔',0],['🍀',0]];
 function miniScratch(){
   $('miniBody').innerHTML=`<div class="center">
-    <div class="hint">Cào 3 ô. Trùng 2 biểu tượng nhận ×2, trùng 3 nhận thưởng lớn.</div>
+    <div class="hint">Cào 3 ô. Trùng biểu tượng nhận thưởng.</div>
     <div style="margin:10px 0">Cược: ${miniBetSelect('scr')}</div>
     <div class="segs" id="scrCells"><div class="seg">❔</div><div class="seg">❔</div><div class="seg">❔</div></div>
     <button onclick="scratchDo()">🎟️ Cào</button><div class="res" id="scrRes"></div></div>`;
@@ -1548,14 +1530,14 @@ function scratchDo(){
   if(cells[0][0]===cells[1][0]&&cells[1][0]===cells[2][0])mult=cells[0][1]*5;
   else if(cells[0][0]===cells[1][0]||cells[1][0]===cells[2][0]||cells[0][0]===cells[2][0])mult=2;
   const pay=Math.floor(b*mult);S.wallet+=pay;
-  $('scrRes').innerHTML=pay>0?`<span class="up">🎉 Nhận ${fmt(pay)} xu (×${mult})</span>`:`<span class="down">Không trúng, mất ${fmt(b)} xu</span>`;
+  $('scrRes').innerHTML=pay>0?`<span class="up">🎉 Nhận ${fmt(pay)} xu</span>`:`<span class="down">Không trúng, mất ${fmt(b)} xu</span>`;
   txPush('Cào thẻ','',b,'',pay-b);renderWallet();saveUser();
 }
 
 let memCards=[],memOpen=[],memFound=0,memLock=false,memBet=0;
 function miniMemory(){
   $('miniBody').innerHTML=`<div class="center">
-    <div class="hint">Lật 2 lá mỗi lượt, tìm đôi giống nhau. Tìm đủ 6 đôi nhận ×4.</div>
+    <div class="hint">Lật bài tìm 6 đôi giống nhau.</div>
     <div style="margin:10px 0">Cược: ${miniBetSelect('mem')}</div>
     <button onclick="memoryStart()">Bắt đầu</button>
     <div id="memGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:340px;margin:12px auto"></div>
@@ -1585,7 +1567,7 @@ function memFlip(i){
       memOpen=[];memLock=false;renderMem();
       if(memFound===6){
         const pay=memBet*4;S.wallet+=pay;
-        $('memRes').innerHTML=`<span class="up">🎉 Tìm đủ 6 đôi! Nhận ${fmt(pay)} xu</span>`;
+        $('memRes').innerHTML=`<span class="up">🎉 Thắng! Nhận ${fmt(pay)} xu</span>`;
         txPush('Lật bài','',memBet,'',pay-memBet);renderWallet();saveUser();
       }
     },600);
@@ -1594,7 +1576,7 @@ function memFlip(i){
 
 function miniHiLo(){
   $('miniBody').innerHTML=`<div class="center">
-    <div class="hint">Tổng 3 xúc xắc 11–17 là LỚN, 4–10 là NHỎ. Đoán đúng nhận ×1,95.</div>
+    <div class="hint">Đoán tổng 3 xúc xắc Lớn (11–17) hay Nhỏ (4–10).</div>
     <div style="margin:10px 0">Cược: ${miniBetSelect('hl')}</div>
     <div class="btns" style="justify-content:center">
       <button class="gold" onclick="hiloDo('L')">⬆️ LỚN</button>
@@ -1615,7 +1597,7 @@ function hiloDo(pick){
 let pkBetHold=0,pkArr=[],pkPlaying=false;
 function miniPick(){
   $('miniBody').innerHTML=`<div class="center">
-    <div class="hint">10 lá: 1 lá ×4, 2 lá hoàn cược, 7 lá trượt. Bấm bốc thăm rồi chọn 1 lá.</div>
+    <div class="hint">Chọn 1 lá trong 10 lá may mắn.</div>
     <div style="margin:10px 0">Cược: ${miniBetSelect('pk')}</div>
     <button onclick="pickDo()">🎫 Bốc thăm</button>
     <div class="grid" id="pkGrid" style="grid-template-columns:repeat(5,1fr);max-width:400px;margin:12px auto"></div>
@@ -1642,7 +1624,7 @@ function pickChoose(i){
 let trCells=[],trBet=0,trDone=false;
 function miniTreasure(){
   $('miniBody').innerHTML=`<div class="center">
-    <div class="hint">Lưới 5×5 có 1 kho báu (×5) và 4 bom. Đào trúng bom là mất cược.</div>
+    <div class="hint">Lưới 5×5 có kho báu (×5) và bom. Tránh bom để nhận thưởng!</div>
     <div style="margin:10px 0">Cược: ${miniBetSelect('tr')}</div>
     <button onclick="treasureStart()">⛏️ Bắt đầu</button>
     <div id="trGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:320px;margin:12px auto"></div>
@@ -1656,7 +1638,7 @@ function treasureStart(){
   trCells[pos[0]]='gold';
   for(let i=1;i<=4;i++)trCells[pos[i]]='bomb';
   trDone=false;renderTreasure();
-  $('trRes').textContent='Chọn một ô để đào';
+  $('trRes').textContent='Chọn ô để đào';
   renderWallet();
 }
 function renderTreasure(){
@@ -1678,7 +1660,7 @@ function digCell(i){
     renderTreasure();renderWallet();saveUser();
   }else{
     trCells[i]='dug';renderTreasure();
-    $('trRes').textContent='Ô an toàn. Tiếp tục đào.';
+    $('trRes').textContent='Ô an toàn.';
   }
 }
 
