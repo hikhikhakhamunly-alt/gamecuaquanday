@@ -134,6 +134,7 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
   .ob{padding:10px}
   .bcgrid{grid-template-columns:repeat(3,1fr);gap:6px}
   .bcf .e{font-size:30px}
+  .gc svg{height:80px}
 }
 @media(max-width:480px){
   .arena{height:300px}
@@ -175,6 +176,15 @@ th,td{padding:7px 6px;text-align:left;border-bottom:1px solid #123b5c}
         <input id="regPass2" type="password" placeholder="Nhập lại mật khẩu">
         <button class="w" onclick="register()">Tạo tài khoản</button>
         <p>Đã có tài khoản? <span class="link" onclick="showLogin()">Đăng nhập</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="center" style="margin-top:18px">
+    <div class="card" style="display:inline-block;max-width:560px;width:100%">
+      <div class="hint">Mã thiết bị của bạn (dùng khi cần admin mở khóa):</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+        <input id="devIdBox" readonly style="font-family:Consolas,monospace;font-size:13px">
+        <button onclick="copyDevId()">📋 Sao chép mã thiết bị</button>
       </div>
     </div>
   </div>
@@ -462,11 +472,17 @@ const START_WALLET_CLIENT=100000;
 
 const $=id=>document.getElementById(id);
 const fmt=n=>Math.floor(Number(n)||0).toLocaleString('en-US');
+const fmtShort=n=>{
+  n=Math.floor(Number(n)||0);
+  if(n>=1e12)return (n/1e12).toLocaleString('en-US',{maximumFractionDigits:1})+' nghìn tỉ';
+  if(n>=1e9)return (n/1e9).toLocaleString('en-US',{maximumFractionDigits:1})+' tỉ';
+  if(n>=1e6)return (n/1e6).toLocaleString('en-US',{maximumFractionDigits:1})+' triệu';
+  return fmt(n);
+};
 const betLabel=b=>b>=1e9?(b/1e9)+' tỉ':fmt(b);
 const rnd=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const todayStr=()=>new Date().toDateString();
 
-/* Mã thiết bị: lưu trong trình duyệt để máy chủ nhận diện spam */
 function deviceId(){
   let id=localStorage.getItem('sf_fp');
   if(!id){id=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('sf_fp',id)}
@@ -498,7 +514,17 @@ const GUNS=[
  {id:'dragon',name:'Súng Rồng',price:150000000,mult:9,c1:'#4ff09a',c2:'#0b5a33',beam:'#7dffb0'},
  {id:'meteor',name:'Súng Thiên Thạch',price:250000000,mult:12,c1:'#9d82ff',c2:'#2a1659',beam:'#b49bff'},
  {id:'gold',name:'Súng Hoàng Kim',price:350000000,mult:15,c1:'#ffe66b',c2:'#a06b00',beam:'#ffe066'},
- {id:'galaxy',name:'Súng Thiên Hà',price:500000000,mult:22,c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8'}
+ {id:'galaxy',name:'Súng Thiên Hà',price:500000000,mult:22,c1:'#ff9ae0',c2:'#2b0a4a',beam:'#ff8ad8'},
+ {id:'vangrong',name:'Súng Vàng Ròng',price:100000,mult:1.2,c1:'#fff3a0',c2:'#c99a00',beam:'#ffe27a'},
+ {id:'xanhngoc',name:'Súng Xanh Ngọc',price:1000000,mult:2.5,c1:'#7dffe0',c2:'#0c7a66',beam:'#58ffd0'},
+ {id:'tinhthe',name:'Súng Tinh Thể',price:10000000,mult:5,c1:'#e6f7ff',c2:'#4a7fb8',beam:'#b8ecff'},
+ {id:'baotoo',name:'Súng Bão Tố',price:100000000,mult:9,c1:'#8fb8ff',c2:'#1a2a6a',beam:'#6fa8ff'},
+ {id:'hoalong',name:'Súng Hỏa Long',price:1000000000,mult:14,c1:'#ff8a2a',c2:'#7a1000',beam:'#ff6a1a'},
+ {id:'banghа',name:'Súng Băng Hà',price:10000000000,mult:20,c1:'#d6fbff',c2:'#1f5f8f',beam:'#9ef3ff'},
+ {id:'thansset',name:'Súng Thần Sét',price:100000000000,mult:30,c1:'#fffb9a',c2:'#4a3a00',beam:'#ffff66'},
+ {id:'vutru',name:'Súng Vũ Trụ',price:1000000000000,mult:45,c1:'#c6a6ff',c2:'#140a3a',beam:'#b68bff'},
+ {id:'batdiet',name:'Súng Bất Diệt',price:10000000000000,mult:65,c1:'#ffd0f0',c2:'#3a0a2e',beam:'#ff9ee0'},
+ {id:'thanthanh',name:'Súng Thần Thánh',price:30000000000000,mult:100,c1:'#ffffff',c2:'#c9a300',beam:'#fff6b0'}
 ];
 
 const SHADOW='<ellipse cx="100" cy="122" rx="70" ry="7" fill="#000" opacity=".35"/>';
@@ -512,8 +538,11 @@ function gunSvg(g){
   let deco='';
   if(t>=3)deco+=`<path d="M40 70 L14 50 L22 80 Z" fill="${g.c1}" stroke="#06142e" stroke-width="2"/><path d="M80 70 L106 50 L98 80 Z" fill="${g.c1}" stroke="#06142e" stroke-width="2"/>`;
   if(t>=7)deco+=`<circle cx="16" cy="88" r="7" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/><circle cx="104" cy="88" r="7" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/>`;
+  if(t>=11)deco+=`<path d="M30 40 L8 30 L16 50 Z M90 40 L112 30 L104 50 Z" fill="${g.beam}" stroke="#06142e" stroke-width="2" opacity=".9"/>`;
+  if(t>=14)deco+=`<circle cx="60" cy="8" r="6" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/>`;
   const flame=t>=4?`<path d="M48 26 Q60 2 72 26 Q60 16 48 26Z" fill="url(#fl${id})"/>`:'';
   const aura=t>=9?`<circle cx="60" cy="62" r="56" fill="${g.beam}" opacity=".15"/><circle cx="60" cy="62" r="54" fill="none" stroke="${g.beam}" stroke-width="2" stroke-dasharray="6 6" opacity=".7"/>`:'';
+  const crown=t>=18?`<path d="M36 22 L44 4 L52 18 L60 0 L68 18 L76 4 L84 22 Z" fill="#ffe066" stroke="#06142e" stroke-width="2"/>`:'';
   return `<svg viewBox="0 0 120 120"><defs>
     <linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c1}"/><stop offset="1" stop-color="${g.c2}"/></linearGradient>
     <linearGradient id="fl${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6a0"/><stop offset="1" stop-color="#ff7a1a"/></linearGradient>
@@ -527,6 +556,7 @@ function gunSvg(g){
   <rect x="48" y="38" width="24" height="5" rx="2" fill="${g.beam}" opacity=".85"/>
   <rect x="48" y="54" width="24" height="5" rx="2" fill="${g.beam}" opacity=".85"/>
   ${flame}
+  ${crown}
   <circle cx="60" cy="26" r="16" fill="url(#mz${id})"/>
   <ellipse cx="60" cy="26" rx="8" ry="5" fill="#06142e"/>
   <circle cx="60" cy="78" r="5" fill="${g.beam}" stroke="#fff" stroke-width="1.5"/>
@@ -736,7 +766,7 @@ function sync(op,data){
       renderWallet();renderEvt();
       return j;
     }catch(e){
-      if(e.code==='locked'||e.code==='kick'||e.code==='maint'||e.code==='devban'){notify(e.message);endSession();return null}
+      if(['locked','kick','maint','devban'].indexOf(e.code)>=0){notify(e.message);endSession();return null}
       if(e.code==='auth'){notify('Phiên đăng nhập không còn hợp lệ: '+e.message);endSession();return null}
       if(op)notify(e.message);
       return null;
@@ -795,6 +825,7 @@ function endSession(){
   document.querySelectorAll('.over').forEach(e=>e.classList.add('hidden'));
   $('gameScreen').classList.add('hidden');$('homeScreen').classList.add('hidden');
   $('authScreen').classList.remove('hidden');
+  showDevId();
 }
 
 function enterGame(){
@@ -872,6 +903,23 @@ function renderAmmo(){
   $('ammoList').innerHTML=AMMOS.map((a,i)=>`<div class="ammo ${i===S.ammo?'on':''}" onclick="S.ammo=${i};renderAmmo();saveUser()"><i>${a[0]}</i>${a[1]}<br><small>x${a[2]}</small></div>`).join('');
 }
 function applyGun(){$('cannon').innerHTML=gunSvg(gun());$('gunName').textContent='🔫 '+gun().name+' x'+gun().mult}
+
+function showDevId(){
+  const box=$('devIdBox');
+  if(box)box.value=deviceId();
+}
+function copyDevId(){
+  const v=deviceId();
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(v).then(()=>notify('📋 Đã sao chép mã thiết bị')).catch(()=>fallbackCopy(v));
+  }else fallbackCopy(v);
+}
+function fallbackCopy(v){
+  const box=$('devIdBox');
+  box.removeAttribute('readonly');box.select();
+  try{document.execCommand('copy');notify('📋 Đã sao chép mã thiết bị')}catch(e){notify('Hãy bôi đen và copy thủ công')}
+  box.setAttribute('readonly','');
+}
 
 function openRoom(){if(!user)return;renderRooms();$('roomView').classList.remove('hidden')}
 function closeRoom(){$('roomView').classList.add('hidden')}
@@ -999,8 +1047,8 @@ function renderShop(){
     let btn;
     if(eq)btn='<button disabled>✅ Đang dùng</button>';
     else if(has)btn=`<button onclick="equipGun('${g.id}')">Trang bị</button>`;
-    else btn=`<button ${S.wallet>=g.price?'':'disabled'} onclick="buyGun('${g.id}')">Mua ${fmt(g.price)}</button>`;
-    return `<div class="gc ${eq?'eq':''}">${gunSvg(g)}<div><b>${g.name}</b></div><div class="hint">x${g.mult} sát thương boss</div><div class="price">🪙 ${fmt(g.price)}</div>${btn}</div>`;
+    else btn=`<button ${S.wallet>=g.price?'':'disabled'} onclick="buyGun('${g.id}')">Mua ${fmtShort(g.price)}</button>`;
+    return `<div class="gc ${eq?'eq':''}">${gunSvg(g)}<div><b>${g.name}</b></div><div class="hint">x${g.mult} sát thương boss</div><div class="price">🪙 ${fmtShort(g.price)}</div>${btn}</div>`;
   }).join('');
 }
 function buyGun(id){
@@ -1682,6 +1730,7 @@ function digCell(i){
   }
 }
 
+showDevId();
 renderAmmo();
 </script>
 </body>
